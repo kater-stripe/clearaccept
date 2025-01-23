@@ -55,7 +55,7 @@ const renderDayProgressBar = () => {
     <div
       className="absolute left-20 h-[2px] w-[calc(100%-10rem)] bg-secondary pl-20"
       style={{
-        top: `${(SCHEDULE_HEIGHT * minutesSince9AM) / MINUTES_IN_BUSINESS_DAY}px`,
+        top: `${55 + (SCHEDULE_HEIGHT * minutesSince9AM) / MINUTES_IN_BUSINESS_DAY}px`,
       }}
     >
       <div className="relative left-[-80px] top-[-3px] h-2 w-2 rounded-full border-2 border-secondary bg-secondary"></div>
