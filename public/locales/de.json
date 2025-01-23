@@ -1,0 +1,112 @@
+{
+  "auth": {
+    "login": {
+      "email": "E-Mail",
+      "sample_email": "jenny.rosen@example.com",
+      "password": "Passwort",
+      "continue": "Weitermachen",
+      "loading": "Laden...",
+      "dont_have_an_account": "Sie haben noch kein Konto?",
+      "sign_up": "Melden Sie sich an",
+      "login": "Login"
+    },
+    "loginas": {
+      "select": "Wählen Sie Konto aus",
+      "dont_have_account": "Sie haben noch kein Konto?",
+      "register": "Registrieren",
+      "acct_id": "Konto-ID",
+      "sample_acct_id": "acct_1234567890abcdef",
+      "continue": "Weitermachen",
+      "loading": "Einreichen..."
+    },
+    "signup": {
+      "sign_up": "Melden Sie sich an",
+      "already_have_account": "Sie haben bereits ein Konto?",
+      "login": "Login",
+      "country": "Land",
+      "email": "E-Mail"
+    },
+    "layout": {
+      "manage": "Verwalten Sie Ihr Studio ganz einfach.",
+      "pose_is_leading": "Pose ist die weltweit führende Gesundheits- und Wellnessplattform.",
+      "sign_up": "Melden Sie sich an",
+      "fill_form": "Füllen Sie das Formular aus, um Ihr Konto einzurichten.",
+      "contact": "Kontaktieren Sie den Support"
+    }
+  },
+  "countries": {
+    "australia": "Australien",
+    "france": "Frankreich",
+    "germany": "Deutschland",
+    "united_states": "Vereinigte Staaten"
+  },
+  "dashboard": {
+    "classes": {
+      "classes": "Klassen",
+      "create_class": "Klasse erstellen",
+      "edit_studios": "Studios bearbeiten",
+      "today": "Heute",
+      "tomorrow": "Morgen",
+      "studio": "Studio"
+    },
+    "instructors": {
+      "instructors": "Ausbilder",
+      "add": "Dozent hinzufügen",
+      "class": "Klasse",
+      "es": "es",
+      "this_week": "diese Woche"
+    },
+    "payments": {
+      "payments": "Zahlungen",
+      "recent": "Letzte Zahlungen"
+    },
+    "payouts": {
+      "payouts": "Auszahlungen"
+    },
+    "welcome": "Willkommen, Jenny!",
+    "performance": "Leistung",
+    "settings": {
+      "my_studio": "Mein Studio"
+    }
+  },
+  "class": {
+    "gentle": "Sanfter Fluss",
+    "yoga_intermediate": "Yoga-Grundlagen - Fortgeschrittene",
+    "mindful": "Achtsame Bewegung",
+    "stretch": "Dehnen & Regenerieren",
+    "yoga_core": "Yoga für Kernkraft"
+  },
+  "components": {
+    "month_to_date": {
+      "month_to_date": "Diesen Monat"
+    },
+    "customers": {
+      "customers": "Kunden"
+    },
+    "schedule": {
+      "attendees": "Teilnehmer",
+      "today": "Der heutige Zeitplan"
+    },
+    "balance": {
+      "total": "Gesamtbilanz",
+      "payout": "Auszahlung an die Bank"
+    },
+    "recent_payments": {
+      "recent": "Letzte Zahlungen",
+      "view_all": "Alle anzeigen"
+    }
+  },
+  "loading": "Laden...",
+  "studio": {
+    "1": "Studio 1",
+    "2": "Studio 2"
+  },
+  "navigation": {
+    "home": "Heim",
+    "classes": "Klassen",
+    "payouts": "Auszahlungen",
+    "finances": "Finanzen",
+    "payments": "Zahlungen",
+    "instructors": "Ausbilder"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "auth": {
+    "login": {
+      "email": "E-mail",
+      "sample_email": "jenny.rosen@example.com",
+      "password": "Mot de passe",
+      "continue": "Continuer",
+      "loading": "Chargement...",
+      "dont_have_an_account": "Vous n'avez pas de compte ?",
+      "sign_up": "S'inscrire",
+      "login": "Se connecter"
+    },
+    "loginas": {
+      "select": "Sélectionnez un compte",
+      "dont_have_account": "Vous n'avez pas de compte ?",
+      "register": "Registre",
+      "acct_id": "Identifiant du compte",
+      "sample_acct_id": "acct_1234567890abcdef",
+      "continue": "Continuer",
+      "loading": "Soumission..."
+    },
+    "signup": {
+      "sign_up": "S'inscrire",
+      "already_have_account": "Vous avez déjà un compte ?",
+      "login": "Se connecter",
+      "country": "Pays",
+      "email": "E-mail"
+    },
+    "layout": {
+      "manage": "Gérez votre studio en toute simplicité.",
+      "pose_is_leading": "Pose est la première plateforme mondiale de santé et de bien-être.",
+      "sign_up": "S'inscrire",
+      "fill_form": "Remplissez le formulaire pour créer votre compte.",
+      "contact": "Contacter l'assistance"
+    }
+  },
+  "countries": {
+    "australia": "Australie",
+    "france": "France",
+    "germany": "Allemagne",
+    "united_states": "États-Unis"
+  },
+  "dashboard": {
+    "classes": {
+      "classes": "Cours",
+      "create_class": "Créer une classe",
+      "edit_studios": "Modifier les studios",
+      "tomorrow": "Demain",
+      "studio": "Studio"
+    },
+    "instructors": {
+      "instructors": "Instructeurs",
+      "add": "Ajouter un instructeur",
+      "class": "classe",
+      "es": "es",
+      "this_week": "cette semaine"
+    },
+    "payments": {
+      "payments": "Paiements",
+      "recent": "Paiements récents"
+    },
+    "payouts": {
+      "payouts": "Paiements"
+    },
+    "welcome": "Bienvenue Jenny !",
+    "performance": "Performance",
+    "settings": {
+      "my_studio": "Mon atelier"
+    }
+  },
+  "class": {
+    "gentle": "Flux Doux",
+    "yoga_intermediate": "Yoga de Base - Intermédiaire",
+    "mindful": "Mouvement en Pleine Conscience",
+    "stretch": "Étirement et Restauration",
+    "yoga_core": "Yoga de Renforcement du Core"
+  },
+  "components": {
+    "month_to_date": {
+      "month_to_date": "Le mois courant"
+    },
+    "customers": {
+      "customers": "Clients"
+    },
+    "schedule": {
+      "attendees": "participants",
+      "today": "Programme du jour"
+    },
+    "balance": {
+      "total": "Solde total",
+      "payout": "Payer à la banque"
+    },
+    "recent_payments": {
+      "recent": "Paiements récents",
+      "view_all": "Voir tout"
+    }
+  },
+  "loading": "Chargement...",
+  "studio": {
+    "1": "Atelier 1",
+    "2": "Atelier 2"
+  },
+  "navigation": {
+    "home": "Maison",
+    "classes": "Cours",
+    "payouts": "Paiements",
+    "finances": "Finances",
+    "payments": "Paiements",
+    "instructors": "Instructeurs"
+  }
+}

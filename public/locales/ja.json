@@ -1,0 +1,112 @@
+{
+  "auth": {
+    "login": {
+      "email": "電子メール",
+      "sample_email": "jenny.rosen@example.com",
+      "password": "パスワード",
+      "continue": "続く",
+      "loading": "読み込み中...",
+      "dont_have_an_account": "アカウントをお持ちでない場合は、",
+      "sign_up": "サインアップ",
+      "login": "ログイン"
+    },
+    "loginas": {
+      "select": "アカウントの選択",
+      "dont_have_account": "アカウントをお持ちでない場合は、",
+      "register": "登録する",
+      "acct_id": "アカウントID",
+      "sample_acct_id": "acct_1234567890abcdef",
+      "continue": "続く",
+      "loading": "送信中..."
+    },
+    "signup": {
+      "sign_up": "サインアップ",
+      "already_have_account": "すでにアカウントをお持ちですか?",
+      "login": "ログイン",
+      "country": "国",
+      "email": "電子メール"
+    },
+    "layout": {
+      "manage": "スタジオを簡単に管理しましょう。",
+      "pose_is_leading": "Pose は、世界をリードする健康とウェルネスのプラットフォームです。",
+      "sign_up": "サインアップ",
+      "fill_form": "フォームに記入してアカウントを設定します。",
+      "contact": "サポートに連絡する"
+    }
+  },
+  "countries": {
+    "australia": "オーストラリア",
+    "france": "フランス",
+    "germany": "ドイツ",
+    "united_states": "米国"
+  },
+  "dashboard": {
+    "classes": {
+      "classes": "クラス",
+      "create_class": "クラスの作成",
+      "edit_studios": "スタジオを編集する",
+      "today": "今日",
+      "tomorrow": "明日",
+      "studio": "スタジオ"
+    },
+    "instructors": {
+      "instructors": "講師",
+      "add": "講師を追加",
+      "class": "クラス",
+      "es": "エス",
+      "this_week": "今週"
+    },
+    "payments": {
+      "payments": "支払い",
+      "recent": "最近の支払い"
+    },
+    "payouts": {
+      "payouts": "支払い"
+    },
+    "welcome": "ようこそ、ジェニー！",
+    "performance": "パフォーマンス",
+    "settings": {
+      "my_studio": "私のスタジオ"
+    }
+  },
+  "class": {
+    "gentle": "ジェントルフロー",
+    "yoga_intermediate": "ヨガ基礎 - 中級",
+    "mindful": "マインドフルムーブメント",
+    "stretch": "ストレッチ＆リストア",
+    "yoga_core": "コア強化ヨガ"
+  },
+  "components": {
+    "month_to_date": {
+      "month_to_date": "過去1カ月間"
+    },
+    "customers": {
+      "customers": "お客様"
+    },
+    "schedule": {
+      "attendees": "出席者",
+      "today": "今日のスケジュール"
+    },
+    "balance": {
+      "total": "合計残高",
+      "payout": "銀行への支払い"
+    },
+    "recent_payments": {
+      "recent": "最近の支払い",
+      "view_all": "すべて見る"
+    }
+  },
+  "loading": "読み込み中...",
+  "studio": {
+    "1": "スタジオ1",
+    "2": "スタジオ2"
+  },
+  "navigation": {
+    "home": "家",
+    "classes": "クラス",
+    "payouts": "支払い",
+    "finances": "財政",
+    "payments": "支払い",
+    "instructors": "講師"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "auth": {
+    "login": {
+      "email": "Email",
+      "sample_email": "jenny.rosen@example.com",
+      "password": "Password",
+      "continue": "Continue",
+      "loading": "Loading...",
+      "dont_have_an_account": "Don't have an account?",
+      "sign_up": "Sign up",
+      "login": "Login"
+    },
+    "loginas": {
+      "select": "Select Account",
+      "dont_have_account": "Don't have an account?",
+      "register": "Register",
+      "acct_id": "Account ID",
+      "sample_acct_id": "acct_1234567890abcdef",
+      "continue": "Continue",
+      "loading": "Submitting..."
+    },
+    "signup": {
+      "sign_up": "Sign up",
+      "already_have_account": "Already have an account?",
+      "login": "Login",
+      "country": "Country",
+      "email": "Email"
+    },
+    "layout": {
+      "manage": "Manage your studio with ease.",
+      "pose_is_leading": "Pose is the world's leading health and wellness platform.",
+      "sign_up": "Sign up",
+      "fill_form": "Fill out the form to set up your account.",
+      "contact": "Contact support"
+    }
+  },
+  "countries": {
+    "australia": "Australia",
+    "france": "France",
+    "germany": "Germany",
+    "united_states": "United States"
+  },
+  "dashboard": {
+    "classes": {
+      "classes": "Classes",
+      "create_class": "Create class",
+      "edit_studios": "Edit studios",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "studio": "Studio"
+    },
+    "instructors": {
+      "instructors": "Instructors",
+      "add": "Add instructor",
+      "class": "class",
+      "es": "es",
+      "this_week": "this week"
+    },
+    "payments": {
+      "payments": "Payments",
+      "recent": "Recent payments"
+    },
+    "payouts": {
+      "payouts": "Payouts"
+    },
+    "welcome": "Welcome, Jenny!",
+    "performance": "Performance",
+    "settings": {
+      "my_studio": "My studio"
+    }
+  },
+  "class": {
+    "gentle": "Gentle Flow",
+    "yoga_intermediate": "Yoga Basics - Intermediate",
+    "mindful": "Mindful Movement",
+    "stretch": "Stretch & Restore",
+    "yoga_core": "Core Strength Yoga"
+  },
+  "components": {
+    "month_to_date": {
+      "month_to_date": "Month-to-date"
+    },
+    "customers": {
+      "customers": "Customers"
+    },
+    "schedule": {
+      "attendees": "attendees",
+      "today": "Today's Schedule"
+    },
+    "balance": {
+      "total": "Total balance",
+      "payout": "Pay out to bank"
+    },
+    "recent_payments": {
+      "recent": "Recent payments",
+      "view_all": "View all"
+    }
+  },
+  "loading": "Loading...",
+  "studio": {
+    "1": "Studio 1",
+    "2": "Studio 2"
+  },
+  "navigation": {
+    "home": "Home",
+    "classes": "Classes",
+    "payouts": "Payouts",
+    "finances": "Finances",
+    "payments": "Payments",
+    "instructors": "Instructors"
+  }
+}
