@@ -26,7 +26,10 @@ const MonthToDateWidget = () => {
             {t('components.month_to_date.month_to_date')}
           </h1>
           <div className="flex flex-row items-center space-x-2">
-            <div className="text-xl font-bold">{sign}13.3k</div>
+            <div className="text-xl font-bold">
+              {sign}
+              {((session?.user.mtdEarnings || 0) / 100).toFixed(2)}
+            </div>
             <Badge className="h-6 rounded-md border-success-border bg-success pb-0 pl-1 pr-1 pt-0 text-success-foreground">
               +7.5%
             </Badge>

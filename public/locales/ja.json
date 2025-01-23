@@ -67,6 +67,13 @@
     "performance": "パフォーマンス",
     "settings": {
       "my_studio": "私のスタジオ"
+    },
+    "finances": {
+      "financial_account": "金融口座",
+      "transactions": "トランザクション",
+      "cards": "カード",
+      "finances": "財政",
+      "overview": "概要"
     }
   },
   "class": {

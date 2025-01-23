@@ -25,7 +25,7 @@ const AppearanceTab = () => {
       <div className="space-y-4">
         {[
           {
-            label: 'Currency',
+            label: 'Transaction Currency',
             key: 'currency',
             options: [
               {value: 'usd', label: 'USD'},

@@ -27,7 +27,15 @@ const BalanceWidget = () => {
           <h1 className="font-bold text-subdued">
             {t('components.balance.total')}
           </h1>
-          <div className="text-xl font-bold">{sign}1,532</div>
+          <div className="text-xl font-bold">
+            {sign}
+            {((session?.user.availableBalance || 0) / 100).toFixed(2)}{' '}
+          </div>
+          <div className="text-md font-subdued">
+            {sign}
+            {((session?.user.pendingBalance || 0) / 100).toFixed(2)}{' '}
+            {t('components.balance.pending')}
+          </div>
         </div>
         <div>
           <Link

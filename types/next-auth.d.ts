@@ -9,6 +9,11 @@ declare module 'next-auth' {
     user: {
       /** The user's Stripe account. */
       stripeAccount: Stripe.Account;
+      pendingBalance: number;
+      availableBalance: number;
+      charges: Stripe.Charge[];
+      mtdEarnings: number;
+      customerCount: number;
     } & DefaultSession['user'];
   }
 }

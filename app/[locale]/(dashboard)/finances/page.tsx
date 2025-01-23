@@ -9,6 +9,7 @@ import {
 import Container from '@/app/components/Container';
 import EmbeddedComponentContainer from '@/app/components/EmbeddedComponentContainer';
 import {useAccount} from '@/app/hooks/useAccount';
+import {useTranslation} from 'react-i18next';
 
 const useFinancialAccount = () => {
   const [financialAccount, setFinancialAccount] = useState<string | null>(null);
@@ -35,6 +36,8 @@ const useFinancialAccount = () => {
 };
 
 export default function Finances() {
+  const {t} = useTranslation();
+
   const {
     financialAccount,
     error: useFinancialAccountError,
@@ -74,7 +77,9 @@ export default function Finances() {
       </Container>
       {displayFinancialAccount && (
         <Container>
-          <h1 className="mb-2 ml-2 text-xl font-bold">Financial account</h1>
+          <h1 className="mb-2 ml-2 text-xl font-bold">
+            {t('dashboard.finances.financial_account')}
+          </h1>
           <EmbeddedComponentContainer>
             <ConnectFinancialAccount financialAccount={financialAccount} />
           </EmbeddedComponentContainer>
@@ -82,7 +87,9 @@ export default function Finances() {
       )}
       {displayFinancialAccount && (
         <Container>
-          <h1 className="ml-2 text-xl font-bold">Transactions</h1>
+          <h1 className="ml-2 text-xl font-bold">
+            {t('dashboard.finances.transactions')}
+          </h1>
           <EmbeddedComponentContainer>
             <ConnectFinancialAccountTransactions
               financialAccount={financialAccount}

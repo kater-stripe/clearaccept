@@ -63,10 +63,17 @@
     "payouts": {
       "payouts": "Payouts"
     },
-    "welcome": "Welcome, Jenny!",
+    "welcome": "Welcome, {{name}}!",
     "performance": "Performance",
     "settings": {
       "my_studio": "My studio"
+    },
+    "finances": {
+      "financial_account": "Financial account",
+      "transactions": "Transactions",
+      "cards": "Cards",
+      "finances": "Finances",
+      "overview": "Overview"
     }
   },
   "class": {
@@ -89,7 +96,8 @@
     },
     "balance": {
       "total": "Total balance",
-      "payout": "Pay out to bank"
+      "payout": "Pay out to bank",
+      "pending": "pending"
     },
     "recent_payments": {
       "recent": "Recent payments",

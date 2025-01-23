@@ -67,6 +67,13 @@
     "performance": "Actuación",
     "settings": {
       "my_studio": "mi estudio"
+    },
+    "finances": {
+      "financial_account": "cuenta financiera",
+      "transactions": "Actas",
+      "cards": "Tarjetas",
+      "finances": "Finanzas",
+      "overview": "Descripción general"
     }
   },
   "class": {

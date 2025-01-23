@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Container from './Container';
 import {ChevronRight} from 'lucide-react';
-import {countryToCurrencySign} from '@/lib/currency';
+import {countryToCurrencySign, currencyToCurrencySign} from '@/lib/currency';
 import {useSession} from 'next-auth/react';
 import {useTranslation} from 'react-i18next';
 import {useConfigContext} from '../contexts/ConfigContext';
@@ -15,7 +15,7 @@ const BalanceWidget = () => {
 
   // Localization for currency
   const {data: session} = useSession();
-  const sign = countryToCurrencySign(
+  const sign = currencyToCurrencySign(
     session?.user.stripeAccount?.country ||
       process.env.NEXT_PUBLIC_DEFAULT_COUNTRY!
   );
@@ -43,18 +43,17 @@ const BalanceWidget = () => {
         </div>
         <div>
           <ul>
-            <li className="flex flex-row justify-between text-subdued">
-              <div>michael@stripe.com</div>
-              <div>{sign}250.00</div>
-            </li>
-            <li className="flex flex-row justify-between text-subdued">
-              <div>jessica@stripe.com</div>
-              <div>{sign}250.00</div>
-            </li>
-            <li className="flex flex-row justify-between text-subdued">
-              <div>david@stripe.com</div>
-              <div>{sign}54.32</div>
-            </li>
+            {session?.user.charges.map((charge) => (
+              <li className="flex flex-row justify-between text-subdued">
+                <div>{charge.description}</div>
+                <div>
+                  {currencyToCurrencySign(charge.currency)}
+                  {(
+                    charge.amount / (charge.currency !== 'jpy' ? 100 : 1)
+                  ).toFixed(2)}
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

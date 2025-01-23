@@ -2,6 +2,7 @@ import type {AuthOptions} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import {stripe} from '@/lib/stripe';
 import {countryToCurrency} from '@/lib/currency';
+import Stripe from 'stripe';
 
 export const authOptions: AuthOptions = {
   session: {
@@ -20,13 +21,55 @@ export const authOptions: AuthOptions = {
     },
 
     async session({session}) {
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
       let stripeAccount;
+      let balance = {available: 0, pending: 0};
+      let charges = [];
+      let mtdEarnings = 0;
 
       try {
         const accountList = await stripe.accounts.list();
         stripeAccount = accountList.data.find(
           (account) => account.email === session.user?.email
         );
+
+        // Balance
+        const accountBalance = await stripe.balance.retrieve({
+          stripeAccount: stripeAccount?.id,
+        });
+        balance.available = accountBalance.available.reduce(
+          (accum, curr) => accum + curr.amount,
+          0
+        );
+        balance.pending = accountBalance.pending.reduce(
+          (accum, curr) => accum + curr.amount,
+          0
+        );
+
+        // Charge list
+        const accountCharges = await stripe.charges.list(
+          {limit: 100, expand: ['data.balance_transaction']},
+          {
+            stripeAccount: stripeAccount?.id,
+          }
+        );
+        charges = accountCharges.data
+          .filter((charge) => charge.status === 'succeeded')
+          .slice(0, 3);
+        mtdEarnings = accountCharges.data
+          .filter(
+            (charge) =>
+              charge.status === 'succeeded' &&
+              charge.created >= Math.floor(startOfMonth.getTime() / 1000)
+          )
+          .reduce(
+            (acc, charge) =>
+              (charge.balance_transaction as Stripe.BalanceTransaction).net +
+              acc,
+            0
+          );
       } catch (err) {
         console.error('Could not retrieve stripe account for user', err);
         throw err;
@@ -37,6 +80,12 @@ export const authOptions: AuthOptions = {
       }
 
       session.user.stripeAccount = stripeAccount;
+      session.user.pendingBalance = balance.pending;
+      session.user.availableBalance = balance.available;
+      session.user.name = stripeAccount?.business_profile?.name || 'Instructor';
+      session.user.charges = charges;
+      session.user.mtdEarnings = mtdEarnings;
+
       console.log(
         `Got session for user ${session.user?.email} and stripe account ${stripeAccount.id}`
       );

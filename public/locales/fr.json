@@ -66,6 +66,13 @@
     "performance": "Performance",
     "settings": {
       "my_studio": "Mon atelier"
+    },
+    "finances": {
+      "financial_account": "Compte financier",
+      "transactions": "Transactions",
+      "cards": "Cartes",
+      "finances": "Finances",
+      "overview": "Aperçu"
     }
   },
   "class": {
