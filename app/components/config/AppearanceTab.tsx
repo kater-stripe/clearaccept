@@ -50,6 +50,23 @@ const AppearanceTab = () => {
               {value: 'ja', label: 'Japanese'},
             ],
           },
+          {
+            label: 'Checkout Integration',
+            key: 'checkoutIntegration',
+            options: [
+              {value: 'elements', label: 'Elements'},
+              {value: 'embedded', label: 'Embedded'},
+              {value: 'hosted', label: 'Hosted'},
+            ],
+          },
+          {
+            label: 'Elements Style',
+            key: 'elementsStyle',
+            options: [
+              {value: 'accordion', label: 'Accordion'},
+              {value: 'tabs', label: 'Tabs'},
+            ],
+          },
         ].map(({label, key, options}) => (
           <div key={key}>
             <label className="mb-2 block text-sm font-medium text-gray-700">

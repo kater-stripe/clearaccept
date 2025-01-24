@@ -43,8 +43,11 @@ const BalanceWidget = () => {
         </div>
         <div>
           <ul>
-            {session?.user.charges.map((charge) => (
-              <li className="flex flex-row justify-between text-subdued">
+            {session?.user.charges.map((charge, i) => (
+              <li
+                key={i}
+                className="flex flex-row justify-between text-subdued"
+              >
                 <div>{charge.description}</div>
                 <div>
                   {currencyToCurrencySign(charge.currency)}

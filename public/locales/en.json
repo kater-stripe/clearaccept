@@ -116,5 +116,22 @@
     "payments": "Payments",
     "payouts": "Payouts",
     "finances": "Finances"
+  },
+  "checkout": {
+    "payment_status": {
+      "error": "Something went wrong with your payment.",
+      "succeeded": "Payment was successful!",
+      "processing": "Your payment is processing...",
+      "requires_payment_method": "Your payment was not successful. Please select another payment method and try again."
+    },
+    "address_header": "Customer Address",
+    "payments_header": "Checkout Details",
+    "elements": {
+      "orderSummary": "Order Summary",
+      "classCharge": "Class Charge",
+      "tax": "Tax",
+      "total": "Total",
+      "chargeCustomer": "Charge Customer"
+    }
   }
 }

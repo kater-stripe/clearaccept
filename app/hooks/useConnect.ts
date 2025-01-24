@@ -127,7 +127,7 @@ export const useConnect = (demoOnboarding: boolean) => {
       });
     } else {
       const instance = loadConnectAndInitialize({
-        publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!,
+        publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
         appearance: {
           overlays: 'dialog',
           variables: appearanceVariables,
