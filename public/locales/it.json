@@ -1,35 +1,35 @@
 {
   "auth": {
     "login": {
-      "email": "E-mail",
+      "email": "Email",
       "sample_email": "jenny.rosen@example.com",
       "password": "Password",
-      "continue": "Continuare",
+      "continue": "Continua",
       "loading": "Caricamento...",
       "dont_have_an_account": "Non hai un account?",
-      "sign_up": "Iscrizione",
-      "login": "Login"
+      "sign_up": "Registrati",
+      "login": "Accedi"
     },
     "loginas": {
-      "select": "Seleziona Conto",
+      "select": "Seleziona Account",
       "dont_have_account": "Non hai un account?",
-      "register": "Registro",
-      "acct_id": "ID conto",
+      "register": "Registrati",
+      "acct_id": "ID Account",
       "sample_acct_id": "acct_1234567890abcdef",
-      "continue": "Continuare",
-      "loading": "Invio..."
+      "continue": "Continua",
+      "loading": "Invio in corso..."
     },
     "signup": {
-      "sign_up": "Iscrizione",
+      "sign_up": "Registrati",
       "already_have_account": "Hai già un account?",
-      "login": "Login",
+      "login": "Accedi",
       "country": "Paese",
-      "email": "E-mail"
+      "email": "Email"
     },
     "layout": {
       "manage": "Gestisci il tuo studio con facilità.",
-      "pose_is_leading": "Pose è la piattaforma di salute e benessere leader a livello mondiale.",
-      "sign_up": "Iscrizione",
+      "pose_is_leading": "Pose è la piattaforma leader mondiale per la salute e il benessere.",
+      "sign_up": "Registrati",
       "fill_form": "Compila il modulo per configurare il tuo account.",
       "contact": "Contatta l'assistenza"
     }
@@ -42,8 +42,8 @@
   },
   "dashboard": {
     "classes": {
-      "classes": "Classi",
-      "create_class": "Crea classe",
+      "classes": "Lezioni",
+      "create_class": "Crea lezione",
       "edit_studios": "Modifica studi",
       "today": "Oggi",
       "tomorrow": "Domani",
@@ -52,22 +52,15 @@
     "instructors": {
       "instructors": "Istruttori",
       "add": "Aggiungi istruttore",
-      "class": "classe",
-      "es": "es",
+      "class": "lezione",
+      "es": "i",
       "this_week": "questa settimana"
     },
-    "payments": {
-      "payments": "Pagamenti",
-      "recent": "Pagamenti recenti"
-    },
-    "payouts": {
-      "payouts": "Pagamenti"
-    },
-    "welcome": "Benvenuta, Jenny!",
-    "performance": "Prestazione",
-    "settings": {
-      "my_studio": "Il mio studio"
-    },
+    "payments": {"payments": "Pagamenti", "recent": "Pagamenti recenti"},
+    "payouts": {"payouts": "Pagamenti"},
+    "welcome": "Benvenuto, {{name}}!",
+    "performance": "Prestazioni",
+    "settings": {"my_studio": "Il mio studio"},
     "finances": {
       "financial_account": "Conto finanziario",
       "transactions": "Transazioni",
@@ -77,43 +70,48 @@
     }
   },
   "class": {
-    "gentle": "Flusso Delicato",
+    "gentle": "Flusso Dolce",
     "yoga_intermediate": "Yoga Base - Intermedio",
     "mindful": "Movimento Consapevole",
-    "stretch": "Allungamento e Ripristino",
-    "yoga_core": "Yoga per la Forza del Core"
+    "stretch": "Stretching e Rigenerazione",
+    "yoga_core": "Yoga Core Strength"
   },
   "components": {
-    "month_to_date": {
-      "month_to_date": "Dall'inizio del mese a oggi"
-    },
-    "customers": {
-      "customers": "Clienti"
-    },
-    "schedule": {
-      "attendees": "partecipanti",
-      "today": "Il programma di oggi"
-    },
+    "month_to_date": {"month_to_date": "Mese ad oggi"},
+    "customers": {"customers": "Clienti"},
+    "schedule": {"attendees": "partecipanti", "today": "Programma di oggi"},
     "balance": {
       "total": "Saldo totale",
-      "payout": "Paga alla banca"
+      "payout": "Paga sul conto bancario",
+      "pending": "in sospeso"
     },
-    "recent_payments": {
-      "recent": "Pagamenti recenti",
-      "view_all": "Visualizza tutto"
-    }
+    "recent_payments": {"recent": "Pagamenti recenti", "view_all": "Vedi tutti"}
   },
   "loading": "Caricamento...",
-  "studio": {
-    "1": "Studio 1",
-    "2": "Studio 2"
-  },
+  "studio": {"1": "Studio 1", "2": "Studio 2"},
   "navigation": {
-    "home": "Casa",
-    "classes": "Classi",
-    "payouts": "Pagamenti",
-    "finances": "Finanze",
+    "home": "Home",
+    "classes": "Lezioni",
+    "instructors": "Istruttori",
     "payments": "Pagamenti",
-    "instructors": "Istruttori"
+    "payouts": "Pagamenti",
+    "finances": "Finanze"
+  },
+  "checkout": {
+    "payment_status": {
+      "error": "Si è verificato un errore con il tuo pagamento.",
+      "succeeded": "Il pagamento è stato effettuato con successo!",
+      "processing": "Il tuo pagamento è in fase di elaborazione...",
+      "requires_payment_method": "Il tuo pagamento non è andato a buon fine. Seleziona un altro metodo di pagamento e riprova."
+    },
+    "address_header": "Indirizzo del cliente",
+    "payments_header": "Dettagli del pagamento",
+    "elements": {
+      "orderSummary": "Riepilogo dell'ordine",
+      "classCharge": "Costo della lezione",
+      "tax": "Tasse",
+      "total": "Totale",
+      "chargeCustomer": "Addebita al cliente"
+    }
   }
 }

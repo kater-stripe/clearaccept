@@ -56,18 +56,11 @@
       "es": "es",
       "this_week": "this week"
     },
-    "payments": {
-      "payments": "Payments",
-      "recent": "Recent payments"
-    },
-    "payouts": {
-      "payouts": "Payouts"
-    },
-    "welcome": "Welcome, Jenny!",
+    "payments": {"payments": "Payments", "recent": "Recent payments"},
+    "payouts": {"payouts": "Payouts"},
+    "welcome": "Welcome, {{name}}!",
     "performance": "Performance",
-    "settings": {
-      "my_studio": "My studio"
-    },
+    "settings": {"my_studio": "My studio"},
     "finances": {
       "financial_account": "Financial account",
       "transactions": "Transactions",
@@ -84,36 +77,41 @@
     "yoga_core": "Core Strength Yoga"
   },
   "components": {
-    "month_to_date": {
-      "month_to_date": "Month-to-date"
-    },
-    "customers": {
-      "customers": "Customers"
-    },
-    "schedule": {
-      "attendees": "attendees",
-      "today": "Today's Schedule"
-    },
+    "month_to_date": {"month_to_date": "Month-to-date"},
+    "customers": {"customers": "Customers"},
+    "schedule": {"attendees": "attendees", "today": "Today's Schedule"},
     "balance": {
       "total": "Total balance",
-      "payout": "Pay out to bank"
+      "payout": "Pay out to bank",
+      "pending": "pending"
     },
-    "recent_payments": {
-      "recent": "Recent payments",
-      "view_all": "View all"
-    }
+    "recent_payments": {"recent": "Recent payments", "view_all": "View all"}
   },
   "loading": "Loading...",
-  "studio": {
-    "1": "Studio 1",
-    "2": "Studio 2"
-  },
+  "studio": {"1": "Studio 1", "2": "Studio 2"},
   "navigation": {
     "home": "Home",
     "classes": "Classes",
-    "payouts": "Payouts",
-    "finances": "Finances",
+    "instructors": "Instructors",
     "payments": "Payments",
-    "instructors": "Instructors"
+    "payouts": "Payouts",
+    "finances": "Finances"
+  },
+  "checkout": {
+    "payment_status": {
+      "error": "Something went wrong with your payment.",
+      "succeeded": "Payment was successful!",
+      "processing": "Your payment is processing...",
+      "requires_payment_method": "Your payment was not successful. Please select another payment method and try again."
+    },
+    "address_header": "Customer Address",
+    "payments_header": "Checkout Details",
+    "elements": {
+      "orderSummary": "Order Summary",
+      "classCharge": "Class Charge",
+      "tax": "VAT",
+      "total": "Total",
+      "chargeCustomer": "Charge Customer"
+    }
   }
 }

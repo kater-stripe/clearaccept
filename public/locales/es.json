@@ -7,30 +7,30 @@
       "continue": "Continuar",
       "loading": "Cargando...",
       "dont_have_an_account": "¿No tienes una cuenta?",
-      "sign_up": "Inscribirse",
-      "login": "Acceso"
+      "sign_up": "Regístrate",
+      "login": "Iniciar sesión"
     },
     "loginas": {
       "select": "Seleccionar cuenta",
       "dont_have_account": "¿No tienes una cuenta?",
-      "register": "Registro",
+      "register": "Registrarse",
       "acct_id": "ID de cuenta",
-      "sample_acct_id": "cuenta_1234567890abcdef",
+      "sample_acct_id": "acct_1234567890abcdef",
       "continue": "Continuar",
-      "loading": "Sumisión..."
+      "loading": "Enviando..."
     },
     "signup": {
-      "sign_up": "Inscribirse",
+      "sign_up": "Regístrate",
       "already_have_account": "¿Ya tienes una cuenta?",
-      "login": "Acceso",
+      "login": "Iniciar sesión",
       "country": "País",
       "email": "Correo electrónico"
     },
     "layout": {
-      "manage": "Administre su estudio con facilidad.",
-      "pose_is_leading": "Pose es la plataforma de salud y bienestar líder en el mundo.",
-      "sign_up": "Inscribirse",
-      "fill_form": "Complete el formulario para configurar su cuenta.",
+      "manage": "Gestiona tu estudio con facilidad.",
+      "pose_is_leading": "Pose es la plataforma líder mundial de salud y bienestar.",
+      "sign_up": "Regístrate",
+      "fill_form": "Completa el formulario para configurar tu cuenta.",
       "contact": "Contactar con soporte"
     }
   },
@@ -43,7 +43,7 @@
   "dashboard": {
     "classes": {
       "classes": "Clases",
-      "create_class": "crear clase",
+      "create_class": "Crear clase",
       "edit_studios": "Editar estudios",
       "today": "Hoy",
       "tomorrow": "Mañana",
@@ -51,29 +51,22 @@
     },
     "instructors": {
       "instructors": "Instructores",
-      "add": "Agregar instructor",
+      "add": "Añadir instructor",
       "class": "clase",
       "es": "es",
       "this_week": "esta semana"
     },
-    "payments": {
-      "payments": "Pagos",
-      "recent": "Pagos recientes"
-    },
-    "payouts": {
-      "payouts": "Pagos"
-    },
-    "welcome": "¡Bienvenida Jenny!",
-    "performance": "Actuación",
-    "settings": {
-      "my_studio": "mi estudio"
-    },
+    "payments": {"payments": "Pagos", "recent": "Pagos recientes"},
+    "payouts": {"payouts": "Pagos"},
+    "welcome": "¡Bienvenido, {{name}}!",
+    "performance": "Rendimiento",
+    "settings": {"my_studio": "Mi estudio"},
     "finances": {
-      "financial_account": "cuenta financiera",
-      "transactions": "Actas",
+      "financial_account": "Cuenta financiera",
+      "transactions": "Transacciones",
       "cards": "Tarjetas",
       "finances": "Finanzas",
-      "overview": "Descripción general"
+      "overview": "Resumen"
     }
   },
   "class": {
@@ -84,36 +77,41 @@
     "yoga_core": "Yoga de Fuerza Central"
   },
   "components": {
-    "month_to_date": {
-      "month_to_date": "Mes hasta la fecha"
-    },
-    "customers": {
-      "customers": "Clientes"
-    },
-    "schedule": {
-      "attendees": "asistentes",
-      "today": "Horario de hoy"
-    },
+    "month_to_date": {"month_to_date": "Mes hasta la fecha"},
+    "customers": {"customers": "Clientes"},
+    "schedule": {"attendees": "asistentes", "today": "Horario de hoy"},
     "balance": {
-      "total": "saldo total",
-      "payout": "Pagar al banco"
+      "total": "Saldo total",
+      "payout": "Pagar al banco",
+      "pending": "pendiente"
     },
-    "recent_payments": {
-      "recent": "Pagos recientes",
-      "view_all": "Ver todo"
-    }
+    "recent_payments": {"recent": "Pagos recientes", "view_all": "Ver todos"}
   },
   "loading": "Cargando...",
-  "studio": {
-    "1": "Estudio 1",
-    "2": "Estudio 2"
-  },
+  "studio": {"1": "Estudio 1", "2": "Estudio 2"},
   "navigation": {
-    "home": "Hogar",
+    "home": "Inicio",
     "classes": "Clases",
-    "payouts": "Pagos",
-    "finances": "Finanzas",
+    "instructors": "Instructores",
     "payments": "Pagos",
-    "instructors": "Instructores"
+    "payouts": "Pagos",
+    "finances": "Finanzas"
+  },
+  "checkout": {
+    "payment_status": {
+      "error": "Algo salió mal con tu pago.",
+      "succeeded": "¡El pago fue exitoso!",
+      "processing": "Tu pago está siendo procesado...",
+      "requires_payment_method": "Tu pago no fue exitoso. Por favor, selecciona otro método de pago e inténtalo de nuevo."
+    },
+    "address_header": "Dirección del cliente",
+    "payments_header": "Detalles del pago",
+    "elements": {
+      "orderSummary": "Resumen del pedido",
+      "classCharge": "Cargo de la clase",
+      "tax": "Impuesto",
+      "total": "Total",
+      "chargeCustomer": "Cobrar al cliente"
+    }
   }
 }

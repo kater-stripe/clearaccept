@@ -4,7 +4,6 @@ import {useState, useEffect} from 'react';
 import {useStripe, useElements} from '@stripe/react-stripe-js';
 import {useTranslation} from 'react-i18next';
 import {useCheckout} from '@/app/contexts/CheckoutContext';
-import AddressElementWrapper from './AddressElementWrapper';
 import PaymentElementWrapper from './PaymentElementWrapper';
 
 export default function CheckoutForm() {

@@ -12,6 +12,8 @@ import {
 } from 'lucide-react';
 import {useTranslation} from 'react-i18next';
 import {useConfigContext} from '@/app/contexts/ConfigContext';
+import CheckoutModal from '@/app/components/checkout/CheckoutModal';
+import {useState} from 'react';
 
 const getDate = (daysFromToday: number, locale: string) => {
   const date = new Date();
@@ -41,50 +43,60 @@ function internationalizeTime(time: string, locale: string): string {
   return `${hour.toString().padStart(2, '0')}:${minutes}`;
 }
 
-const renderClassRow = (item: {
-  name: string;
-  studio: string;
-  startTime: string;
-  endTime: string;
-  teacher: string;
-  profilePhoto: string;
-}) => {
+const renderClassRow = (
+  item: {
+    name: string;
+    studio: string;
+    startTime: string;
+    endTime: string;
+    teacher: string;
+    profilePhoto: string;
+  },
+  setOpen: any
+) => {
   const {t} = useTranslation();
   const {settings} = useConfigContext();
 
   return (
-    <Container className="flex cursor-pointer items-center gap-5 py-4 transition hover:shadow-lg">
-      <div className="w-[180px] font-medium text-secondary">
-        {internationalizeTime(item.startTime, settings?.language ?? 'en')} -{' '}
-        {internationalizeTime(item.endTime, settings?.language ?? 'en')}
-      </div>
-      <div className="min-w-[200px] flex-1">
-        <div className="font-bold">{t(item.name)}</div>
-        <div className="text-subdued">
-          {t('dashboard.classes.studio')} {item.studio}
+    <div
+      onClick={() => {
+        setOpen(true);
+      }}
+    >
+      <Container className="flex cursor-pointer items-center gap-5 py-4 transition hover:shadow-lg">
+        <div className="w-[180px] font-medium text-secondary">
+          {internationalizeTime(item.startTime, settings?.language ?? 'en')} -{' '}
+          {internationalizeTime(item.endTime, settings?.language ?? 'en')}
         </div>
-      </div>
-      <div className="relative flex flex-1 items-center gap-2">
-        <Image
-          className="relative h-7 w-7 rounded-full"
-          fill
-          quality={100}
-          src={`/headshots/${item.profilePhoto}.jpg`}
-          alt={`Profile photo of ${item.name}`}
-        />
-        {item.teacher}
-      </div>
-      <div className="flex gap-6">
-        <PencilIcon className="h-5 w-5" color="var(--secondary)"></PencilIcon>
-        <TrashIcon className="h-5 w-5" color="var(--secondary)"></TrashIcon>
-      </div>
-    </Container>
+        <div className="min-w-[200px] flex-1">
+          <div className="font-bold">{t(item.name)}</div>
+          <div className="text-subdued">
+            {t('dashboard.classes.studio')} {item.studio}
+          </div>
+        </div>
+        <div className="relative flex flex-1 items-center gap-2">
+          <Image
+            className="relative h-7 w-7 rounded-full"
+            fill
+            quality={100}
+            src={`/headshots/${item.profilePhoto}.jpg`}
+            alt={`Profile photo of ${item.name}`}
+          />
+          {item.teacher}
+        </div>
+        <div className="flex gap-6">
+          <PencilIcon className="h-5 w-5" color="var(--secondary)"></PencilIcon>
+          <TrashIcon className="h-5 w-5" color="var(--secondary)"></TrashIcon>
+        </div>
+      </Container>
+    </div>
   );
 };
 
 export default function Classes() {
   const {t} = useTranslation();
   const {settings} = useConfigContext();
+  const [open, setOpen] = useState(false);
 
   const classes = studios[0].classes.concat(studios[1].classes);
   classes.sort((a, b) => a.startTimeMinutes - b.startTimeMinutes);
@@ -112,7 +124,7 @@ export default function Classes() {
       </div>
       <div className="flex flex-col gap-y-3">
         {classes.map((item) => {
-          return renderClassRow(item);
+          return renderClassRow(item, setOpen);
         })}
       </div>
       <div className="flex gap-3 pt-8 text-xl">
@@ -123,9 +135,11 @@ export default function Classes() {
       </div>
       <div className="flex flex-col gap-y-3">
         {classes.map((item) => {
-          return renderClassRow(item);
+          return renderClassRow(item, setOpen);
         })}
       </div>
+
+      <CheckoutModal open={open} setOpen={setOpen} />
     </>
   );
 }

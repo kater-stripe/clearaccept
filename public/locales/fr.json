@@ -11,13 +11,13 @@
       "login": "Se connecter"
     },
     "loginas": {
-      "select": "Sélectionnez un compte",
+      "select": "Sélectionner un compte",
       "dont_have_account": "Vous n'avez pas de compte ?",
-      "register": "Registre",
-      "acct_id": "Identifiant du compte",
+      "register": "S'inscrire",
+      "acct_id": "ID du compte",
       "sample_acct_id": "acct_1234567890abcdef",
       "continue": "Continuer",
-      "loading": "Soumission..."
+      "loading": "Soumission en cours..."
     },
     "signup": {
       "sign_up": "S'inscrire",
@@ -28,10 +28,10 @@
     },
     "layout": {
       "manage": "Gérez votre studio en toute simplicité.",
-      "pose_is_leading": "Pose est la première plateforme mondiale de santé et de bien-être.",
+      "pose_is_leading": "Pose est la plateforme de santé et de bien-être leader mondiale.",
       "sign_up": "S'inscrire",
-      "fill_form": "Remplissez le formulaire pour créer votre compte.",
-      "contact": "Contacter l'assistance"
+      "fill_form": "Remplissez le formulaire pour configurer votre compte.",
+      "contact": "Contacter le support"
     }
   },
   "countries": {
@@ -43,30 +43,24 @@
   "dashboard": {
     "classes": {
       "classes": "Cours",
-      "create_class": "Créer une classe",
+      "create_class": "Créer un cours",
       "edit_studios": "Modifier les studios",
+      "today": "Aujourd'hui",
       "tomorrow": "Demain",
       "studio": "Studio"
     },
     "instructors": {
       "instructors": "Instructeurs",
       "add": "Ajouter un instructeur",
-      "class": "classe",
-      "es": "es",
+      "class": "cours",
+      "es": "s",
       "this_week": "cette semaine"
     },
-    "payments": {
-      "payments": "Paiements",
-      "recent": "Paiements récents"
-    },
-    "payouts": {
-      "payouts": "Paiements"
-    },
-    "welcome": "Bienvenue Jenny !",
+    "payments": {"payments": "Paiements", "recent": "Paiements récents"},
+    "payouts": {"payouts": "Versements"},
+    "welcome": "Bienvenue, {{name}} !",
     "performance": "Performance",
-    "settings": {
-      "my_studio": "Mon atelier"
-    },
+    "settings": {"my_studio": "Mon studio"},
     "finances": {
       "financial_account": "Compte financier",
       "transactions": "Transactions",
@@ -76,43 +70,51 @@
     }
   },
   "class": {
-    "gentle": "Flux Doux",
-    "yoga_intermediate": "Yoga de Base - Intermédiaire",
-    "mindful": "Mouvement en Pleine Conscience",
-    "stretch": "Étirement et Restauration",
-    "yoga_core": "Yoga de Renforcement du Core"
+    "gentle": "Flow doux",
+    "yoga_intermediate": "Yoga de base - Intermédiaire",
+    "mindful": "Mouvement en pleine conscience",
+    "stretch": "Étirement et restauration",
+    "yoga_core": "Yoga renforcement du centre"
   },
   "components": {
-    "month_to_date": {
-      "month_to_date": "Le mois courant"
-    },
-    "customers": {
-      "customers": "Clients"
-    },
+    "month_to_date": {"month_to_date": "Mois en cours"},
+    "customers": {"customers": "Clients"},
     "schedule": {
       "attendees": "participants",
-      "today": "Programme du jour"
+      "today": "Programme d'aujourd'hui"
     },
     "balance": {
       "total": "Solde total",
-      "payout": "Payer à la banque"
+      "payout": "Verser sur le compte bancaire",
+      "pending": "en attente"
     },
-    "recent_payments": {
-      "recent": "Paiements récents",
-      "view_all": "Voir tout"
-    }
+    "recent_payments": {"recent": "Paiements récents", "view_all": "Voir tout"}
   },
   "loading": "Chargement...",
-  "studio": {
-    "1": "Atelier 1",
-    "2": "Atelier 2"
-  },
+  "studio": {"1": "Studio 1", "2": "Studio 2"},
   "navigation": {
-    "home": "Maison",
+    "home": "Accueil",
     "classes": "Cours",
-    "payouts": "Paiements",
-    "finances": "Finances",
+    "instructors": "Instructeurs",
     "payments": "Paiements",
-    "instructors": "Instructeurs"
+    "payouts": "Versements",
+    "finances": "Finances"
+  },
+  "checkout": {
+    "payment_status": {
+      "error": "Une erreur s'est produite avec votre paiement.",
+      "succeeded": "Le paiement a réussi !",
+      "processing": "Votre paiement est en cours de traitement...",
+      "requires_payment_method": "Votre paiement n'a pas abouti. Veuillez sélectionner une autre méthode de paiement et réessayer."
+    },
+    "address_header": "Adresse du client",
+    "payments_header": "Détails du paiement",
+    "elements": {
+      "orderSummary": "Récapitulatif de la commande",
+      "classCharge": "Frais de cours",
+      "tax": "Taxe",
+      "total": "Total",
+      "chargeCustomer": "Facturer le client"
+    }
   }
 }
