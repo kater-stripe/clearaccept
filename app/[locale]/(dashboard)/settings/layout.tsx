@@ -31,10 +31,13 @@ export default function SettingsLayout({
           <SubNav
             base={`/${settings?.language}/settings`}
             routes={[
-              {path: `/${settings?.language}/settings`, label: 'Settings'},
+              {
+                path: `/${settings?.language}/settings`,
+                label: t('dashboard.settings.settings'),
+              },
               {
                 path: `/${settings?.language}/settings/paymentmethods`,
-                label: 'Payment methods',
+                label: t('dashboard.settings.payment_methods'),
               },
             ]}
           />
@@ -44,7 +47,7 @@ export default function SettingsLayout({
               variant="ghost"
               onClick={() => signOut()}
             >
-              Sign out
+              {t('dashboard.settings.sign_out')}
             </Button>
           </div>
         </div>

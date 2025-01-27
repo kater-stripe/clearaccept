@@ -56,11 +56,28 @@
       "es": "",
       "this_week": "今週"
     },
-    "payments": {"payments": "支払い", "recent": "最近の支払い"},
-    "payouts": {"payouts": "支払い"},
+    "payments": {
+      "payments": "支払い",
+      "recent": "最近の支払い"
+    },
+    "payouts": {
+      "payouts": "支払い"
+    },
     "welcome": "ようこそ、{{name}}さん！",
     "performance": "パフォーマンス",
-    "settings": {"my_studio": "マイスタジオ"},
+    "settings": {
+      "my_studio": "マイスタジオ",
+      "settings": "設定",
+      "payment_methods": "支払い方法",
+      "sign_out": "サインアウト",
+      "basic_details": "基本的な詳細",
+      "studio_name": "スタジオ名",
+      "practice": "ヨガスタジオの練習",
+      "email": "電子メール",
+      "account_settings": "アカウント設定",
+      "manage_account": "アカウントとビジネス設定を管理します。",
+      "payment_methods_add": "支払い方法を追加して管理します。"
+    },
     "finances": {
       "financial_account": "財務アカウント",
       "transactions": "取引",
@@ -77,18 +94,31 @@
     "yoga_core": "コアストレングスヨガ"
   },
   "components": {
-    "month_to_date": {"month_to_date": "月初から今日まで"},
-    "customers": {"customers": "顧客"},
-    "schedule": {"attendees": "参加者", "today": "今日のスケジュール"},
+    "month_to_date": {
+      "month_to_date": "月初から今日まで"
+    },
+    "customers": {
+      "customers": "顧客"
+    },
+    "schedule": {
+      "attendees": "参加者",
+      "today": "今日のスケジュール"
+    },
     "balance": {
       "total": "合計残高",
       "payout": "銀行へ払い出し",
       "pending": "保留中"
     },
-    "recent_payments": {"recent": "最近の支払い", "view_all": "すべて表示"}
+    "recent_payments": {
+      "recent": "最近の支払い",
+      "view_all": "すべて表示"
+    }
   },
   "loading": "読み込み中...",
-  "studio": {"1": "スタジオ1", "2": "スタジオ2"},
+  "studio": {
+    "1": "スタジオ1",
+    "2": "スタジオ2"
+  },
   "navigation": {
     "home": "ホーム",
     "classes": "クラス",

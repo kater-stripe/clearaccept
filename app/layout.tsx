@@ -21,16 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Pose</title>
+        <title>Stripe Demo</title>
         <meta name="robots" content="noindex, nofollow" />
-
         {/* ANALYTICS - DO NOT REMOVE */}
         <script
           defer
           src="https://analytics-hub.stripedemos.com/script.js"
           data-website-id="c6478f63-f260-4f70-b1ab-c6938c39426b"
         ></script>
-
         {/* GOOGLE ANALYTICS - DO NOT REMOVE */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4WLNJQ7QF9"

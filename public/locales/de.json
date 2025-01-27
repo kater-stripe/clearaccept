@@ -56,11 +56,28 @@
       "es": "e",
       "this_week": "diese Woche"
     },
-    "payments": {"payments": "Zahlungen", "recent": "Letzte Zahlungen"},
-    "payouts": {"payouts": "Auszahlungen"},
+    "payments": {
+      "payments": "Zahlungen",
+      "recent": "Letzte Zahlungen"
+    },
+    "payouts": {
+      "payouts": "Auszahlungen"
+    },
     "welcome": "Willkommen, {{name}}!",
     "performance": "Leistung",
-    "settings": {"my_studio": "Mein Studio"},
+    "settings": {
+      "my_studio": "Mein Studio",
+      "settings": "Einstellungen",
+      "payment_methods": "Zahlungsmethoden",
+      "sign_out": "Abmelden",
+      "basic_details": "Grundlegende Details",
+      "studio_name": "Studioname",
+      "practice": "Übe Yoga Studio",
+      "email": "E-Mail",
+      "account_settings": "Kontoeinstellungen",
+      "manage_account": "Konto- und Geschäftseinstellungen verwalten.",
+      "payment_methods_add": "Fügen Sie Ihre Zahlungsmethoden hinzu und verwalten Sie sie."
+    },
     "finances": {
       "financial_account": "Finanzkonto",
       "transactions": "Transaktionen",
@@ -77,9 +94,16 @@
     "yoga_core": "Yoga für die Körpermitte"
   },
   "components": {
-    "month_to_date": {"month_to_date": "Monat bis heute"},
-    "customers": {"customers": "Kunden"},
-    "schedule": {"attendees": "Teilnehmer", "today": "Heutiger Zeitplan"},
+    "month_to_date": {
+      "month_to_date": "Monat bis heute"
+    },
+    "customers": {
+      "customers": "Kunden"
+    },
+    "schedule": {
+      "attendees": "Teilnehmer",
+      "today": "Heutiger Zeitplan"
+    },
     "balance": {
       "total": "Gesamtsaldo",
       "payout": "Auszahlung auf Bankkonto",
@@ -91,7 +115,10 @@
     }
   },
   "loading": "Lädt...",
-  "studio": {"1": "Studio 1", "2": "Studio 2"},
+  "studio": {
+    "1": "Studio 1",
+    "2": "Studio 2"
+  },
   "navigation": {
     "home": "Startseite",
     "classes": "Kurse",

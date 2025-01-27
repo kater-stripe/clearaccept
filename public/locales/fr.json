@@ -56,11 +56,28 @@
       "es": "s",
       "this_week": "cette semaine"
     },
-    "payments": {"payments": "Paiements", "recent": "Paiements récents"},
-    "payouts": {"payouts": "Versements"},
+    "payments": {
+      "payments": "Paiements",
+      "recent": "Paiements récents"
+    },
+    "payouts": {
+      "payouts": "Versements"
+    },
     "welcome": "Bienvenue, {{name}} !",
     "performance": "Performance",
-    "settings": {"my_studio": "Mon studio"},
+    "settings": {
+      "my_studio": "Mon studio",
+      "settings": "Paramètres",
+      "payment_methods": "Modes de paiement",
+      "sign_out": "se déconnecter",
+      "basic_details": "Détails de base",
+      "studio_name": "Nom du studio",
+      "practice": "Pratiquez un studio de yoga",
+      "email": "E-mail",
+      "account_settings": "Paramètres du compte",
+      "manage_account": "Gérer les paramètres du compte et de l'entreprise.",
+      "payment_methods_add": "Ajoutez et gérez vos méthodes de paiement."
+    },
     "finances": {
       "financial_account": "Compte financier",
       "transactions": "Transactions",
@@ -77,8 +94,12 @@
     "yoga_core": "Yoga renforcement du centre"
   },
   "components": {
-    "month_to_date": {"month_to_date": "Mois en cours"},
-    "customers": {"customers": "Clients"},
+    "month_to_date": {
+      "month_to_date": "Mois en cours"
+    },
+    "customers": {
+      "customers": "Clients"
+    },
     "schedule": {
       "attendees": "participants",
       "today": "Programme d'aujourd'hui"
@@ -88,10 +109,16 @@
       "payout": "Verser sur le compte bancaire",
       "pending": "en attente"
     },
-    "recent_payments": {"recent": "Paiements récents", "view_all": "Voir tout"}
+    "recent_payments": {
+      "recent": "Paiements récents",
+      "view_all": "Voir tout"
+    }
   },
   "loading": "Chargement...",
-  "studio": {"1": "Studio 1", "2": "Studio 2"},
+  "studio": {
+    "1": "Studio 1",
+    "2": "Studio 2"
+  },
   "navigation": {
     "home": "Accueil",
     "classes": "Cours",

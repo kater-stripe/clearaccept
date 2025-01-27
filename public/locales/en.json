@@ -66,7 +66,17 @@
     "welcome": "Welcome, {{name}}!",
     "performance": "Performance",
     "settings": {
-      "my_studio": "My studio"
+      "my_studio": "My studio",
+      "settings": "Settings",
+      "payment_methods": "Payment methods",
+      "sign_out": "Sign out",
+      "basic_details": "Basic details",
+      "studio_name": "Studio name",
+      "practice": "Practice Yoga Studio",
+      "email": "Email",
+      "account_settings": "Account settings",
+      "manage_account": "Manage account and business settings.",
+      "payment_methods_add": "Add and manage your payment methods."
     },
     "finances": {
       "financial_account": "Financial account",

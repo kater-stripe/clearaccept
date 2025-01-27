@@ -108,7 +108,6 @@ export async function POST(req: NextRequest) {
         // },
       },
       // Connect
-      // @ts-ignore
       account_management: {
         enabled: true,
         // features: {

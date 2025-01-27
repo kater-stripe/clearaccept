@@ -56,11 +56,28 @@
       "es": "es",
       "this_week": "esta semana"
     },
-    "payments": {"payments": "Pagos", "recent": "Pagos recientes"},
-    "payouts": {"payouts": "Pagos"},
+    "payments": {
+      "payments": "Pagos",
+      "recent": "Pagos recientes"
+    },
+    "payouts": {
+      "payouts": "Pagos"
+    },
     "welcome": "¡Bienvenido, {{name}}!",
     "performance": "Rendimiento",
-    "settings": {"my_studio": "Mi estudio"},
+    "settings": {
+      "my_studio": "Mi estudio",
+      "settings": "Ajustes",
+      "payment_methods": "Métodos de pago",
+      "sign_out": "desconectar",
+      "basic_details": "Detalles básicos",
+      "studio_name": "Nombre de estudio",
+      "practice": "Practice el estudio de yoga",
+      "email": "Correo electrónico",
+      "account_settings": "Configuraciones de la cuenta",
+      "manage_account": "Administrar la configuración de cuentas y negocios.",
+      "payment_methods_add": "Agregue y administre sus métodos de pago."
+    },
     "finances": {
       "financial_account": "Cuenta financiera",
       "transactions": "Transacciones",
@@ -77,18 +94,31 @@
     "yoga_core": "Yoga de Fuerza Central"
   },
   "components": {
-    "month_to_date": {"month_to_date": "Mes hasta la fecha"},
-    "customers": {"customers": "Clientes"},
-    "schedule": {"attendees": "asistentes", "today": "Horario de hoy"},
+    "month_to_date": {
+      "month_to_date": "Mes hasta la fecha"
+    },
+    "customers": {
+      "customers": "Clientes"
+    },
+    "schedule": {
+      "attendees": "asistentes",
+      "today": "Horario de hoy"
+    },
     "balance": {
       "total": "Saldo total",
       "payout": "Pagar al banco",
       "pending": "pendiente"
     },
-    "recent_payments": {"recent": "Pagos recientes", "view_all": "Ver todos"}
+    "recent_payments": {
+      "recent": "Pagos recientes",
+      "view_all": "Ver todos"
+    }
   },
   "loading": "Cargando...",
-  "studio": {"1": "Estudio 1", "2": "Estudio 2"},
+  "studio": {
+    "1": "Estudio 1",
+    "2": "Estudio 2"
+  },
   "navigation": {
     "home": "Inicio",
     "classes": "Clases",

@@ -6,7 +6,7 @@ export default function PaymentElementWrapper() {
   const {t} = useTranslation();
   const {settings} = useConfigContext();
 
-  let options = {
+  const options = {
     layout: settings?.elementsStyle,
     defaultValues: {
       billingDetails: {

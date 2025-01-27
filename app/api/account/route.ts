@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
 
-    let stripeAccountId = session?.user?.stripeAccount?.id;
+    const stripeAccountId = session?.user?.stripeAccount?.id;
     if (!stripeAccountId) {
       return new Response(
         JSON.stringify({

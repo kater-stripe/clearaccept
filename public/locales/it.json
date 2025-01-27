@@ -56,11 +56,28 @@
       "es": "i",
       "this_week": "questa settimana"
     },
-    "payments": {"payments": "Pagamenti", "recent": "Pagamenti recenti"},
-    "payouts": {"payouts": "Pagamenti"},
+    "payments": {
+      "payments": "Pagamenti",
+      "recent": "Pagamenti recenti"
+    },
+    "payouts": {
+      "payouts": "Pagamenti"
+    },
     "welcome": "Benvenuto, {{name}}!",
     "performance": "Prestazioni",
-    "settings": {"my_studio": "Il mio studio"},
+    "settings": {
+      "my_studio": "Il mio studio",
+      "settings": "Impostazioni",
+      "payment_methods": "Metodi di pagamento",
+      "sign_out": "disconnessione",
+      "basic_details": "Dettagli di base",
+      "studio_name": "Nome in studio",
+      "practice": "Pratica lo studio di yoga",
+      "email": "E-mail",
+      "account_settings": "Impostazioni dell'account",
+      "manage_account": "Gestisci l'account e le impostazioni aziendali.",
+      "payment_methods_add": "Aggiungi e gestisci i tuoi metodi di pagamento."
+    },
     "finances": {
       "financial_account": "Conto finanziario",
       "transactions": "Transazioni",
@@ -77,18 +94,31 @@
     "yoga_core": "Yoga Core Strength"
   },
   "components": {
-    "month_to_date": {"month_to_date": "Mese ad oggi"},
-    "customers": {"customers": "Clienti"},
-    "schedule": {"attendees": "partecipanti", "today": "Programma di oggi"},
+    "month_to_date": {
+      "month_to_date": "Mese ad oggi"
+    },
+    "customers": {
+      "customers": "Clienti"
+    },
+    "schedule": {
+      "attendees": "partecipanti",
+      "today": "Programma di oggi"
+    },
     "balance": {
       "total": "Saldo totale",
       "payout": "Paga sul conto bancario",
       "pending": "in sospeso"
     },
-    "recent_payments": {"recent": "Pagamenti recenti", "view_all": "Vedi tutti"}
+    "recent_payments": {
+      "recent": "Pagamenti recenti",
+      "view_all": "Vedi tutti"
+    }
   },
   "loading": "Caricamento...",
-  "studio": {"1": "Studio 1", "2": "Studio 2"},
+  "studio": {
+    "1": "Studio 1",
+    "2": "Studio 2"
+  },
   "navigation": {
     "home": "Home",
     "classes": "Lezioni",

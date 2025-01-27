@@ -56,11 +56,28 @@
       "es": "es",
       "this_week": "this week"
     },
-    "payments": {"payments": "Payments", "recent": "Recent payments"},
-    "payouts": {"payouts": "Payouts"},
+    "payments": {
+      "payments": "Payments",
+      "recent": "Recent payments"
+    },
+    "payouts": {
+      "payouts": "Payouts"
+    },
     "welcome": "Welcome, {{name}}!",
     "performance": "Performance",
-    "settings": {"my_studio": "My studio"},
+    "settings": {
+      "my_studio": "My studio",
+      "settings": "Settings",
+      "payment_methods": "Payment methods",
+      "sign_out": "Sign out",
+      "basic_details": "Basic details",
+      "studio_name": "Studio name",
+      "practice": "Practice Yoga Studio",
+      "email": "Email",
+      "account_settings": "Account settings",
+      "manage_account": "Manage account and business settings.",
+      "payment_methods_add": "Add and manage your payment methods."
+    },
     "finances": {
       "financial_account": "Financial account",
       "transactions": "Transactions",
@@ -77,18 +94,31 @@
     "yoga_core": "Core Strength Yoga"
   },
   "components": {
-    "month_to_date": {"month_to_date": "Month-to-date"},
-    "customers": {"customers": "Customers"},
-    "schedule": {"attendees": "attendees", "today": "Today's Schedule"},
+    "month_to_date": {
+      "month_to_date": "Month-to-date"
+    },
+    "customers": {
+      "customers": "Customers"
+    },
+    "schedule": {
+      "attendees": "attendees",
+      "today": "Today's Schedule"
+    },
     "balance": {
       "total": "Total balance",
       "payout": "Pay out to bank",
       "pending": "pending"
     },
-    "recent_payments": {"recent": "Recent payments", "view_all": "View all"}
+    "recent_payments": {
+      "recent": "Recent payments",
+      "view_all": "View all"
+    }
   },
   "loading": "Loading...",
-  "studio": {"1": "Studio 1", "2": "Studio 2"},
+  "studio": {
+    "1": "Studio 1",
+    "2": "Studio 2"
+  },
   "navigation": {
     "home": "Home",
     "classes": "Classes",

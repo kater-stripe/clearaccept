@@ -25,7 +25,7 @@ export const authOptions: AuthOptions = {
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
       let stripeAccount;
-      let balance = {available: 0, pending: 0};
+      const balance = {available: 0, pending: 0};
       let charges = [];
       let mtdEarnings = 0;
 
