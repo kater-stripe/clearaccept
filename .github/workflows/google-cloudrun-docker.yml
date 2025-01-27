@@ -70,7 +70,7 @@ jobs:
         run: |-
           touch .env
           echo "${{ env.ENV_FILE }}" >> .env
-          echo "NEXTAUTH_URL=${{ github.event.inputs.subdomain }}" >> .env
+          echo "NEXTAUTH_URL=${{ github.event.inputs.subdomain }}.stripedemos.com" >> .env
 
       - name: 'Build and Push Container'
         run: |-
