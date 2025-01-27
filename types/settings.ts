@@ -1,9 +1,103 @@
-export type CountryType = 'US' | 'DE' | 'FR' | 'AU';
+export type CountryType =
+  | 'AU'
+  | 'AT'
+  | 'BE'
+  | 'BR'
+  | 'BG'
+  | 'CA'
+  | 'HR'
+  | 'CY'
+  | 'CZ'
+  | 'DK'
+  | 'EE'
+  | 'FI'
+  | 'FR'
+  | 'DE'
+  | 'GH'
+  | 'GI'
+  | 'GR'
+  | 'HK'
+  | 'HU'
+  | 'ID'
+  | 'IE'
+  | 'IT'
+  | 'JP'
+  | 'KE'
+  | 'LV'
+  | 'LI'
+  | 'LT'
+  | 'LU'
+  | 'MY'
+  | 'MT'
+  | 'MX'
+  | 'NL'
+  | 'NZ'
+  | 'NG'
+  | 'NO'
+  | 'PL'
+  | 'PT'
+  | 'RO'
+  | 'SG'
+  | 'SK'
+  | 'SI'
+  | 'ZA'
+  | 'ES'
+  | 'SE'
+  | 'CH'
+  | 'TH'
+  | 'AE'
+  | 'GB'
+  | 'US';
 
 export const Countries: Array<{country: CountryType; label: string}> = [
   {label: 'countries.australia', country: 'AU'},
+  {label: 'countries.austria', country: 'AT'},
+  {label: 'countries.belgium', country: 'BE'},
+  {label: 'countries.brazil', country: 'BR'},
+  {label: 'countries.bulgaria', country: 'BG'},
+  {label: 'countries.canada', country: 'CA'},
+  {label: 'countries.croatia', country: 'HR'},
+  {label: 'countries.cyprus', country: 'CY'},
+  {label: 'countries.czech_republic', country: 'CZ'},
+  {label: 'countries.denmark', country: 'DK'},
+  {label: 'countries.estonia', country: 'EE'},
+  {label: 'countries.finland', country: 'FI'},
   {label: 'countries.france', country: 'FR'},
   {label: 'countries.germany', country: 'DE'},
+  {label: 'countries.ghana', country: 'GH'},
+  {label: 'countries.gibraltar', country: 'GI'},
+  {label: 'countries.greece', country: 'GR'},
+  {label: 'countries.hong_kong', country: 'HK'},
+  {label: 'countries.hungary', country: 'HU'},
+  {label: 'countries.indonesia', country: 'ID'},
+  {label: 'countries.ireland', country: 'IE'},
+  {label: 'countries.italy', country: 'IT'},
+  {label: 'countries.japan', country: 'JP'},
+  {label: 'countries.kenya', country: 'KE'},
+  {label: 'countries.latvia', country: 'LV'},
+  {label: 'countries.liechtenstein', country: 'LI'},
+  {label: 'countries.lithuania', country: 'LT'},
+  {label: 'countries.luxembourg', country: 'LU'},
+  {label: 'countries.malaysia', country: 'MY'},
+  {label: 'countries.malta', country: 'MT'},
+  {label: 'countries.mexico', country: 'MX'},
+  {label: 'countries.netherlands', country: 'NL'},
+  {label: 'countries.new_zealand', country: 'NZ'},
+  {label: 'countries.nigeria', country: 'NG'},
+  {label: 'countries.norway', country: 'NO'},
+  {label: 'countries.poland', country: 'PL'},
+  {label: 'countries.portugal', country: 'PT'},
+  {label: 'countries.romania', country: 'RO'},
+  {label: 'countries.singapore', country: 'SG'},
+  {label: 'countries.slovakia', country: 'SK'},
+  {label: 'countries.slovenia', country: 'SI'},
+  {label: 'countries.south_africa', country: 'ZA'},
+  {label: 'countries.spain', country: 'ES'},
+  {label: 'countries.sweden', country: 'SE'},
+  {label: 'countries.switzerland', country: 'CH'},
+  {label: 'countries.thailand', country: 'TH'},
+  {label: 'countries.united_arab_emirates', country: 'AE'},
+  {label: 'countries.united_kingdom', country: 'GB'},
   {label: 'countries.united_states', country: 'US'},
 ];
 

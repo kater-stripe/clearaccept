@@ -192,43 +192,10 @@ export const authOptions: AuthOptions = {
         }
 
         try {
-          const firstName = 'Steve';
-          const lastName = 'Kaliski';
-
-          const bank_account: any = {
-            country,
-            currency: countryToCurrency(country),
-            account_holder_name: `${firstName} ${lastName}`,
-          };
-          switch (country) {
-            case 'US':
-              bank_account.routing_number = '110000000';
-              bank_account.account_number = '000123456789';
-              break;
-            case 'GB':
-              bank_account.account_number = 'GB82WEST12345698765432';
-              break;
-            case 'DE':
-              bank_account.account_number = 'DE89370400440532013000';
-              break;
-            case 'FR':
-              bank_account.account_number = 'FR1420041010050500013M02606';
-              break;
-            case 'AU':
-              bank_account.routing_number = '000-000';
-              bank_account.account_number = '000123456';
-              break;
-            default:
-              throw new Error('Unsupported country');
-          }
-
           // Register the Stripe account
           const stripe = initializeStripe(
             new Headers({'demo-stripesecretkey': credentials.stripe_sk})
           );
-          const bankAccount = await stripe.tokens.create({
-            bank_account,
-          });
 
           const controller = {
             losses: {payments: 'application'},
@@ -250,6 +217,26 @@ export const authOptions: AuthOptions = {
             },
           };
           switch (country) {
+            case 'AT':
+            case 'BE':
+            case 'HR':
+            case 'CY':
+            case 'EE':
+            case 'FI':
+            case 'FR':
+            case 'DE':
+            case 'GR':
+            case 'IE':
+            case 'IT':
+            case 'LV':
+            case 'LT':
+            case 'LU':
+            case 'MT':
+            case 'NL':
+            case 'PT':
+            case 'SK':
+            case 'SI':
+            case 'ES':
             case 'GB':
               capabilities['card_issuing'] = {requested: true};
               break;

@@ -63,7 +63,7 @@ jobs:
         run: |-
           touch .env
           echo "${{ github.event.inputs.custom_env_file }}" | tr ' ' '\n' > .env
-          echo "NEXTAUTH_URL=${{ github.event.inputs.subdomain }}" >> .env
+          echo "NEXTAUTH_URL=${{ github.event.inputs.subdomain }}.stripedemos.com" >> .env
 
       - name: 'Create source of truth .env file'
         if: env.ENV_FILE != '~CUSTOM-ENV~'

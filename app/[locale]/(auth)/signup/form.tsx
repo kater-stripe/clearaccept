@@ -25,7 +25,7 @@ import {useConfigContext} from '@/app/contexts/ConfigContext';
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
-  country: z.enum(['US', 'DE', 'FR', 'AU']),
+  country: z.any(),
 });
 
 export default function SignupForm() {
