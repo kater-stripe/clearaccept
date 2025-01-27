@@ -41,9 +41,11 @@ export default function LoginForm() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      console.log(settings);
       await signIn('login', {
         email: values.email,
         password: values.password,
+        stripe_sk: settings?.stripeSecretKey,
         redirect: false,
       });
 

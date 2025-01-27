@@ -9,12 +9,10 @@ export default function ThemeOverrides() {
   return (
     <style>{`
       :root {
-        --purple: ${settings?.primaryColor};
-        --purple-hover: ${changeHexColor(settings?.primaryColor)};
-        --background: ${settings?.secondaryColor};
-        --background-hover: ${changeHexColor(settings?.secondaryColor)};
-        --button-color: ${getTextColor(settings?.primaryColor)};
-        --text-color: ${getTextColor(settings?.secondaryColor)};
+        --primary: ${settings?.primaryColor};
+        --primary-foreground: ${getTextColor(settings?.primaryColor)};
+        --secondary: ${settings?.secondaryColor};
+        --secondary-foreground: ${getTextColor(settings?.secondaryColor)};
       }
     `}</style>
   );

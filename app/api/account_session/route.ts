@@ -1,11 +1,12 @@
 import {type NextRequest} from 'next/server';
 import {getServerSession} from 'next-auth/next';
 import {authOptions} from '@/lib/auth';
-import {stripe} from '@/lib/stripe';
+import initializeStripe from '@/app/utils/stripe/initializeStripe';
 
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
+    const stripe = initializeStripe(req.headers);
 
     const json = await req.json();
 

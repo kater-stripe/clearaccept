@@ -78,7 +78,13 @@ const Nav = () => {
 
   return (
     <div className="fixed z-40 h-screen w-64 bg-primary p-3">
-      <Image className="p-5" src={PoseRed} alt="Pose" width={150} height={23} />
+      <Image
+        className="p-5"
+        src={settings?.customLogo || '/pose_red.svg'}
+        alt="Pose"
+        width={150}
+        height={23}
+      />
       <nav>
         <ul className="flex-col items-start space-x-0">
           {navigationMenuItems

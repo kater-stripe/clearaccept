@@ -4,7 +4,6 @@ import {Inter as FontSans} from 'next/font/google';
 import {cn} from '@/lib/utils';
 import './globals.css';
 import NextAuthProvider from './auth';
-import DebugMenu from '@/app/components/debug/DebugMenu';
 import {EmbeddedComponentBorderProvider} from '@/app/hooks/EmbeddedComponentBorderProvider';
 import ClientLayout from './ClientLayout';
 import Script from 'next/script';
@@ -58,7 +57,6 @@ export default function RootLayout({
           <EmbeddedComponentBorderProvider>
             <ClientLayout>{children}</ClientLayout>
           </EmbeddedComponentBorderProvider>
-          <DebugMenu />
           {/* </SettingsProvider> */}
         </NextAuthProvider>
       </body>

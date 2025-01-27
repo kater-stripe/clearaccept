@@ -1,10 +1,12 @@
 import {getServerSession} from 'next-auth/next';
 import {authOptions} from '@/lib/auth';
-import {stripe} from '@/lib/stripe';
+import initializeStripe from '@/app/utils/stripe/initializeStripe';
+import {NextRequest} from 'next/server';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
+    const stripe = initializeStripe(request.headers);
 
     const financialAccounts = await stripe.treasury.financialAccounts.list(
       {

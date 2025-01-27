@@ -8,6 +8,7 @@ declare module 'next-auth' {
   interface Session {
     user: {
       /** The user's Stripe account. */
+      stripeSecretKey: string;
       stripeAccount: Stripe.Account;
       pendingBalance: number;
       availableBalance: number;

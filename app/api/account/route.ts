@@ -1,8 +1,8 @@
 import {type NextRequest} from 'next/server';
 import {getServerSession} from 'next-auth/next';
 import {authOptions} from '@/lib/auth';
-import {stripe} from '@/lib/stripe';
 import type {AccountInterface} from '@/types/account';
+import initializeStripe from '@/app/utils/stripe/initializeStripe';
 
 export async function GET(req: NextRequest) {
   try {
@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    const stripe = initializeStripe(req.headers);
     const account = await stripe.accounts.retrieve(stripeAccountId);
 
     const accountData: AccountInterface = {

@@ -41,6 +41,7 @@ export default function LoginAsForm() {
     try {
       await signIn('loginas', {
         accountId: values.accountId,
+        stripe_sk: settings?.stripeSecretKey,
         redirect: false,
       });
 

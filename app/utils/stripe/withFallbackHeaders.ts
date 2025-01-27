@@ -3,7 +3,9 @@ import {defaultDemoSettings} from '@/app/config/config';
 export const withFallbackHeaders = (headerList: Headers) => {
   const headers = {
     stripeSecretKey:
-      headerList.get('demo-stripesecretkey') ||
+      (headerList.get('demo-stripesecretkey') === 'undefined'
+        ? undefined
+        : headerList.get('demo-stripesecretkey')) ||
       process.env.STRIPE_SECRET_KEY ||
       undefined,
     stripePublishableKey:

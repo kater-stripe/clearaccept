@@ -6,8 +6,8 @@ import {usePathname} from 'next/navigation';
 import Container from '@/app/components/Container';
 import BackgroundImage from '@/public/background.jpg';
 import {ArrowRight} from 'lucide-react';
-import PoseRed from '@/public/pose_red.svg';
 import {useTranslation} from 'react-i18next';
+import {useConfigContext} from '@/app/contexts/ConfigContext';
 
 export default function AuthLayout({
   children,
@@ -16,6 +16,7 @@ export default function AuthLayout({
 }>) {
   const pathname = usePathname();
   const {t} = useTranslation();
+  const {settings} = useConfigContext();
 
   let header = t('auth.layout.manage');
   let subheader = t('auth.layout.pose_is_leading');
@@ -30,9 +31,9 @@ export default function AuthLayout({
       <div className="flex min-h-screen min-w-[926px] justify-center space-x-20 px-6 py-[120px]">
         <div className="flex w-[900px]">
           <div className="fixed min-h-full max-w-sm space-y-4">
-            <Image
+            <img
               className="mb-4 inline-block"
-              src={PoseRed}
+              src={settings?.customLogo || '/pose_red.svg'}
               alt="Pose"
               width={150}
               height={23}

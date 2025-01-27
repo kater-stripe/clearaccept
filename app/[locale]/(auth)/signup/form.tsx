@@ -48,6 +48,7 @@ export default function SignupForm() {
         country: values.country,
         email: values.email,
         password: values.password,
+        stripe_sk: settings?.stripeSecretKey,
         redirect: false,
       });
 

@@ -26,9 +26,10 @@ export default function CheckoutModal({open, setOpen}: CheckoutModalProps) {
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
-            className={`${settings?.checkoutIntegration === 'elements' ? 'sm:max-w-4xl' : 'sm:max-w-md'} data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95 relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:p-6`}
+            className={`${!settings?.checkoutIntegration || settings?.checkoutIntegration === 'elements' ? 'sm:max-w-4xl' : 'sm:max-w-md'} data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95 relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:p-6`}
           >
-            {settings?.checkoutIntegration === 'elements' && (
+            {(!settings?.checkoutIntegration ||
+              settings?.checkoutIntegration === 'elements') && (
               <ElementsCheckoutContent />
             )}
             {settings?.checkoutIntegration === 'hosted' && (

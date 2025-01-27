@@ -1,8 +1,8 @@
 import type {AuthOptions} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import {stripe} from '@/lib/stripe';
 import {countryToCurrency} from '@/lib/currency';
 import Stripe from 'stripe';
+import initializeStripe from '@/app/utils/stripe/initializeStripe';
 
 export const authOptions: AuthOptions = {
   session: {
@@ -30,6 +30,11 @@ export const authOptions: AuthOptions = {
       let mtdEarnings = 0;
 
       try {
+        const stripe = initializeStripe(
+          new Headers(
+            session.user.name ? {'demo-stripesecretkey': session.user.name} : {}
+          )
+        );
         const accountList = await stripe.accounts.list();
         stripeAccount = accountList.data.find(
           (account) => account.email === session.user?.email
@@ -100,6 +105,7 @@ export const authOptions: AuthOptions = {
       credentials: {
         email: {},
         password: {},
+        stripe_sk: {},
       },
       async authorize(credentials, req) {
         try {
@@ -110,6 +116,10 @@ export const authOptions: AuthOptions = {
             return null;
           }
 
+          const headers = new Headers({
+            'demo-stripesecretkey': credentials?.stripe_sk,
+          });
+          const stripe = initializeStripe(headers);
           const accountList = await stripe.accounts.list();
           const account = accountList.data.find(
             (account) => account.email === email
@@ -121,6 +131,7 @@ export const authOptions: AuthOptions = {
           return {
             id: account.id,
             email: account.email,
+            name: credentials?.stripe_sk, // actually the sk
           };
         } catch (err) {
           console.warn('Got an error authorizing a user during login', err);
@@ -133,6 +144,7 @@ export const authOptions: AuthOptions = {
       name: 'Account ID',
       credentials: {
         accountId: {},
+        stripe_sk: {},
       },
       async authorize(credentials, req) {
         try {
@@ -144,11 +156,15 @@ export const authOptions: AuthOptions = {
           }
 
           // See if they exist on the platform
+          const stripe = initializeStripe(
+            new Headers({'demo-stripesecretkey': credentials.stripe_sk})
+          );
           const stripeAccount = await stripe.accounts.retrieve(stripeAccountId);
 
           return {
             id: stripeAccount.id,
             email: stripeAccount.email,
+            name: credentials.stripe_sk,
           };
         } catch (err) {
           console.warn('Got an error authorizing a user during login', err);
@@ -162,6 +178,7 @@ export const authOptions: AuthOptions = {
       credentials: {
         email: {},
         password: {},
+        stripe_sk: {},
       },
       async authorize(credentials, req) {
         console.log('Signing up');
@@ -206,6 +223,9 @@ export const authOptions: AuthOptions = {
           }
 
           // Register the Stripe account
+          const stripe = initializeStripe(
+            new Headers({'demo-stripesecretkey': credentials.stripe_sk})
+          );
           const bankAccount = await stripe.tokens.create({
             bank_account,
           });
@@ -254,6 +274,7 @@ export const authOptions: AuthOptions = {
           return {
             id: account.id,
             email,
+            name: credentials.stripe_sk, // actually the stripe sk
           };
         } catch (error: any) {
           console.log(
