@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 
 import type {AccountInterface} from '@/types/account';
+import fetchClient from '../utils/fetchClient';
 
 export const useAccount = () => {
   const [loading, setLoading] = useState(true);
@@ -12,8 +13,8 @@ export const useAccount = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/account');
-        const account = (await response.json()) as AccountInterface;
+        const {data} = await fetchClient.get('/api/account');
+        const account = data as AccountInterface;
         setAccountInstance(account);
         setLoading(false);
       } catch (error: any) {

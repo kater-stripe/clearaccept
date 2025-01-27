@@ -196,6 +196,7 @@ export const authOptions: AuthOptions = {
           const stripe = initializeStripe(
             new Headers({'demo-stripesecretkey': credentials.stripe_sk})
           );
+          const platformAccount = await stripe.accounts.retrieve();
 
           const controller = {
             losses: {payments: 'application'},
@@ -216,6 +217,7 @@ export const authOptions: AuthOptions = {
               requested: true,
             },
           };
+
           switch (country) {
             case 'AT':
             case 'BE':
@@ -242,7 +244,10 @@ export const authOptions: AuthOptions = {
               break;
             case 'US':
               capabilities['card_issuing'] = {requested: true};
-              capabilities['treasury'] = {requested: true};
+
+              if (platformAccount.country === 'US') {
+                capabilities['treasury'] = {requested: true};
+              }
               break;
             default:
               break;

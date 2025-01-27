@@ -5,6 +5,7 @@ import {useSettings} from '@/app/hooks/useSettings';
 import type {LocaleType} from '@/types/settings';
 import {useConfigContext} from '../contexts/ConfigContext';
 import {convertToLocale} from '../utils/helpers';
+import fetchClient from '../utils/fetchClient';
 
 export const useConnect = (demoOnboarding: boolean) => {
   const [hasError, setHasError] = useState(false);
@@ -66,7 +67,7 @@ export const useConnect = (demoOnboarding: boolean) => {
     if (demoOnboarding) {
       console.log('Fetching client secret for demo onboarding');
     }
-    const data = demoOnboarding
+    const onboardingData = demoOnboarding
       ? {
           demoOnboarding: true,
           locale,
@@ -74,21 +75,17 @@ export const useConnect = (demoOnboarding: boolean) => {
       : {};
 
     // Fetch the AccountSession client secret
-    const response = await fetch('/api/account_session', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) {
-      // Handle errors on the client side here
-      const {error} = await response.json();
-      console.warn('An error occurred: ', error);
+    const {data} = await fetchClient.post(
+      '/api/account_session',
+      onboardingData
+    );
+    if (!data.client_secret) {
       setHasError(true);
       return undefined;
-    } else {
-      const {client_secret: clientSecret} = await response.json();
-      setHasError(false);
-      return clientSecret;
     }
+
+    setHasError(false);
+    return data.client_secret;
   }, [demoOnboarding, locale]);
 
   const appearanceVariables = useMemo(

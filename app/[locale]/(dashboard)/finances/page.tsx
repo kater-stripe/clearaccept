@@ -10,6 +10,7 @@ import Container from '@/app/components/Container';
 import EmbeddedComponentContainer from '@/app/components/EmbeddedComponentContainer';
 import {useAccount} from '@/app/hooks/useAccount';
 import {useTranslation} from 'react-i18next';
+import fetchClient from '@/app/utils/fetchClient';
 
 const useFinancialAccount = () => {
   const [financialAccount, setFinancialAccount] = useState<string | null>(null);
@@ -20,9 +21,8 @@ const useFinancialAccount = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/financial_account');
-        const json = await response.json();
-        setFinancialAccount(json.financial_account);
+        const {data} = await fetchClient.get('/api/financial_account');
+        setFinancialAccount(data.financial_account);
         setLoading(false);
       } catch (error: any) {
         setError(error);
