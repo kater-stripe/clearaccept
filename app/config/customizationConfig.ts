@@ -1,9 +1,10 @@
-"use server";
+'use server';
 
 export const getEnv = async () => ({
   primaryColor: process.env.PRIMARY_COLOR,
   secondaryColor: process.env.SECONDARY_COLOR,
   customLogo: process.env.CUSTOM_LOGO,
+  authImage: process.env.AUTH_IMAGE,
   stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   language: process.env.LANGUAGE,
   currency: process.env.CURRENCY,

@@ -22,6 +22,7 @@ export const defaultDemoSettings = {
   primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR,
   secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR,
   customLogo: process.env.NEXT_PUBLIC_CUSTOM_LOGO,
+  authImage: process.env.NEXT_PUBLIC_AUTH_IMAGE,
   eceEnabled: true,
   addressEnabled: true,
   customerPortalEnabled: true,

@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import Container from '@/app/components/Container';
-import BackgroundImage from '@/public/background.jpg';
 import {ArrowRight} from 'lucide-react';
 import {useTranslation} from 'react-i18next';
 import {useConfigContext} from '@/app/contexts/ConfigContext';
@@ -61,14 +60,11 @@ export default function AuthLayout({
           </div>
         </div>
       </div>
-      <Image
-        src={BackgroundImage}
+      <img
+        src={settings?.authImage || '/background.jpg'}
         alt="logo"
-        placeholder="blur"
-        quality={100}
-        fill
         sizes="100vw"
-        className="fixed z-[-1] h-full w-full min-w-[926px] overflow-hidden object-cover"
+        className="fixed inset-0 z-[-1] h-full w-full min-w-[926px] overflow-hidden object-cover"
       />
     </div>
   );
