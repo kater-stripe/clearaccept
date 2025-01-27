@@ -37,6 +37,12 @@ export async function POST(request: NextRequest) {
         currency: demoConfig.currency,
         automatic_payment_methods: {enabled: true},
         description: 'Group Session',
+        application_fee_amount:
+          parseFloat(
+            parseFloat(demoConfig.applicationFee || '1.00').toFixed(
+              demoConfig.currency === 'jpy' ? 0 : 2
+            )
+          ) * (demoConfig.currency === 'jpy' ? 1 : 100),
       },
       {
         stripeAccount: session?.user.stripeAccount.id!,

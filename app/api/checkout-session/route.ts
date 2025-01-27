@@ -56,6 +56,14 @@ export async function POST(request: NextRequest) {
               success_url: `${request.headers.get('origin')}/${demoConfig.language}/payments?session_id={CHECKOUT_SESSION_ID}`,
               cancel_url: `${request.headers.get('origin')}/${demoConfig.language}/classes`,
             }),
+        payment_intent_data: {
+          application_fee_amount:
+            parseFloat(
+              parseFloat(demoConfig.applicationFee || '1.00').toFixed(
+                demoConfig.currency === 'jpy' ? 0 : 2
+              )
+            ) * (demoConfig.currency === 'jpy' ? 1 : 100),
+        },
       },
       {
         stripeAccount: serverSession?.user.stripeAccount.id,

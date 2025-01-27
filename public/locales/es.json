@@ -121,7 +121,9 @@
       "email": "Correo electrónico",
       "account_settings": "Configuraciones de la cuenta",
       "manage_account": "Administrar la configuración de cuentas y negocios.",
-      "payment_methods_add": "Agregue y administre sus métodos de pago."
+      "payment_methods_add": "Agregue y administre sus métodos de pago.",
+      "tax_settings": "Configuración de impuestos",
+      "tax_account": "Administrar la configuración y los registros de impuestos."
     },
     "finances": {
       "financial_account": "Cuenta financiera",
@@ -186,7 +188,8 @@
       "classCharge": "Cargo de la clase",
       "tax": "Impuesto",
       "total": "Total",
-      "chargeCustomer": "Cobrar al cliente"
+      "chargeCustomer": "Cobrar al cliente",
+      "fee": "Tarifa"
     }
   }
 }

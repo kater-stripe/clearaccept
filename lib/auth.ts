@@ -239,14 +239,42 @@ export const authOptions: AuthOptions = {
             case 'SK':
             case 'SI':
             case 'ES':
+              if (
+                [
+                  'AT',
+                  'BE',
+                  'HR',
+                  'CY',
+                  'EE',
+                  'FI',
+                  'FR',
+                  'DE',
+                  'GR',
+                  'IE',
+                  'IT',
+                  'LV',
+                  'LT',
+                  'LU',
+                  'MT',
+                  'NL',
+                  'PT',
+                  'SK',
+                  'SI',
+                  'ES',
+                ].includes(platformAccount.country || '')
+              ) {
+                capabilities['card_issuing'] = {requested: true};
+              }
+              break;
             case 'GB':
-              capabilities['card_issuing'] = {requested: true};
+              if (platformAccount.country == 'GB') {
+                capabilities['card_issuing'] = {requested: true};
+              }
               break;
             case 'US':
-              capabilities['card_issuing'] = {requested: true};
-
               if (platformAccount.country === 'US') {
                 capabilities['treasury'] = {requested: true};
+                capabilities['card_issuing'] = {requested: true};
               }
               break;
             default:
@@ -260,6 +288,15 @@ export const authOptions: AuthOptions = {
             country,
             email,
           });
+
+          if (country == 'US' && platformAccount.country === 'US') {
+            await stripe.treasury.financialAccounts.create(
+              {
+                supported_currencies: ['usd'],
+              },
+              {stripeAccount: account.id}
+            );
+          }
 
           console.log('Account has been created with id', account.id);
 

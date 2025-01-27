@@ -107,11 +107,17 @@ export default function Classes() {
         <h1 className="flex-1 text-3xl font-bold">
           {t('dashboard.classes.classes')}
         </h1>
-        <Button className="gap-2 bg-[#312356] text-base font-bold shadow transition hover:shadow-md">
+        <Button
+          className="gap-2 bg-[#312356] text-base font-bold shadow transition hover:shadow-md"
+          disabled={true}
+        >
           <PlusIcon className="h-5 w-5"></PlusIcon>
           {t('dashboard.classes.create_class')}
         </Button>
-        <Button className="gap-2 bg-white text-base font-medium text-primary shadow transition hover:shadow-md">
+        <Button
+          className="gap-2 bg-white text-base font-medium text-primary shadow transition hover:shadow-md"
+          disabled={true}
+        >
           <PencilIcon className="h-5 w-5"></PencilIcon>
           {t('dashboard.classes.edit_studios')}
         </Button>

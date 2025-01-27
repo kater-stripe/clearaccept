@@ -121,7 +121,9 @@
       "email": "E-mail",
       "account_settings": "Impostazioni dell'account",
       "manage_account": "Gestisci l'account e le impostazioni aziendali.",
-      "payment_methods_add": "Aggiungi e gestisci i tuoi metodi di pagamento."
+      "payment_methods_add": "Aggiungi e gestisci i tuoi metodi di pagamento.",
+      "tax_settings": "Impostazioni fiscali",
+      "tax_account": "Gestire le impostazioni e le registrazioni fiscali."
     },
     "finances": {
       "financial_account": "Conto finanziario",
@@ -186,7 +188,8 @@
       "classCharge": "Costo della lezione",
       "tax": "Tasse",
       "total": "Totale",
-      "chargeCustomer": "Addebita al cliente"
+      "chargeCustomer": "Addebita al cliente",
+      "fee": "Tassa"
     }
   }
 }

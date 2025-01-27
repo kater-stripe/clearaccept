@@ -86,6 +86,15 @@ export default function OrderSummary({
           {settings?.currency.toUpperCase()}
         </span>
       </div>
+      <div className="mb-2 flex justify-between text-gray-600">
+        <span>{t('checkout.elements.fee')}:</span>
+        <span>
+          {parseFloat(settings?.applicationFee).toFixed(
+            settings?.currency === 'jpy' ? 0 : 2
+          )}{' '}
+          {settings?.currency.toUpperCase()}
+        </span>
+      </div>
       <div className="mb-6 flex justify-between text-lg font-bold text-gray-800">
         <span>{t('checkout.elements.total')}:</span>
         <span>

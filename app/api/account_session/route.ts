@@ -1,3 +1,6 @@
+// beta embedded account surface issue
+// @ts-nocheck
+
 import {type NextRequest} from 'next/server';
 import {getServerSession} from 'next-auth/next';
 import {authOptions} from '@/lib/auth';
@@ -65,16 +68,16 @@ export async function POST(req: NextRequest) {
         ? {
             financial_account: {
               enabled: true,
-              // features: {
-              //   money_movement: true,
-              //   external_account_collection: false,
-              // },
+              features: {
+                external_account_collection: true,
+                disable_stripe_user_authentication: true,
+              },
             },
             financial_account_transactions: {
               enabled: true,
-              // features: {
-              //   card_spend_dispute_management: true,
-              // },
+              features: {
+                card_spend_dispute_management: true,
+              },
             },
           }
         : {};
@@ -84,11 +87,12 @@ export async function POST(req: NextRequest) {
         ? {
             issuing_cards_list: {
               enabled: true,
-              // features: {
-              //   card_management: true,
-              //   cardholder_management: true,
-              //   card_spend_dispute_management: true,
-              // },
+              features: {
+                card_management: true,
+                cardholder_management: true,
+                card_spend_dispute_management: true,
+                disable_stripe_user_authentication: true,
+              },
             },
           }
         : {};
@@ -100,25 +104,34 @@ export async function POST(req: NextRequest) {
       },
       payouts: {
         enabled: true,
-        // features: {
-        //   instant_payouts: true,
-        //   standard_payouts: true,
-        //   edit_payout_schedule: true,
-        //   external_account_collection: false,
-        // },
+        features: {
+          disable_stripe_user_authentication: true,
+          external_account_collection: true,
+          edit_payout_schedule: true,
+          standard_payouts: true,
+          instant_payouts: true,
+        },
       },
       // Connect
       account_management: {
         enabled: true,
-        // features: {
-        //   external_account_collection: false,
-        // },
+        features: {
+          disable_stripe_user_authentication: true,
+          external_account_collection: true,
+        },
       },
       account_onboarding: {
         enabled: true,
-        // features: {
-        //   external_account_collection: false,
-        // },
+        features: {
+          disable_stripe_user_authentication: true,
+          external_account_collection: true,
+        },
+      },
+      tax_settings: {
+        enabled: true,
+      },
+      tax_registrations: {
+        enabled: true,
       },
       // payment_method_settings & capital_overview are beta options and need to be enabled before you can use them
       // -- https://trailhead.corp.stripe.com/docs/connect-tfc/accounts-and-onboarding/connect-embedded-components

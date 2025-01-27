@@ -121,7 +121,9 @@
       "email": "E-mail",
       "account_settings": "Paramètres du compte",
       "manage_account": "Gérer les paramètres du compte et de l'entreprise.",
-      "payment_methods_add": "Ajoutez et gérez vos méthodes de paiement."
+      "payment_methods_add": "Ajoutez et gérez vos méthodes de paiement.",
+      "tax_settings": "Paramètres fiscaux",
+      "tax_account": "Gérer les paramètres fiscaux et les inscriptions."
     },
     "finances": {
       "financial_account": "Compte financier",
@@ -186,7 +188,8 @@
       "classCharge": "Frais de cours",
       "tax": "Taxe",
       "total": "Total",
-      "chargeCustomer": "Facturer le client"
+      "chargeCustomer": "Facturer le client",
+      "fee": "Frais"
     }
   }
 }

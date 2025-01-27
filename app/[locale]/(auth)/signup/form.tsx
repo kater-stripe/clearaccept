@@ -21,6 +21,7 @@ import CountrySelector from '@/app/components/CountrySelector';
 import Link from 'next/link';
 import {useTranslation} from 'react-i18next';
 import {useConfigContext} from '@/app/contexts/ConfigContext';
+import {generateRandomCustomerEmail} from '@/app/utils/helpers';
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -37,8 +38,8 @@ export default function SignupForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       country: 'US',
-      email: '',
-      password: '',
+      email: generateRandomCustomerEmail(),
+      password: 'wej90@j902ji',
     },
   });
 

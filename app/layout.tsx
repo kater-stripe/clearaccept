@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Stripe Demo</title>
+        <title>Pose</title>
         <meta name="robots" content="noindex, nofollow" />
         {/* ANALYTICS - DO NOT REMOVE */}
         <script

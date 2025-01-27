@@ -121,7 +121,9 @@
       "email": "電子メール",
       "account_settings": "アカウント設定",
       "manage_account": "アカウントとビジネス設定を管理します。",
-      "payment_methods_add": "支払い方法を追加して管理します。"
+      "payment_methods_add": "支払い方法を追加して管理します。",
+      "tax_settings": "税設定",
+      "tax_account": "税の設定と登録を管理します。"
     },
     "finances": {
       "financial_account": "財務アカウント",
@@ -186,7 +188,8 @@
       "classCharge": "クラス料金",
       "tax": "税金",
       "total": "合計",
-      "chargeCustomer": "顧客に請求する"
+      "chargeCustomer": "顧客に請求する",
+      "fee": "手数料"
     }
   }
 }

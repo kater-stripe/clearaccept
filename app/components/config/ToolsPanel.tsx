@@ -8,6 +8,7 @@ import {useState} from 'react';
 import TabSelector from './TabSelector';
 import AppearanceTab from './AppearanceTab';
 import AccountTab from './AccountTab';
+import {useRouter} from 'next/navigation';
 
 export default function ToolsPanel() {
   const {
@@ -17,6 +18,7 @@ export default function ToolsPanel() {
     isLoading,
     resetSettings,
   } = useConfigContext();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('Appearance');
   const [isResetConfirming, setIsResetConfirming] = useState(false);
 
@@ -35,6 +37,7 @@ export default function ToolsPanel() {
       window.umami?.track('settings_reset');
       resetSettings();
       setIsResetConfirming(false);
+      router.push(`/${settings.language}/signup`);
     } else {
       setIsResetConfirming(true);
     }
@@ -70,7 +73,7 @@ export default function ToolsPanel() {
       {/* Tools panel toggle button */}
       <button
         onClick={() => toggleToolsPanel('isToolsPanelOpen')}
-        className="bg-blurple fixed bottom-16 left-0 z-50 rounded-r-lg p-2 transition-all duration-300"
+        className="fixed bottom-16 left-0 z-50 rounded-r-lg bg-blurple p-2 transition-all duration-300"
         aria-label={isToolsPanelOpen ? 'Close settings' : 'Open settings'}
       >
         {isToolsPanelOpen ? (

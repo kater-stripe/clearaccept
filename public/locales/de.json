@@ -121,7 +121,9 @@
       "email": "E-Mail",
       "account_settings": "Kontoeinstellungen",
       "manage_account": "Konto- und Geschäftseinstellungen verwalten.",
-      "payment_methods_add": "Fügen Sie Ihre Zahlungsmethoden hinzu und verwalten Sie sie."
+      "payment_methods_add": "Fügen Sie Ihre Zahlungsmethoden hinzu und verwalten Sie sie.",
+      "tax_settings": "Steuereinstellungen",
+      "tax_account": "Steuereinstellungen und Registrierungen verwalten."
     },
     "finances": {
       "financial_account": "Finanzkonto",
@@ -186,7 +188,8 @@
       "classCharge": "Kursgebühr",
       "tax": "Steuern",
       "total": "Gesamt",
-      "chargeCustomer": "Kunde belasten"
+      "chargeCustomer": "Kunde belasten",
+      "fee": "Gebühr"
     }
   }
 }

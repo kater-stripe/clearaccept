@@ -17,7 +17,7 @@ export default function AuthenticatedAndOnboardedRoute({
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.replace(`/${settings?.language}/login`);
+      router.replace(`/${settings?.language}/signup`);
     } else if (
       status === 'authenticated' &&
       session.user?.stripeAccount?.charges_enabled === false

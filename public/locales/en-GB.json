@@ -121,7 +121,9 @@
       "email": "Email",
       "account_settings": "Account settings",
       "manage_account": "Manage account and business settings.",
-      "payment_methods_add": "Add and manage your payment methods."
+      "payment_methods_add": "Add and manage your payment methods.",
+      "tax_settings": "Tax Settings",
+      "tax_account": "Manage tax settings and registrations."
     },
     "finances": {
       "financial_account": "Financial account",
@@ -186,7 +188,8 @@
       "classCharge": "Class Charge",
       "tax": "VAT",
       "total": "Total",
-      "chargeCustomer": "Charge Customer"
+      "chargeCustomer": "Charge Customer",
+      "fee": "Fee"
     }
   }
 }

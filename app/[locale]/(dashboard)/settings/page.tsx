@@ -1,6 +1,10 @@
 'use client';
 
-import {ConnectAccountManagement} from '@stripe/react-connect-js';
+import {
+  ConnectAccountManagement,
+  ConnectTaxRegistrations,
+  ConnectTaxSettings,
+} from '@stripe/react-connect-js';
 import Container from '@/app/components/Container';
 import EmbeddedComponentContainer from '@/app/components/EmbeddedComponentContainer';
 import {useSession} from 'next-auth/react';
@@ -42,6 +46,21 @@ export default function Settings() {
         </header>
         <EmbeddedComponentContainer>
           <ConnectAccountManagement />
+        </EmbeddedComponentContainer>
+      </Container>
+      <Container>
+        <header className="mb-8 ml-2">
+          <h1 className="text-xl font-semibold">
+            {t('dashboard.settings.tax_settings')}
+          </h1>
+          <h2 className="text-subdued">
+            {t('dashboard.settings.tax_account')}
+          </h2>
+        </header>
+        <EmbeddedComponentContainer>
+          <ConnectTaxSettings />
+          <div className="h-8"> </div>
+          <ConnectTaxRegistrations />
         </EmbeddedComponentContainer>
       </Container>
     </>

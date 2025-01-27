@@ -55,8 +55,8 @@ const AppearanceTab = () => {
             key: 'checkoutIntegration',
             options: [
               {value: 'elements', label: 'Elements'},
-              {value: 'embedded', label: 'Embedded'},
-              {value: 'hosted', label: 'Hosted'},
+              {value: 'embedded', label: 'Embedded Checkout'},
+              {value: 'hosted', label: 'Stripe Checkout'},
             ],
           },
           {
@@ -85,6 +85,31 @@ const AppearanceTab = () => {
             </select>
           </div>
         ))}
+
+        {[{label: 'Application Fee', key: 'applicationFee'}].map(
+          ({label, key}) => (
+            <div key={key}>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                {label}
+              </label>
+              <input
+                type="text"
+                value={
+                  settings &&
+                  defaultDemoSettings &&
+                  settings[key] !== defaultDemoSettings[key]
+                    ? settings[key]
+                    : ''
+                }
+                onChange={(e) => {
+                  updateSetting(key, e.target.value);
+                }}
+                placeholder="Enter to override .env value"
+                className="w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          )
+        )}
       </div>
     </>
   );

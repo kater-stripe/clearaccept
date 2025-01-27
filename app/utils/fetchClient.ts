@@ -13,8 +13,13 @@ const defaultOptions = {
 const fetchClient = axios.create(defaultOptions);
 
 fetchClient.interceptors.request.use(function (config) {
-  const {stripeSecretKey, stripePublishableKey, currency, language} =
-    loadFromStorage('settings', defaultDemoSettings);
+  const {
+    stripeSecretKey,
+    stripePublishableKey,
+    currency,
+    language,
+    applicationFee,
+  } = loadFromStorage('settings', defaultDemoSettings);
   const {id} = loadFromStorage('customer', {});
 
   config.headers['demo-stripesecretkey'] = stripeSecretKey;
@@ -22,6 +27,7 @@ fetchClient.interceptors.request.use(function (config) {
   config.headers['demo-currency'] = currency;
   config.headers['demo-customer'] = id;
   config.headers['demo-language'] = language;
+  config.headers['demo-applicationfee'] = applicationFee;
 
   return config;
 });

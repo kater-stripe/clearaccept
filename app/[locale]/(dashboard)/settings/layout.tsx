@@ -47,7 +47,7 @@ export default function SettingsLayout({
               variant="ghost"
               onClick={() =>
                 signOut({
-                  callbackUrl: `${new URL(window.location.href).origin}/default/login`,
+                  callbackUrl: `${new URL(window.location.href).origin}/${settings?.language}/signup`,
                 })
               }
             >

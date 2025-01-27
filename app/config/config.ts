@@ -27,6 +27,7 @@ export const defaultDemoSettings = {
   addressEnabled: true,
   customerPortalEnabled: true,
   externalPaymentMethod: null,
+  applicationFee: '1.00',
 };
 
 export const defaultCartSettings = {

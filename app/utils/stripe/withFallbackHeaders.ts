@@ -14,6 +14,7 @@ export const withFallbackHeaders = (headerList: Headers) => {
     language: headerList.get('demo-language') || undefined,
     email: headerList.get('demo-email') || undefined,
     customer: headerList.get('demo-customer') || undefined,
+    applicationFee: headerList.get('demo-applicationfee') || undefined,
   };
 
   return {
