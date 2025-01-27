@@ -1,6 +1,6 @@
 'use client';
 
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, Suspense} from 'react';
 import {ConfigProvider, useConfigContext} from '@/app/contexts/ConfigContext';
 import ToolsPanel from './components/config/ToolsPanel';
 import ThemeOverrides from './ThemeOverrides';
@@ -71,11 +71,11 @@ interface ClientLayoutProps {
 
 export default function ClientLayout({children}: ClientLayoutProps) {
   return (
-    <>
+    <Suspense>
       <ConfigProvider>
         <ThemeOverrides />
         <AppContent>{children}</AppContent>
       </ConfigProvider>
-    </>
+    </Suspense>
   );
 }

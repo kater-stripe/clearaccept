@@ -4,9 +4,10 @@ import initializeStripe from '@/app/utils/stripe/initializeStripe';
 import {NextRequest} from 'next/server';
 
 export async function GET(request: NextRequest) {
+  const stripe = initializeStripe(request.headers);
+
   try {
     const session = await getServerSession(authOptions);
-    const stripe = initializeStripe(request.headers);
 
     const financialAccounts = await stripe.treasury.financialAccounts.list(
       {
