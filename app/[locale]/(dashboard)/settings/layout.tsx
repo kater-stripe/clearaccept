@@ -45,7 +45,11 @@ export default function SettingsLayout({
             <Button
               className="text-md ml-2 self-end p-2 hover:bg-white/80"
               variant="ghost"
-              onClick={() => signOut({callbackUrl: '/default/login'})}
+              onClick={() =>
+                signOut({
+                  callbackUrl: `${new URL(window.location.href).origin}/default/login`,
+                })
+              }
             >
               {t('dashboard.settings.sign_out')}
             </Button>
