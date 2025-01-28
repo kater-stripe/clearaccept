@@ -191,5 +191,8 @@
       "chargeCustomer": "Cobrar al cliente",
       "fee": "Tarifa"
     }
+  },
+  "errors": {
+    "unable_to_create": "Esta plataforma"
   }
 }

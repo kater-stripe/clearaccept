@@ -191,5 +191,8 @@
       "chargeCustomer": "Kunde belasten",
       "fee": "Gebühr"
     }
+  },
+  "errors": {
+    "unable_to_create": "Diese Plattform"
   }
 }

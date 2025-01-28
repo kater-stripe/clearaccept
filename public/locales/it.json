@@ -191,5 +191,8 @@
       "chargeCustomer": "Addebita al cliente",
       "fee": "Tassa"
     }
+  },
+  "errors": {
+    "unable_to_create": "Questa piattaforma"
   }
 }

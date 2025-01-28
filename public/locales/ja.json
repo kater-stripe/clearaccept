@@ -191,5 +191,8 @@
       "chargeCustomer": "顧客に請求する",
       "fee": "手数料"
     }
+  },
+  "errors": {
+    "unable_to_create": "このプラットフォーム"
   }
 }

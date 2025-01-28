@@ -33,6 +33,7 @@ export default function SignupForm() {
   const router = useRouter();
   const {t} = useTranslation();
   const {settings} = useConfigContext();
+  const [error, setError] = React.useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,21 +44,36 @@ export default function SignupForm() {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      await signIn('signup', {
-        country: values.country,
-        email: values.email,
-        password: values.password,
-        stripe_sk: settings?.stripeSecretKey,
-        redirect: false,
-      });
+  const onSubmit = React.useCallback(
+    async (values: z.infer<typeof formSchema>) => {
+      try {
+        setError(null);
 
-      router.push(`/${settings?.language}/onboarding`);
-    } catch (error: any) {
-      console.error('An error occurred when signing in', error);
-    }
-  };
+        const signInOptions = {
+          country: values.country,
+          email: values.email,
+          password: values.password,
+          redirect: false,
+          stripe_sk: undefined,
+        };
+
+        if (settings?.stripeSecretKey) {
+          signInOptions.stripe_sk = settings.stripeSecretKey;
+        }
+
+        const res = await signIn('signup', signInOptions);
+        if (res && res.ok) {
+          router.push(`/${settings?.language || 'en'}/onboarding`);
+        } else {
+          setError(t('errors.unable_to_create'));
+        }
+      } catch (error: any) {
+        setError(t('errors.unable_to_create'));
+        console.error('An error occurred when signing in', error);
+      }
+    },
+    [settings, router, t]
+  );
 
   return (
     <>
@@ -75,6 +91,7 @@ export default function SignupForm() {
         </div>
       </div>
       <Form {...form}>
+        {error && <span className="text-red-500">{error}</span>}
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-3 space-y-4">
           <div className="flex flex-col space-y-2">
             <FormField

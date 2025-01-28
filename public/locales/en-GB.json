@@ -191,5 +191,8 @@
       "chargeCustomer": "Charge Customer",
       "fee": "Fee"
     }
+  },
+  "errors": {
+    "unable_to_create": "This platform"
   }
 }

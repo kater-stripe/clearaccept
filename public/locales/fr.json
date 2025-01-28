@@ -191,5 +191,8 @@
       "chargeCustomer": "Facturer le client",
       "fee": "Frais"
     }
+  },
+  "errors": {
+    "unable_to_create": "Cette plate-forme"
   }
 }

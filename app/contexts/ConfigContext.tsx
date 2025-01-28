@@ -17,6 +17,7 @@ import LoadingOverlay from '@/app/components/LoadingOverlay';
 import {getEnv} from '@/app/config/customizationConfig';
 import {useSearchParams} from 'next/navigation';
 import {debounceTrack} from '@/app/utils/tracking';
+import {signOut} from 'next-auth/react';
 
 interface Settings {
   language: string;

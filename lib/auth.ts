@@ -310,7 +310,7 @@ export const authOptions: AuthOptions = {
             'Got an error authorizing and creating a user during signup',
             error
           );
-          return null;
+          throw error;
         }
       },
     }),
