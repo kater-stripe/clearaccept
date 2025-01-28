@@ -18,6 +18,7 @@ import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import PoseRed from '@/public/pose_red.svg';
 import {useTranslation} from 'react-i18next';
 import {useConfigContext} from '../contexts/ConfigContext';
+import {useAccount} from '../hooks/useAccount';
 
 interface NavigationMenuItem {
   label: string;
@@ -63,7 +64,30 @@ const navigationMenuItems: NavigationMenuItem[] = [
     href: '/finances',
     icon: LandmarkIcon,
     paths: ['/finances/cards'],
-    countryFilter: ['US'],
+    countryFilter: [
+      'US',
+      'AT',
+      'BE',
+      'HR',
+      'CY',
+      'EE',
+      'FI',
+      'FR',
+      'DE',
+      'GR',
+      'IE',
+      'IT',
+      'LV',
+      'LT',
+      'LU',
+      'MT',
+      'NL',
+      'PT',
+      'SK',
+      'SI',
+      'ES',
+      'GB',
+    ],
   },
 ];
 
@@ -75,6 +99,10 @@ const Nav = () => {
 
   const accountID = session?.user?.stripeAccount?.id;
   const country = session?.user?.stripeAccount?.country!;
+
+  const displayIssuing =
+    session?.user?.stripeAccount?.capabilities?.card_issuing;
+  const displayCapital = session?.user?.stripeAccount?.capabilities?.treasury;
 
   return (
     <div className="fixed z-40 h-screen w-64 bg-primary p-3">
@@ -91,6 +119,12 @@ const Nav = () => {
             .filter(
               (item) =>
                 !item.countryFilter || item.countryFilter.includes(country)
+            )
+            .filter(
+              (item) =>
+                item.label !== 'navigation.finances' ||
+                displayIssuing ||
+                displayCapital
             )
             .map((item) => (
               <li key={item.label} className="p-1">

@@ -28,6 +28,8 @@ export default function FinancesLayout({
     !accountLoading &&
     account &&
     account.card_issuing_enabled;
+  const displayCapital =
+    !useAccountError && !accountLoading && account && account.treasury_enabled;
 
   const routes = [
     {

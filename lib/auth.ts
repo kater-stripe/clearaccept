@@ -35,7 +35,7 @@ export const authOptions: AuthOptions = {
             session.user.name ? {'demo-stripesecretkey': session.user.name} : {}
           )
         );
-        const accountList = await stripe.accounts.list();
+        const accountList = await stripe.accounts.list({limit: 100});
         stripeAccount = accountList.data.find(
           (account) => account.email === session.user?.email
         );
@@ -120,7 +120,7 @@ export const authOptions: AuthOptions = {
             'demo-stripesecretkey': credentials?.stripe_sk,
           });
           const stripe = initializeStripe(headers);
-          const accountList = await stripe.accounts.list();
+          const accountList = await stripe.accounts.list({limit: 100});
           const account = accountList.data.find(
             (account) => account.email === email
           );
