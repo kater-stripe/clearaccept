@@ -35,6 +35,7 @@ const AppearanceTab = () => {
               {value: 'aud', label: 'AUD'},
               {value: 'sgd', label: 'SGD'},
               {value: 'jpy', label: 'JPY'},
+              {value: 'sek', label: 'SEK'},
             ],
           },
           {
