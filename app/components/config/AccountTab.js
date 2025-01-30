@@ -18,6 +18,7 @@ const AccountTab = () => {
   const handleLogout = () => {
     signOut({
       callbackUrl: `${new URL(window.location.href).origin}/${settings?.language}/signup`,
+      redirect: false,
     });
   };
 
