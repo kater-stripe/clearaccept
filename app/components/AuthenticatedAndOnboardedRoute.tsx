@@ -22,7 +22,9 @@ export default function AuthenticatedAndOnboardedRoute({
       status === 'authenticated' &&
       session.user?.stripeAccount?.charges_enabled === false
     ) {
-      router.replace(`/${settings?.language}/onboarding`);
+      router.replace(
+        `/${settings?.language}/onboarding${window.location.search}`
+      );
     }
   }, [status, session, router, settings?.language]);
 

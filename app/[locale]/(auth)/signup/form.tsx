@@ -63,7 +63,9 @@ export default function SignupForm() {
 
         const res = await signIn('signup', signInOptions);
         if (res && res.ok) {
-          router.push(`/${settings?.language || 'en'}/onboarding`);
+          router.push(
+            `/${settings?.language || 'en'}/onboarding${window.location.search}`
+          );
         } else {
           setError(t('errors.unable_to_create'));
         }
