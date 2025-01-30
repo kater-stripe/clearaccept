@@ -24,7 +24,10 @@ const AccountTab = () => {
   return (
     <div className="space-y-4">
       {session && (
-        <div className="bg-yellow mb-4 rounded-md p-3">
+        <div
+          className="mb-4 rounded-md p-3"
+          style={{backgroundColor: '#fff9d1'}}
+        >
           <p>You are logged in. To edit these keys, please log out first.</p>
           <button
             onClick={handleLogout}

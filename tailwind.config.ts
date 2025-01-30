@@ -20,7 +20,6 @@ const config = {
     },
     extend: {
       colors: {
-        yellow: '#fff9d1',
         blurple: 'var(--blurple)',
         'blurple-hover': 'var(--blurple-hover)',
         border: 'hsl(var(--border))',
