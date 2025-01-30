@@ -67,10 +67,14 @@ export default function SignupForm() {
             `/${settings?.language || 'en'}/onboarding${window.location.search}`
           );
         } else {
-          setError(t('errors.unable_to_create'));
+          if (res?.error?.includes('cannot be created by platforms in')) {
+            setError(t('errors.unable_to_create'));
+          } else {
+            setError(t('unexpected_error'));
+          }
         }
       } catch (error: any) {
-        setError(t('errors.unable_to_create'));
+        setError(t('unexpected_error'));
         console.error('An error occurred when signing in', error);
       }
     },

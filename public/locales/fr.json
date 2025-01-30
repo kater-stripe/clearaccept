@@ -194,5 +194,6 @@
   },
   "errors": {
     "unable_to_create": "Cette plate-forme"
-  }
+  },
+  "unexpected_error": "Une erreur inattendue s'est produite. \nA-t-il été bien fait?"
 }

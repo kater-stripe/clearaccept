@@ -194,5 +194,6 @@
   },
   "errors": {
     "unable_to_create": "This platform & account country combo is not supported."
-  }
+  },
+  "unexpected_error": "An unexpected error occurred. Has it been gated correctly?"
 }

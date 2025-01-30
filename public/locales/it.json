@@ -194,5 +194,6 @@
   },
   "errors": {
     "unable_to_create": "Questa piattaforma"
-  }
+  },
+  "unexpected_error": "Si è verificato un errore imprevisto. \nÈ stato recintato correttamente?"
 }

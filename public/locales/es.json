@@ -194,5 +194,6 @@
   },
   "errors": {
     "unable_to_create": "Esta plataforma"
-  }
+  },
+  "unexpected_error": "Se produjo un error inesperado. \n¿Ha sido cerrado correctamente?"
 }

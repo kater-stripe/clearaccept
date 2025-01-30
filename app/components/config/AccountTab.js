@@ -2,8 +2,10 @@ import {defaultDemoSettings} from '@/app/config/config';
 import {getEnv} from '@/app/config/customizationConfig';
 import {useConfigContext} from '@/app/contexts/ConfigContext';
 import {useEffect, useState} from 'react';
+import {useSession, signOut} from 'next-auth/react';
 
 const AccountTab = () => {
+  const {data: session} = useSession();
   const {settings, updateSetting} = useConfigContext();
   const [defaultPk, setDefaultPk] = useState('');
 
@@ -13,8 +15,25 @@ const AccountTab = () => {
     });
   }, [settings]);
 
+  const handleLogout = () => {
+    signOut({
+      callbackUrl: `${new URL(window.location.href).origin}/${settings?.language}/signup`,
+    });
+  };
+
   return (
     <div className="space-y-4">
+      {session && (
+        <div className="bg-yellow mb-4 rounded-md p-3">
+          <p>You are logged in. To edit these keys, please log out first.</p>
+          <button
+            onClick={handleLogout}
+            className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white"
+          >
+            Logout
+          </button>
+        </div>
+      )}
       {[
         {label: 'Stripe Publishable Key', key: 'stripePublishableKey'},
         {label: 'Stripe Secret Key', key: 'stripeSecretKey'},
@@ -38,6 +57,7 @@ const AccountTab = () => {
             }}
             placeholder="Enter to override .env value"
             className="w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+            disabled={session ? true : false}
           />
         </div>
       ))}

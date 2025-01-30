@@ -194,5 +194,6 @@
   },
   "errors": {
     "unable_to_create": "Diese Plattform"
-  }
+  },
+  "unexpected_error": "Ein unerwarteter Fehler ist aufgetreten. \nWurde es richtig geschaltet?"
 }
