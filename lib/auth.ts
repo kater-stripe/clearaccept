@@ -14,56 +14,64 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async signIn({user}) {
-      // Ensure the user exists on Stripe
       console.log('Signing in user', user);
-
       return true;
     },
 
-    async session({session}) {
+    async session({session, token}) {
       const now = new Date();
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
-      let stripeAccount;
-      const balance = {available: 0, pending: 0};
-      let charges = [];
-      let mtdEarnings = 0;
-
       try {
+        console.log('start');
         const stripe = initializeStripe(
           new Headers(
             session.user.name ? {'demo-stripesecretkey': session.user.name} : {}
           )
         );
-        const accountList = await stripe.accounts.list({limit: 100});
-        stripeAccount = accountList.data.find(
-          (account) => account.email === session.user?.email
-        );
+        console.log('end');
 
-        // Balance
-        const accountBalance = await stripe.balance.retrieve({
-          stripeAccount: stripeAccount?.id,
-        });
-        balance.available = accountBalance.available.reduce(
-          (accum, curr) => accum + curr.amount,
-          0
-        );
-        balance.pending = accountBalance.pending.reduce(
-          (accum, curr) => accum + curr.amount,
-          0
-        );
+        console.log('start');
 
-        // Charge list
-        const accountCharges = await stripe.charges.list(
-          {limit: 100, expand: ['data.balance_transaction']},
-          {
-            stripeAccount: stripeAccount?.id,
-          }
-        );
-        charges = accountCharges.data
+        const [stripeAccount, accountBalance, accountCharges] =
+          await Promise.all([
+            stripe.accounts.retrieve({
+              stripeAccount: token.sub,
+            }),
+            stripe.balance.retrieve({
+              stripeAccount: token.sub,
+            }),
+            stripe.charges.list(
+              {limit: 50, expand: ['data.balance_transaction']},
+              {
+                stripeAccount: token.sub,
+              }
+            ),
+          ]);
+
+        console.log(stripeAccount, accountBalance, accountCharges);
+        console.log('end');
+
+        if (!stripeAccount) {
+          throw 'Could not retrieve Stripe account for user';
+        }
+
+        const balance = {
+          available: accountBalance.available.reduce(
+            (accum, curr) => accum + curr.amount,
+            0
+          ),
+          pending: accountBalance.pending.reduce(
+            (accum, curr) => accum + curr.amount,
+            0
+          ),
+        };
+
+        const charges = accountCharges.data
           .filter((charge) => charge.status === 'succeeded')
           .slice(0, 3);
-        mtdEarnings = accountCharges.data
+
+        const mtdEarnings = accountCharges.data
           .filter(
             (charge) =>
               charge.status === 'succeeded' &&
@@ -75,27 +83,24 @@ export const authOptions: AuthOptions = {
               acc,
             0
           );
+
+        session.user.stripeAccount = stripeAccount;
+        session.user.pendingBalance = balance.pending;
+        session.user.availableBalance = balance.available;
+        session.user.name =
+          stripeAccount?.business_profile?.name || 'Instructor';
+        session.user.charges = charges;
+        session.user.mtdEarnings = mtdEarnings;
+
+        console.log(
+          `Got session for user ${session.user?.email} and stripe account ${stripeAccount.id}`
+        );
+
+        return session;
       } catch (err) {
         console.error('Could not retrieve stripe account for user', err);
         throw err;
       }
-
-      if (!stripeAccount) {
-        throw 'Could not retrieve Stripe account for user';
-      }
-
-      session.user.stripeAccount = stripeAccount;
-      session.user.pendingBalance = balance.pending;
-      session.user.availableBalance = balance.available;
-      session.user.name = stripeAccount?.business_profile?.name || 'Instructor';
-      session.user.charges = charges;
-      session.user.mtdEarnings = mtdEarnings;
-
-      console.log(
-        `Got session for user ${session.user?.email} and stripe account ${stripeAccount.id}`
-      );
-
-      return session;
     },
   },
   providers: [
@@ -155,7 +160,6 @@ export const authOptions: AuthOptions = {
             return null;
           }
 
-          // See if they exist on the platform
           const stripe = initializeStripe(
             new Headers({'demo-stripesecretkey': credentials.stripe_sk})
           );
@@ -192,7 +196,6 @@ export const authOptions: AuthOptions = {
         }
 
         try {
-          // Register the Stripe account
           const stripe = initializeStripe(
             new Headers({'demo-stripesecretkey': credentials.stripe_sk})
           );
@@ -203,82 +206,69 @@ export const authOptions: AuthOptions = {
             fees: {payer: 'application'},
             requirement_collection: 'application',
             stripe_dashboard: {
-              type: 'none' as const, // The connected account will not have access to dashboard
+              type: 'none' as const,
             },
           };
 
           console.log('Creating stripe account for the email', email);
 
           const capabilities: any = {
-            card_payments: {
-              requested: true,
-            },
-            transfers: {
-              requested: true,
-            },
+            card_payments: {requested: true},
+            transfers: {requested: true},
           };
 
-          switch (country) {
-            case 'AT':
-            case 'BE':
-            case 'HR':
-            case 'CY':
-            case 'EE':
-            case 'FI':
-            case 'FR':
-            case 'DE':
-            case 'GR':
-            case 'IE':
-            case 'IT':
-            case 'LV':
-            case 'LT':
-            case 'LU':
-            case 'MT':
-            case 'NL':
-            case 'PT':
-            case 'SK':
-            case 'SI':
-            case 'ES':
-              if (
-                [
-                  'AT',
-                  'BE',
-                  'HR',
-                  'CY',
-                  'EE',
-                  'FI',
-                  'FR',
-                  'DE',
-                  'GR',
-                  'IE',
-                  'IT',
-                  'LV',
-                  'LT',
-                  'LU',
-                  'MT',
-                  'NL',
-                  'PT',
-                  'SK',
-                  'SI',
-                  'ES',
-                ].includes(platformAccount.country || '')
-              ) {
-                capabilities['card_issuing'] = {requested: true};
-              }
-              break;
-            case 'GB':
-              if (platformAccount.country == 'GB') {
-                capabilities['card_issuing'] = {requested: true};
-              }
-              break;
-            case 'US':
-              if (platformAccount.country === 'US') {
-                capabilities['treasury'] = {requested: true};
-                capabilities['card_issuing'] = {requested: true};
-              }
-              break;
-            default:
-              break;
+          if (
+            [
+              'AT',
+              'BE',
+              'HR',
+              'CY',
+              'EE',
+              'FI',
+              'FR',
+              'DE',
+              'GR',
+              'IE',
+              'IT',
+              'LV',
+              'LT',
+              'LU',
+              'MT',
+              'NL',
+              'PT',
+              'SK',
+              'SI',
+              'ES',
+            ].includes(country) &&
+            [
+              'AT',
+              'BE',
+              'HR',
+              'CY',
+              'EE',
+              'FI',
+              'FR',
+              'DE',
+              'GR',
+              'IE',
+              'IT',
+              'LV',
+              'LT',
+              'LU',
+              'MT',
+              'NL',
+              'PT',
+              'SK',
+              'SI',
+              'ES',
+            ].includes(platformAccount.country || '')
+          ) {
+            capabilities['card_issuing'] = {requested: true};
+          } else if (country === 'GB' && platformAccount.country === 'GB') {
+            capabilities['card_issuing'] = {requested: true};
+          } else if (country === 'US' && platformAccount.country === 'US') {
+            capabilities['treasury'] = {requested: true};
+            capabilities['card_issuing'] = {requested: true};
           }
 
           const account = await stripe.accounts.create({
@@ -289,8 +279,9 @@ export const authOptions: AuthOptions = {
             email,
           });
 
-          if (country == 'US' && platformAccount.country === 'US') {
-            await stripe.treasury.financialAccounts.create(
+          let financialAccount = null;
+          if (country === 'US' && platformAccount.country === 'US') {
+            financialAccount = await stripe.treasury.financialAccounts.create(
               {
                 supported_currencies: ['usd'],
               },
@@ -303,7 +294,7 @@ export const authOptions: AuthOptions = {
           return {
             id: account.id,
             email,
-            name: credentials.stripe_sk, // actually the stripe sk
+            name: credentials.stripe_sk,
           };
         } catch (error: any) {
           console.log(
