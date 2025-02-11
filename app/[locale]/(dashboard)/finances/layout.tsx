@@ -19,10 +19,6 @@ export default function FinancesLayout({
   } = useAccount();
   const {settings} = useConfigContext();
 
-  if (!account || useAccountError) {
-    return <></>;
-  }
-
   const displayIssuing =
     !useAccountError &&
     !accountLoading &&

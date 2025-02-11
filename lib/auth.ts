@@ -23,15 +23,11 @@ export const authOptions: AuthOptions = {
       const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
       try {
-        console.log('start');
         const stripe = initializeStripe(
           new Headers(
             session.user.name ? {'demo-stripesecretkey': session.user.name} : {}
           )
         );
-        console.log('end');
-
-        console.log('start');
 
         const [stripeAccount, accountBalance, accountCharges] =
           await Promise.all([
@@ -48,9 +44,6 @@ export const authOptions: AuthOptions = {
               }
             ),
           ]);
-
-        console.log(stripeAccount, accountBalance, accountCharges);
-        console.log('end');
 
         if (!stripeAccount) {
           throw 'Could not retrieve Stripe account for user';
@@ -125,10 +118,20 @@ export const authOptions: AuthOptions = {
             'demo-stripesecretkey': credentials?.stripe_sk,
           });
           const stripe = initializeStripe(headers);
-          const accountList = await stripe.accounts.list({limit: 100});
-          const account = accountList.data.find(
-            (account) => account.email === email
-          );
+
+          // Accounts are not queryable. Workaround: user customer metadata as a mapping to accounts until v2 is available
+          const customerMapping = await stripe.customers.list({
+            limit: 1,
+            email,
+          });
+          if (!customerMapping.data.length) {
+            return null;
+          }
+
+          const account = await stripe.accounts.retrieve({
+            stripeAccount:
+              customerMapping.data[0]?.metadata?.connectedAccountId,
+          });
           if (!account) {
             return null;
           }
@@ -277,6 +280,14 @@ export const authOptions: AuthOptions = {
             capabilities,
             country,
             email,
+          });
+
+          // Accounts are not queryable. Workaround: user customer metadata as a mapping to accounts until v2 is available
+          await stripe.customers.create({
+            email,
+            metadata: {
+              connectedAccountId: account.id,
+            },
           });
 
           let financialAccount = null;
