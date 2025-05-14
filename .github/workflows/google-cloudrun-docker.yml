@@ -36,6 +36,8 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: 'actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332' # actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # Configure Workload Identity Federation and generate an access token.
       #
@@ -71,6 +73,13 @@ jobs:
           touch .env
           echo "${{ env.ENV_FILE }}" >> .env
           echo "NEXTAUTH_URL=${{ github.event.inputs.subdomain }}.stripedemos.com" >> .env
+
+      - name: 'Generate version.txt'
+        run: |-
+          LAST_INCORPORATED_MAIN_COMMIT=$(git rev-parse origin/main)
+          echo "Latest incorporated main branch commit: ${LAST_INCORPORATED_MAIN_COMMIT}" > ./public/version.txt
+          echo "Latest incorporated main branch commit date: $(git log -1 --format=%cd ${LAST_INCORPORATED_MAIN_COMMIT})" >> ./public/version.txt
+          echo "Base environment: ${{ github.event.inputs.environment }}" >> ./public/version.txt
 
       - name: 'Build and Push Container'
         run: |-
