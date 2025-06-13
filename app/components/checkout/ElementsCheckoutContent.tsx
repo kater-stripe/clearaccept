@@ -74,7 +74,7 @@ export default function ElementsCheckoutContent() {
       setIsProcessing(true);
 
       try {
-        const {data} = await fetchClient.post('/api/payment-intent', {
+        const {data} = await fetchClient.post('/api/payment-intents', {
           total: subtotal + tax,
         });
 

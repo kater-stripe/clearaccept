@@ -21,7 +21,7 @@ export default function Instructors() {
         <h1 className="flex-1 text-3xl font-bold">
           {t('dashboard.instructors.instructors')}
         </h1>
-        <Button className="gap-2 bg-[#312356] text-base font-bold shadow transition hover:shadow-md">
+        <Button className="gap-2 bg-[#312356] text-base font-bold shadow transition hover:cursor-default hover:shadow-md">
           <PlusIcon className="h-5 w-5"></PlusIcon>
           {t('dashboard.instructors.add')}
         </Button>
@@ -30,7 +30,7 @@ export default function Instructors() {
         {instructors.map((instructor) => {
           return (
             <Container
-              className="relative flex cursor-pointer flex-col items-center gap-4 transition hover:shadow-lg"
+              className="relative flex flex-col items-center gap-4 transition hover:shadow-lg"
               key={instructor.id}
             >
               <Image

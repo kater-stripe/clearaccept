@@ -22,7 +22,7 @@ const useFinancialAccount = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const {data} = await fetchClient.get('/api/financial_account');
+        const {data} = await fetchClient.get('/api/financial-accounts');
         setFinancialAccount(data.financial_account);
         setLoading(false);
       } catch (error: any) {

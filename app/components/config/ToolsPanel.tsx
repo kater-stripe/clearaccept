@@ -9,6 +9,7 @@ import TabSelector from './TabSelector';
 import AppearanceTab from './AppearanceTab';
 import AccountTab from './AccountTab';
 import {useRouter} from 'next/navigation';
+import {SeedAccountTab} from './SeedAccountTab';
 
 export default function ToolsPanel() {
   const {
@@ -56,6 +57,7 @@ export default function ToolsPanel() {
         <TabSelector activeTab={activeTab} setActiveTab={setActiveTab} />
         {activeTab === 'Appearance' && <AppearanceTab />}
         {activeTab === 'Account' && <AccountTab />}
+        {activeTab === 'SeedAccount' && <SeedAccountTab />}
 
         <button
           onClick={handleResetClick}

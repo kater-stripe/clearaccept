@@ -1,8 +1,6 @@
 import {useEffect, useMemo, useState, useCallback} from 'react';
 import {type StripeConnectInstance} from '@stripe/connect-js';
 import {loadConnectAndInitialize} from '@stripe/connect-js';
-import {useSettings} from '@/app/hooks/useSettings';
-import type {LocaleType} from '@/types/settings';
 import {useConfigContext} from '../contexts/ConfigContext';
 import {convertToLocale} from '../utils/helpers';
 import fetchClient from '../utils/fetchClient';
@@ -12,7 +10,6 @@ export const useConnect = (demoOnboarding: boolean) => {
   const [stripeConnectInstance, setStripeConnectInstance] =
     useState<StripeConnectInstance | null>(null);
 
-  // const settings = useSettings();
   const {settings} = useConfigContext();
   const locale = convertToLocale(settings?.language || 'en');
 

@@ -5,13 +5,9 @@ import Stripe from 'stripe';
 import initializeStripe from '@/app/utils/stripe/initializeStripe';
 
 export const authOptions: AuthOptions = {
-  session: {
-    strategy: 'jwt',
-  },
+  session: {strategy: 'jwt'},
 
-  pages: {
-    signIn: '/login',
-  },
+  pages: {signIn: '/login'},
   callbacks: {
     async signIn({user}) {
       console.log('Signing in user', user);
@@ -31,17 +27,11 @@ export const authOptions: AuthOptions = {
 
         const [stripeAccount, accountBalance, accountCharges] =
           await Promise.all([
-            stripe.accounts.retrieve({
-              stripeAccount: token.sub,
-            }),
-            stripe.balance.retrieve({
-              stripeAccount: token.sub,
-            }),
+            stripe.accounts.retrieve({stripeAccount: token.sub}),
+            stripe.balance.retrieve({stripeAccount: token.sub}),
             stripe.charges.list(
               {limit: 50, expand: ['data.balance_transaction']},
-              {
-                stripeAccount: token.sub,
-              }
+              {stripeAccount: token.sub}
             ),
           ]);
 
@@ -100,11 +90,7 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       id: 'login',
       name: 'Email & Password',
-      credentials: {
-        email: {},
-        password: {},
-        stripe_sk: {},
-      },
+      credentials: {email: {}, password: {}, stripe_sk: {}},
       async authorize(credentials, req) {
         try {
           const email = credentials?.email;
@@ -150,10 +136,7 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       id: 'loginas',
       name: 'Account ID',
-      credentials: {
-        accountId: {},
-        stripe_sk: {},
-      },
+      credentials: {accountId: {}, stripe_sk: {}},
       async authorize(credentials, req) {
         try {
           const stripeAccountId = credentials?.accountId;
@@ -182,11 +165,7 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       id: 'signup',
       name: 'Email & Password',
-      credentials: {
-        email: {},
-        password: {},
-        stripe_sk: {},
-      },
+      credentials: {email: {}, password: {}, stripe_sk: {}},
       async authorize(credentials, req) {
         console.log('Signing up');
 
@@ -208,9 +187,7 @@ export const authOptions: AuthOptions = {
             losses: {payments: 'application'},
             fees: {payer: 'application'},
             requirement_collection: 'application',
-            stripe_dashboard: {
-              type: 'none' as const,
-            },
+            stripe_dashboard: {type: 'none' as const},
           };
 
           console.log('Creating stripe account for the email', email);
@@ -285,28 +262,20 @@ export const authOptions: AuthOptions = {
           // Accounts are not queryable. Workaround: user customer metadata as a mapping to accounts until v2 is available
           await stripe.customers.create({
             email,
-            metadata: {
-              connectedAccountId: account.id,
-            },
+            metadata: {connectedAccountId: account.id},
           });
 
           let financialAccount = null;
           if (country === 'US' && platformAccount.country === 'US') {
             financialAccount = await stripe.treasury.financialAccounts.create(
-              {
-                supported_currencies: ['usd'],
-              },
+              {supported_currencies: ['usd']},
               {stripeAccount: account.id}
             );
           }
 
           console.log('Account has been created with id', account.id);
 
-          return {
-            id: account.id,
-            email,
-            name: credentials.stripe_sk,
-          };
+          return {id: account.id, email, name: credentials.stripe_sk};
         } catch (error: any) {
           console.log(
             'Got an error authorizing and creating a user during signup',

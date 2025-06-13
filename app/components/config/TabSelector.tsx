@@ -1,4 +1,6 @@
-import {Cog6ToothIcon, KeyIcon} from '@heroicons/react/24/outline';
+import {Cog6ToothIcon, KeyIcon, UserIcon} from '@heroicons/react/24/outline';
+import {useSession} from 'next-auth/react';
+import {useEffect} from 'react';
 
 interface Props {
   activeTab: string;
@@ -6,10 +8,25 @@ interface Props {
 }
 
 const TabSelector = ({activeTab, setActiveTab}: Props) => {
+  const {data: session} = useSession();
+
   const tabs = [
     {name: 'Appearance', href: '#', icon: Cog6ToothIcon},
     {name: 'Account', href: '#', icon: KeyIcon},
+    ...(session ? [{name: 'SeedAccount', href: '#', icon: UserIcon}] : []),
   ];
+
+  useEffect(() => {
+    if (session) {
+      return;
+    }
+
+    if (activeTab !== 'SeedUser') {
+      return;
+    }
+
+    setActiveTab('Appearance');
+  }, [session]);
 
   return (
     <div className="mb-4 block">

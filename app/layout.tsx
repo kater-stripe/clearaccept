@@ -51,11 +51,9 @@ export default function RootLayout({
         )}
       >
         <NextAuthProvider>
-          {/* <SettingsProvider> */}
           <EmbeddedComponentBorderProvider>
             <ClientLayout>{children}</ClientLayout>
           </EmbeddedComponentBorderProvider>
-          {/* </SettingsProvider> */}
         </NextAuthProvider>
       </body>
     </html>
