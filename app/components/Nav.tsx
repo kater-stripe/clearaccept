@@ -15,10 +15,8 @@ import {
 } from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
-import PoseRed from '@/public/pose_red.svg';
 import {useTranslation} from 'react-i18next';
 import {useConfigContext} from '../contexts/ConfigContext';
-import {useAccount} from '../hooks/useAccount';
 
 interface NavigationMenuItem {
   label: string;
