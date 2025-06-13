@@ -2,7 +2,7 @@
 
 import SubNav from '@/app/components/SubNav';
 import {useConfigContext} from '@/app/contexts/ConfigContext';
-import {useAccount} from '@/app/hooks/useAccount';
+import {useAccount} from '@/app/contexts/AccountContext';
 import {useTranslation} from 'react-i18next';
 
 export default function FinancesLayout({

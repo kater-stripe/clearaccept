@@ -8,7 +8,7 @@ import {
 } from '@stripe/react-connect-js';
 import Container from '@/app/components/Container';
 import EmbeddedComponentContainer from '@/app/components/EmbeddedComponentContainer';
-import {useAccount} from '@/app/hooks/useAccount';
+import {useAccount} from '@/app/contexts/AccountContext';
 import {useTranslation} from 'react-i18next';
 import fetchClient from '@/app/utils/fetchClient';
 import {Spinner} from '@/app/components/ui';
@@ -21,6 +21,7 @@ const useFinancialAccount = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+
       try {
         const {data} = await fetchClient.get('/api/financial-accounts');
         setFinancialAccount(data.financial_account);

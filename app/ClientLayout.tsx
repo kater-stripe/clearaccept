@@ -5,6 +5,7 @@ import {ConfigProvider, useConfigContext} from '@/app/contexts/ConfigContext';
 import ToolsPanel from './components/config/ToolsPanel';
 import ThemeOverrides from './ThemeOverrides';
 import UmamiTracker from './UmamiTracker';
+import {AccountProvider} from './contexts/AccountContext';
 
 interface AppContentProps {
   children: React.ReactNode;
@@ -74,7 +75,9 @@ export default function ClientLayout({children}: ClientLayoutProps) {
     <Suspense>
       <ConfigProvider>
         <ThemeOverrides />
-        <AppContent>{children}</AppContent>
+        <AccountProvider>
+          <AppContent>{children}</AppContent>
+        </AccountProvider>
       </ConfigProvider>
     </Suspense>
   );

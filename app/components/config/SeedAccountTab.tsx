@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
 import {Spinner} from '../ui';
 import fetchClient from '@/app/utils/fetchClient';
-import {useAccount} from '@/app/hooks/useAccount';
+import {useAccount} from '@/app/contexts/AccountContext';
 
 export const SeedAccountTab = () => {
   const [isSeeding, setIsSeeding] = useState(false);
