@@ -46,8 +46,8 @@ export async function POST(request: NextRequest) {
       }
 
       const [firstName, lastName] = [
-        fakerLocales.faker.person.firstName(),
-        fakerLocales.faker.person.lastName(),
+        faker.person.firstName(),
+        faker.person.lastName(),
       ];
 
       const cardholder = await stripe.issuing.cardholders.create(
@@ -61,6 +61,9 @@ export async function POST(request: NextRequest) {
               state,
             },
           },
+          phone_number: faker.phone.number({
+            style: 'international'
+          }),
           individual: {
             first_name: firstName,
             last_name: lastName,
