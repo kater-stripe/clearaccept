@@ -1,4 +1,14 @@
 {
+  "products": {
+    "pro-membership": {
+      "name": "Membresía Pro",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Marketing mejorado",
+        "advanced-analytics": "Análisis avanzados",
+        "priority-support": "Soporte prioritario"
+      }
+    }
+  },
   "auth": {
     "login": {
       "email": "Correo electrónico",
@@ -7,11 +17,11 @@
       "continue": "Continuar",
       "loading": "Cargando...",
       "dont_have_an_account": "¿No tienes una cuenta?",
-      "sign_up": "Regístrate",
+      "sign_up": "Registrarse",
       "login": "Iniciar sesión"
     },
     "loginas": {
-      "select": "Seleccionar cuenta",
+      "select": "Seleccionar Cuenta",
       "dont_have_account": "¿No tienes una cuenta?",
       "register": "Registrarse",
       "acct_id": "ID de cuenta",
@@ -20,18 +30,18 @@
       "loading": "Enviando..."
     },
     "signup": {
-      "sign_up": "Regístrate",
+      "sign_up": "Registrarse",
       "already_have_account": "¿Ya tienes una cuenta?",
       "login": "Iniciar sesión",
       "country": "País",
       "email": "Correo electrónico"
     },
     "layout": {
-      "manage": "Gestiona tu estudio con facilidad.",
+      "manage": "Administra tu estudio con facilidad.",
       "pose_is_leading": "Pose es la plataforma líder mundial de salud y bienestar.",
-      "sign_up": "Regístrate",
+      "sign_up": "Registrarse",
       "fill_form": "Completa el formulario para configurar tu cuenta.",
-      "contact": "Contactar con soporte"
+      "contact": "Contactar soporte"
     }
   },
   "countries": {
@@ -98,7 +108,7 @@
       "instructors": "Instructores",
       "add": "Añadir instructor",
       "class": "clase",
-      "es": "es",
+      "es": "s",
       "this_week": "esta semana"
     },
     "payments": {
@@ -112,18 +122,18 @@
     "performance": "Rendimiento",
     "settings": {
       "my_studio": "Mi estudio",
-      "settings": "Ajustes",
+      "settings": "Configuración",
       "payment_methods": "Métodos de pago",
-      "sign_out": "desconectar",
+      "sign_out": "Cerrar sesión",
       "basic_details": "Detalles básicos",
-      "studio_name": "Nombre de estudio",
-      "practice": "Practice el estudio de yoga",
+      "studio_name": "Nombre del estudio",
+      "practice": "Practice Yoga Studio",
       "email": "Correo electrónico",
-      "account_settings": "Configuraciones de la cuenta",
-      "manage_account": "Administrar la configuración de cuentas y negocios.",
-      "payment_methods_add": "Agregue y administre sus métodos de pago.",
+      "account_settings": "Configuración de cuenta",
+      "manage_account": "Administrar configuración de cuenta y negocio.",
+      "payment_methods_add": "Añadir y gestionar tus métodos de pago.",
       "tax_settings": "Configuración de impuestos",
-      "tax_account": "Administrar la configuración y los registros de impuestos."
+      "tax_account": "Gestionar configuración de impuestos y registros."
     },
     "finances": {
       "financial_account": "Cuenta financiera",
@@ -131,6 +141,25 @@
       "cards": "Tarjetas",
       "finances": "Finanzas",
       "overview": "Resumen"
+    },
+    "membership": {
+      "membership": "Membresía",
+      "enroll": "Inscribirse",
+      "perTimeUnits": {
+        "day": "/ día",
+        "week": "/ semana",
+        "month": "/ mes",
+        "year": "/ año"
+      },
+      "price": "Precio",
+      "features": "Características",
+      "payment_method": "Método de pago",
+      "stripe_balance": "Saldo de Stripe",
+      "enroll_now": "Inscribirse ahora",
+      "enrolling": "Inscribiéndose...",
+      "enrolled": "¡Inscrito!",
+      "disclaimer": "Al presionar '{{enroll_now}}', autorizas un cargo recurrente de {{amount}} {{interval}} contra tu saldo de Stripe.",
+      "insufficient_balance": "Tu saldo de Stripe de {{balance}} no es suficiente para completar la inscripción."
     }
   },
   "class": {
@@ -138,7 +167,7 @@
     "yoga_intermediate": "Yoga Básico - Intermedio",
     "mindful": "Movimiento Consciente",
     "stretch": "Estiramiento y Restauración",
-    "yoga_core": "Yoga de Fuerza Central"
+    "yoga_core": "Yoga de Fortalecimiento Central"
   },
   "components": {
     "month_to_date": {
@@ -152,8 +181,8 @@
       "today": "Horario de hoy"
     },
     "balance": {
-      "total": "Saldo total",
-      "payout": "Pagar al banco",
+      "total": "Balance total",
+      "payout": "Enviar a banco",
       "pending": "pendiente"
     },
     "recent_payments": {
@@ -172,7 +201,8 @@
     "instructors": "Instructores",
     "payments": "Pagos",
     "payouts": "Pagos",
-    "finances": "Finanzas"
+    "finances": "Finanzas",
+    "membership": "Membresía"
   },
   "checkout": {
     "payment_status": {
@@ -181,19 +211,19 @@
       "processing": "Tu pago está siendo procesado...",
       "requires_payment_method": "Tu pago no fue exitoso. Por favor, selecciona otro método de pago e inténtalo de nuevo."
     },
-    "address_header": "Dirección del cliente",
-    "payments_header": "Detalles del pago",
+    "address_header": "Dirección del Cliente",
+    "payments_header": "Detalles del Pago",
     "elements": {
-      "orderSummary": "Resumen del pedido",
-      "classCharge": "Cargo de la clase",
+      "orderSummary": "Resumen del Pedido",
+      "classCharge": "Cargo por Clase",
       "tax": "Impuesto",
       "total": "Total",
-      "chargeCustomer": "Cobrar al cliente",
+      "chargeCustomer": "Cobrar al Cliente",
       "fee": "Tarifa"
     }
   },
   "errors": {
-    "unable_to_create": "Esta plataforma"
+    "unable_to_create": "Esta combinación de plataforma y país de cuenta no está soportada."
   },
-  "unexpected_error": "Se produjo un error inesperado. \n¿Ha sido cerrado correctamente?"
+  "unexpected_error": "Ha ocurrido un error inesperado. ¿Ha sido correctamente restringido?"
 }

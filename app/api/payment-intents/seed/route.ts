@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
         await stripe.paymentIntents.create(
           {
             amount,
-            currency: 'usd',
+            currency: connectedAccount.default_currency ?? 'usd',
             customer: faker.helpers.arrayElement(customers).id,
             payment_method: paymentMethod.id,
             confirm: true,

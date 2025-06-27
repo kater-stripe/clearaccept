@@ -4,10 +4,10 @@ const config = {
   darkMode: ['class'],
   important: true,
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    './pages/**/*.{js,jsx,ts,tsx}',
+    './components/**/*.{js,jsx,ts,tsx}',
+    './app/**/*.{js,jsx,ts,tsx}',
+    './src/**/*.{js,jsx,ts,tsx}',
   ],
   prefix: '',
   theme: {
@@ -81,7 +81,7 @@ const config = {
       sans: ['Sohne', 'ui-sans-serif', 'system-ui', 'sans-serif'],
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/forms')],
 } satisfies Config;
 
 export default config;

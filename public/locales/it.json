@@ -1,4 +1,14 @@
 {
+  "products": {
+    "pro-membership": {
+      "name": "Abbonamento Pro",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Marketing avanzato",
+        "advanced-analytics": "Analisi avanzate",
+        "priority-support": "Supporto prioritario"
+      }
+    }
+  },
   "auth": {
     "login": {
       "email": "Email",
@@ -28,7 +38,7 @@
     },
     "layout": {
       "manage": "Gestisci il tuo studio con facilità.",
-      "pose_is_leading": "Pose è la piattaforma leader mondiale per la salute e il benessere.",
+      "pose_is_leading": "Pose è la piattaforma leader mondiale per salute e benessere.",
       "sign_up": "Registrati",
       "fill_form": "Compila il modulo per configurare il tuo account.",
       "contact": "Contatta l'assistenza"
@@ -76,7 +86,7 @@
     "singapore": "Singapore",
     "slovakia": "Slovacchia",
     "slovenia": "Slovenia",
-    "south_africa": "Sudafrica",
+    "south_africa": "Sud Africa",
     "spain": "Spagna",
     "sweden": "Svezia",
     "switzerland": "Svizzera",
@@ -106,43 +116,62 @@
       "recent": "Pagamenti recenti"
     },
     "payouts": {
-      "payouts": "Pagamenti"
+      "payouts": "Pagamenti in uscita"
     },
     "welcome": "Benvenuto, {{name}}!",
-    "performance": "Prestazioni",
+    "performance": "Performance",
     "settings": {
       "my_studio": "Il mio studio",
       "settings": "Impostazioni",
       "payment_methods": "Metodi di pagamento",
-      "sign_out": "disconnessione",
+      "sign_out": "Esci",
       "basic_details": "Dettagli di base",
-      "studio_name": "Nome in studio",
-      "practice": "Pratica lo studio di yoga",
-      "email": "E-mail",
-      "account_settings": "Impostazioni dell'account",
-      "manage_account": "Gestisci l'account e le impostazioni aziendali.",
+      "studio_name": "Nome dello studio",
+      "practice": "Practice Yoga Studio",
+      "email": "Email",
+      "account_settings": "Impostazioni account",
+      "manage_account": "Gestisci le impostazioni dell'account e dell'attività.",
       "payment_methods_add": "Aggiungi e gestisci i tuoi metodi di pagamento.",
       "tax_settings": "Impostazioni fiscali",
-      "tax_account": "Gestire le impostazioni e le registrazioni fiscali."
+      "tax_account": "Gestisci impostazioni fiscali e registrazioni."
     },
     "finances": {
-      "financial_account": "Conto finanziario",
+      "financial_account": "Account finanziario",
       "transactions": "Transazioni",
       "cards": "Carte",
       "finances": "Finanze",
       "overview": "Panoramica"
+    },
+    "membership": {
+      "membership": "Abbonamento",
+      "enroll": "Iscriviti",
+      "perTimeUnits": {
+        "day": "/ giorno",
+        "week": "/ settimana",
+        "month": "/ mese",
+        "year": "/ anno"
+      },
+      "price": "Prezzo",
+      "features": "Funzionalità",
+      "payment_method": "Metodo di pagamento",
+      "stripe_balance": "Saldo Stripe",
+      "enroll_now": "Iscriviti ora",
+      "enrolling": "Iscrizione in corso...",
+      "enrolled": "Iscritto!",
+      "disclaimer": "Premendo '{{enroll_now}}', autorizzi un addebito ricorrente di {{amount}} {{interval}} sul tuo saldo Stripe.",
+      "insufficient_balance": "Il tuo saldo Stripe di {{balance}} non è sufficiente per completare l'iscrizione."
     }
   },
   "class": {
-    "gentle": "Flusso Dolce",
+    "gentle": "Flusso Delicato",
     "yoga_intermediate": "Yoga Base - Intermedio",
     "mindful": "Movimento Consapevole",
-    "stretch": "Stretching e Rigenerazione",
-    "yoga_core": "Yoga Core Strength"
+    "stretch": "Stretching e Recupero",
+    "yoga_core": "Yoga Rinforzo Core"
   },
   "components": {
     "month_to_date": {
-      "month_to_date": "Mese ad oggi"
+      "month_to_date": "Mese fino ad oggi"
     },
     "customers": {
       "customers": "Clienti"
@@ -153,8 +182,8 @@
     },
     "balance": {
       "total": "Saldo totale",
-      "payout": "Paga sul conto bancario",
-      "pending": "in sospeso"
+      "payout": "Trasferisci alla banca",
+      "pending": "in attesa"
     },
     "recent_payments": {
       "recent": "Pagamenti recenti",
@@ -171,29 +200,30 @@
     "classes": "Lezioni",
     "instructors": "Istruttori",
     "payments": "Pagamenti",
-    "payouts": "Pagamenti",
-    "finances": "Finanze"
+    "payouts": "Pagamenti in uscita",
+    "finances": "Finanze",
+    "membership": "Abbonamento"
   },
   "checkout": {
     "payment_status": {
-      "error": "Si è verificato un errore con il tuo pagamento.",
-      "succeeded": "Il pagamento è stato effettuato con successo!",
-      "processing": "Il tuo pagamento è in fase di elaborazione...",
+      "error": "Qualcosa è andato storto con il tuo pagamento.",
+      "succeeded": "Il pagamento è andato a buon fine!",
+      "processing": "Il tuo pagamento è in elaborazione...",
       "requires_payment_method": "Il tuo pagamento non è andato a buon fine. Seleziona un altro metodo di pagamento e riprova."
     },
-    "address_header": "Indirizzo del cliente",
-    "payments_header": "Dettagli del pagamento",
+    "address_header": "Indirizzo Cliente",
+    "payments_header": "Dettagli Checkout",
     "elements": {
-      "orderSummary": "Riepilogo dell'ordine",
-      "classCharge": "Costo della lezione",
+      "orderSummary": "Riepilogo Ordine",
+      "classCharge": "Costo Lezione",
       "tax": "Tasse",
       "total": "Totale",
-      "chargeCustomer": "Addebita al cliente",
-      "fee": "Tassa"
+      "chargeCustomer": "Addebita al Cliente",
+      "fee": "Commissione"
     }
   },
   "errors": {
-    "unable_to_create": "Questa piattaforma"
+    "unable_to_create": "Questa combinazione di piattaforma e paese dell'account non è supportata."
   },
-  "unexpected_error": "Si è verificato un errore imprevisto. \nÈ stato recintato correttamente?"
+  "unexpected_error": "Si è verificato un errore imprevisto. È stato configurato correttamente?"
 }

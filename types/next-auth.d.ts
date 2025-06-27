@@ -15,6 +15,8 @@ declare module 'next-auth' {
       charges: Stripe.Charge[];
       mtdEarnings: number;
       customerCount: number;
+      accountType: 'v1' | 'v2';
+      customerId: string;
     } & DefaultSession['user'];
   }
 }

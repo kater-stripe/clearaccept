@@ -1,4 +1,14 @@
 {
+  "products": {
+    "pro-membership": {
+      "name": "Pro Membership",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Enhanced marketing",
+        "advanced-analytics": "Advanced analytics",
+        "priority-support": "Priority support"
+      }
+    }
+  },
   "auth": {
     "login": {
       "email": "Email",
@@ -131,6 +141,25 @@
       "cards": "Cards",
       "finances": "Finances",
       "overview": "Overview"
+    },
+    "membership": {
+      "membership": "Membership",
+      "enroll": "Enroll",
+      "perTimeUnits": {
+        "day": "/ day",
+        "week": "/ week",
+        "month": "/ month",
+        "year": "/ year"
+      },
+      "price": "Price",
+      "features": "Features",
+      "payment_method": "Payment Method",
+      "stripe_balance": "Stripe Balance",
+      "enroll_now": "Enroll now",
+      "enrolling": "Enrolling...",
+      "enrolled": "Enrolled!",
+      "disclaimer": "By pressing '{{enroll_now}}', you authorize a recurring debit of {{amount}} {{interval}} against your Stripe balance.",
+      "insufficient_balance": "Your Stripe balance of {{balance}} is not sufficient to complete enrollment."
     }
   },
   "class": {
@@ -172,7 +201,8 @@
     "instructors": "Instructors",
     "payments": "Payments",
     "payouts": "Payouts",
-    "finances": "Finances"
+    "finances": "Finances",
+    "membership": "Membership"
   },
   "checkout": {
     "payment_status": {

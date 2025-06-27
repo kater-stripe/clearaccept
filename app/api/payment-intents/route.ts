@@ -1,3 +1,4 @@
+import initializeStripe from '@/app/utils/stripe/initializeStripe';
 import {withFallbackHeaders} from '@/app/utils/stripe/withFallbackHeaders';
 import {authOptions} from '@/lib/auth';
 import {getServerSession} from 'next-auth';
@@ -14,13 +15,6 @@ export async function POST(request: NextRequest) {
 
     const demoConfig = withFallbackHeaders(request.headers);
 
-    if (!demoConfig.stripeSecretKey) {
-      return NextResponse.json(
-        {error: 'Stripe Secret Key is not available'},
-        {status: 400}
-      );
-    }
-
     if (!demoConfig.currency) {
       return NextResponse.json(
         {error: 'Currency is not specified'},
@@ -28,8 +22,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const stripe = initializeStripe(request.headers);
+
     const session = await getServerSession(authOptions);
-    const stripe = new Stripe(demoConfig.stripeSecretKey);
 
     const paymentIntent = await stripe.paymentIntents.create(
       {

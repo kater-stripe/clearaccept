@@ -60,7 +60,7 @@ const AccountTab = () => {
               updateSetting(key, e.target.value);
             }}
             placeholder="Enter to override .env value"
-            className="w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
             disabled={session ? true : false}
           />
         </div>

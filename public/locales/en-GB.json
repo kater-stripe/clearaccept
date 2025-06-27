@@ -1,4 +1,14 @@
 {
+  "products": {
+    "pro-membership": {
+      "name": "Pro Membership",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Enhanced marketing",
+        "advanced-analytics": "Advanced analytics",
+        "priority-support": "Priority support"
+      }
+    }
+  },
   "auth": {
     "login": {
       "email": "Email",
@@ -131,6 +141,25 @@
       "cards": "Cards",
       "finances": "Finances",
       "overview": "Overview"
+    },
+    "membership": {
+      "membership": "Membership",
+      "enroll": "Enrol",
+      "perTimeUnits": {
+        "day": "/ day",
+        "week": "/ week",
+        "month": "/ month",
+        "year": "/ year"
+      },
+      "price": "Price",
+      "features": "Features",
+      "payment_method": "Payment Method",
+      "stripe_balance": "Stripe Balance",
+      "enroll_now": "Enrol now",
+      "enrolling": "Enrolling...",
+      "enrolled": "Enrolled!",
+      "disclaimer": "By pressing '{{enroll_now}}', you authorise a recurring debit of {{amount}} {{interval}} against your Stripe balance.",
+      "insufficient_balance": "Your Stripe balance of {{balance}} is not sufficient to complete enrolment."
     }
   },
   "class": {
@@ -172,7 +201,8 @@
     "instructors": "Instructors",
     "payments": "Payments",
     "payouts": "Payouts",
-    "finances": "Finances"
+    "finances": "Finances",
+    "membership": "Membership"
   },
   "checkout": {
     "payment_status": {
@@ -186,14 +216,14 @@
     "elements": {
       "orderSummary": "Order Summary",
       "classCharge": "Class Charge",
-      "tax": "VAT",
+      "tax": "Tax",
       "total": "Total",
       "chargeCustomer": "Charge Customer",
       "fee": "Fee"
     }
   },
   "errors": {
-    "unable_to_create": "This platform"
+    "unable_to_create": "This platform & account country combo is not supported."
   },
   "unexpected_error": "An unexpected error occurred. Has it been gated correctly?"
 }

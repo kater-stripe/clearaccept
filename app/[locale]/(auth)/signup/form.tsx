@@ -27,6 +27,7 @@ const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
   country: z.any(),
+  use_v2_accounts: z.boolean(),
 });
 
 export default function SignupForm() {
@@ -41,6 +42,7 @@ export default function SignupForm() {
       country: 'US',
       email: generateRandomCustomerEmail(),
       password: 'wej90@j902ji',
+      use_v2_accounts: false,
     },
   });
 
@@ -49,19 +51,20 @@ export default function SignupForm() {
       try {
         setError(null);
 
-        const signInOptions = {
+        const signUpOptions = {
           country: values.country,
           email: values.email,
           password: values.password,
           redirect: false,
           stripe_sk: undefined,
+          use_v2_accounts: settings?.useV2Accounts ?? false,
         };
 
         if (settings?.stripeSecretKey) {
-          signInOptions.stripe_sk = settings.stripeSecretKey;
+          signUpOptions.stripe_sk = settings.stripeSecretKey;
         }
 
-        const res = await signIn('signup', signInOptions);
+        const res = await signIn('signup', signUpOptions);
         if (res && res.ok) {
           router.push(
             `/${settings?.language || 'en'}/onboarding${window.location.search}`

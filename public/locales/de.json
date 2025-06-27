@@ -1,4 +1,14 @@
 {
+  "products": {
+    "pro-membership": {
+      "name": "Pro-Mitgliedschaft",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Verbessertes Marketing",
+        "advanced-analytics": "Erweiterte Analytik",
+        "priority-support": "Prioritäts-Support"
+      }
+    }
+  },
   "auth": {
     "login": {
       "email": "E-Mail",
@@ -6,13 +16,13 @@
       "password": "Passwort",
       "continue": "Weiter",
       "loading": "Lädt...",
-      "dont_have_an_account": "Sie haben noch kein Konto?",
+      "dont_have_an_account": "Noch kein Konto?",
       "sign_up": "Registrieren",
       "login": "Anmelden"
     },
     "loginas": {
       "select": "Konto auswählen",
-      "dont_have_account": "Sie haben kein Konto?",
+      "dont_have_account": "Noch kein Konto?",
       "register": "Registrieren",
       "acct_id": "Konto-ID",
       "sample_acct_id": "acct_1234567890abcdef",
@@ -21,7 +31,7 @@
     },
     "signup": {
       "sign_up": "Registrieren",
-      "already_have_account": "Sie haben bereits ein Konto?",
+      "already_have_account": "Bereits ein Konto?",
       "login": "Anmelden",
       "country": "Land",
       "email": "E-Mail"
@@ -117,28 +127,47 @@
       "sign_out": "Abmelden",
       "basic_details": "Grundlegende Details",
       "studio_name": "Studioname",
-      "practice": "Übe Yoga Studio",
+      "practice": "Practice Yoga Studio",
       "email": "E-Mail",
       "account_settings": "Kontoeinstellungen",
       "manage_account": "Konto- und Geschäftseinstellungen verwalten.",
-      "payment_methods_add": "Fügen Sie Ihre Zahlungsmethoden hinzu und verwalten Sie sie.",
+      "payment_methods_add": "Zahlungsmethoden hinzufügen und verwalten.",
       "tax_settings": "Steuereinstellungen",
-      "tax_account": "Steuereinstellungen und Registrierungen verwalten."
+      "tax_account": "Steuereinstellungen und -registrierungen verwalten."
     },
     "finances": {
       "financial_account": "Finanzkonto",
       "transactions": "Transaktionen",
       "cards": "Karten",
       "finances": "Finanzen",
-      "overview": "Übersicht"
+      "overview": "Überblick"
+    },
+    "membership": {
+      "membership": "Mitgliedschaft",
+      "enroll": "Beitreten",
+      "perTimeUnits": {
+        "day": "/ Tag",
+        "week": "/ Woche",
+        "month": "/ Monat",
+        "year": "/ Jahr"
+      },
+      "price": "Preis",
+      "features": "Funktionen",
+      "payment_method": "Zahlungsmethode",
+      "stripe_balance": "Stripe-Guthaben",
+      "enroll_now": "Jetzt beitreten",
+      "enrolling": "Beitritt läuft...",
+      "enrolled": "Beigetreten!",
+      "disclaimer": "Durch Klicken auf '{{enroll_now}}' autorisieren Sie eine wiederkehrende Abbuchung von {{amount}} {{interval}} von Ihrem Stripe-Guthaben.",
+      "insufficient_balance": "Ihr Stripe-Guthaben von {{balance}} ist nicht ausreichend, um den Beitritt abzuschließen."
     }
   },
   "class": {
     "gentle": "Sanfter Flow",
-    "yoga_intermediate": "Yoga Grundlagen - Fortgeschrittene",
+    "yoga_intermediate": "Yoga Grundlagen - Mittelstufe",
     "mindful": "Achtsame Bewegung",
-    "stretch": "Dehnen & Entspannen",
-    "yoga_core": "Yoga für die Körpermitte"
+    "stretch": "Dehnen & Erholen",
+    "yoga_core": "Yoga für Körpermitte"
   },
   "components": {
     "month_to_date": {
@@ -152,8 +181,8 @@
       "today": "Heutiger Zeitplan"
     },
     "balance": {
-      "total": "Gesamtsaldo",
-      "payout": "Auszahlung auf Bankkonto",
+      "total": "Gesamtguthaben",
+      "payout": "Auf Bankkonto auszahlen",
       "pending": "ausstehend"
     },
     "recent_payments": {
@@ -172,28 +201,29 @@
     "instructors": "Kursleiter",
     "payments": "Zahlungen",
     "payouts": "Auszahlungen",
-    "finances": "Finanzen"
+    "finances": "Finanzen",
+    "membership": "Mitgliedschaft"
   },
   "checkout": {
     "payment_status": {
-      "error": "Bei Ihrer Zahlung ist etwas schief gelaufen.",
-      "succeeded": "Die Zahlung war erfolgreich!",
-      "processing": "Ihre Zahlung wird verarbeitet...",
+      "error": "Bei Ihrer Zahlung ist ein Fehler aufgetreten.",
+      "succeeded": "Zahlung erfolgreich!",
+      "processing": "Ihre Zahlung wird bearbeitet...",
       "requires_payment_method": "Ihre Zahlung war nicht erfolgreich. Bitte wählen Sie eine andere Zahlungsmethode und versuchen Sie es erneut."
     },
     "address_header": "Kundenadresse",
-    "payments_header": "Zahlungsdetails",
+    "payments_header": "Checkout-Details",
     "elements": {
       "orderSummary": "Bestellübersicht",
       "classCharge": "Kursgebühr",
-      "tax": "Steuern",
+      "tax": "Steuer",
       "total": "Gesamt",
       "chargeCustomer": "Kunde belasten",
       "fee": "Gebühr"
     }
   },
   "errors": {
-    "unable_to_create": "Diese Plattform"
+    "unable_to_create": "Diese Kombination aus Plattform und Kontolande wird nicht unterstützt."
   },
-  "unexpected_error": "Ein unerwarteter Fehler ist aufgetreten. \nWurde es richtig geschaltet?"
+  "unexpected_error": "Ein unerwarteter Fehler ist aufgetreten. Ist es richtig freigegeben worden?"
 }

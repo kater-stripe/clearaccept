@@ -1,4 +1,14 @@
 {
+  "products": {
+    "pro-membership": {
+      "name": "プロメンバーシップ",
+      "marketing_feature_list": {
+        "enhanced-marketing": "マーケティング機能強化",
+        "advanced-analytics": "高度な分析機能",
+        "priority-support": "優先サポート"
+      }
+    }
+  },
   "auth": {
     "login": {
       "email": "メールアドレス",
@@ -11,7 +21,7 @@
       "login": "ログイン"
     },
     "loginas": {
-      "select": "アカウントを選択",
+      "select": "アカウント選択",
       "dont_have_account": "アカウントをお持ちでないですか？",
       "register": "登録する",
       "acct_id": "アカウントID",
@@ -28,9 +38,9 @@
     },
     "layout": {
       "manage": "簡単にスタジオを管理できます。",
-      "pose_is_leading": "Poseは世界をリードする健康とウェルネスのプラットフォームです。",
+      "pose_is_leading": "Poseは世界をリードする健康・ウェルネスプラットフォームです。",
       "sign_up": "登録する",
-      "fill_form": "フォームに記入してアカウントを設定してください。",
+      "fill_form": "アカウント設定のためにフォームに記入してください。",
       "contact": "サポートに連絡する"
     }
   },
@@ -106,7 +116,7 @@
       "recent": "最近の支払い"
     },
     "payouts": {
-      "payouts": "支払い"
+      "payouts": "払い出し"
     },
     "welcome": "ようこそ、{{name}}さん！",
     "performance": "パフォーマンス",
@@ -114,23 +124,42 @@
       "my_studio": "マイスタジオ",
       "settings": "設定",
       "payment_methods": "支払い方法",
-      "sign_out": "サインアウト",
-      "basic_details": "基本的な詳細",
+      "sign_out": "ログアウト",
+      "basic_details": "基本情報",
       "studio_name": "スタジオ名",
-      "practice": "ヨガスタジオの練習",
-      "email": "電子メール",
+      "practice": "Practice Yoga Studio",
+      "email": "メールアドレス",
       "account_settings": "アカウント設定",
       "manage_account": "アカウントとビジネス設定を管理します。",
-      "payment_methods_add": "支払い方法を追加して管理します。",
-      "tax_settings": "税設定",
-      "tax_account": "税の設定と登録を管理します。"
+      "payment_methods_add": "支払い方法を追加・管理します。",
+      "tax_settings": "税金設定",
+      "tax_account": "税金設定と登録を管理します。"
     },
     "finances": {
-      "financial_account": "財務アカウント",
+      "financial_account": "金融口座",
       "transactions": "取引",
       "cards": "カード",
       "finances": "財務",
       "overview": "概要"
+    },
+    "membership": {
+      "membership": "メンバーシップ",
+      "enroll": "登録",
+      "perTimeUnits": {
+        "day": "/ 日",
+        "week": "/ 週",
+        "month": "/ 月",
+        "year": "/ 年"
+      },
+      "price": "価格",
+      "features": "特徴",
+      "payment_method": "支払い方法",
+      "stripe_balance": "Stripe残高",
+      "enroll_now": "今すぐ登録",
+      "enrolling": "登録中...",
+      "enrolled": "登録完了！",
+      "disclaimer": "'{{enroll_now}}'をクリックすると、Stripe残高から{{amount}}を{{interval}}ごとに定期的に引き落とすことを承認します。",
+      "insufficient_balance": "Stripe残高の{{balance}}では登録を完了するのに十分ではありません。"
     }
   },
   "class": {
@@ -138,7 +167,7 @@
     "yoga_intermediate": "ヨガ基礎 - 中級",
     "mindful": "マインドフルムーブメント",
     "stretch": "ストレッチ＆リストア",
-    "yoga_core": "コアストレングスヨガ"
+    "yoga_core": "コア強化ヨガ"
   },
   "components": {
     "month_to_date": {
@@ -153,7 +182,7 @@
     },
     "balance": {
       "total": "合計残高",
-      "payout": "銀行へ払い出し",
+      "payout": "銀行に払い出す",
       "pending": "保留中"
     },
     "recent_payments": {
@@ -163,16 +192,17 @@
   },
   "loading": "読み込み中...",
   "studio": {
-    "1": "スタジオ1",
-    "2": "スタジオ2"
+    "1": "スタジオ 1",
+    "2": "スタジオ 2"
   },
   "navigation": {
     "home": "ホーム",
     "classes": "クラス",
     "instructors": "インストラクター",
     "payments": "支払い",
-    "payouts": "支払い",
-    "finances": "財務"
+    "payouts": "払い出し",
+    "finances": "財務",
+    "membership": "メンバーシップ"
   },
   "checkout": {
     "payment_status": {
@@ -188,12 +218,12 @@
       "classCharge": "クラス料金",
       "tax": "税金",
       "total": "合計",
-      "chargeCustomer": "顧客に請求する",
+      "chargeCustomer": "顧客に請求",
       "fee": "手数料"
     }
   },
   "errors": {
-    "unable_to_create": "このプラットフォーム"
+    "unable_to_create": "このプラットフォームとアカウント国の組み合わせはサポートされていません。"
   },
-  "unexpected_error": "予期しないエラーが発生しました。\nそれは正しくゲートされましたか？"
+  "unexpected_error": "予期せぬエラーが発生しました。正しく設定されていますか？"
 }

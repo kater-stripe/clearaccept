@@ -1,7 +1,17 @@
 {
+  "products": {
+    "pro-membership": {
+      "name": "Adhésion Pro",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Marketing amélioré",
+        "advanced-analytics": "Analyses avancées",
+        "priority-support": "Support prioritaire"
+      }
+    }
+  },
   "auth": {
     "login": {
-      "email": "E-mail",
+      "email": "Email",
       "sample_email": "jenny.rosen@example.com",
       "password": "Mot de passe",
       "continue": "Continuer",
@@ -17,18 +27,18 @@
       "acct_id": "ID du compte",
       "sample_acct_id": "acct_1234567890abcdef",
       "continue": "Continuer",
-      "loading": "Soumission en cours..."
+      "loading": "Envoi en cours..."
     },
     "signup": {
       "sign_up": "S'inscrire",
       "already_have_account": "Vous avez déjà un compte ?",
       "login": "Se connecter",
       "country": "Pays",
-      "email": "E-mail"
+      "email": "Email"
     },
     "layout": {
       "manage": "Gérez votre studio en toute simplicité.",
-      "pose_is_leading": "Pose est la plateforme de santé et de bien-être leader mondiale.",
+      "pose_is_leading": "Pose est la plateforme leader mondiale de santé et bien-être.",
       "sign_up": "S'inscrire",
       "fill_form": "Remplissez le formulaire pour configurer votre compte.",
       "contact": "Contacter le support"
@@ -98,7 +108,7 @@
       "instructors": "Instructeurs",
       "add": "Ajouter un instructeur",
       "class": "cours",
-      "es": "s",
+      "es": "",
       "this_week": "cette semaine"
     },
     "payments": {
@@ -106,24 +116,24 @@
       "recent": "Paiements récents"
     },
     "payouts": {
-      "payouts": "Versements"
+      "payouts": "Virements"
     },
     "welcome": "Bienvenue, {{name}} !",
     "performance": "Performance",
     "settings": {
       "my_studio": "Mon studio",
       "settings": "Paramètres",
-      "payment_methods": "Modes de paiement",
-      "sign_out": "se déconnecter",
-      "basic_details": "Détails de base",
+      "payment_methods": "Moyens de paiement",
+      "sign_out": "Se déconnecter",
+      "basic_details": "Informations de base",
       "studio_name": "Nom du studio",
-      "practice": "Pratiquez un studio de yoga",
-      "email": "E-mail",
+      "practice": "Practice Yoga Studio",
+      "email": "Email",
       "account_settings": "Paramètres du compte",
-      "manage_account": "Gérer les paramètres du compte et de l'entreprise.",
-      "payment_methods_add": "Ajoutez et gérez vos méthodes de paiement.",
+      "manage_account": "Gérer les paramètres de votre compte et de votre entreprise.",
+      "payment_methods_add": "Ajouter et gérer vos moyens de paiement.",
       "tax_settings": "Paramètres fiscaux",
-      "tax_account": "Gérer les paramètres fiscaux et les inscriptions."
+      "tax_account": "Gérer les paramètres et enregistrements fiscaux."
     },
     "finances": {
       "financial_account": "Compte financier",
@@ -131,14 +141,33 @@
       "cards": "Cartes",
       "finances": "Finances",
       "overview": "Aperçu"
+    },
+    "membership": {
+      "membership": "Adhésion",
+      "enroll": "S'inscrire",
+      "perTimeUnits": {
+        "day": "/ jour",
+        "week": "/ semaine",
+        "month": "/ mois",
+        "year": "/ an"
+      },
+      "price": "Prix",
+      "features": "Fonctionnalités",
+      "payment_method": "Moyen de paiement",
+      "stripe_balance": "Solde Stripe",
+      "enroll_now": "S'inscrire maintenant",
+      "enrolling": "Inscription en cours...",
+      "enrolled": "Inscrit !",
+      "disclaimer": "En appuyant sur '{{enroll_now}}', vous autorisez un débit récurrent de {{amount}} {{interval}} sur votre solde Stripe.",
+      "insufficient_balance": "Votre solde Stripe de {{balance}} n'est pas suffisant pour compléter l'inscription."
     }
   },
   "class": {
-    "gentle": "Flow doux",
-    "yoga_intermediate": "Yoga de base - Intermédiaire",
-    "mindful": "Mouvement en pleine conscience",
-    "stretch": "Étirement et restauration",
-    "yoga_core": "Yoga renforcement du centre"
+    "gentle": "Flow Doux",
+    "yoga_intermediate": "Yoga Bases - Intermédiaire",
+    "mindful": "Mouvement Conscient",
+    "stretch": "Étirements & Récupération",
+    "yoga_core": "Yoga Renforcement Central"
   },
   "components": {
     "month_to_date": {
@@ -149,11 +178,11 @@
     },
     "schedule": {
       "attendees": "participants",
-      "today": "Programme d'aujourd'hui"
+      "today": "Programme du jour"
     },
     "balance": {
       "total": "Solde total",
-      "payout": "Verser sur le compte bancaire",
+      "payout": "Virer vers la banque",
       "pending": "en attente"
     },
     "recent_payments": {
@@ -171,15 +200,16 @@
     "classes": "Cours",
     "instructors": "Instructeurs",
     "payments": "Paiements",
-    "payouts": "Versements",
-    "finances": "Finances"
+    "payouts": "Virements",
+    "finances": "Finances",
+    "membership": "Adhésion"
   },
   "checkout": {
     "payment_status": {
-      "error": "Une erreur s'est produite avec votre paiement.",
+      "error": "Un problème est survenu avec votre paiement.",
       "succeeded": "Le paiement a réussi !",
       "processing": "Votre paiement est en cours de traitement...",
-      "requires_payment_method": "Votre paiement n'a pas abouti. Veuillez sélectionner une autre méthode de paiement et réessayer."
+      "requires_payment_method": "Votre paiement a échoué. Veuillez sélectionner un autre moyen de paiement et réessayer."
     },
     "address_header": "Adresse du client",
     "payments_header": "Détails du paiement",
@@ -193,7 +223,7 @@
     }
   },
   "errors": {
-    "unable_to_create": "Cette plate-forme"
+    "unable_to_create": "Cette combinaison de plateforme et de pays du compte n'est pas prise en charge."
   },
-  "unexpected_error": "Une erreur inattendue s'est produite. \nA-t-il été bien fait?"
+  "unexpected_error": "Une erreur inattendue s'est produite. A-t-elle été correctement configurée ?"
 }

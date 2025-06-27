@@ -1,24 +1,9 @@
 /* eslint-disable i18next/no-literal-string */
-import {useState} from 'react';
-import ExternalElementsComboBox from './ExternalElementsCombobox';
 import {useConfigContext} from '@/app/contexts/ConfigContext';
 import {defaultDemoSettings} from '@/app/config/config';
 
 const AppearanceTab = () => {
-  const {
-    settings,
-    updateSetting,
-    customer,
-    updateCustomer,
-    triggerElementsRefresh,
-  } = useConfigContext();
-
-  const [localExternalPaymentMethod, setLocalExternalPaymentMethod] = useState(
-    settings?.externalPaymentMethod !==
-      defaultDemoSettings.externalPaymentMethod
-      ? settings?.externalPaymentMethod
-      : ''
-  );
+  const {settings, updateSetting} = useConfigContext();
 
   return (
     <>
@@ -76,7 +61,7 @@ const AppearanceTab = () => {
             <select
               value={settings ? settings[key] : null}
               onChange={(e) => updateSetting(key, e.target.value)}
-              className="w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
             >
               {options.map(({value, label}) => (
                 <option key={value} value={value}>
@@ -106,11 +91,25 @@ const AppearanceTab = () => {
                   updateSetting(key, e.target.value);
                 }}
                 placeholder="Enter to override .env value"
-                className="w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-md border border-gray-300 bg-white p-2 text-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           )
         )}
+
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            checked={settings?.useV2Accounts ?? false}
+            onChange={(e) => {
+              updateSetting('useV2Accounts', e.target.checked);
+            }}
+            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          />
+          <label className="ml-2 block flex items-center gap-x-1 text-sm text-gray-900">
+            Enable Accounts v2 API
+          </label>
+        </div>
       </div>
     </>
   );

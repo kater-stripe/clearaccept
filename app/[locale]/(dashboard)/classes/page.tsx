@@ -44,6 +44,7 @@ function internationalizeTime(time: string, locale: string): string {
 }
 
 const renderClassRow = (
+  key: number,
   item: {
     name: string;
     studio: string;
@@ -59,6 +60,7 @@ const renderClassRow = (
 
   return (
     <div
+      key={key}
       onClick={() => {
         setOpen(true);
       }}
@@ -129,8 +131,8 @@ export default function Classes() {
         </span>
       </div>
       <div className="flex flex-col gap-y-3">
-        {classes.map((item) => {
-          return renderClassRow(item, setOpen);
+        {classes.map((item, index) => {
+          return renderClassRow(index, item, setOpen);
         })}
       </div>
       <div className="flex gap-3 pt-8 text-xl">
@@ -140,8 +142,8 @@ export default function Classes() {
         </span>
       </div>
       <div className="flex flex-col gap-y-3">
-        {classes.map((item) => {
-          return renderClassRow(item, setOpen);
+        {classes.map((item, index) => {
+          return renderClassRow(index, item, setOpen);
         })}
       </div>
 
