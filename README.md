@@ -96,9 +96,9 @@
 
 ###### To learn more about this demo in particular or see this demo live, take a look at the following resources:
 
-- [go/flow-demo](http://go/zenflow-demo) - ZenFlow Demo Instructions
+- [go/zenflow-demo](http://go/zenflow-demo) - ZenFlow Demo Instructions
 
-- [go/demos/flow](http://go/demos/zenflow) - ZenFlow Live Site
+- [go/demos/zenflow](http://go/demos/zenflow) - ZenFlow Live Site
 
 ###### To learn more about the Demo Engineering team, take a look at the following resources:
 
