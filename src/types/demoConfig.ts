@@ -1,0 +1,30 @@
+import type { SupportedLanguage } from '@/constants/languages';
+import type { CurrencyCode } from '@/constants/currencyCodes';
+import type { CountryCode } from '@/constants/countryCodes';
+import type { CheckoutMethod } from '@/constants/checkoutMethod';
+
+export type DemoConfig = {
+  country: CountryCode;
+  checkoutMethod: CheckoutMethod;
+  currency: CurrencyCode;
+  customHero?: string;
+  customLogo?: string;
+  demoName: string;
+  language: SupportedLanguage;
+  primaryColor: string;
+  secondaryColor: string;
+  stripePublishableKey?: string;
+  stripeSecretKey?: string;
+  terminalLocationId?: string;
+  terminalReaderId?: string;
+  capitalFinancingPromotionLayout?: 'banner' | 'full';
+  chargeType: 'destination' | 'direct' | 'destination-on-behalf-of';
+  onboardingType: 'hosted' | 'embedded';
+  treasuryCapabilityEnabled?: boolean;
+  onboardCollectionFields: 'eventually_due' | 'currently_due';
+  useV2Accounts: boolean;
+  customPaymentMethods: string[];
+  elementsStyle: 'accordion' | 'tabs';
+  elementsExpressCheckoutEnabled: boolean;
+  elementsAddressFormEnabled: boolean;
+};

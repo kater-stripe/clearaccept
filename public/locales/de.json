@@ -1,150 +1,187 @@
 {
-  "products": {
-    "pro-membership": {
-      "name": "Pro-Mitgliedschaft",
-      "marketing_feature_list": {
-        "enhanced-marketing": "Verbessertes Marketing",
-        "advanced-analytics": "Erweiterte Analytik",
-        "priority-support": "Prioritäts-Support"
-      }
+  "sign-up": {
+    "heading": "Registrieren",
+    "existing-account": "Haben Sie bereits ein Konto?",
+    "sign-in": "Anmelden",
+    "country": {
+      "label": "Land"
+    },
+    "email": {
+      "label": "E-Mail"
+    },
+    "password": {
+      "label": "Passwort"
+    },
+    "confirm-password": {
+      "label": "Passwort bestätigen"
+    },
+    "button": {
+      "text": "Registrieren"
+    },
+    "errors": {
+      "email-already-in-use": "Ein Konto mit dieser E-Mail-Adresse existiert bereits."
     }
   },
-  "auth": {
-    "login": {
-      "email": "E-Mail",
-      "sample_email": "jenny.rosen@example.com",
-      "password": "Passwort",
-      "continue": "Weiter",
-      "loading": "Lädt...",
-      "dont_have_an_account": "Noch kein Konto?",
-      "sign_up": "Registrieren",
-      "login": "Anmelden"
+  "sign-in": {
+    "heading": "Anmelden",
+    "no-account": "Sie haben noch kein Konto?",
+    "sign-up": "Registrieren",
+    "email": {
+      "label": "E-Mail"
     },
-    "loginas": {
-      "select": "Konto auswählen",
-      "dont_have_account": "Noch kein Konto?",
-      "register": "Registrieren",
-      "acct_id": "Konto-ID",
-      "sample_acct_id": "acct_1234567890abcdef",
-      "continue": "Weiter",
-      "loading": "Wird übermittelt..."
+    "password": {
+      "label": "Passwort"
     },
-    "signup": {
-      "sign_up": "Registrieren",
-      "already_have_account": "Bereits ein Konto?",
-      "login": "Anmelden",
-      "country": "Land",
-      "email": "E-Mail"
+    "button": {
+      "text": "Anmelden"
     },
-    "layout": {
-      "manage": "Verwalten Sie Ihr Studio mit Leichtigkeit.",
-      "pose_is_leading": "Pose ist die weltweit führende Gesundheits- und Wellness-Plattform.",
-      "sign_up": "Registrieren",
-      "fill_form": "Füllen Sie das Formular aus, um Ihr Konto einzurichten.",
-      "contact": "Support kontaktieren"
+    "errors": {
+      "email-not-found": "Ein Konto mit dieser E-Mail-Adresse wurde nicht gefunden.",
+      "account-not-linked": "Die `accountId`-Metadaten, die den Kunden mit einem Konto verknüpfen, fehlen."
     }
   },
-  "countries": {
-    "australia": "Australien",
-    "austria": "Österreich",
-    "belgium": "Belgien",
-    "brazil": "Brasilien",
-    "bulgaria": "Bulgarien",
-    "canada": "Kanada",
-    "croatia": "Kroatien",
-    "cyprus": "Zypern",
-    "czech_republic": "Tschechische Republik",
-    "denmark": "Dänemark",
-    "estonia": "Estland",
-    "finland": "Finnland",
-    "france": "Frankreich",
-    "germany": "Deutschland",
-    "ghana": "Ghana",
-    "gibraltar": "Gibraltar",
-    "greece": "Griechenland",
-    "hong_kong": "Hongkong",
-    "hungary": "Ungarn",
-    "indonesia": "Indonesien",
-    "ireland": "Irland",
-    "italy": "Italien",
-    "japan": "Japan",
-    "kenya": "Kenia",
-    "latvia": "Lettland",
-    "liechtenstein": "Liechtenstein",
-    "lithuania": "Litauen",
-    "luxembourg": "Luxemburg",
-    "malaysia": "Malaysia",
-    "malta": "Malta",
-    "mexico": "Mexiko",
-    "netherlands": "Niederlande",
-    "new_zealand": "Neuseeland",
-    "nigeria": "Nigeria",
-    "norway": "Norwegen",
-    "poland": "Polen",
-    "portugal": "Portugal",
-    "romania": "Rumänien",
-    "singapore": "Singapur",
-    "slovakia": "Slowakei",
-    "slovenia": "Slowenien",
-    "south_africa": "Südafrika",
-    "spain": "Spanien",
-    "sweden": "Schweden",
-    "switzerland": "Schweiz",
-    "thailand": "Thailand",
-    "united_arab_emirates": "Vereinigte Arabische Emirate",
-    "united_kingdom": "Vereinigtes Königreich",
-    "united_states": "Vereinigte Staaten"
+  "sign-out": {
+    "button": {
+      "text": "Abmelden"
+    }
+  },
+  "hero": {
+    "heading": "Vereinfachen Sie Ihre Geschäftsabläufe.",
+    "subheading": "Eine umfassende Plattform für dienstleistungsorientierte Unternehmen.",
+    "cta": "Support kontaktieren"
   },
   "dashboard": {
-    "classes": {
-      "classes": "Kurse",
-      "create_class": "Kurs erstellen",
-      "edit_studios": "Studios bearbeiten",
-      "today": "Heute",
-      "tomorrow": "Morgen",
-      "studio": "Studio"
-    },
-    "instructors": {
-      "instructors": "Kursleiter",
-      "add": "Kursleiter hinzufügen",
-      "class": "Kurs",
-      "es": "e",
-      "this_week": "diese Woche"
-    },
-    "payments": {
-      "payments": "Zahlungen",
-      "recent": "Letzte Zahlungen"
+    "home": {
+      "title": "Startseite",
+      "greeting": "Hallo, {{name}}",
+      "greeting-subtitle": "Sie sind angemeldet als {{email}}",
+      "todays-schedule": "Heutiger Zeitplan",
+      "balances": "Guthaben",
+      "capital": "Kapital"
     },
     "payouts": {
-      "payouts": "Auszahlungen"
+      "title": "Auszahlungen"
     },
-    "welcome": "Willkommen, {{name}}!",
-    "performance": "Leistung",
-    "settings": {
-      "my_studio": "Mein Studio",
-      "settings": "Einstellungen",
-      "payment_methods": "Zahlungsmethoden",
-      "sign_out": "Abmelden",
-      "basic_details": "Grundlegende Details",
-      "studio_name": "Studioname",
-      "practice": "Practice Yoga Studio",
-      "email": "E-Mail",
-      "account_settings": "Kontoeinstellungen",
-      "manage_account": "Konto- und Geschäftseinstellungen verwalten.",
-      "payment_methods_add": "Zahlungsmethoden hinzufügen und verwalten.",
-      "tax_settings": "Steuereinstellungen",
-      "tax_account": "Steuereinstellungen und -registrierungen verwalten."
+    "products": {
+      "title": "Produkte",
+      "table": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "price": "Preis",
+        "actions": "Aktionen",
+        "delete": "Löschen",
+        "create-product": "Neues Produkt erstellen",
+        "create-payment-link": "Zahlungslink erstellen"
+      }
     },
-    "finances": {
-      "financial_account": "Finanzkonto",
-      "transactions": "Transaktionen",
-      "cards": "Karten",
-      "finances": "Finanzen",
-      "overview": "Überblick"
+    "expenses": {
+      "title": "Ausgaben",
+      "financial-account-card": {
+        "ending-in": "Endet auf {{last4}}"
+      },
+      "create-financial-account": "Finanzkonto erstellen",
+      "financial-account": {
+        "title": "Finanzkonto",
+        "transactions": "Transaktionen"
+      },
+      "available-balances": "Verfügbares Guthaben:",
+      "financial-accounts": "Finanzkonten",
+      "issuing-cards": "Ausgegebene Karten",
+      "issuing-balances": "Ausgabeguthaben",
+      "issuing-topups": {
+        "transfer-amount": "Überweisungsbetrag ({{amount}} verfügbar)",
+        "transfer": "Überweisen",
+        "error": "Beim Aufladen Ihres Ausgabeguthabens ist ein unbekannter Fehler aufgetreten."
+      }
+    },
+    "capital": {
+      "title": "Kapital",
+      "promotions": "Werbeaktionen",
+      "financings": "Finanzierungen",
+      "financing-application": "Finanzierungsantrag"
+    },
+    "payments": {
+      "title": "Zahlungen",
+      "payment-method-settings": "Zahlungsmethoden-Einstellungen"
+    },
+    "tax": {
+      "title": "Steuern",
+      "tax-settings": "Steuereinstellungen",
+      "tax-registrations": "Steuerregistrierungen",
+      "export-tax-transactions": "Steuertransaktionen exportieren",
+      "tax-threshold-monitoring": "Steuergrenzwert-Überwachung"
+    },
+    "reports": {
+      "title": "Berichte"
+    },
+    "terminal-and-pos": {
+      "title": "Terminal & POS",
+      "description": "Verwalten Sie physische Kartenterminals und nehmen Sie Zahlungen entgegen.",
+      "terminal": {
+        "tab": "Terminal",
+        "select-location": "Standort auswählen",
+        "terminal-locations": "Terminal-Standorte",
+        "readers": "Lesegeräte",
+        "locations-table": {
+          "name": "Name",
+          "address": "Adresse",
+          "actions": "Aktionen",
+          "delete": "Löschen",
+          "create-location": "Neuen Standort erstellen"
+        },
+        "readers-table": {
+          "name": "Name",
+          "serial-number": "Seriennummer",
+          "status": "Status",
+          "actions": "Aktionen",
+          "pair-reader": "Lesegerät koppeln",
+          "delete": "Löschen",
+          "online": "Online",
+          "offline": "Offline"
+        }
+      },
+      "pos": {
+        "tab": "POS",
+        "products": "Produkte",
+        "select-location": "Standort auswählen",
+        "select-reader": "Lesegerät auswählen",
+        "customer": "Kunde",
+        "add-to-cart": "Zum Warenkorb hinzufügen",
+        "no-products-found": "Keine Produkte gefunden.",
+        "no-products-found-link": "Fügen Sie hier Ihr erstes Produkt hinzu.",
+        "cart": "Warenkorb",
+        "cart-empty": "Der Warenkorb ist leer.",
+        "quantity": "Menge",
+        "subtotal": "Zwischensumme",
+        "tax": "Steuer",
+        "total": "Gesamtsumme",
+        "pay": "{{amount}} bezahlen",
+        "clear-all": "Alles löschen",
+        "cancel-payment": "Zahlung abbrechen",
+        "collect-inputs": {
+          "email": {
+            "title": "E-Mail",
+            "description": "Bitte geben Sie Ihre E-Mail-Adresse ein."
+          },
+          "phone-number": {
+            "title": "Telefonnummer",
+            "description": "Bitte geben Sie Ihre Telefonnummer ein."
+          }
+        }
+      }
+    },
+    "account": {
+      "title": "Konto",
+      "description": "Verwalten Sie Ihre persönlichen und geschäftlichen Daten."
+    },
+    "apps": {
+      "title": "Apps",
+      "description": "Installieren Sie Apps, um Ihr Unternehmen mit Ihrer Buchhaltungssoftware, Mailinglisten und mehr zu verbinden.",
+      "acodei-quickbooks-sync": "Acodei Quickbooks Sync",
+      "xero-sync": "Xero Sync"
     },
     "membership": {
-      "membership": "Mitgliedschaft",
-      "enroll": "Beitreten",
+      "title": "Mitgliedschaft",
       "perTimeUnits": {
         "day": "/ Tag",
         "week": "/ Woche",
@@ -155,75 +192,208 @@
       "features": "Funktionen",
       "payment_method": "Zahlungsmethode",
       "stripe_balance": "Stripe-Guthaben",
-      "enroll_now": "Jetzt beitreten",
-      "enrolling": "Beitritt läuft...",
-      "enrolled": "Beigetreten!",
-      "disclaimer": "Durch Klicken auf '{{enroll_now}}' autorisieren Sie eine wiederkehrende Abbuchung von {{amount}} {{interval}} von Ihrem Stripe-Guthaben.",
-      "insufficient_balance": "Ihr Stripe-Guthaben von {{balance}} ist nicht ausreichend, um den Beitritt abzuschließen."
-    }
-  },
-  "class": {
-    "gentle": "Sanfter Flow",
-    "yoga_intermediate": "Yoga Grundlagen - Mittelstufe",
-    "mindful": "Achtsame Bewegung",
-    "stretch": "Dehnen & Erholen",
-    "yoga_core": "Yoga für Körpermitte"
-  },
-  "components": {
-    "month_to_date": {
-      "month_to_date": "Monat bis heute"
+      "enroll_now": "Jetzt anmelden",
+      "enrolling": "Wird angemeldet...",
+      "enrolled": "Angemeldet!",
+      "disclaimer": "Durch Drücken von '{{enroll_now}}' autorisieren Sie eine wiederkehrende Abbuchung von {{amount}} {{interval}} von Ihrem Stripe-Kontoguthaben.",
+      "insufficient_balance": "Ihr Stripe-Kontoguthaben von {{balance}} reicht nicht aus, um die Anmeldung abzuschließen."
     },
-    "customers": {
-      "customers": "Kunden"
-    },
-    "schedule": {
-      "attendees": "Teilnehmer",
-      "today": "Heutiger Zeitplan"
-    },
-    "balance": {
-      "total": "Gesamtguthaben",
-      "payout": "Auf Bankkonto auszahlen",
-      "pending": "ausstehend"
-    },
-    "recent_payments": {
-      "recent": "Letzte Zahlungen",
-      "view_all": "Alle anzeigen"
-    }
+    "open-storefront": "Ladenfront öffnen"
   },
-  "loading": "Lädt...",
-  "studio": {
-    "1": "Studio 1",
-    "2": "Studio 2"
-  },
-  "navigation": {
-    "home": "Startseite",
-    "classes": "Kurse",
-    "instructors": "Kursleiter",
-    "payments": "Zahlungen",
-    "payouts": "Auszahlungen",
-    "finances": "Finanzen",
-    "membership": "Mitgliedschaft"
+  "success": {
+    "title": "Erfolg",
+    "description": "Weiterleitung in {{countdown}} Sekunden..."
   },
   "checkout": {
-    "payment_status": {
-      "error": "Bei Ihrer Zahlung ist ein Fehler aufgetreten.",
-      "succeeded": "Zahlung erfolgreich!",
-      "processing": "Ihre Zahlung wird bearbeitet...",
-      "requires_payment_method": "Ihre Zahlung war nicht erfolgreich. Bitte wählen Sie eine andere Zahlungsmethode und versuchen Sie es erneut."
+    "shipping_address_header": "Versandinformationen",
+    "billing_address_header": "Rechnungsinformationen",
+    "payments_header": "Zahlungsmethode",
+    "or": "oder",
+    "upsellTitle": "Das könnte Ihnen auch gefallen",
+    "order_summary": {
+      "title": "Bestellübersicht",
+      "promotion_code_label": "Rabattcode",
+      "apply_promotion_code": "Anwenden",
+      "subtotal": "Zwischensumme",
+      "discount": "Rabatt",
+      "shipping": "Versand",
+      "shipping_not_selected": "Nicht ausgewählt",
+      "taxes": "Steuern",
+      "total": "Gesamtsumme",
+      "confirm_order": "Bestellung bestätigen",
+      "processing": "Wird bearbeitet..."
     },
-    "address_header": "Kundenadresse",
-    "payments_header": "Checkout-Details",
-    "elements": {
-      "orderSummary": "Bestellübersicht",
-      "classCharge": "Kursgebühr",
-      "tax": "Steuer",
-      "total": "Gesamt",
-      "chargeCustomer": "Kunde belasten",
-      "fee": "Gebühr"
+    "payment_status": {
+      "succeeded": "Zahlung erfolgreich!",
+      "processing": "Ihre Zahlung wird bearbeitet.",
+      "requires_payment_method": "Ihre Zahlung war nicht erfolgreich, bitte versuchen Sie es erneut.",
+      "error": "Etwas ist schiefgelaufen."
+    },
+    "shipping": {
+      "title": "Versandart",
+      "standard": {
+        "title": "Standardversand"
+      },
+      "priority": {
+        "title": "Prioritätsversand"
+      },
+      "free": {
+        "title": "Kostenloser Versand"
+      },
+      "unknown": {
+        "title": "Unbekannte Versandoption"
+      }
+    },
+    "invalid_promotion_code": "Dieser Aktionscode ist ungültig."
+  },
+  "addToBag": {
+    "buttonText": "In den Warenkorb"
+  },
+  "buyNow": {
+    "buttonText": "Jetzt kaufen"
+  },
+  "cartPanel": {
+    "title": "Warenkorb",
+    "closePanel": "Panel schließen",
+    "subtotal": "Zwischensumme",
+    "shippingTaxes": "Versandkosten und Steuern werden beim Checkout berechnet.",
+    "or": "oder",
+    "continueShopping": "Weiter einkaufen",
+    "checkoutButton": "Zur Kasse",
+    "chargeButton": "Belasten",
+    "cancelButton": "Abbrechen"
+  },
+  "modals": {
+    "payins": {
+      "title": "Einzahlungen",
+      "manual-entry-option": "Kunde wird seine Kartendaten manuell eingeben",
+      "present-to-terminal-reader-option": "Kunde wird seine Karte an einem Terminal-Lesegerät vorzeigen"
+    },
+    "create-product": {
+      "title": "Neues Produkt erstellen",
+      "description": "Erstellen Sie ein neues Produkt für Ihre Kunden.",
+      "form": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "unit-amount": "Preis",
+        "currency": "Währung",
+        "product-tax-code": "Produkt-Steuercode",
+        "create": "Erstellen",
+        "cancel": "Abbrechen",
+        "image": "Bild",
+        "category": "Kategorie",
+        "good": "Ware",
+        "service": "Dienstleistung",
+        "studio": "Studio",
+        "start-time": "Startzeit",
+        "end-time": "Endzeit",
+        "recurring": {
+          "is-recurring": "Wiederkehrend?",
+          "frequency": "Häufigkeit",
+          "day": "Täglich",
+          "week": "Wöchentlich",
+          "month": "Monatlich",
+          "year": "Jährlich"
+        }
+      },
+      "error": "Beim Erstellen des Produkts ist ein unbekannter Fehler aufgetreten."
+    },
+    "create-financial-account": {
+      "title": "Neues Finanzkonto erstellen",
+      "description": "Erstellen Sie ein neues Finanzkonto zur Verwaltung Ihrer Gelder.",
+      "form": {
+        "name": "Name",
+        "currency": "Währung",
+        "create": "Erstellen",
+        "cancel": "Abbrechen"
+      },
+      "error": "Beim Erstellen des Finanzkontos ist ein unbekannter Fehler aufgetreten. Möglicherweise wird die ausgewählte Währung von Ihrem Konto nicht unterstützt."
+    },
+    "copy-payment-link": {
+      "title": "Zahlungslink kopieren",
+      "description": "Senden Sie diesen Link an Ihren Kunden, um die Zahlung abzuschließen.",
+      "form": {
+        "url": "URL",
+        "close": "Schließen",
+        "copy": "Kopieren",
+        "copied": "Kopiert!"
+      }
+    },
+    "create-terminal-location": {
+      "title": "Neuen Terminal-Standort erstellen",
+      "description": "Erstellen Sie einen neuen Terminal-Standort zur Verwaltung Ihrer Terminals.",
+      "form": {
+        "name": "Name",
+        "line1": "Zeile 1",
+        "line2": "Zeile 2",
+        "city": "Stadt",
+        "state": "Bundesland",
+        "postal-code": "Postleitzahl",
+        "country": "Land",
+        "create": "Erstellen",
+        "cancel": "Abbrechen"
+      }
+    },
+    "pair-reader": {
+      "title": "Lesegerät koppeln",
+      "description": "Koppeln Sie ein Lesegerät mit einem Terminal-Standort.",
+      "form": {
+        "registration-code": "Registrierungscode",
+        "pair": "Koppeln",
+        "cancel": "Abbrechen"
+      }
+    },
+    "create-customer": {
+      "title": "Kunde erstellen",
+      "description": "Erstellen Sie einen neuen Kunden mit Namen, E-Mail-Adresse und Telefonnummer.",
+      "form": {
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "create": "Erstellen",
+        "cancel": "Abbrechen"
+      },
+      "error": "Beim Erstellen des Kunden ist ein unbekannter Fehler aufgetreten."
     }
   },
-  "errors": {
-    "unable_to_create": "Diese Kombination aus Plattform und Kontolande wird nicht unterstützt."
+  "products": {
+    "pro-membership": {
+      "name": "Pro-Mitgliedschaft",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Erweitertes Marketing",
+        "advanced-analytics": "Erweiterte Analysen",
+        "priority-support": "Prioritäts-Support"
+      }
+    }
   },
-  "unexpected_error": "Ein unerwarteter Fehler ist aufgetreten. Ist es richtig freigegeben worden?"
+  "timeUnits": {
+    "hour": "{{value}} Stunde",
+    "hours": "{{value}} Stunden",
+    "day": "{{value}} Tag",
+    "days": "{{value}} Tage",
+    "business_day": "{{value}} Werktag",
+    "business_days": "{{value}} Werktage",
+    "week": "{{value}} Woche",
+    "weeks": "{{value}} Wochen",
+    "month": "{{value}} Monat",
+    "months": "{{value}} Monate"
+  },
+  "perTimeUnits": {
+    "hour": "/ Stunde",
+    "week": "/ Woche",
+    "month": "/ Monat",
+    "year": "/ Jahr"
+  },
+  "payment_status": {
+    "succeeded": "Zahlung erfolgreich!",
+    "processing": "Ihre Zahlung wird bearbeitet.",
+    "requires_payment_method": "Ihre Zahlung war nicht erfolgreich, bitte versuchen Sie es erneut.",
+    "error": "Etwas ist schiefgelaufen."
+  },
+  "storefront": {
+    "products": {
+      "title": "Produkte",
+      "no-products-found": "Keine Produkte gefunden."
+    }
+  }
 }

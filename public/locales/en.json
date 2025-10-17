@@ -1,150 +1,187 @@
 {
-  "products": {
-    "pro-membership": {
-      "name": "Pro Membership",
-      "marketing_feature_list": {
-        "enhanced-marketing": "Enhanced marketing",
-        "advanced-analytics": "Advanced analytics",
-        "priority-support": "Priority support"
-      }
+  "sign-up": {
+    "heading": "Sign up",
+    "existing-account": "Already have an account?",
+    "sign-in": "Sign in",
+    "country": {
+      "label": "Country"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "password": {
+      "label": "Password"
+    },
+    "confirm-password": {
+      "label": "Confirm Password"
+    },
+    "button": {
+      "text": "Sign up"
+    },
+    "errors": {
+      "email-already-in-use": "An account already exists with the specified email."
     }
   },
-  "auth": {
-    "login": {
-      "email": "Email",
-      "sample_email": "jenny.rosen@example.com",
-      "password": "Password",
-      "continue": "Continue",
-      "loading": "Loading...",
-      "dont_have_an_account": "Don't have an account?",
-      "sign_up": "Sign up",
-      "login": "Login"
+  "sign-in": {
+    "heading": "Sign in",
+    "no-account": "Don't have an account?",
+    "sign-up": "Sign up",
+    "email": {
+      "label": "Email"
     },
-    "loginas": {
-      "select": "Select Account",
-      "dont_have_account": "Don't have an account?",
-      "register": "Register",
-      "acct_id": "Account ID",
-      "sample_acct_id": "acct_1234567890abcdef",
-      "continue": "Continue",
-      "loading": "Submitting..."
+    "password": {
+      "label": "Password"
     },
-    "signup": {
-      "sign_up": "Sign up",
-      "already_have_account": "Already have an account?",
-      "login": "Login",
-      "country": "Country",
-      "email": "Email"
+    "button": {
+      "text": "Sign in"
     },
-    "layout": {
-      "manage": "Manage your studio with ease.",
-      "pose_is_leading": "Pose is the world's leading health and wellness platform.",
-      "sign_up": "Sign up",
-      "fill_form": "Fill out the form to set up your account.",
-      "contact": "Contact support"
+    "errors": {
+      "email-not-found": "An account with the specified email was not found.",
+      "account-not-linked": "The `accountId` metadata that links the customer to an account is missing."
     }
   },
-  "countries": {
-    "australia": "Australia",
-    "austria": "Austria",
-    "belgium": "Belgium",
-    "brazil": "Brazil",
-    "bulgaria": "Bulgaria",
-    "canada": "Canada",
-    "croatia": "Croatia",
-    "cyprus": "Cyprus",
-    "czech_republic": "Czech Republic",
-    "denmark": "Denmark",
-    "estonia": "Estonia",
-    "finland": "Finland",
-    "france": "France",
-    "germany": "Germany",
-    "ghana": "Ghana",
-    "gibraltar": "Gibraltar",
-    "greece": "Greece",
-    "hong_kong": "Hong Kong",
-    "hungary": "Hungary",
-    "indonesia": "Indonesia",
-    "ireland": "Ireland",
-    "italy": "Italy",
-    "japan": "Japan",
-    "kenya": "Kenya",
-    "latvia": "Latvia",
-    "liechtenstein": "Liechtenstein",
-    "lithuania": "Lithuania",
-    "luxembourg": "Luxembourg",
-    "malaysia": "Malaysia",
-    "malta": "Malta",
-    "mexico": "Mexico",
-    "netherlands": "Netherlands",
-    "new_zealand": "New Zealand",
-    "nigeria": "Nigeria",
-    "norway": "Norway",
-    "poland": "Poland",
-    "portugal": "Portugal",
-    "romania": "Romania",
-    "singapore": "Singapore",
-    "slovakia": "Slovakia",
-    "slovenia": "Slovenia",
-    "south_africa": "South Africa",
-    "spain": "Spain",
-    "sweden": "Sweden",
-    "switzerland": "Switzerland",
-    "thailand": "Thailand",
-    "united_arab_emirates": "United Arab Emirates",
-    "united_kingdom": "United Kingdom",
-    "united_states": "United States"
+  "sign-out": {
+    "button": {
+      "text": "Sign out"
+    }
+  },
+  "hero": {
+    "heading": "Simplify your business workflows.",
+    "subheading": "A comprehensive platform designed for service-based businesses.",
+    "cta": "Contact support"
   },
   "dashboard": {
-    "classes": {
-      "classes": "Classes",
-      "create_class": "Create class",
-      "edit_studios": "Edit studios",
-      "today": "Today",
-      "tomorrow": "Tomorrow",
-      "studio": "Studio"
-    },
-    "instructors": {
-      "instructors": "Instructors",
-      "add": "Add instructor",
-      "class": "class",
-      "es": "es",
-      "this_week": "this week"
-    },
-    "payments": {
-      "payments": "Payments",
-      "recent": "Recent payments"
+    "home": {
+      "title": "Home",
+      "greeting": "Hello, {{name}}",
+      "greeting-subtitle": "You're signed in as {{email}}",
+      "todays-schedule": "Today's Schedule",
+      "balances": "Balances",
+      "capital": "Capital"
     },
     "payouts": {
-      "payouts": "Payouts"
+      "title": "Payouts"
     },
-    "welcome": "Welcome, {{name}}!",
-    "performance": "Performance",
-    "settings": {
-      "my_studio": "My studio",
-      "settings": "Settings",
-      "payment_methods": "Payment methods",
-      "sign_out": "Sign out",
-      "basic_details": "Basic details",
-      "studio_name": "Studio name",
-      "practice": "Practice Yoga Studio",
-      "email": "Email",
-      "account_settings": "Account settings",
-      "manage_account": "Manage account and business settings.",
-      "payment_methods_add": "Add and manage your payment methods.",
-      "tax_settings": "Tax Settings",
-      "tax_account": "Manage tax settings and registrations."
+    "products": {
+      "title": "Products",
+      "table": {
+        "name": "Name",
+        "description": "Description",
+        "price": "Price",
+        "actions": "Actions",
+        "delete": "Delete",
+        "create-product": "Create new product",
+        "create-payment-link": "Create payment link"
+      }
     },
-    "finances": {
-      "financial_account": "Financial account",
-      "transactions": "Transactions",
-      "cards": "Cards",
-      "finances": "Finances",
-      "overview": "Overview"
+    "expenses": {
+      "title": "Expenses",
+      "financial-account-card": {
+        "ending-in": "Ending in {{last4}}"
+      },
+      "create-financial-account": "Create Financial Account",
+      "financial-account": {
+        "title": "Financial Account",
+        "transactions": "Transactions"
+      },
+      "available-balances": "Available balances:",
+      "financial-accounts": "Financial Accounts",
+      "issuing-cards": "Issuing Cards",
+      "issuing-balances": "Issuing Balances",
+      "issuing-topups": {
+        "transfer-amount": "Transfer amount ({{amount}} available)",
+        "transfer": "Transfer",
+        "error": "An unknown error occurred while topping up your issuing balance."
+      }
+    },
+    "capital": {
+      "title": "Capital",
+      "promotions": "Promotions",
+      "financings": "Financings",
+      "financing-application": "Financing Application"
+    },
+    "payments": {
+      "title": "Payments",
+      "payment-method-settings": "Payment Method Settings"
+    },
+    "tax": {
+      "title": "Tax",
+      "tax-settings": "Tax Settings",
+      "tax-registrations": "Tax Registrations",
+      "export-tax-transactions": "Export Tax Transactions",
+      "tax-threshold-monitoring": "Tax Threshold Monitoring"
+    },
+    "reports": {
+      "title": "Reports"
+    },
+    "terminal-and-pos": {
+      "title": "Terminal & POS",
+      "description": "Manage physical card terminals and take payments.",
+      "terminal": {
+        "tab": "Terminal",
+        "select-location": "Select a location",
+        "terminal-locations": "Terminal Locations",
+        "readers": "Readers",
+        "locations-table": {
+          "name": "Name",
+          "address": "Address",
+          "actions": "Actions",
+          "delete": "Delete",
+          "create-location": "Create new location"
+        },
+        "readers-table": {
+          "name": "Name",
+          "serial-number": "Serial Number",
+          "status": "Status",
+          "actions": "Actions",
+          "pair-reader": "Pair reader",
+          "delete": "Delete",
+          "online": "Online",
+          "offline": "Offline"
+        }
+      },
+      "pos": {
+        "tab": "POS",
+        "products": "Products",
+        "select-location": "Select a location",
+        "select-reader": "Select a reader",
+        "customer": "Customer",
+        "add-to-cart": "Add to cart",
+        "no-products-found": "No products found.",
+        "no-products-found-link": "Add your first one here.",
+        "cart": "Cart",
+        "cart-empty": "The cart is empty.",
+        "quantity": "Quantity",
+        "subtotal": "Subtotal",
+        "tax": "Tax",
+        "total": "Total",
+        "pay": "Pay {{amount}}",
+        "clear-all": "Clear all",
+        "cancel-payment": "Cancel payment",
+        "collect-inputs": {
+          "email": {
+            "title": "Email",
+            "description": "Please enter your email address."
+          },
+          "phone-number": {
+            "title": "Phone number",
+            "description": "Please enter your phone number."
+          }
+        }
+      }
+    },
+    "account": {
+      "title": "Account",
+      "description": "Manage your personal and business details."
+    },
+    "apps": {
+      "title": "Apps",
+      "description": "Install apps to connect your business to your accounting software, mailing lists, and more.",
+      "acodei-quickbooks-sync": "Acodei Quickbooks Sync",
+      "xero-sync": "Xero Sync"
     },
     "membership": {
-      "membership": "Membership",
-      "enroll": "Enroll",
+      "title": "Membership",
       "perTimeUnits": {
         "day": "/ day",
         "week": "/ week",
@@ -158,72 +195,205 @@
       "enroll_now": "Enroll now",
       "enrolling": "Enrolling...",
       "enrolled": "Enrolled!",
-      "disclaimer": "By pressing '{{enroll_now}}', you authorize a recurring debit of {{amount}} {{interval}} against your Stripe balance.",
-      "insufficient_balance": "Your Stripe balance of {{balance}} is not sufficient to complete enrollment."
-    }
-  },
-  "class": {
-    "gentle": "Gentle Flow",
-    "yoga_intermediate": "Yoga Basics - Intermediate",
-    "mindful": "Mindful Movement",
-    "stretch": "Stretch & Restore",
-    "yoga_core": "Core Strength Yoga"
-  },
-  "components": {
-    "month_to_date": {
-      "month_to_date": "Month-to-date"
+      "disclaimer": "By pressing '{{enroll_now}}', you authorize a recurring debit of {{amount}} {{interval}} against your Stripe account balance.",
+      "insufficient_balance": "Your Stripe account balance of {{balance}} is not sufficient to complete enrollment."
     },
-    "customers": {
-      "customers": "Customers"
-    },
-    "schedule": {
-      "attendees": "attendees",
-      "today": "Today's Schedule"
-    },
-    "balance": {
-      "total": "Total balance",
-      "payout": "Pay out to bank",
-      "pending": "pending"
-    },
-    "recent_payments": {
-      "recent": "Recent payments",
-      "view_all": "View all"
-    }
+    "open-storefront": "Open storefront"
   },
-  "loading": "Loading...",
-  "studio": {
-    "1": "Studio 1",
-    "2": "Studio 2"
-  },
-  "navigation": {
-    "home": "Home",
-    "classes": "Classes",
-    "instructors": "Instructors",
-    "payments": "Payments",
-    "payouts": "Payouts",
-    "finances": "Finances",
-    "membership": "Membership"
+  "success": {
+    "title": "Success",
+    "description": "Redirecting in {{countdown}} seconds..."
   },
   "checkout": {
-    "payment_status": {
-      "error": "Something went wrong with your payment.",
-      "succeeded": "Payment was successful!",
-      "processing": "Your payment is processing...",
-      "requires_payment_method": "Your payment was not successful. Please select another payment method and try again."
-    },
-    "address_header": "Customer Address",
-    "payments_header": "Checkout Details",
-    "elements": {
-      "orderSummary": "Order Summary",
-      "classCharge": "Class Charge",
-      "tax": "Tax",
+    "shipping_address_header": "Shipping Information",
+    "billing_address_header": "Billing Information",
+    "payments_header": "Payment Method",
+    "or": "or",
+    "upsellTitle": "You may also like",
+    "order_summary": {
+      "title": "Order Summary",
+      "promotion_code_label": "Discount code",
+      "apply_promotion_code": "Apply",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "shipping_not_selected": "Not selected",
+      "taxes": "Taxes",
       "total": "Total",
-      "chargeCustomer": "Charge Customer",
-      "fee": "Fee"
+      "confirm_order": "Confirm order",
+      "processing": "Processing..."
+    },
+    "payment_status": {
+      "succeeded": "Payment succeeded!",
+      "processing": "Your payment is processing.",
+      "requires_payment_method": "Your payment was not successful, please try again.",
+      "error": "Something went wrong."
+    },
+    "shipping": {
+      "title": "Delivery Method",
+      "standard": {
+        "title": "No rush shipping"
+      },
+      "priority": {
+        "title": "Priority shipping"
+      },
+      "free": {
+        "title": "Free shipping"
+      },
+      "unknown": {
+        "title": "Unknown shipping option"
+      }
+    },
+    "invalid_promotion_code": "This promotion code is invalid."
+  },
+  "addToBag": {
+    "buttonText": "Add to bag"
+  },
+  "buyNow": {
+    "buttonText": "Buy now"
+  },
+  "cartPanel": {
+    "title": "Shopping cart",
+    "closePanel": "Close panel",
+    "subtotal": "Subtotal",
+    "shippingTaxes": "Shipping and taxes calculated at checkout.",
+    "or": "or",
+    "continueShopping": "Continue Shopping",
+    "checkoutButton": "Checkout",
+    "chargeButton": "Charge",
+    "cancelButton": "Cancel"
+  },
+  "modals": {
+    "payins": {
+      "title": "Payins",
+      "manual-entry-option": "Customer will enter their card details manually",
+      "present-to-terminal-reader-option": "Customer will present their card to a Terminal reader"
+    },
+    "create-product": {
+      "title": "Create new product",
+      "description": "Create a new product to offer to your customers.",
+      "form": {
+        "name": "Name",
+        "description": "Description",
+        "unit-amount": "Price",
+        "currency": "Currency",
+        "product-tax-code": "Product Tax Code",
+        "create": "Create",
+        "cancel": "Cancel",
+        "image": "Image",
+        "category": "Category",
+        "good": "Good",
+        "service": "Service",
+        "studio": "Studio",
+        "start-time": "Start Time",
+        "end-time": "End Time",
+        "recurring": {
+          "is-recurring": "Is recurring?",
+          "frequency": "Frequency",
+          "day": "Every day",
+          "week": "Every week",
+          "month": "Every month",
+          "year": "Every year"
+        }
+      },
+      "error": "An unknown error occurred while creating the product."
+    },
+    "create-financial-account": {
+      "title": "Create new financial account",
+      "description": "Create a new financial account to manage your funds.",
+      "form": {
+        "name": "Name",
+        "currency": "Currency",
+        "create": "Create",
+        "cancel": "Cancel"
+      },
+      "error": "An unknown error occurred while creating the financial account. It's possible the selected currency is not supported by your account."
+    },
+    "copy-payment-link": {
+      "title": "Copy payment link",
+      "description": "Send this link to your customer to complete their payment.",
+      "form": {
+        "url": "URL",
+        "close": "Close",
+        "copy": "Copy",
+        "copied": "Copied!"
+      }
+    },
+    "create-terminal-location": {
+      "title": "Create new terminal location",
+      "description": "Create a new terminal location to manage your terminals.",
+      "form": {
+        "name": "Name",
+        "line1": "Line 1",
+        "line2": "Line 2",
+        "city": "City",
+        "state": "State",
+        "postal-code": "Postal Code",
+        "country": "Country",
+        "create": "Create",
+        "cancel": "Cancel"
+      }
+    },
+    "pair-reader": {
+      "title": "Pair reader",
+      "description": "Pair a reader to a terminal location.",
+      "form": {
+        "registration-code": "Registration Code",
+        "pair": "Pair",
+        "cancel": "Cancel"
+      }
+    },
+    "create-customer": {
+      "title": "Create customer",
+      "description": "Create a new customer with their name, email address, and phone number.",
+      "form": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "create": "Create",
+        "cancel": "Cancel"
+      },
+      "error": "An unknown error occurred while creating the customer."
     }
   },
-  "errors": {
-    "unable_to_create": "This platform & account country combo is not supported."
+  "products": {
+    "pro-membership": {
+      "name": "Pro Membership",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Enhanced marketing",
+        "advanced-analytics": "Advanced analytics",
+        "priority-support": "Priority support"
+      }
+    }
   },
-  "unexpected_error": "An unexpected error occurred. Has it been gated correctly?"
+  "timeUnits": {
+    "hour": "{{value}} hour",
+    "hours": "{{value}} hours",
+    "day": "{{value}} day",
+    "days": "{{value}} days",
+    "business_day": "{{value}} business day",
+    "business_days": "{{value}} business days",
+    "week": "{{value}} week",
+    "weeks": "{{value}} weeks",
+    "month": "{{value}} month",
+    "months": "{{value}} months"
+  },
+  "perTimeUnits": {
+    "hour": "/ hour",
+    "week": "/ week",
+    "month": "/ month",
+    "year": "/ year"
+  },
+  "payment_status": {
+    "succeeded": "Payment succeeded!",
+    "processing": "Your payment is processing.",
+    "requires_payment_method": "Your payment was not successful, please try again.",
+    "error": "Something went wrong."
+  },
+  "storefront": {
+    "products": {
+      "title": "Products",
+      "no-products-found": "No products found."
+    }
+  }
 }

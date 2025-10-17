@@ -1,150 +1,187 @@
 {
-  "products": {
-    "pro-membership": {
-      "name": "プロメンバーシップ",
-      "marketing_feature_list": {
-        "enhanced-marketing": "マーケティング機能強化",
-        "advanced-analytics": "高度な分析機能",
-        "priority-support": "優先サポート"
-      }
+  "sign-up": {
+    "heading": "新規登録",
+    "existing-account": "すでにアカウントをお持ちですか？",
+    "sign-in": "ログイン",
+    "country": {
+      "label": "国"
+    },
+    "email": {
+      "label": "メールアドレス"
+    },
+    "password": {
+      "label": "パスワード"
+    },
+    "confirm-password": {
+      "label": "パスワード確認"
+    },
+    "button": {
+      "text": "登録する"
+    },
+    "errors": {
+      "email-already-in-use": "指定されたメールアドレスのアカウントは既に存在します。"
     }
   },
-  "auth": {
-    "login": {
-      "email": "メールアドレス",
-      "sample_email": "jenny.rosen@example.com",
-      "password": "パスワード",
-      "continue": "続ける",
-      "loading": "読み込み中...",
-      "dont_have_an_account": "アカウントをお持ちでないですか？",
-      "sign_up": "登録する",
-      "login": "ログイン"
+  "sign-in": {
+    "heading": "ログイン",
+    "no-account": "アカウントをお持ちでない方は",
+    "sign-up": "新規登録",
+    "email": {
+      "label": "メールアドレス"
     },
-    "loginas": {
-      "select": "アカウント選択",
-      "dont_have_account": "アカウントをお持ちでないですか？",
-      "register": "登録する",
-      "acct_id": "アカウントID",
-      "sample_acct_id": "acct_1234567890abcdef",
-      "continue": "続ける",
-      "loading": "送信中..."
+    "password": {
+      "label": "パスワード"
     },
-    "signup": {
-      "sign_up": "登録する",
-      "already_have_account": "すでにアカウントをお持ちですか？",
-      "login": "ログイン",
-      "country": "国",
-      "email": "メールアドレス"
+    "button": {
+      "text": "ログイン"
     },
-    "layout": {
-      "manage": "簡単にスタジオを管理できます。",
-      "pose_is_leading": "Poseは世界をリードする健康・ウェルネスプラットフォームです。",
-      "sign_up": "登録する",
-      "fill_form": "アカウント設定のためにフォームに記入してください。",
-      "contact": "サポートに連絡する"
+    "errors": {
+      "email-not-found": "指定されたメールアドレスのアカウントが見つかりませんでした。",
+      "account-not-linked": "顧客をアカウントにリンクする`accountId`メタデータが不足しています。"
     }
   },
-  "countries": {
-    "australia": "オーストラリア",
-    "austria": "オーストリア",
-    "belgium": "ベルギー",
-    "brazil": "ブラジル",
-    "bulgaria": "ブルガリア",
-    "canada": "カナダ",
-    "croatia": "クロアチア",
-    "cyprus": "キプロス",
-    "czech_republic": "チェコ共和国",
-    "denmark": "デンマーク",
-    "estonia": "エストニア",
-    "finland": "フィンランド",
-    "france": "フランス",
-    "germany": "ドイツ",
-    "ghana": "ガーナ",
-    "gibraltar": "ジブラルタル",
-    "greece": "ギリシャ",
-    "hong_kong": "香港",
-    "hungary": "ハンガリー",
-    "indonesia": "インドネシア",
-    "ireland": "アイルランド",
-    "italy": "イタリア",
-    "japan": "日本",
-    "kenya": "ケニア",
-    "latvia": "ラトビア",
-    "liechtenstein": "リヒテンシュタイン",
-    "lithuania": "リトアニア",
-    "luxembourg": "ルクセンブルク",
-    "malaysia": "マレーシア",
-    "malta": "マルタ",
-    "mexico": "メキシコ",
-    "netherlands": "オランダ",
-    "new_zealand": "ニュージーランド",
-    "nigeria": "ナイジェリア",
-    "norway": "ノルウェー",
-    "poland": "ポーランド",
-    "portugal": "ポルトガル",
-    "romania": "ルーマニア",
-    "singapore": "シンガポール",
-    "slovakia": "スロバキア",
-    "slovenia": "スロベニア",
-    "south_africa": "南アフリカ",
-    "spain": "スペイン",
-    "sweden": "スウェーデン",
-    "switzerland": "スイス",
-    "thailand": "タイ",
-    "united_arab_emirates": "アラブ首長国連邦",
-    "united_kingdom": "イギリス",
-    "united_states": "アメリカ合衆国"
+  "sign-out": {
+    "button": {
+      "text": "サインアウト"
+    }
+  },
+  "hero": {
+    "heading": "ビジネスワークフローをシンプルに。",
+    "subheading": "サービス業向けに設計された包括的なプラットフォーム。",
+    "cta": "サポートに問い合わせる"
   },
   "dashboard": {
-    "classes": {
-      "classes": "クラス",
-      "create_class": "クラスを作成",
-      "edit_studios": "スタジオを編集",
-      "today": "今日",
-      "tomorrow": "明日",
-      "studio": "スタジオ"
-    },
-    "instructors": {
-      "instructors": "インストラクター",
-      "add": "インストラクターを追加",
-      "class": "クラス",
-      "es": "",
-      "this_week": "今週"
-    },
-    "payments": {
-      "payments": "支払い",
-      "recent": "最近の支払い"
+    "home": {
+      "title": "ホーム",
+      "greeting": "こんにちは、{{name}}さん",
+      "greeting-subtitle": "{{email}}としてログイン中です",
+      "todays-schedule": "本日のスケジュール",
+      "balances": "残高",
+      "capital": "資金調達"
     },
     "payouts": {
-      "payouts": "払い出し"
+      "title": "支払い"
     },
-    "welcome": "ようこそ、{{name}}さん！",
-    "performance": "パフォーマンス",
-    "settings": {
-      "my_studio": "マイスタジオ",
-      "settings": "設定",
-      "payment_methods": "支払い方法",
-      "sign_out": "ログアウト",
-      "basic_details": "基本情報",
-      "studio_name": "スタジオ名",
-      "practice": "Practice Yoga Studio",
-      "email": "メールアドレス",
-      "account_settings": "アカウント設定",
-      "manage_account": "アカウントとビジネス設定を管理します。",
-      "payment_methods_add": "支払い方法を追加・管理します。",
-      "tax_settings": "税金設定",
-      "tax_account": "税金設定と登録を管理します。"
+    "products": {
+      "title": "商品",
+      "table": {
+        "name": "商品名",
+        "description": "説明",
+        "price": "価格",
+        "actions": "操作",
+        "delete": "削除",
+        "create-product": "新しい商品を作成",
+        "create-payment-link": "決済リンクを作成"
+      }
     },
-    "finances": {
-      "financial_account": "金融口座",
-      "transactions": "取引",
-      "cards": "カード",
-      "finances": "財務",
-      "overview": "概要"
+    "expenses": {
+      "title": "支出",
+      "financial-account-card": {
+        "ending-in": "末尾番号 {{last4}}"
+      },
+      "create-financial-account": "金融口座を作成",
+      "financial-account": {
+        "title": "金融口座",
+        "transactions": "取引履歴"
+      },
+      "available-balances": "利用可能な残高：",
+      "financial-accounts": "金融口座",
+      "issuing-cards": "カード発行",
+      "issuing-balances": "発行残高",
+      "issuing-topups": {
+        "transfer-amount": "振込金額（利用可能額：{{amount}}）",
+        "transfer": "振込",
+        "error": "発行残高のチャージ中に不明なエラーが発生しました。"
+      }
+    },
+    "capital": {
+      "title": "資金調達",
+      "promotions": "キャンペーン",
+      "financings": "融資",
+      "financing-application": "融資申請"
+    },
+    "payments": {
+      "title": "決済",
+      "payment-method-settings": "決済方法設定"
+    },
+    "tax": {
+      "title": "税金",
+      "tax-settings": "税金設定",
+      "tax-registrations": "税務登録",
+      "export-tax-transactions": "税務取引のエクスポート",
+      "tax-threshold-monitoring": "課税閾値モニタリング"
+    },
+    "reports": {
+      "title": "レポート"
+    },
+    "terminal-and-pos": {
+      "title": "ターミナル＆POS",
+      "description": "実店舗用カード端末を管理し、支払いを受け取りましょう。",
+      "terminal": {
+        "tab": "ターミナル",
+        "select-location": "場所を選択",
+        "terminal-locations": "ターミナル設置場所",
+        "readers": "リーダー",
+        "locations-table": {
+          "name": "名称",
+          "address": "住所",
+          "actions": "操作",
+          "delete": "削除",
+          "create-location": "新しい場所を作成"
+        },
+        "readers-table": {
+          "name": "名称",
+          "serial-number": "シリアル番号",
+          "status": "ステータス",
+          "actions": "操作",
+          "pair-reader": "リーダーをペアリング",
+          "delete": "削除",
+          "online": "オンライン",
+          "offline": "オフライン"
+        }
+      },
+      "pos": {
+        "tab": "POS",
+        "products": "商品",
+        "select-location": "場所を選択",
+        "select-reader": "リーダーを選択",
+        "customer": "顧客",
+        "add-to-cart": "カートに追加",
+        "no-products-found": "商品が見つかりません。",
+        "no-products-found-link": "最初の商品をここで追加しましょう。",
+        "cart": "カート",
+        "cart-empty": "カートは空です。",
+        "quantity": "数量",
+        "subtotal": "小計",
+        "tax": "税金",
+        "total": "合計",
+        "pay": "{{amount}}を支払う",
+        "clear-all": "すべて削除",
+        "cancel-payment": "支払いをキャンセル",
+        "collect-inputs": {
+          "email": {
+            "title": "メールアドレス",
+            "description": "メールアドレスを入力してください。"
+          },
+          "phone-number": {
+            "title": "電話番号",
+            "description": "電話番号を入力してください。"
+          }
+        }
+      }
+    },
+    "account": {
+      "title": "アカウント",
+      "description": "個人情報とビジネス情報を管理します。"
+    },
+    "apps": {
+      "title": "アプリ",
+      "description": "会計ソフト、メーリングリストなどにビジネスを連携するアプリをインストール。",
+      "acodei-quickbooks-sync": "Acodei Quickbooks連携",
+      "xero-sync": "Xero連携"
     },
     "membership": {
-      "membership": "メンバーシップ",
-      "enroll": "登録",
+      "title": "メンバーシップ",
       "perTimeUnits": {
         "day": "/ 日",
         "week": "/ 週",
@@ -152,78 +189,211 @@
         "year": "/ 年"
       },
       "price": "価格",
-      "features": "特徴",
+      "features": "特典",
       "payment_method": "支払い方法",
       "stripe_balance": "Stripe残高",
       "enroll_now": "今すぐ登録",
       "enrolling": "登録中...",
       "enrolled": "登録完了！",
-      "disclaimer": "'{{enroll_now}}'をクリックすると、Stripe残高から{{amount}}を{{interval}}ごとに定期的に引き落とすことを承認します。",
-      "insufficient_balance": "Stripe残高の{{balance}}では登録を完了するのに十分ではありません。"
-    }
-  },
-  "class": {
-    "gentle": "ジェントルフロー",
-    "yoga_intermediate": "ヨガ基礎 - 中級",
-    "mindful": "マインドフルムーブメント",
-    "stretch": "ストレッチ＆リストア",
-    "yoga_core": "コア強化ヨガ"
-  },
-  "components": {
-    "month_to_date": {
-      "month_to_date": "月初から今日まで"
+      "disclaimer": "「{{enroll_now}}」を押すことで、Stripeアカウント残高から{{amount}}を{{interval}}ごとに引き落とすことを承認します。",
+      "insufficient_balance": "現在のStripeアカウント残高{{balance}}では登録に必要な金額が不足しています。"
     },
-    "customers": {
-      "customers": "顧客"
-    },
-    "schedule": {
-      "attendees": "参加者",
-      "today": "今日のスケジュール"
-    },
-    "balance": {
-      "total": "合計残高",
-      "payout": "銀行に払い出す",
-      "pending": "保留中"
-    },
-    "recent_payments": {
-      "recent": "最近の支払い",
-      "view_all": "すべて表示"
-    }
+    "open-storefront": "ストアフロントを開く"
   },
-  "loading": "読み込み中...",
-  "studio": {
-    "1": "スタジオ 1",
-    "2": "スタジオ 2"
-  },
-  "navigation": {
-    "home": "ホーム",
-    "classes": "クラス",
-    "instructors": "インストラクター",
-    "payments": "支払い",
-    "payouts": "払い出し",
-    "finances": "財務",
-    "membership": "メンバーシップ"
+  "success": {
+    "title": "完了",
+    "description": "{{countdown}}秒後にリダイレクトします..."
   },
   "checkout": {
-    "payment_status": {
-      "error": "支払いに問題が発生しました。",
-      "succeeded": "支払いが成功しました！",
-      "processing": "支払いを処理中です...",
-      "requires_payment_method": "支払いが成功しませんでした。別の支払い方法を選択して再試行してください。"
-    },
-    "address_header": "顧客住所",
-    "payments_header": "決済詳細",
-    "elements": {
-      "orderSummary": "注文概要",
-      "classCharge": "クラス料金",
-      "tax": "税金",
+    "shipping_address_header": "配送情報",
+    "billing_address_header": "請求情報",
+    "payments_header": "支払い方法",
+    "or": "または",
+    "upsellTitle": "こちらもおすすめです",
+    "order_summary": {
+      "title": "注文概要",
+      "promotion_code_label": "割引コード",
+      "apply_promotion_code": "適用",
+      "subtotal": "小計",
+      "discount": "割引",
+      "shipping": "配送料",
+      "shipping_not_selected": "未選択",
+      "taxes": "税金",
       "total": "合計",
-      "chargeCustomer": "顧客に請求",
-      "fee": "手数料"
+      "confirm_order": "注文を確定",
+      "processing": "処理中..."
+    },
+    "payment_status": {
+      "succeeded": "お支払いが完了しました！",
+      "processing": "お支払いを処理中です。",
+      "requires_payment_method": "お支払いが完了しませんでした。もう一度お試しください。",
+      "error": "エラーが発生しました。"
+    },
+    "shipping": {
+      "title": "配送方法",
+      "standard": {
+        "title": "通常配送"
+      },
+      "priority": {
+        "title": "優先配送"
+      },
+      "free": {
+        "title": "無料配送"
+      },
+      "unknown": {
+        "title": "不明な配送オプション"
+      }
+    },
+    "invalid_promotion_code": "このプロモーションコードは無効です。"
+  },
+  "addToBag": {
+    "buttonText": "カートに追加"
+  },
+  "buyNow": {
+    "buttonText": "今すぐ購入"
+  },
+  "cartPanel": {
+    "title": "ショッピングカート",
+    "closePanel": "パネルを閉じる",
+    "subtotal": "小計",
+    "shippingTaxes": "配送料と税金は精算時に計算されます。",
+    "or": "または",
+    "continueShopping": "買い物を続ける",
+    "checkoutButton": "精算へ進む",
+    "chargeButton": "決済する",
+    "cancelButton": "キャンセル"
+  },
+  "modals": {
+    "payins": {
+      "title": "入金",
+      "manual-entry-option": "顧客がカード情報を手動で入力する",
+      "present-to-terminal-reader-option": "顧客がカードをターミナルリーダーで提示する"
+    },
+    "create-product": {
+      "title": "新商品の作成",
+      "description": "顧客に提供する新しい商品を作成します。",
+      "form": {
+        "name": "商品名",
+        "description": "説明",
+        "unit-amount": "価格",
+        "currency": "通貨",
+        "product-tax-code": "商品税コード",
+        "create": "作成",
+        "cancel": "キャンセル",
+        "image": "画像",
+        "category": "カテゴリ",
+        "good": "物品",
+        "service": "サービス",
+        "studio": "スタジオ",
+        "start-time": "開始時間",
+        "end-time": "終了時間",
+        "recurring": {
+          "is-recurring": "定期課金？",
+          "frequency": "頻度",
+          "day": "毎日",
+          "week": "毎週",
+          "month": "毎月",
+          "year": "毎年"
+        }
+      },
+      "error": "商品作成中に不明なエラーが発生しました。"
+    },
+    "create-financial-account": {
+      "title": "新しい金融口座の作成",
+      "description": "資金管理のための新しい金融口座を作成します。",
+      "form": {
+        "name": "名称",
+        "currency": "通貨",
+        "create": "作成",
+        "cancel": "キャンセル"
+      },
+      "error": "金融口座の作成中に不明なエラーが発生しました。選択した通貨がアカウントでサポートされていない可能性があります。"
+    },
+    "copy-payment-link": {
+      "title": "決済リンクをコピー",
+      "description": "このリンクを顧客に送信して決済を完了させてください。",
+      "form": {
+        "url": "URL",
+        "close": "閉じる",
+        "copy": "コピー",
+        "copied": "コピーしました！"
+      }
+    },
+    "create-terminal-location": {
+      "title": "新しいターミナル設置場所の作成",
+      "description": "ターミナルを管理するための新しい設置場所を作成します。",
+      "form": {
+        "name": "名称",
+        "line1": "住所1",
+        "line2": "住所2",
+        "city": "市区町村",
+        "state": "都道府県",
+        "postal-code": "郵便番号",
+        "country": "国",
+        "create": "作成",
+        "cancel": "キャンセル"
+      }
+    },
+    "pair-reader": {
+      "title": "リーダーをペアリング",
+      "description": "リーダーをターミナル設置場所にペアリングします。",
+      "form": {
+        "registration-code": "登録コード",
+        "pair": "ペアリング",
+        "cancel": "キャンセル"
+      }
+    },
+    "create-customer": {
+      "title": "顧客の作成",
+      "description": "名前、メールアドレス、電話番号で新しい顧客を作成します。",
+      "form": {
+        "name": "名前",
+        "email": "メールアドレス",
+        "phone": "電話番号",
+        "create": "作成",
+        "cancel": "キャンセル"
+      },
+      "error": "顧客作成中に不明なエラーが発生しました。"
     }
   },
-  "errors": {
-    "unable_to_create": "このプラットフォームとアカウント国の組み合わせはサポートされていません。"
+  "products": {
+    "pro-membership": {
+      "name": "プロメンバーシップ",
+      "marketing_feature_list": {
+        "enhanced-marketing": "強化されたマーケティング",
+        "advanced-analytics": "高度な分析",
+        "priority-support": "優先サポート"
+      }
+    }
   },
-  "unexpected_error": "予期せぬエラーが発生しました。正しく設定されていますか？"
+  "timeUnits": {
+    "hour": "{{value}}時間",
+    "hours": "{{value}}時間",
+    "day": "{{value}}日",
+    "days": "{{value}}日",
+    "business_day": "{{value}}営業日",
+    "business_days": "{{value}}営業日",
+    "week": "{{value}}週間",
+    "weeks": "{{value}}週間",
+    "month": "{{value}}ヶ月",
+    "months": "{{value}}ヶ月"
+  },
+  "perTimeUnits": {
+    "hour": "/ 時間",
+    "week": "/ 週",
+    "month": "/ 月",
+    "year": "/ 年"
+  },
+  "payment_status": {
+    "succeeded": "お支払いが完了しました！",
+    "processing": "お支払いを処理中です。",
+    "requires_payment_method": "お支払いが完了しませんでした。もう一度お試しください。",
+    "error": "エラーが発生しました。"
+  },
+  "storefront": {
+    "products": {
+      "title": "商品",
+      "no-products-found": "商品が見つかりません。"
+    }
+  }
 }

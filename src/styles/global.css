@@ -1,0 +1,298 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+}
+
+@theme {
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-accent: var(--brand-primary-accent);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-secondary-accent: var(--brand-secondary-accent);
+  --color-brand-primary-contrasting-text: var(--brand-primary-contrasting-text);
+  --color-brand-secondary-contrasting-text: var(
+    --brand-secondary-contrasting-text
+  );
+  --color-blurple: #635bff;
+
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #d4d4d4;
+  --color-gray-400: #a3a3a3;
+  --color-gray-500: #737373;
+  --color-gray-600: #525252;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+  --color-gray-900: #171717;
+  --color-gray-950: #0a0a0a;
+
+  --color-yellow-50: #fffbeb;
+  --color-yellow-100: #fef3c7;
+  --color-yellow-200: #fde68a;
+  --color-yellow-300: #fcd34d;
+  --color-yellow-400: #fbbf24;
+  --color-yellow-500: #f59e0b;
+  --color-yellow-600: #d97706;
+  --color-yellow-700: #b45309;
+  --color-yellow-800: #92400e;
+  --color-yellow-900: #78350f;
+  --color-yellow-950: #451a03;
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Sohne';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/Sohne-Buch.otf) format('opentype');
+  }
+
+  @font-face {
+    font-family: 'Sohne';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(/fonts/Sohne-Kraftig.otf) format('opentype');
+  }
+
+  @font-face {
+    font-family: 'Sohne';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url(/fonts/Sohne-Halbfett.otf) format('opentype');
+  }
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+*[role='button']:not(:disabled) {
+  cursor: pointer;
+}
+
+*[role='button']:disabled {
+  cursor: not-allowed;
+}
+
+[data-stripe-connect-js-wrapper] {
+  position: relative;
+  pointer-events: none;
+}
+
+.__PrivateStripeElement::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  margin: 10px;
+  display: block;
+  box-shadow:
+    0 0 4px #635cff,
+    inset 0 0 2px #635cff;
+  border-radius: 12px;
+  opacity: 0;
+  transition:
+    opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.3s ease;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.__PrivateStripeElement::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -34px;
+  right: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #635cff;
+  opacity: 0;
+  transition:
+    opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.3s ease;
+  z-index: 999;
+  pointer-events: none;
+}
+
+[data-stripe-connect-js-wrapper]::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  margin: 10px;
+  display: block;
+  box-shadow:
+    0 0 4px #635cff,
+    inset 0 0 2px #635cff;
+  border-radius: 12px;
+  opacity: 0;
+  transition:
+    opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.3s ease;
+  z-index: 80;
+}
+
+[data-stripe-connect-js-wrapper]::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #635cff;
+  opacity: 0;
+  transition:
+    opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.3s ease;
+  z-index: 80;
+}
+
+.reveal-elements [data-stripe-connect-js-wrapper]::before,
+.reveal-elements [data-stripe-connect-js-wrapper]::after,
+.reveal-elements .__PrivateStripeElement::before,
+.reveal-elements .__PrivateStripeElement::after {
+  opacity: 1 !important;
+}
+
+#connect-account-onboarding [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Account Onboarding';
+}
+
+#connect-account-management [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Account Management';
+}
+
+#connect-payouts [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Payouts';
+}
+
+#connect-financial-account [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Financial Account';
+}
+
+#connect-financial-account-transactions
+  [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Financial Account Transactions';
+}
+
+#connect-reporting-chart [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Reporting Chart';
+}
+
+#connect-documents [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Documents';
+}
+
+#connect-tax-settings [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Tax Settings';
+}
+
+#connect-tax-registrations [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Tax Registrations';
+}
+
+#connect-export-tax-transactions [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Export Tax Transactions';
+}
+
+#connect-tax-threshold-monitoring [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Tax Threshold Monitoring';
+}
+
+#connect-app-install [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect App Install';
+}
+
+#connect-app-viewport [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect App Viewport';
+}
+
+#connect-notification-banner [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Notification Banner';
+}
+
+#connect-product-tax-code-selector [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Product Tax Code Selector';
+}
+
+#connect-payouts [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Payouts';
+}
+
+#connect-payments [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Payments';
+}
+
+#connect-balances [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Balances';
+}
+
+#connect-disputes-list [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Disputes List';
+}
+
+#connect-payment-method-settings [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Payment Method Settings';
+}
+
+#connect-issuing-cards-list [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Issuing Cards List';
+}
+
+#connect-capital-financing [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Capital Financing';
+}
+
+#connect-capital-financing-promotion [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Capital Financing Promotion';
+}
+
+#connect-capital-financing-application [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Capital Financing Application';
+}
+
+#connect-instant-payouts-promotion [data-stripe-connect-js-wrapper]::after {
+  content: 'Connect Instant Payouts Promotion';
+}
+
+#express-checkout-element .__PrivateStripeElement::after {
+  content: 'Express Checkout Element';
+}
+
+#address-element .__PrivateStripeElement::after {
+  content: 'Address Element';
+}
+
+#payment-element .__PrivateStripeElement::after {
+  content: 'Payment Element';
+}
+
+#currency-selector-element .__PrivateStripeElement::after {
+  content: 'Currency Selector Element';
+}
+
+#payment-method-messaging-element .__PrivateStripeElement::after {
+  content: 'Payment Method Messaging Element';
+}

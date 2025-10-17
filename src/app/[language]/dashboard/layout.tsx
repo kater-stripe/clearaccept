@@ -1,0 +1,231 @@
+'use client';
+
+import { Container } from '@/components/common/Container';
+import { LoadingOverlay } from '@/components/common/LoadingOverlay';
+import { Logo } from '@/components/common/Logo';
+import { Sidebar } from '@/components/common/Sidebar';
+import { ConnectNotificationsBannerWrapper } from '@/components/connect/ConnectNotificationsBannerWrapper';
+import { useDemoConfig } from '@/context/DemoConfigContext';
+import { useDemoMerchant } from '@/context/DemoMerchantContext';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { usePathname, useRouter } from 'next/navigation';
+import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+type DashboardLayoutProps = PropsWithChildren;
+
+const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  const { language } = useDemoConfig();
+  const { isSignedIn, account, signOut } = useDemoMerchant();
+  const router = useRouter();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const pathname = usePathname();
+
+  const pathnameWithoutLanguage = pathname.replace(`/${language}`, '');
+
+  const { t } = useTranslation();
+
+  /**
+   * If we're not signed in, redirect to the sign in page.
+   */
+  useEffect(() => {
+    if (isSignedIn) {
+      return;
+    }
+
+    router.push(`/${language}/sign-in`);
+  }, [isSignedIn]);
+
+  const headings = useMemo(() => {
+    switch (pathnameWithoutLanguage) {
+      case '/dashboard': {
+        let title = t('dashboard.home.greeting', {
+          name:
+            account?.object === 'v2.core.account'
+              ? account?.contact_email
+              : account?.email,
+        });
+
+        if (account?.object === 'v2.core.account') {
+          title = t('dashboard.home.greeting', {
+            name:
+              account?.identity?.business_details?.registered_name ||
+              `${account?.identity?.individual?.given_name} ${
+                account?.identity?.individual?.surname
+              }`.trim(),
+          });
+        } else {
+          title = t('dashboard.home.greeting', {
+            name:
+              account?.business_profile?.name ??
+              `${account?.individual?.first_name} ${account?.individual?.last_name}`.trim(),
+          });
+        }
+
+        return {
+          title,
+          subtitle: t('dashboard.home.greeting-subtitle', {
+            email:
+              account?.object === 'v2.core.account'
+                ? account?.contact_email
+                : account?.email,
+          }),
+        };
+      }
+      case '/dashboard/payouts': {
+        return {
+          title: t('dashboard.payouts.title'),
+        };
+      }
+      case '/dashboard/products': {
+        return {
+          title: t('dashboard.products.title'),
+        };
+      }
+      case '/dashboard/expenses': {
+        return {
+          title: t('dashboard.expenses.title'),
+        };
+      }
+      case '/dashboard/capital': {
+        return {
+          title: t('dashboard.capital.title'),
+        };
+      }
+      case '/dashboard/payments': {
+        return {
+          title: t('dashboard.payments.title'),
+        };
+      }
+      case '/dashboard/tax': {
+        return {
+          title: t('dashboard.tax.title'),
+        };
+      }
+      case '/dashboard/reports': {
+        return {
+          title: t('dashboard.reports.title'),
+        };
+      }
+      case '/dashboard/terminal-and-pos/pos':
+      case '/dashboard/terminal-and-pos/terminal': {
+        return {
+          title: t('dashboard.terminal-and-pos.title'),
+        };
+      }
+      case '/dashboard/account': {
+        return {
+          title: t('dashboard.account.title'),
+        };
+      }
+      case '/dashboard/apps': {
+        return {
+          title: t('dashboard.apps.title'),
+        };
+      }
+      case '/dashboard/membership': {
+        return {
+          title: t('dashboard.membership.title'),
+        };
+      }
+      default: {
+        if (
+          pathnameWithoutLanguage.startsWith(
+            '/dashboard/expenses/financial-accounts/',
+          )
+        ) {
+          return {
+            title: t('dashboard.expenses.financial-account.title'),
+          };
+        }
+
+        return {
+          title: t('dashboard.home.greeting', {
+            name:
+              account?.object === 'v2.core.account'
+                ? account?.contact_email!
+                : account?.email!,
+          }),
+        };
+      }
+    }
+  }, [pathnameWithoutLanguage, account]);
+
+  /**
+   * We're not signed in or have not completed onboarding. Wait for redirect to home page.
+   */
+  if (
+    !isSignedIn ||
+    !account ||
+    (account.object === 'v2.core.account' &&
+      account.requirements?.summary?.minimum_deadline?.status === 'past_due') ||
+    (account.object === 'account' && !account.details_submitted)
+  ) {
+    return <LoadingOverlay />;
+  }
+
+  return (
+    <div className='relative'>
+      {/* Mobile Top Navbar */}
+      <div className='lg:hidden bg-brand-primary px-8 py-3 flex items-center justify-between fixed top-0 left-0 right-0 z-50'>
+        <Logo className='flex-shrink-0 max-h-12' />
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className='text-white p-2'
+        >
+          {isMobileMenuOpen ? (
+            <XMarkIcon className='size-6' />
+          ) : (
+            <Bars3Icon className='size-6' />
+          )}
+        </button>
+      </div>
+
+      <div className='grid grid-cols-12 lg:h-screen'>
+        {/* Desktop Sidebar */}
+        <div className='hidden lg:flex lg:col-span-2 bg-brand-primary py-8 flex-col'>
+          <Logo className='mb-6 px-8 flex-shrink-0' />
+          <Sidebar />
+        </div>
+
+        {/* Mobile Sliding Menu */}
+        <div
+          className={`lg:hidden fixed inset-y-0 left-0 z-40 w-full bg-brand-primary transform transition-transform duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <div className='py-8 flex flex-col h-full pt-16'>
+            <Sidebar onMobileMenuClose={() => setIsMobileMenuOpen(false)} />
+          </div>
+        </div>
+
+        {/* Mobile Menu Backdrop */}
+        {isMobileMenuOpen && (
+          <div
+            className='lg:hidden fixed inset-0 bg-black/20 z-30'
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+
+        {/* Main Content */}
+        <div className='col-span-12 lg:col-span-10 min-h-screen pt-16 lg:pt-0 lg:overflow-y-auto'>
+          <Container>
+            <div>
+              <h1 className='text-3xl font-bold'>{headings.title}</h1>
+              {headings.subtitle && (
+                <p className='text-md text-gray-500'>{headings.subtitle}</p>
+              )}
+            </div>
+            <div id='connect-notifications-banner'>
+              <ConnectNotificationsBannerWrapper />
+            </div>
+            <div className='mt-4'>{children}</div>
+          </Container>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardLayout;

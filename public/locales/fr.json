@@ -1,4 +1,361 @@
 {
+  "sign-up": {
+    "heading": "Inscription",
+    "existing-account": "Vous avez déjà un compte ?",
+    "sign-in": "Se connecter",
+    "country": {
+      "label": "Pays"
+    },
+    "email": {
+      "label": "Email"
+    },
+    "password": {
+      "label": "Mot de passe"
+    },
+    "confirm-password": {
+      "label": "Confirmer le mot de passe"
+    },
+    "button": {
+      "text": "S'inscrire"
+    },
+    "errors": {
+      "email-already-in-use": "Un compte existe déjà avec cet email."
+    }
+  },
+  "sign-in": {
+    "heading": "Connexion",
+    "no-account": "Vous n'avez pas de compte ?",
+    "sign-up": "S'inscrire",
+    "email": {
+      "label": "Email"
+    },
+    "password": {
+      "label": "Mot de passe"
+    },
+    "button": {
+      "text": "Se connecter"
+    },
+    "errors": {
+      "email-not-found": "Aucun compte n'a été trouvé avec cet email.",
+      "account-not-linked": "Les métadonnées `accountId` qui lient le client à un compte sont manquantes."
+    }
+  },
+  "sign-out": {
+    "button": {
+      "text": "Se déconnecter"
+    }
+  },
+  "hero": {
+    "heading": "Simplifiez vos processus d'entreprise.",
+    "subheading": "Une plateforme complète conçue pour les entreprises de services.",
+    "cta": "Contacter le support"
+  },
+  "dashboard": {
+    "home": {
+      "title": "Accueil",
+      "greeting": "Bonjour, {{name}}",
+      "greeting-subtitle": "Vous êtes connecté en tant que {{email}}",
+      "todays-schedule": "Planning du jour",
+      "balances": "Soldes",
+      "capital": "Capital"
+    },
+    "payouts": {
+      "title": "Versements"
+    },
+    "products": {
+      "title": "Produits",
+      "table": {
+        "name": "Nom",
+        "description": "Description",
+        "price": "Prix",
+        "actions": "Actions",
+        "delete": "Supprimer",
+        "create-product": "Créer un nouveau produit",
+        "create-payment-link": "Créer un lien de paiement"
+      }
+    },
+    "expenses": {
+      "title": "Dépenses",
+      "financial-account-card": {
+        "ending-in": "Se terminant par {{last4}}"
+      },
+      "create-financial-account": "Créer un compte financier",
+      "financial-account": {
+        "title": "Compte financier",
+        "transactions": "Transactions"
+      },
+      "available-balances": "Soldes disponibles :",
+      "financial-accounts": "Comptes financiers",
+      "issuing-cards": "Cartes émises",
+      "issuing-balances": "Soldes d'émission",
+      "issuing-topups": {
+        "transfer-amount": "Montant du transfert ({{amount}} disponible)",
+        "transfer": "Transférer",
+        "error": "Une erreur inconnue s'est produite lors du rechargement de votre solde d'émission."
+      }
+    },
+    "capital": {
+      "title": "Capital",
+      "promotions": "Promotions",
+      "financings": "Financements",
+      "financing-application": "Demande de financement"
+    },
+    "payments": {
+      "title": "Paiements",
+      "payment-method-settings": "Paramètres des méthodes de paiement"
+    },
+    "tax": {
+      "title": "Taxes",
+      "tax-settings": "Paramètres de taxes",
+      "tax-registrations": "Enregistrements fiscaux",
+      "export-tax-transactions": "Exporter les transactions fiscales",
+      "tax-threshold-monitoring": "Surveillance des seuils fiscaux"
+    },
+    "reports": {
+      "title": "Rapports"
+    },
+    "terminal-and-pos": {
+      "title": "Terminal et PDV",
+      "description": "Gérez les terminaux de carte physiques et acceptez des paiements.",
+      "terminal": {
+        "tab": "Terminal",
+        "select-location": "Sélectionnez un emplacement",
+        "terminal-locations": "Emplacements des terminaux",
+        "readers": "Lecteurs",
+        "locations-table": {
+          "name": "Nom",
+          "address": "Adresse",
+          "actions": "Actions",
+          "delete": "Supprimer",
+          "create-location": "Créer un nouvel emplacement"
+        },
+        "readers-table": {
+          "name": "Nom",
+          "serial-number": "Numéro de série",
+          "status": "Statut",
+          "actions": "Actions",
+          "pair-reader": "Associer un lecteur",
+          "delete": "Supprimer",
+          "online": "En ligne",
+          "offline": "Hors ligne"
+        }
+      },
+      "pos": {
+        "tab": "PDV",
+        "products": "Produits",
+        "select-location": "Sélectionnez un emplacement",
+        "select-reader": "Sélectionnez un lecteur",
+        "customer": "Client",
+        "add-to-cart": "Ajouter au panier",
+        "no-products-found": "Aucun produit trouvé.",
+        "no-products-found-link": "Ajoutez votre premier produit ici.",
+        "cart": "Panier",
+        "cart-empty": "Le panier est vide.",
+        "quantity": "Quantité",
+        "subtotal": "Sous-total",
+        "tax": "Taxe",
+        "total": "Total",
+        "pay": "Payer {{amount}}",
+        "clear-all": "Tout effacer",
+        "cancel-payment": "Annuler le paiement",
+        "collect-inputs": {
+          "email": {
+            "title": "Email",
+            "description": "Veuillez saisir votre adresse email."
+          },
+          "phone-number": {
+            "title": "Numéro de téléphone",
+            "description": "Veuillez saisir votre numéro de téléphone."
+          }
+        }
+      }
+    },
+    "account": {
+      "title": "Compte",
+      "description": "Gérez vos informations personnelles et professionnelles."
+    },
+    "apps": {
+      "title": "Applications",
+      "description": "Installez des applications pour connecter votre entreprise à votre logiciel de comptabilité, listes de diffusion, et plus encore.",
+      "acodei-quickbooks-sync": "Synchronisation Acodei Quickbooks",
+      "xero-sync": "Synchronisation Xero"
+    },
+    "membership": {
+      "title": "Adhésion",
+      "perTimeUnits": {
+        "day": "/ jour",
+        "week": "/ semaine",
+        "month": "/ mois",
+        "year": "/ an"
+      },
+      "price": "Prix",
+      "features": "Fonctionnalités",
+      "payment_method": "Méthode de paiement",
+      "stripe_balance": "Solde Stripe",
+      "enroll_now": "S'inscrire maintenant",
+      "enrolling": "Inscription en cours...",
+      "enrolled": "Inscrit !",
+      "disclaimer": "En appuyant sur '{{enroll_now}}', vous autorisez un prélèvement récurrent de {{amount}} {{interval}} sur le solde de votre compte Stripe.",
+      "insufficient_balance": "Votre solde de compte Stripe de {{balance}} n'est pas suffisant pour compléter l'inscription."
+    },
+    "open-storefront": "Ouvrir la boutique"
+  },
+  "success": {
+    "title": "Succès",
+    "description": "Redirection dans {{countdown}} secondes..."
+  },
+  "checkout": {
+    "shipping_address_header": "Informations de livraison",
+    "billing_address_header": "Informations de facturation",
+    "payments_header": "Méthode de paiement",
+    "or": "ou",
+    "upsellTitle": "Vous pourriez également aimer",
+    "order_summary": {
+      "title": "Résumé de la commande",
+      "promotion_code_label": "Code de réduction",
+      "apply_promotion_code": "Appliquer",
+      "subtotal": "Sous-total",
+      "discount": "Réduction",
+      "shipping": "Livraison",
+      "shipping_not_selected": "Non sélectionné",
+      "taxes": "Taxes",
+      "total": "Total",
+      "confirm_order": "Confirmer la commande",
+      "processing": "Traitement en cours..."
+    },
+    "payment_status": {
+      "succeeded": "Paiement réussi !",
+      "processing": "Votre paiement est en cours de traitement.",
+      "requires_payment_method": "Votre paiement n'a pas réussi, veuillez réessayer.",
+      "error": "Une erreur s'est produite."
+    },
+    "shipping": {
+      "title": "Mode de livraison",
+      "standard": {
+        "title": "Livraison standard"
+      },
+      "priority": {
+        "title": "Livraison prioritaire"
+      },
+      "free": {
+        "title": "Livraison gratuite"
+      },
+      "unknown": {
+        "title": "Option de livraison inconnue"
+      }
+    },
+    "invalid_promotion_code": "Ce code promotionnel n'est pas valide."
+  },
+  "addToBag": {
+    "buttonText": "Ajouter au panier"
+  },
+  "buyNow": {
+    "buttonText": "Acheter maintenant"
+  },
+  "cartPanel": {
+    "title": "Panier d'achat",
+    "closePanel": "Fermer le panneau",
+    "subtotal": "Sous-total",
+    "shippingTaxes": "Frais de livraison et taxes calculés à la caisse.",
+    "or": "ou",
+    "continueShopping": "Continuer vos achats",
+    "checkoutButton": "Passer à la caisse",
+    "chargeButton": "Facturer",
+    "cancelButton": "Annuler"
+  },
+  "modals": {
+    "payins": {
+      "title": "Paiements entrants",
+      "manual-entry-option": "Le client saisira manuellement les détails de sa carte",
+      "present-to-terminal-reader-option": "Le client présentera sa carte à un lecteur Terminal"
+    },
+    "create-product": {
+      "title": "Créer un nouveau produit",
+      "description": "Créez un nouveau produit à proposer à vos clients.",
+      "form": {
+        "name": "Nom",
+        "description": "Description",
+        "unit-amount": "Prix",
+        "currency": "Devise",
+        "product-tax-code": "Code fiscal du produit",
+        "create": "Créer",
+        "cancel": "Annuler",
+        "image": "Image",
+        "category": "Catégorie",
+        "good": "Bien",
+        "service": "Service",
+        "studio": "Studio",
+        "start-time": "Heure de début",
+        "end-time": "Heure de fin",
+        "recurring": {
+          "is-recurring": "Est récurrent ?",
+          "frequency": "Fréquence",
+          "day": "Chaque jour",
+          "week": "Chaque semaine",
+          "month": "Chaque mois",
+          "year": "Chaque année"
+        }
+      },
+      "error": "Une erreur inconnue s'est produite lors de la création du produit."
+    },
+    "create-financial-account": {
+      "title": "Créer un nouveau compte financier",
+      "description": "Créez un nouveau compte financier pour gérer vos fonds.",
+      "form": {
+        "name": "Nom",
+        "currency": "Devise",
+        "create": "Créer",
+        "cancel": "Annuler"
+      },
+      "error": "Une erreur inconnue s'est produite lors de la création du compte financier. Il est possible que la devise sélectionnée ne soit pas prise en charge par votre compte."
+    },
+    "copy-payment-link": {
+      "title": "Copier le lien de paiement",
+      "description": "Envoyez ce lien à votre client pour qu'il finalise son paiement.",
+      "form": {
+        "url": "URL",
+        "close": "Fermer",
+        "copy": "Copier",
+        "copied": "Copié !"
+      }
+    },
+    "create-terminal-location": {
+      "title": "Créer un nouvel emplacement de terminal",
+      "description": "Créez un nouvel emplacement de terminal pour gérer vos terminaux.",
+      "form": {
+        "name": "Nom",
+        "line1": "Ligne 1",
+        "line2": "Ligne 2",
+        "city": "Ville",
+        "state": "État/Région",
+        "postal-code": "Code postal",
+        "country": "Pays",
+        "create": "Créer",
+        "cancel": "Annuler"
+      }
+    },
+    "pair-reader": {
+      "title": "Associer un lecteur",
+      "description": "Associez un lecteur à un emplacement de terminal.",
+      "form": {
+        "registration-code": "Code d'enregistrement",
+        "pair": "Associer",
+        "cancel": "Annuler"
+      }
+    },
+    "create-customer": {
+      "title": "Créer un client",
+      "description": "Créez un nouveau client avec son nom, son adresse email et son numéro de téléphone.",
+      "form": {
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "create": "Créer",
+        "cancel": "Annuler"
+      },
+      "error": "Une erreur inconnue s'est produite lors de la création du client."
+    }
+  },
   "products": {
     "pro-membership": {
       "name": "Adhésion Pro",
@@ -9,221 +366,34 @@
       }
     }
   },
-  "auth": {
-    "login": {
-      "email": "Email",
-      "sample_email": "jenny.rosen@example.com",
-      "password": "Mot de passe",
-      "continue": "Continuer",
-      "loading": "Chargement...",
-      "dont_have_an_account": "Vous n'avez pas de compte ?",
-      "sign_up": "S'inscrire",
-      "login": "Se connecter"
-    },
-    "loginas": {
-      "select": "Sélectionner un compte",
-      "dont_have_account": "Vous n'avez pas de compte ?",
-      "register": "S'inscrire",
-      "acct_id": "ID du compte",
-      "sample_acct_id": "acct_1234567890abcdef",
-      "continue": "Continuer",
-      "loading": "Envoi en cours..."
-    },
-    "signup": {
-      "sign_up": "S'inscrire",
-      "already_have_account": "Vous avez déjà un compte ?",
-      "login": "Se connecter",
-      "country": "Pays",
-      "email": "Email"
-    },
-    "layout": {
-      "manage": "Gérez votre studio en toute simplicité.",
-      "pose_is_leading": "Pose est la plateforme leader mondiale de santé et bien-être.",
-      "sign_up": "S'inscrire",
-      "fill_form": "Remplissez le formulaire pour configurer votre compte.",
-      "contact": "Contacter le support"
+  "timeUnits": {
+    "hour": "{{value}} heure",
+    "hours": "{{value}} heures",
+    "day": "{{value}} jour",
+    "days": "{{value}} jours",
+    "business_day": "{{value}} jour ouvrable",
+    "business_days": "{{value}} jours ouvrables",
+    "week": "{{value}} semaine",
+    "weeks": "{{value}} semaines",
+    "month": "{{value}} mois",
+    "months": "{{value}} mois"
+  },
+  "perTimeUnits": {
+    "hour": "/ heure",
+    "week": "/ semaine",
+    "month": "/ mois",
+    "year": "/ an"
+  },
+  "payment_status": {
+    "succeeded": "Paiement réussi !",
+    "processing": "Votre paiement est en cours de traitement.",
+    "requires_payment_method": "Votre paiement n'a pas réussi, veuillez réessayer.",
+    "error": "Une erreur s'est produite."
+  },
+  "storefront": {
+    "products": {
+      "title": "Produits",
+      "no-products-found": "Aucun produit trouvé."
     }
-  },
-  "countries": {
-    "australia": "Australie",
-    "austria": "Autriche",
-    "belgium": "Belgique",
-    "brazil": "Brésil",
-    "bulgaria": "Bulgarie",
-    "canada": "Canada",
-    "croatia": "Croatie",
-    "cyprus": "Chypre",
-    "czech_republic": "République tchèque",
-    "denmark": "Danemark",
-    "estonia": "Estonie",
-    "finland": "Finlande",
-    "france": "France",
-    "germany": "Allemagne",
-    "ghana": "Ghana",
-    "gibraltar": "Gibraltar",
-    "greece": "Grèce",
-    "hong_kong": "Hong Kong",
-    "hungary": "Hongrie",
-    "indonesia": "Indonésie",
-    "ireland": "Irlande",
-    "italy": "Italie",
-    "japan": "Japon",
-    "kenya": "Kenya",
-    "latvia": "Lettonie",
-    "liechtenstein": "Liechtenstein",
-    "lithuania": "Lituanie",
-    "luxembourg": "Luxembourg",
-    "malaysia": "Malaisie",
-    "malta": "Malte",
-    "mexico": "Mexique",
-    "netherlands": "Pays-Bas",
-    "new_zealand": "Nouvelle-Zélande",
-    "nigeria": "Nigeria",
-    "norway": "Norvège",
-    "poland": "Pologne",
-    "portugal": "Portugal",
-    "romania": "Roumanie",
-    "singapore": "Singapour",
-    "slovakia": "Slovaquie",
-    "slovenia": "Slovénie",
-    "south_africa": "Afrique du Sud",
-    "spain": "Espagne",
-    "sweden": "Suède",
-    "switzerland": "Suisse",
-    "thailand": "Thaïlande",
-    "united_arab_emirates": "Émirats arabes unis",
-    "united_kingdom": "Royaume-Uni",
-    "united_states": "États-Unis"
-  },
-  "dashboard": {
-    "classes": {
-      "classes": "Cours",
-      "create_class": "Créer un cours",
-      "edit_studios": "Modifier les studios",
-      "today": "Aujourd'hui",
-      "tomorrow": "Demain",
-      "studio": "Studio"
-    },
-    "instructors": {
-      "instructors": "Instructeurs",
-      "add": "Ajouter un instructeur",
-      "class": "cours",
-      "es": "",
-      "this_week": "cette semaine"
-    },
-    "payments": {
-      "payments": "Paiements",
-      "recent": "Paiements récents"
-    },
-    "payouts": {
-      "payouts": "Virements"
-    },
-    "welcome": "Bienvenue, {{name}} !",
-    "performance": "Performance",
-    "settings": {
-      "my_studio": "Mon studio",
-      "settings": "Paramètres",
-      "payment_methods": "Moyens de paiement",
-      "sign_out": "Se déconnecter",
-      "basic_details": "Informations de base",
-      "studio_name": "Nom du studio",
-      "practice": "Practice Yoga Studio",
-      "email": "Email",
-      "account_settings": "Paramètres du compte",
-      "manage_account": "Gérer les paramètres de votre compte et de votre entreprise.",
-      "payment_methods_add": "Ajouter et gérer vos moyens de paiement.",
-      "tax_settings": "Paramètres fiscaux",
-      "tax_account": "Gérer les paramètres et enregistrements fiscaux."
-    },
-    "finances": {
-      "financial_account": "Compte financier",
-      "transactions": "Transactions",
-      "cards": "Cartes",
-      "finances": "Finances",
-      "overview": "Aperçu"
-    },
-    "membership": {
-      "membership": "Adhésion",
-      "enroll": "S'inscrire",
-      "perTimeUnits": {
-        "day": "/ jour",
-        "week": "/ semaine",
-        "month": "/ mois",
-        "year": "/ an"
-      },
-      "price": "Prix",
-      "features": "Fonctionnalités",
-      "payment_method": "Moyen de paiement",
-      "stripe_balance": "Solde Stripe",
-      "enroll_now": "S'inscrire maintenant",
-      "enrolling": "Inscription en cours...",
-      "enrolled": "Inscrit !",
-      "disclaimer": "En appuyant sur '{{enroll_now}}', vous autorisez un débit récurrent de {{amount}} {{interval}} sur votre solde Stripe.",
-      "insufficient_balance": "Votre solde Stripe de {{balance}} n'est pas suffisant pour compléter l'inscription."
-    }
-  },
-  "class": {
-    "gentle": "Flow Doux",
-    "yoga_intermediate": "Yoga Bases - Intermédiaire",
-    "mindful": "Mouvement Conscient",
-    "stretch": "Étirements & Récupération",
-    "yoga_core": "Yoga Renforcement Central"
-  },
-  "components": {
-    "month_to_date": {
-      "month_to_date": "Mois en cours"
-    },
-    "customers": {
-      "customers": "Clients"
-    },
-    "schedule": {
-      "attendees": "participants",
-      "today": "Programme du jour"
-    },
-    "balance": {
-      "total": "Solde total",
-      "payout": "Virer vers la banque",
-      "pending": "en attente"
-    },
-    "recent_payments": {
-      "recent": "Paiements récents",
-      "view_all": "Voir tout"
-    }
-  },
-  "loading": "Chargement...",
-  "studio": {
-    "1": "Studio 1",
-    "2": "Studio 2"
-  },
-  "navigation": {
-    "home": "Accueil",
-    "classes": "Cours",
-    "instructors": "Instructeurs",
-    "payments": "Paiements",
-    "payouts": "Virements",
-    "finances": "Finances",
-    "membership": "Adhésion"
-  },
-  "checkout": {
-    "payment_status": {
-      "error": "Un problème est survenu avec votre paiement.",
-      "succeeded": "Le paiement a réussi !",
-      "processing": "Votre paiement est en cours de traitement...",
-      "requires_payment_method": "Votre paiement a échoué. Veuillez sélectionner un autre moyen de paiement et réessayer."
-    },
-    "address_header": "Adresse du client",
-    "payments_header": "Détails du paiement",
-    "elements": {
-      "orderSummary": "Récapitulatif de la commande",
-      "classCharge": "Frais de cours",
-      "tax": "Taxe",
-      "total": "Total",
-      "chargeCustomer": "Facturer le client",
-      "fee": "Frais"
-    }
-  },
-  "errors": {
-    "unable_to_create": "Cette combinaison de plateforme et de pays du compte n'est pas prise en charge."
-  },
-  "unexpected_error": "Une erreur inattendue s'est produite. A-t-elle été correctement configurée ?"
+  }
 }
