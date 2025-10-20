@@ -33,5 +33,8 @@ export const DEFAULT_DEMO_CONFIG = {
   elementsStyle: 'accordion',
   elementsExpressCheckoutEnabled: true,
   elementsAddressFormEnabled: true,
+  cryptoEnabled: true,
   customPaymentMethods: [],
+  onrampDiscountEligible: false,
+  onrampBannerVisible: true,
 } as const satisfies DemoConfig;

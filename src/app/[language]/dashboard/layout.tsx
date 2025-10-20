@@ -152,6 +152,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     }
   }, [pathnameWithoutLanguage, account]);
 
+  const hideHeadings = pathnameWithoutLanguage === '/dashboard/onramp';
+
   /**
    * We're not signed in or have not completed onboarding. Wait for redirect to home page.
    */
@@ -211,12 +213,14 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         {/* Main Content */}
         <div className='col-span-12 lg:col-span-10 min-h-screen pt-16 lg:pt-0 lg:overflow-y-auto'>
           <Container>
-            <div>
-              <h1 className='text-3xl font-bold'>{headings.title}</h1>
-              {headings.subtitle && (
-                <p className='text-md text-gray-500'>{headings.subtitle}</p>
-              )}
-            </div>
+            {!hideHeadings && (
+              <div>
+                <h1 className='text-3xl font-bold'>{headings.title}</h1>
+                {headings.subtitle && (
+                  <p className='text-md text-gray-500'>{headings.subtitle}</p>
+                )}
+              </div>
+            )}
             <div id='connect-notifications-banner'>
               <ConnectNotificationsBannerWrapper />
             </div>

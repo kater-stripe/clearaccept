@@ -395,5 +395,20 @@
       "title": "Productos",
       "no-products-found": "No se encontraron productos."
     }
+  },
+  "onramp": {
+    "cta": {
+      "headline_strong": "Obtén un 20% de descuento",
+      "headline_rest": "cuando",
+      "button": "compres cripto."
+    },
+    "page": {
+      "title": "Comprar cripto"
+    },
+    "errors": {
+      "missing_pk": "La clave pública de Stripe no está configurada",
+      "mount_failed": "No se pudo montar onramp",
+      "create_failed": "No se pudo crear la sesión"
+    }
   }
 }

@@ -9,6 +9,7 @@ import { LineBreak } from './LineBreak';
 import { ShippingOptions } from './ShippingOptions';
 import { useAgnosticElements } from './AgnosticElementsProvider';
 import { ExpressCheckout } from './ExpressCheckout';
+import { OnrampDiscountCta } from './OnrampDiscountCta';
 
 export const ElementsCheckout = () => {
   const { updateAddress, shippingOptions } = useAgnosticElements();
@@ -18,6 +19,9 @@ export const ElementsCheckout = () => {
     checkoutMethod,
     elementsAddressFormEnabled,
     elementsExpressCheckoutEnabled,
+    cryptoEnabled,
+    onrampBannerVisible,
+    onrampDiscountEligible,
   } = useDemoConfig();
 
   const { hasSubscriptionInCart } = useCart();
@@ -35,6 +39,9 @@ export const ElementsCheckout = () => {
         <div className='@5xl:col-span-8'>
           {errorMessage && (
             <div className='my-4 text-center text-red-500'>{errorMessage}</div>
+          )}
+          {cryptoEnabled && onrampBannerVisible && !onrampDiscountEligible && (
+            <OnrampDiscountCta />
           )}
           {elementsExpressCheckoutEnabled && (
             <ExpressCheckout>

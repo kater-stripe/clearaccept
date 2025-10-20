@@ -395,5 +395,20 @@
       "title": "Prodotti",
       "no-products-found": "Nessun prodotto trovato."
     }
+  },
+  "onramp": {
+    "cta": {
+      "headline_strong": "Ottieni il 20% di sconto",
+      "headline_rest": "quando",
+      "button": "acquisti crypto."
+    },
+    "page": {
+      "title": "Acquista crypto"
+    },
+    "errors": {
+      "missing_pk": "La chiave pubblicabile di Stripe non è configurata",
+      "mount_failed": "Impossibile montare onramp",
+      "create_failed": "Impossibile creare la sessione"
+    }
   }
 }

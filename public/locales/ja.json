@@ -395,5 +395,20 @@
       "title": "商品",
       "no-products-found": "商品が見つかりません。"
     }
+  },
+  "onramp": {
+    "cta": {
+      "headline_strong": "20%割引",
+      "headline_rest": "対象:",
+      "button": "暗号資産を購入"
+    },
+    "page": {
+      "title": "暗号資産を購入"
+    },
+    "errors": {
+      "missing_pk": "Stripeの公開可能キーが設定されていません",
+      "mount_failed": "Onrampのマウントに失敗しました",
+      "create_failed": "セッションの作成に失敗しました"
+    }
   }
 }

@@ -395,5 +395,20 @@
       "title": "Produits",
       "no-products-found": "Aucun produit trouvé."
     }
+  },
+  "onramp": {
+    "cta": {
+      "headline_strong": "-20% de réduction",
+      "headline_rest": "lorsque vous",
+      "button": "achetez des cryptos."
+    },
+    "page": {
+      "title": "Acheter des cryptos"
+    },
+    "errors": {
+      "missing_pk": "La clé publique Stripe n'est pas configurée",
+      "mount_failed": "Échec du montage d'onramp",
+      "create_failed": "Échec de la création de la session"
+    }
   }
 }

@@ -27,4 +27,7 @@ export type DemoConfig = {
   elementsStyle: 'accordion' | 'tabs';
   elementsExpressCheckoutEnabled: boolean;
   elementsAddressFormEnabled: boolean;
+  cryptoEnabled: boolean;
+  onrampDiscountEligible: boolean;
+  onrampBannerVisible: boolean;
 };

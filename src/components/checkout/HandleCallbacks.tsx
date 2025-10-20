@@ -75,7 +75,7 @@ export const HandleCallbacksProvider = ({ children }: PropsWithChildren) => {
     setErrorMessage('');
   }, [pathname]);
 
-  const { language, stripePublishableKey, stripeSecretKey, chargeType } =
+  const { language, stripePublishableKey, stripeSecretKey, chargeType, onrampDiscountEligible, configure } =
     useDemoConfig();
 
   const successUrl = useMemo(() => {
@@ -173,6 +173,11 @@ export const HandleCallbacksProvider = ({ children }: PropsWithChildren) => {
       case 'succeeded':
       case 'requires_capture':
       case 'processing':
+        if (onrampDiscountEligible) {
+          // Consume the one-time discount and re-show the promo banner for future cycles
+          configure('onrampDiscountEligible', false);
+          configure('onrampBannerVisible', true);
+        }
         if (successUrl.endsWith('/payments')) {
           resetRedirectCountdown();
           startRedirectCountdown();

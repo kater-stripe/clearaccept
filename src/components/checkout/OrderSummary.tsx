@@ -26,6 +26,7 @@ export const OrderSummary = () => {
   const { language, elementsAddressFormEnabled, checkoutMethod } =
     useDemoConfig();
   const { items, hasSubscriptionInCart } = useCart();
+  const { onrampDiscountEligible } = useDemoConfig();
   const { t } = useTranslation();
 
   const shippingCost =
@@ -55,6 +56,16 @@ export const OrderSummary = () => {
                   {formatPrice(subtotal, language, currency)}
                 </dd>
               </div>
+              {onrampDiscountEligible && (
+                <div className='flex items-center justify-between'>
+                  <dt className='text-sm font-bold'>
+                    {t('checkout.order_summary.discount')}
+                  </dt>
+                  <dd className='text-sm font-bold text-green-600'>
+                    -{formatPrice(Math.floor((subtotal as any) * 0.2), language, currency)}
+                  </dd>
+                </div>
+              )}
               {shippingOptions.length > 0 && (
                 <div className='flex items-center justify-between'>
                   <dt className='text-sm font-bold'>

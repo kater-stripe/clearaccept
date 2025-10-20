@@ -395,5 +395,20 @@
       "title": "Produkte",
       "no-products-found": "Keine Produkte gefunden."
     }
+  },
+  "onramp": {
+    "cta": {
+      "headline_strong": "Erhalte 20 % Rabatt",
+      "headline_rest": "wenn Sie",
+      "button": "Krypto kaufen."
+    },
+    "page": {
+      "title": "Krypto kaufen"
+    },
+    "errors": {
+      "missing_pk": "Der veröffentlichbare Stripe-Schlüssel ist nicht konfiguriert",
+      "mount_failed": "Onramp konnte nicht eingebunden werden",
+      "create_failed": "Sitzung konnte nicht erstellt werden"
+    }
   }
 }

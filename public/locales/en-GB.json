@@ -395,5 +395,20 @@
       "title": "Products",
       "no-products-found": "No products found."
     }
+  },
+  "onramp": {
+    "cta": {
+      "headline_strong": "Get 20% off",
+      "headline_rest": "when you",
+      "button": "buy crypto."
+    },
+    "page": {
+      "title": "Buy crypto"
+    },
+    "errors": {
+      "missing_pk": "Stripe publishable key is not configured",
+      "mount_failed": "Failed to mount onramp",
+      "create_failed": "Failed to create session"
+    }
   }
 }

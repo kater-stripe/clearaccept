@@ -50,6 +50,7 @@ export const ElementsCheckoutWithPaymentIntents = ({
     customPaymentMethods,
     elementsExpressCheckoutEnabled,
     chargeType,
+    cryptoEnabled,
   } = useDemoConfig();
   const { subtotal, hasSubscriptionInCart } = useCart();
   const { isSignedIn, id: customerId } = useDemoCustomer();
@@ -112,6 +113,9 @@ export const ElementsCheckoutWithPaymentIntents = ({
       customerSessionClientSecret: isSignedIn
         ? customerSession?.client_secret
         : undefined,
+      ...(cryptoEnabled === false && {
+        excludedPaymentMethodTypes: ['crypto'],
+      }),
       customPaymentMethods: customPaymentMethods.map((id) => ({
         id,
         options: {
@@ -131,6 +135,7 @@ export const ElementsCheckoutWithPaymentIntents = ({
     isSignedIn,
     hasSubscriptionInCart,
     customPaymentMethods,
+    cryptoEnabled,
   ]);
 
   const [key, setKey] = useState(0);
@@ -173,6 +178,7 @@ const MapElementsContextToAgnosticElementsContext = ({
 
   const [isConfirming, setIsConfirming] = useState(false);
   const { t } = useTranslation();
+  const { onrampDiscountEligible, configure } = useDemoConfig();
 
   const stripe = useStripe();
   const elements = useElements();
@@ -264,7 +270,7 @@ Exclsuive tax: ${result.tax_amount_exclusive ?? 0}`);
     }
 
     const amount =
-      Math.max(0, subtotal) +
+      Math.max(0, onrampDiscountEligible ? subtotal - Math.floor(subtotal * 0.2) : subtotal) +
       (taxCalculation?.tax_amount_exclusive ?? 0) +
       shippingCost;
 
@@ -275,7 +281,7 @@ Exclsuive tax: ${result.tax_amount_exclusive ?? 0}`);
     elements.update({
       amount,
     });
-  }, [elements, subtotal, taxCalculation, shippingCost]);
+  }, [elements, subtotal, taxCalculation, shippingCost, onrampDiscountEligible]);
 
   const onConfirm = async () => {
     if (elements === null || stripe == null) {
@@ -326,7 +332,7 @@ Exclsuive tax: ${result.tax_amount_exclusive ?? 0}`);
         currency,
         customerEmail,
         customerId,
-        // discount,
+        applyOnrampDiscount: onrampDiscountEligible,
         taxAmount: taxCalculation?.tax_amount_exclusive ?? 0,
         shippingCost,
         items,
@@ -447,7 +453,10 @@ Exclsuive tax: ${result.tax_amount_exclusive ?? 0}`);
 
   const canConfirm = !taxCalculationPending;
 
-  const total = subtotal + (taxCalculation?.tax_amount_exclusive ?? 0);
+  const discountedSubtotal = onrampDiscountEligible
+    ? Math.max(0, subtotal - Math.floor(subtotal * 0.2))
+    : subtotal;
+  const total = discountedSubtotal + (taxCalculation?.tax_amount_exclusive ?? 0);
 
   return (
     <AgnosticElementsProvider

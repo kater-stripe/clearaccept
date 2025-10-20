@@ -28,6 +28,7 @@ export const AppearanceTab = ({ className, ...rest }: AppearenceTabProps) => {
     elementsStyle,
     elementsExpressCheckoutEnabled,
     elementsAddressFormEnabled,
+    cryptoEnabled,
   } = demoConfig;
   const { updateMerchant, email: merchantEmail } = useDemoMerchant();
   const { updateCustomer, email: customerEmail } = useDemoCustomer();
@@ -116,6 +117,13 @@ export const AppearanceTab = ({ className, ...rest }: AppearenceTabProps) => {
           onChange={(checked) =>
             configure('elementsAddressFormEnabled', checked)
           }
+        />
+      )}
+      {checkoutMethod === 'elements-checkout' && (
+        <Checkbox
+          label='Crypto'
+          checked={cryptoEnabled}
+          onChange={(checked) => configure('cryptoEnabled', checked)}
         />
       )}
       <Input

@@ -16,6 +16,7 @@ type CreatePaymentIntentParams = {
   currency: CurrencyCode;
   chargeType: DemoConfig['chargeType'];
   accountId: string;
+  applyOnrampDiscount?: boolean;
 };
 
 export const createPaymentIntent = async ({
@@ -28,6 +29,7 @@ export const createPaymentIntent = async ({
   currency,
   chargeType,
   accountId,
+  applyOnrampDiscount = false,
 }: CreatePaymentIntentParams) => {
   if (!stripeSecretKey) {
     throw new Error(
@@ -42,7 +44,9 @@ export const createPaymentIntent = async ({
 
   const stripe = new Stripe(stripeSecretKey);
 
-  const total = Math.max(0, subtotal) + taxAmount + shippingCost;
+  const discount = applyOnrampDiscount ? Math.floor(subtotal * 0.2) : 0;
+  const discountedSubtotal = Math.max(0, subtotal - discount);
+  const total = discountedSubtotal + taxAmount + shippingCost;
 
   const paymentIntent = await stripe.paymentIntents.create(
     {
