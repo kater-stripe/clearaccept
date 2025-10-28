@@ -50,6 +50,14 @@ export const createEmbeddedCheckoutSession = async ({
       : undefined,
   );
 
+  const defaultTaxBehavior =
+    (taxSettings.defaults.tax_behavior === 'inferred_by_currency'
+      ? currency === 'usd' || currency === 'cad'
+        ? 'exclusive'
+        : 'inclusive'
+      : taxSettings.defaults.tax_behavior) ??
+    (currency === 'usd' || currency === 'cad' ? 'exclusive' : 'inclusive');
+
   // Prepare line items
   const lineItems = items.map((item) => {
     if (!item.product.name || !item.price.unit_amount || !item.quantity) {
@@ -58,9 +66,13 @@ export const createEmbeddedCheckoutSession = async ({
 
     return {
       price_data: {
-        currency: currency.toLowerCase(),
+        currency,
         product: item.product.id,
         unit_amount: item.price.unit_amount,
+        tax_behavior:
+          item.price.tax_behavior === 'unspecified'
+            ? defaultTaxBehavior
+            : (item.price.tax_behavior ?? defaultTaxBehavior),
         ...(item.price.recurring !== null
           ? {
               recurring: {
@@ -107,6 +119,14 @@ export const createEmbeddedCheckoutSession = async ({
       ? {
           automatic_tax: {
             enabled: true,
+            ...(chargeType === 'destination-on-behalf-of'
+              ? {
+                  liability: {
+                    account: accountId,
+                    type: 'account',
+                  },
+                }
+              : {}),
           },
         }
       : {}),
@@ -124,12 +144,12 @@ export const createEmbeddedCheckoutSession = async ({
             },
           }
         : {}),
+      ...(chargeType === 'destination-on-behalf-of'
+        ? {
+            on_behalf_of: accountId,
+          }
+        : {}),
     },
-    ...(chargeType === 'destination-on-behalf-of'
-      ? {
-          on_behalf_of: accountId,
-        }
-      : {}),
   };
 
   if (!hasSubscriptionInCart) {
@@ -146,6 +166,7 @@ export const createEmbeddedCheckoutSession = async ({
             currency: currency,
           },
           type: 'fixed_amount',
+          tax_behavior: defaultTaxBehavior,
         },
       },
       {
@@ -160,6 +181,7 @@ export const createEmbeddedCheckoutSession = async ({
             currency: currency,
           },
           type: 'fixed_amount',
+          tax_behavior: defaultTaxBehavior,
         },
       },
     ];

@@ -127,6 +127,11 @@ export const ElementsCheckoutWithPaymentIntents = ({
             setup_future_usage: 'off_session',
           }
         : {}),
+      ...(chargeType === 'destination-on-behalf-of'
+        ? {
+            onBehalfOf: account!.id,
+          }
+        : {}),
     } satisfies StripeElementsOptions;
   }, [
     currency,
@@ -270,7 +275,12 @@ Exclsuive tax: ${result.tax_amount_exclusive ?? 0}`);
     }
 
     const amount =
-      Math.max(0, onrampDiscountEligible ? subtotal - Math.floor(subtotal * 0.2) : subtotal) +
+      Math.max(
+        0,
+        onrampDiscountEligible
+          ? subtotal - Math.floor(subtotal * 0.2)
+          : subtotal,
+      ) +
       (taxCalculation?.tax_amount_exclusive ?? 0) +
       shippingCost;
 
@@ -281,7 +291,13 @@ Exclsuive tax: ${result.tax_amount_exclusive ?? 0}`);
     elements.update({
       amount,
     });
-  }, [elements, subtotal, taxCalculation, shippingCost, onrampDiscountEligible]);
+  }, [
+    elements,
+    subtotal,
+    taxCalculation,
+    shippingCost,
+    onrampDiscountEligible,
+  ]);
 
   const onConfirm = async () => {
     if (elements === null || stripe == null) {
@@ -456,7 +472,8 @@ Exclsuive tax: ${result.tax_amount_exclusive ?? 0}`);
   const discountedSubtotal = onrampDiscountEligible
     ? Math.max(0, subtotal - Math.floor(subtotal * 0.2))
     : subtotal;
-  const total = discountedSubtotal + (taxCalculation?.tax_amount_exclusive ?? 0);
+  const total =
+    discountedSubtotal + (taxCalculation?.tax_amount_exclusive ?? 0);
 
   return (
     <AgnosticElementsProvider

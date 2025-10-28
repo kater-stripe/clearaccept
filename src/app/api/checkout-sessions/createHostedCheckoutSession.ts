@@ -42,11 +42,33 @@ export const createHostedCheckoutSession = async ({
     );
   }
 
+  const stripe = new Stripe(stripeSecretKey);
+
+  const taxSettings = await stripe.tax.settings.retrieve(
+    chargeType === 'direct'
+      ? {
+          stripeAccount: accountId,
+        }
+      : undefined,
+  );
+
+  const defaultTaxBehavior =
+    (taxSettings.defaults.tax_behavior === 'inferred_by_currency'
+      ? currency === 'usd' || currency === 'cad'
+        ? 'exclusive'
+        : 'inclusive'
+      : taxSettings.defaults.tax_behavior) ??
+    (currency === 'usd' || currency === 'cad' ? 'exclusive' : 'inclusive');
+
   const lineItems = items.map((item) => ({
     price_data: {
       currency: currency,
       product: item.product.id,
       unit_amount: item.price.unit_amount ?? 0,
+      tax_behavior:
+        item.price.tax_behavior === 'unspecified'
+          ? defaultTaxBehavior
+          : (item.price.tax_behavior ?? defaultTaxBehavior),
       ...(item.price.recurring !== null
         ? {
             recurring: {
@@ -63,16 +85,6 @@ export const createHostedCheckoutSession = async ({
       maximum: 100,
     },
   }));
-
-  const stripe = new Stripe(stripeSecretKey);
-
-  const taxSettings = await stripe.tax.settings.retrieve(
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
-  );
 
   const session = await stripe.checkout.sessions.create(
     {
@@ -101,6 +113,14 @@ export const createHostedCheckoutSession = async ({
         ? {
             automatic_tax: {
               enabled: true,
+              ...(chargeType === 'destination-on-behalf-of'
+                ? {
+                    liability: {
+                      account: accountId,
+                      type: 'account',
+                    },
+                  }
+                : {}),
             },
           }
         : {}),
@@ -131,6 +151,7 @@ export const createHostedCheckoutSession = async ({
                     currency: currency,
                   },
                   type: 'fixed_amount',
+                  tax_behavior: defaultTaxBehavior,
                 },
               },
               {
@@ -151,6 +172,7 @@ export const createHostedCheckoutSession = async ({
                     currency: currency,
                   },
                   type: 'fixed_amount',
+                  tax_behavior: defaultTaxBehavior,
                 },
               },
             ],

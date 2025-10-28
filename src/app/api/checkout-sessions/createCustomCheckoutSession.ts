@@ -34,30 +34,6 @@ export const createCustomCheckoutSession = async ({
   accountId,
   shippingOptionsOverride,
 }: CreateCustomCheckoutSessionParams) => {
-  const lineItems = items.map((item) => {
-    return {
-      price_data: {
-        currency: currency,
-        product: item.product.id,
-        unit_amount: item.price.unit_amount ?? 0,
-        ...(item.price.recurring !== null
-          ? {
-              recurring: {
-                interval: item.price.recurring.interval,
-                interval_count: item.price.recurring.interval_count,
-              },
-            }
-          : {}),
-      },
-      quantity: item.quantity,
-      adjustable_quantity: {
-        enabled: true,
-        minimum: 0,
-        maximum: 100,
-      },
-    };
-  });
-
   const hasSubscriptionInCart = items.some(
     ({ price }) => price.recurring !== null,
   );
@@ -77,6 +53,42 @@ export const createCustomCheckoutSession = async ({
         }
       : undefined,
   );
+
+  const defaultTaxBehavior =
+    (taxSettings.defaults.tax_behavior === 'inferred_by_currency'
+      ? currency === 'usd' || currency === 'cad'
+        ? 'exclusive'
+        : 'inclusive'
+      : taxSettings.defaults.tax_behavior) ??
+    (currency === 'usd' || currency === 'cad' ? 'exclusive' : 'inclusive');
+
+  const lineItems = items.map((item) => {
+    return {
+      price_data: {
+        currency: currency,
+        product: item.product.id,
+        unit_amount: item.price.unit_amount ?? 0,
+        tax_behavior:
+          item.price.tax_behavior === 'unspecified'
+            ? defaultTaxBehavior
+            : (item.price.tax_behavior ?? defaultTaxBehavior),
+        ...(item.price.recurring !== null
+          ? {
+              recurring: {
+                interval: item.price.recurring.interval,
+                interval_count: item.price.recurring.interval_count,
+              },
+            }
+          : {}),
+      },
+      quantity: item.quantity,
+      adjustable_quantity: {
+        enabled: true,
+        minimum: 0,
+        maximum: 100,
+      },
+    };
+  });
 
   const session = await stripe.checkout.sessions.create(
     {
@@ -105,6 +117,14 @@ export const createCustomCheckoutSession = async ({
         ? {
             automatic_tax: {
               enabled: true,
+              ...(chargeType === 'destination-on-behalf-of'
+                ? {
+                    liability: {
+                      account: accountId,
+                      type: 'account',
+                    },
+                  }
+                : {}),
             },
           }
         : {}),
@@ -156,6 +176,7 @@ export const createCustomCheckoutSession = async ({
                     currency: currency,
                   },
                   type: 'fixed_amount',
+                  tax_behavior: defaultTaxBehavior,
                 },
               }),
             ) ?? [
@@ -177,6 +198,7 @@ export const createCustomCheckoutSession = async ({
                     currency: currency,
                   },
                   type: 'fixed_amount',
+                  tax_behavior: defaultTaxBehavior,
                 },
               },
               {
@@ -197,6 +219,7 @@ export const createCustomCheckoutSession = async ({
                     currency: currency,
                   },
                   type: 'fixed_amount',
+                  tax_behavior: defaultTaxBehavior,
                 },
               },
             ],
