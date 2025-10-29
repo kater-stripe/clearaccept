@@ -2,6 +2,9 @@
 
 const nextConfig = {
   transpilePackages: ['@demoeng/utils'],
+  typescript: {
+    ignoreBuildErrors: process.env.BUILD_ENVIRONMENT === 'CUSTOM',
+  },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',

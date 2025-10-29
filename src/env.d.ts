@@ -12,6 +12,11 @@ declare global {
       DEMOGEN: string | undefined;
 
       /**
+       * The build environment of the demo.
+       */
+      BUILD_ENVIRONMENT: 'CUSTOM' | 'SOURCE-OF-TRUTH' | undefined;
+
+      /**
        * @see {@link DemoConfig.elements}
        */
       CHECKOUT_METHOD: DemoConfig['checkoutMethod'] | undefined;
