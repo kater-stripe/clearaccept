@@ -54,8 +54,8 @@ export const CreateProductModal = ({
     undefined,
   );
   const [category, setCategory] = useState<'good' | 'service'>('service');
-  const [startTime, setStartTime] = useState<string | undefined>(undefined);
-  const [endTime, setEndTime] = useState<string | undefined>(undefined);
+  const [startTime, setStartTime] = useState<string>('10:00');
+  const [endTime, setEndTime] = useState<string>('11:00');
   const [recurringFrequency, setRecurringFrequency] = useState<
     Parameters<typeof createProductAction>[0]['recurringFrequency'] | undefined
   >(undefined);
@@ -72,8 +72,8 @@ export const CreateProductModal = ({
       setCurrency(defaultCurrency as CurrencyCode);
       setProductTaxCode(undefined);
       setCategory('service');
-      setStartTime(undefined);
-      setEndTime(undefined);
+      setStartTime('10:00');
+      setEndTime('11:00');
       setRecurringFrequency(undefined);
       resetProductImageFileLink();
     }, 1000);

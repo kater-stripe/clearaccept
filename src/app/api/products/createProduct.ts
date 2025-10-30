@@ -60,8 +60,12 @@ export const createProduct = async ({
 
         metadata: {
           accountId,
-          startTime: startTime ?? null,
-          endTime: endTime ?? null,
+          ...(category === 'service'
+            ? {
+                startTime: startTime,
+                endTime: endTime,
+              }
+            : {}),
           category,
         },
         images: imageUrl ? [imageUrl] : undefined,
