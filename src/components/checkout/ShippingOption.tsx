@@ -25,7 +25,7 @@ export const ShippingOption = ({
   return (
     <label
       className={`relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none ${
-        selected ? 'border-brand-secondary-accent' : 'border-transparent'
+        selected ? 'border-gray-900' : 'border-transparent'
       }`}
     >
       <input
@@ -57,14 +57,12 @@ export const ShippingOption = ({
           alt='Success checkmark circle'
           height={20}
           width={20}
-          className='h-5 w-5 text-brand-secondary-accent'
+          className='h-5 w-5 text-gray-900'
         />
       )}
       <span
         className={`delivery-options-border pointer-events-none absolute -inset-px rounded-lg ${
-          selected
-            ? 'border-2 border-brand-secondary-accent'
-            : 'border border-transparent'
+          selected ? 'border-2 border-gray-900' : 'border border-transparent'
         }`}
         aria-hidden='true'
       ></span>

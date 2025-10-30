@@ -23,7 +23,7 @@ const SignUpPage = () => {
         />
       </div>
       <div className='relative z-20'>
-        <Container>
+        <Container className='py-30'>
           {/**
            * The container's max width is 7xl which is a little large for the sign up page.
            * We'll add an additional container with a max width of 2xl to make the sign up card smaller.

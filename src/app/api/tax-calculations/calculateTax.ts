@@ -85,7 +85,7 @@ export const calculateTax = async ({
           address_source: 'shipping',
         },
         shipping_cost: {
-          amount: shippingCost,
+          amount: shippingCost ?? 0,
           tax_behavior: accountLevelTaxBehavior,
         },
       },

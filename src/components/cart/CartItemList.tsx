@@ -75,13 +75,13 @@ export const CartItemList = ({ lineItems }: CartItemListProps) => {
                   <h4 className='text-md flex flex-col'>
                     <Link
                       href={`/${language}/products/${item.product.id}`}
-                      className='font-bold text-brand-secondary-accent'
+                      className='font-bold text-gray-900'
                       onClick={() => closeCart()}
                     >
                       {tp(item.product).name}
                     </Link>
                     {startTime && (
-                      <span className='text-brand-secondary-accent text-sm'>
+                      <span className='text-gray-900 text-sm'>
                         {formatTime(
                           startTime.getHours(),
                           startTime.getMinutes(),
@@ -112,7 +112,7 @@ export const CartItemList = ({ lineItems }: CartItemListProps) => {
               <div className='flex flex-1 justify-between items-center pt-4'>
                 <p
                   id={`amount-item-${item.price.id}`}
-                  className='text-sm font-semibold text-brand-secondary-accent'
+                  className='text-sm font-semibold text-gray-900'
                 >
                   {formatPrice(amount, language, currency)}
                   {item.price.recurring?.interval &&

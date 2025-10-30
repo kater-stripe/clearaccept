@@ -14,7 +14,7 @@ export const Hero = ({ className, ...rest }: HeroProps) => {
 
   return (
     <Container
-      className={`grid grid-cols-6 gap-6 md:grid-cols-12 sm:py-20 lg:py-40 xl:py-60 ${className}`}
+      className={`grid grid-cols-6 gap-6 md:grid-cols-12 py-30 ${className}`}
       {...rest}
     >
       <div className='col-span-6 flex flex-col'>

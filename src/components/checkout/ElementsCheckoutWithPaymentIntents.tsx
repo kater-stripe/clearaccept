@@ -106,7 +106,7 @@ export const ElementsCheckoutWithPaymentIntents = ({
         ...elementsAppearence,
         variables: {
           ...elementsAppearence.variables,
-          colorPrimary: secondaryColor,
+          colorPrimary: '#171717',
         },
       },
       locale: language as StripeElementLocale,
@@ -473,7 +473,9 @@ Exclsuive tax: ${result.tax_amount_exclusive ?? 0}`);
     ? Math.max(0, subtotal - Math.floor(subtotal * 0.2))
     : subtotal;
   const total =
-    discountedSubtotal + (taxCalculation?.tax_amount_exclusive ?? 0);
+    discountedSubtotal +
+    shippingCost +
+    (taxCalculation?.tax_amount_exclusive ?? 0);
 
   return (
     <AgnosticElementsProvider

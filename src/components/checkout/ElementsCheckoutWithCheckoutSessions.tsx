@@ -109,7 +109,7 @@ export const ElementsCheckoutWithCheckoutSessions = ({
           ...elementsAppearence,
           variables: {
             ...elementsAppearence.variables,
-            colorPrimary: secondaryColor,
+            colorPrimary: '#171717',
           },
         },
       },
