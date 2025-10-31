@@ -12,6 +12,7 @@ type CreateAccountParams = {
   language?: string;
   email: string;
   treasuryCapabilityEnabled?: boolean;
+  issuingCapabilityEnabled?: boolean;
   stripeSecretKey?: string;
   useV2Accounts?: boolean;
 };
@@ -21,6 +22,7 @@ export const createAccount = async ({
   language = 'en',
   email,
   treasuryCapabilityEnabled = false,
+  issuingCapabilityEnabled = true,
   stripeSecretKey = process.env.STRIPE_SECRET_KEY,
   useV2Accounts = false,
 }: CreateAccountParams) => {
@@ -56,13 +58,6 @@ export const createAccount = async ({
             card_payments: {
               requested: true,
             },
-            ...(treasuryCapabilityEnabled
-              ? {
-                  treasury: {
-                    requested: true,
-                  },
-                }
-              : {}),
           },
         },
         customer: {
@@ -113,13 +108,6 @@ export const createAccount = async ({
         transfers: {
           requested: true,
         },
-        ...(treasuryCapabilityEnabled
-          ? {
-              treasury: {
-                requested: true,
-              },
-            }
-          : {}),
       },
     });
   }
@@ -441,12 +429,23 @@ export const createAccount = async ({
   const capabilities:
     | Stripe.AccountCreateParams.Capabilities
     | Stripe.V2.Core.Account.Configuration.Merchant.Capabilities = {
-    card_issuing: {
-      requested: true,
-    },
     crypto_payments: {
       requested: true,
     },
+    ...(treasuryCapabilityEnabled
+      ? {
+          treasury: {
+            requested: true,
+          },
+        }
+      : {}),
+    ...(issuingCapabilityEnabled
+      ? {
+          card_issuing: {
+            requested: true,
+          },
+        }
+      : {}),
   };
 
   for (const [capability, value] of Object.entries(capabilities)) {

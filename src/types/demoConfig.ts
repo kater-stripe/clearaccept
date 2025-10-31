@@ -21,6 +21,7 @@ export type DemoConfig = {
   chargeType: 'destination' | 'direct' | 'destination-on-behalf-of';
   onboardingType: 'hosted' | 'embedded';
   treasuryCapabilityEnabled?: boolean;
+  issuingCapabilityEnabled?: boolean;
   onboardCollectionFields: 'eventually_due' | 'currently_due';
   useV2Accounts: boolean;
   customPaymentMethods: string[];

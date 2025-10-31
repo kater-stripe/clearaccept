@@ -24,6 +24,7 @@ export const SignUpCard = () => {
     language,
     onboardingType,
     treasuryCapabilityEnabled,
+    issuingCapabilityEnabled,
     onboardCollectionFields,
     useV2Accounts,
     country: defaultCountryCode,
@@ -109,6 +110,7 @@ export const SignUpCard = () => {
               language,
               countryCode: country?.id ?? 'US',
               treasuryCapabilityEnabled,
+              issuingCapabilityEnabled,
               stripeSecretKey,
               useV2Accounts,
             });

@@ -23,6 +23,7 @@ export const AppearanceTab = ({ className, ...rest }: AppearenceTabProps) => {
     chargeType,
     onboardingType,
     treasuryCapabilityEnabled,
+    issuingCapabilityEnabled,
     onboardCollectionFields,
     checkoutMethod,
     elementsStyle,
@@ -160,6 +161,14 @@ export const AppearanceTab = ({ className, ...rest }: AppearenceTabProps) => {
         }
         value={chargeType}
         onChange={(chargeType) => configure('chargeType', chargeType)}
+      />
+      <Checkbox
+        label='Onboard with issuing'
+        tooltip='When onboarding with the issuing capability enabled, a terms of service agreement will be collected.'
+        checked={issuingCapabilityEnabled}
+        onChange={(issuingCapabilityEnabled) =>
+          configure('issuingCapabilityEnabled', issuingCapabilityEnabled)
+        }
       />
       <Checkbox
         label='Onboard with treasury'
