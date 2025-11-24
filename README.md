@@ -29,10 +29,10 @@
    > :warning: Please follow the directions below closely otherwise you will not be able to install dependencies or run the local development server.
 
    ```bash
-   # Check that your `node` version matches the version in the `.node-version` file (22.14.0).
+   # Check that your `node` version matches the version in the `.node-version` file (24.11.1).
    node -v
 
-   # If you see 22.14.0, skip to step number 4.
+   # If you see 24.11.1, skip to step number 4.
    # If you see another version, follow the steps below.
 
    # Check you have `nodenv` installed.
@@ -43,24 +43,24 @@
    # https://trailhead.corp.stripe.com/docs/frontend/setup
 
    # If you do have `nodenv` installed, use the command below to check what versions of node are installed.
-   # A list of node versions will appear. Check if 22.14.0 is in the list.
+   # A list of node versions will appear. Check if 24.11.1 is in the list.
 
    nodenv versions
 
-   # If node version 22.14.0 is listed, run the following command:
+   # If node version 24.11.1 is listed, run the following command:
 
-   nodenv local 22.14.0
+   nodenv local 24.11.1
 
-   # If node version 22.14.0 is NOT listed, run the following two commands:
+   # If node version 24.11.1 is NOT listed, run the following two commands:
 
-   nodenv install 22.14.0
-   nodenv local 22.14.0
+   nodenv install 24.11.1
+   nodenv local 24.11.1
 
    # Finally, ensure the your `node` version was changed correctly.
 
    node -v
 
-   # You should see 22.14.0.
+   # You should see 24.11.1.
    ```
 
 4. Install dependencies

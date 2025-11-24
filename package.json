@@ -7,9 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:install-browsers": "PLAYWRIGHT_BROWSERS_PATH=0 playwright install",
     "format": "prettier . --write"
   },
   "dependencies": {
@@ -38,7 +35,6 @@
     "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.51.0",
     "@tailwindcss/postcss": "^4.1.14",
     "@types/dotenv": "^8.2.3",
     "@types/lodash": "^4.17.20",
