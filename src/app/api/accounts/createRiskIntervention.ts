@@ -17,7 +17,7 @@ export const createRiskIntervention = async ({
       'Unable to create risk intervention because neither a secret key was provided nor one was found in the environment variables.',
     );
   }
-  
+
   const stripe = new Stripe(stripeSecretKey);
 
   const riskInterventionResponse = await stripe.rawRequest(

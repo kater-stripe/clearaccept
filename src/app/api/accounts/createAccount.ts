@@ -70,7 +70,7 @@ export const createAccount = async ({
         },
       },
       identity: {
-        country: countryCode
+        country: countryCode,
       },
       defaults: {
         responsibilities: {
@@ -188,13 +188,11 @@ export const createAccount = async ({
         address: person.address
           ? {
               ...person.address,
-              country:
-                person.address.country.toLowerCase(),
+              country: person.address.country.toLowerCase(),
             }
           : {
               ...person.address_kana,
-              country:
-                person.address_kana!.country.toLowerCase(),
+              country: person.address_kana!.country.toLowerCase(),
             },
         date_of_birth: person.dob,
       });
@@ -214,13 +212,11 @@ export const createAccount = async ({
               address: addresses.address
                 ? {
                     ...addresses.address,
-                    country:
-                      addresses.address.country.toLowerCase(),
+                    country: addresses.address.country.toLowerCase(),
                   }
                 : {
                     ...addresses.address_kana,
-                    country:
-                      addresses.address_kana!.country.toLowerCase(),
+                    country: addresses.address_kana!.country.toLowerCase(),
                   },
               email: mock.email({
                 companyNames,
@@ -244,13 +240,11 @@ export const createAccount = async ({
             address: addresses.address
               ? {
                   ...addresses.address,
-                  country:
-                    addresses.address.country.toLowerCase(),
+                  country: addresses.address.country.toLowerCase(),
                 }
               : {
                   ...addresses.address_kana,
-                  country:
-                    addresses.address_kana!.country.toLowerCase(),
+                  country: addresses.address_kana!.country.toLowerCase(),
                 },
             phone: mock.phoneNumber(),
           },
@@ -323,13 +317,11 @@ export const createAccount = async ({
         address: addresses.address
           ? {
               ...addresses.address,
-              country:
-                addresses.address.country.toLowerCase(),
+              country: addresses.address.country.toLowerCase(),
             }
           : {
               ...addresses.address_kana,
-              country:
-                addresses.address_kana!.country.toLowerCase(),
+              country: addresses.address_kana!.country.toLowerCase(),
             },
         date_of_birth: {
           day: 1,
@@ -347,13 +339,11 @@ export const createAccount = async ({
               address: addresses.address
                 ? {
                     ...addresses.address,
-                    country:
-                      addresses.address.country.toLowerCase(),
+                    country: addresses.address.country.toLowerCase(),
                   }
                 : {
                     ...addresses.address_kana,
-                    country:
-                      addresses.address_kana!.country.toLowerCase(),
+                    country: addresses.address_kana!.country.toLowerCase(),
                   },
               email: mock.email({
                 individualNames,

@@ -13,7 +13,10 @@ export const OnrampDiscountCta = () => {
       <p className='text-sm'>
         <span className='font-bold'>{t('onramp.cta.headline_strong')}</span>{' '}
         {t('onramp.cta.headline_rest')}
-        <Link href={`/${language}/dashboard/onramp`} className='ml-1 font-semibold underline'>
+        <Link
+          href={`/${language}/dashboard/onramp`}
+          className='ml-1 font-semibold underline'
+        >
           {t('onramp.cta.button')}
         </Link>
       </p>
@@ -34,5 +37,3 @@ export const OnrampDiscountCta = () => {
 };
 
 export default OnrampDiscountCta;
-
-

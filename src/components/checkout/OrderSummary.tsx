@@ -62,7 +62,12 @@ export const OrderSummary = () => {
                     {t('checkout.order_summary.discount')}
                   </dt>
                   <dd className='text-sm font-bold text-green-600'>
-                    -{formatPrice(Math.floor((subtotal as any) * 0.2), language, currency)}
+                    -
+                    {formatPrice(
+                      Math.floor((subtotal as any) * 0.2),
+                      language,
+                      currency,
+                    )}
                   </dd>
                 </div>
               )}

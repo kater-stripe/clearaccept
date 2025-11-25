@@ -31,7 +31,7 @@ export const fetchEphemeralKey = async ({
     },
     {
       stripeAccount: accountId,
-      apiVersion: STRIPE_API_VERSION
+      apiVersion: STRIPE_API_VERSION,
     },
   );
 

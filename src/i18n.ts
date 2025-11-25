@@ -43,8 +43,11 @@ i18n.use(initReactI18next).init({
     },
     zh: {
       translation: zh,
-    }
-  } satisfies Record<SupportedLanguage, { translation: Record<string, string | object> }>,
+    },
+  } satisfies Record<
+    SupportedLanguage,
+    { translation: Record<string, string | object> }
+  >,
 });
 
 export default i18n;

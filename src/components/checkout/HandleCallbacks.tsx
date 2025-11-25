@@ -75,8 +75,14 @@ export const HandleCallbacksProvider = ({ children }: PropsWithChildren) => {
     setErrorMessage('');
   }, [pathname]);
 
-  const { language, stripePublishableKey, stripeSecretKey, chargeType, onrampDiscountEligible, configure } =
-    useDemoConfig();
+  const {
+    language,
+    stripePublishableKey,
+    stripeSecretKey,
+    chargeType,
+    onrampDiscountEligible,
+    configure,
+  } = useDemoConfig();
 
   const successUrl = useMemo(() => {
     if (pathname.startsWith(`/${language}/storefront/`)) {

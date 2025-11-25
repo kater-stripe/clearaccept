@@ -75,7 +75,7 @@ export const reportPayment = async ({
         custom: {
           payment_reference: randomUUID(),
         },
-      }
+      },
     },
     chargeType === 'direct'
       ? {

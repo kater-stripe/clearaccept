@@ -15,7 +15,9 @@ const OnrampSessions = Stripe.StripeResource.extend({
     path: 'crypto/onramp_sessions',
   }),
 }) as unknown as {
-  new (stripe: Stripe): { create: (body: OnrampCreateParams) => Promise<OnrampSession> };
+  new (stripe: Stripe): {
+    create: (body: OnrampCreateParams) => Promise<OnrampSession>;
+  };
 };
 
 export const createOnrampSession = async ({
@@ -41,14 +43,18 @@ export const createOnrampSession = async ({
   const payload: OnrampCreateParams = {};
 
   if (source_currency) payload.source_currency = source_currency;
-  if (Array.isArray(destination_currencies)) payload.destination_currencies = destination_currencies;
-  if (Array.isArray(destination_networks)) payload.destination_networks = destination_networks;
+  if (Array.isArray(destination_currencies))
+    payload.destination_currencies = destination_currencies;
+  if (Array.isArray(destination_networks))
+    payload.destination_networks = destination_networks;
   if (destination_currency) payload.destination_currency = destination_currency;
   if (destination_network) payload.destination_network = destination_network;
 
   // default to USDC Ethereum
   const hasDestPair = Boolean(destination_currency || destination_network);
-  const hasRestrictions = Array.isArray(destination_currencies) || Array.isArray(destination_networks);
+  const hasRestrictions =
+    Array.isArray(destination_currencies) ||
+    Array.isArray(destination_networks);
   if (!hasDestPair && !hasRestrictions) {
     payload.destination_currency = DestinationCurrency.Usdc;
     payload.destination_network = DestinationNetwork.Ethereum;

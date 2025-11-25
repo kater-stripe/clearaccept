@@ -57,7 +57,9 @@ export default function OnrampPage() {
   useEffect(() => {
     const mint = async () => {
       try {
-        const session = (await createOnrampSession({ body: {} })) as OnrampSessionResponse;
+        const session = (await createOnrampSession({
+          body: {},
+        })) as OnrampSessionResponse;
         setClientSecret(session.client_secret);
       } catch (e) {
         const message =
@@ -100,5 +102,3 @@ export default function OnrampPage() {
     </div>
   );
 }
-
-
