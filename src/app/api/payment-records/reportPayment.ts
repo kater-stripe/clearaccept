@@ -1,6 +1,7 @@
 'use server';
 
 import type { CurrencyCode } from '@/constants/currencyCodes';
+import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 import type { DemoConfig } from '@/types/demoConfig';
 import { plain } from '@/utils/plain';
 import { hasGate } from '@demoeng/utils/has-gate';
@@ -43,7 +44,7 @@ export const reportPayment = async ({
 
   const stripe = new Stripe(stripeSecretKey, {
     // @ts-expect-error
-    apiVersion: '2025-05-28.preview; payment_records_beta=v1',
+    apiVersion: `${STRIPE_API_VERSION}; payment_records_beta=v1`,
   });
 
   const secondsSinceEpoch = Math.floor(Date.now() / 1000);
@@ -69,7 +70,12 @@ export const reportPayment = async ({
       guaranteed: {
         guaranteed_at: secondsSinceEpoch,
       },
-      payment_reference: randomUUID(),
+      processor_details: {
+        type: 'custom',
+        custom: {
+          payment_reference: randomUUID(),
+        },
+      }
     },
     chargeType === 'direct'
       ? {

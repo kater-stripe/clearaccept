@@ -3,6 +3,7 @@
 import { plain } from '@/utils/plain';
 import { type NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 
 export type CreateAccountSessionRequestBody = {
   accountId: string;
@@ -34,7 +35,7 @@ export const POST = async (request: NextRequest) => {
 
   const stripe = new Stripe(stripeSecretKey, {
     // @ts-expect-error
-    apiVersion: '2025-07-30.preview;embedded_connect_beta=v2',
+    apiVersion: `${STRIPE_API_VERSION};embedded_connect_beta=v2`,
   });
 
   const account = await stripe.accounts.retrieve(accountId);

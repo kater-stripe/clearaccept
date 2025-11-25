@@ -53,6 +53,7 @@ export const AppearanceTab = ({ className, ...rest }: AppearenceTabProps) => {
             { value: 'de', label: 'German' },
             { value: 'it', label: 'Italian' },
             { value: 'ja', label: 'Japanese' },
+            { value: 'zh', label: 'Chinese (Simplified)' },
           ] as const satisfies {
             value: SupportedLanguage;
             label: string;

@@ -6,6 +6,7 @@ import Stripe from 'stripe';
 import { Mock } from '@demoeng/utils/mock';
 import { Language as MockLanguage } from '@demoeng/utils/languages';
 import { CountryCode as MockCountryCode } from '@demoeng/utils/countries';
+import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 
 type CreateAccountParams = {
   countryCode: CountryCode;
@@ -34,7 +35,7 @@ export const createAccount = async ({
 
   const stripe = new Stripe(stripeSecretKey, {
     // @ts-expect-error
-    apiVersion: `2025-07-30.preview${useV2Accounts ? '' : ';embedded_connect_beta=v2'}`,
+    apiVersion: `${STRIPE_API_VERSION}${useV2Accounts ? '' : ';embedded_connect_beta=v2'}`,
   });
 
   const { data: customers } = await stripe.customers.list({
@@ -69,8 +70,7 @@ export const createAccount = async ({
         },
       },
       identity: {
-        country:
-          countryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+        country: countryCode
       },
       defaults: {
         responsibilities: {
@@ -189,12 +189,12 @@ export const createAccount = async ({
           ? {
               ...person.address,
               country:
-                person.address.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                person.address.country.toLowerCase(),
             }
           : {
               ...person.address_kana,
               country:
-                person.address_kana!.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                person.address_kana!.country.toLowerCase(),
             },
         date_of_birth: person.dob,
       });
@@ -215,12 +215,12 @@ export const createAccount = async ({
                 ? {
                     ...addresses.address,
                     country:
-                      addresses.address.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                      addresses.address.country.toLowerCase(),
                   }
                 : {
                     ...addresses.address_kana,
                     country:
-                      addresses.address_kana!.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                      addresses.address_kana!.country.toLowerCase(),
                   },
               email: mock.email({
                 companyNames,
@@ -232,7 +232,6 @@ export const createAccount = async ({
         identity: {
           entity_type: 'company',
           business_details: {
-            url: 'https://accessible.stripe.com',
             registered_name: companyNames.name,
             annual_revenue: {
               amount: {
@@ -246,12 +245,12 @@ export const createAccount = async ({
               ? {
                   ...addresses.address,
                   country:
-                    addresses.address.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                    addresses.address.country.toLowerCase(),
                 }
               : {
                   ...addresses.address_kana,
                   country:
-                    addresses.address_kana!.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                    addresses.address_kana!.country.toLowerCase(),
                 },
             phone: mock.phoneNumber(),
           },
@@ -325,12 +324,12 @@ export const createAccount = async ({
           ? {
               ...addresses.address,
               country:
-                addresses.address.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                addresses.address.country.toLowerCase(),
             }
           : {
               ...addresses.address_kana,
               country:
-                addresses.address_kana!.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                addresses.address_kana!.country.toLowerCase(),
             },
         date_of_birth: {
           day: 1,
@@ -349,12 +348,12 @@ export const createAccount = async ({
                 ? {
                     ...addresses.address,
                     country:
-                      addresses.address.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                      addresses.address.country.toLowerCase(),
                   }
                 : {
                     ...addresses.address_kana,
                     country:
-                      addresses.address_kana!.country.toLowerCase() as CountryCode as Stripe.V2.Core.AccountCreateParams.Identity.Country,
+                      addresses.address_kana!.country.toLowerCase(),
                   },
               email: mock.email({
                 individualNames,

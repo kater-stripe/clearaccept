@@ -142,10 +142,18 @@ export const DemoConfigProvider = ({ children }: PropsWithChildren) => {
       return;
     }
 
+    const {
+      primaryColor,
+      secondaryColor,
+      customLogo,
+      customHero,
+      ...demoConfigWithoutPersonalizedValues
+    } = demoConfig ?? {};
+
     const newDemoConfig = {
       ...DEFAULT_DEMO_CONFIG,
       ...demoConfigFromServer,
-      ...demoConfig,
+      ...demoConfigWithoutPersonalizedValues,
       country: (account?.country?.toUpperCase() as CountryCode) ?? 'US',
     };
 

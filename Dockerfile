@@ -1,5 +1,5 @@
 # Install dependencies only when needed
-FROM node:22-alpine AS deps
+FROM node:24.11.1-alpine AS base
 
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat git openssh-client
@@ -15,12 +15,11 @@ RUN --mount=type=secret,id=github_token \
     git config --global --unset-all url."https://x-access-token:${GH_TOKEN}@github.com/stripe-demos/".insteadOf
 
 # Rebuild the source code only when needed
-FROM node:22-alpine AS builder
+FROM base AS builder
 
 WORKDIR /app
 
 COPY . .
-COPY --from=deps /app/node_modules ./node_modules
 
 RUN apk add openssl
 RUN echo "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY=$(openssl rand -base64 32)" >> .env
@@ -28,7 +27,7 @@ RUN echo "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY=$(openssl rand -base64 32)" >> .env
 RUN npm run build
 
 # Production image, copy all the files and run next
-FROM node:22-alpine AS runner
+FROM base AS runner
 
 WORKDIR /app
 

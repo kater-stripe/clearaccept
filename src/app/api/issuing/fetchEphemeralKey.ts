@@ -1,6 +1,7 @@
 'use server';
 
 import Stripe from 'stripe';
+import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 
 type FetchEphemeralKeyParams = {
   issuingCard: string;
@@ -30,7 +31,7 @@ export const fetchEphemeralKey = async ({
     },
     {
       stripeAccount: accountId,
-      apiVersion: '2025-07-30.preview',
+      apiVersion: STRIPE_API_VERSION
     },
   );
 

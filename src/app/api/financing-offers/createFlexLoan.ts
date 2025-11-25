@@ -2,6 +2,7 @@
 
 import { plain } from '@/utils/plain';
 import Stripe from 'stripe';
+import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 
 type CreateFlexLoanParams = {
   accountId: string;
@@ -20,7 +21,7 @@ export const createFlexLoan = async ({
 
   const stripe = new Stripe(stripeSecretKey, {
     // @ts-ignore
-    apiVersion: '2023-10-16; embedded_connect_beta=v2',
+    apiVersion: `${STRIPE_API_VERSION}; embedded_connect_beta=v2`,
   });
 
   const account = await stripe.accounts.retrieve(accountId);

@@ -120,7 +120,7 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
         setDemoMerchant((previousMerchant) => ({
           ...previousMerchant,
           account: accountOrErrorMessage,
-          email,
+          email: email!,
         }));
       },
     });

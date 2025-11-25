@@ -18,9 +18,7 @@ export const getAccountByEmail = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey, {
-    apiVersion: '2025-07-30.preview',
-  });
+  const stripe = new Stripe(stripeSecretKey);
 
   const { data: customers } = await stripe.customers.list({
     email,

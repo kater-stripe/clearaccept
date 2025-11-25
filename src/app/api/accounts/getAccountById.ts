@@ -18,9 +18,7 @@ export const getAccountById = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey, {
-    apiVersion: '2025-07-30.preview',
-  });
+  const stripe = new Stripe(stripeSecretKey);
 
   let account: Stripe.Account | Stripe.V2.Core.Account;
 

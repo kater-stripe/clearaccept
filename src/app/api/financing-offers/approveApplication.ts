@@ -1,6 +1,7 @@
 'use server';
 
 import Stripe from 'stripe';
+import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 
 type ApproveApplicationParams = {
   stripeSecretKey?: string;
@@ -19,7 +20,7 @@ export const approveApplication = async ({
 
   const stripe = new Stripe(stripeSecretKey, {
     // @ts-ignore
-    apiVersion: '2023-10-16; embedded_connect_beta=v2',
+    apiVersion: `${STRIPE_API_VERSION}; embedded_connect_beta=v2`,
   });
 
   try {

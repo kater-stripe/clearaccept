@@ -1,0 +1,414 @@
+{
+  "sign-up": {
+    "heading": "注册",
+    "existing-account": "已有账户？",
+    "sign-in": "登录",
+    "country": {
+      "label": "国家"
+    },
+    "email": {
+      "label": "邮箱"
+    },
+    "password": {
+      "label": "密码"
+    },
+    "confirm-password": {
+      "label": "确认密码"
+    },
+    "button": {
+      "text": "注册"
+    },
+    "errors": {
+      "email-already-in-use": "该邮箱已被注册。"
+    }
+  },
+  "sign-in": {
+    "heading": "登录",
+    "no-account": "还没有账户？",
+    "sign-up": "注册",
+    "email": {
+      "label": "邮箱"
+    },
+    "password": {
+      "label": "密码"
+    },
+    "button": {
+      "text": "登录"
+    },
+    "errors": {
+      "email-not-found": "未找到该邮箱对应的账户。",
+      "account-not-linked": "缺少将客户链接到账户的 `accountId` 元数据。"
+    }
+  },
+  "sign-out": {
+    "button": {
+      "text": "退出登录"
+    }
+  },
+  "hero": {
+    "heading": "简化您的业务工作流程。",
+    "subheading": "专为服务型企业设计的综合平台。",
+    "cta": "联系支持"
+  },
+  "dashboard": {
+    "home": {
+      "title": "首页",
+      "greeting": "您好，{{name}}",
+      "greeting-subtitle": "您已登录为 {{email}}",
+      "todays-schedule": "今日日程",
+      "balances": "余额",
+      "capital": "资本"
+    },
+    "payouts": {
+      "title": "提款"
+    },
+    "products": {
+      "title": "产品",
+      "table": {
+        "name": "名称",
+        "description": "描述",
+        "price": "价格",
+        "actions": "操作",
+        "delete": "删除",
+        "create-product": "创建新产品",
+        "create-payment-link": "创建支付链接"
+      }
+    },
+    "expenses": {
+      "title": "支出",
+      "financial-account-card": {
+        "ending-in": "尾号 {{last4}}"
+      },
+      "create-financial-account": "创建金融账户",
+      "financial-account": {
+        "title": "金融账户",
+        "transactions": "交易记录"
+      },
+      "available-balances": "可用余额：",
+      "financial-accounts": "金融账户",
+      "issuing-cards": "发行卡",
+      "issuing-balances": "发行余额",
+      "issuing-topups": {
+        "transfer-amount": "转账金额（可用 {{amount}}）",
+        "transfer": "转账",
+        "error": "充值发行余额时发生未知错误。"
+      }
+    },
+    "capital": {
+      "title": "资本",
+      "promotions": "促销",
+      "financings": "融资",
+      "financing-application": "融资申请"
+    },
+    "payments": {
+      "title": "支付",
+      "payment-method-settings": "支付方式设置"
+    },
+    "tax": {
+      "title": "税务",
+      "tax-settings": "税务设置",
+      "tax-registrations": "税务登记",
+      "export-tax-transactions": "导出税务交易",
+      "tax-threshold-monitoring": "税务阈值监控"
+    },
+    "reports": {
+      "title": "报告"
+    },
+    "terminal-and-pos": {
+      "title": "终端和收银系统",
+      "description": "管理实体卡终端并接受支付。",
+      "terminal": {
+        "tab": "终端",
+        "select-location": "选择位置",
+        "terminal-locations": "终端位置",
+        "readers": "读卡器",
+        "locations-table": {
+          "name": "名称",
+          "address": "地址",
+          "actions": "操作",
+          "delete": "删除",
+          "create-location": "创建新位置"
+        },
+        "readers-table": {
+          "name": "名称",
+          "serial-number": "序列号",
+          "status": "状态",
+          "actions": "操作",
+          "pair-reader": "配对读卡器",
+          "delete": "删除",
+          "online": "在线",
+          "offline": "离线"
+        }
+      },
+      "pos": {
+        "tab": "收银系统",
+        "products": "产品",
+        "select-location": "选择位置",
+        "select-reader": "选择读卡器",
+        "customer": "客户",
+        "add-to-cart": "加入购物车",
+        "no-products-found": "未找到产品。",
+        "no-products-found-link": "在此添加您的第一个产品。",
+        "cart": "购物车",
+        "cart-empty": "购物车为空。",
+        "quantity": "数量",
+        "subtotal": "小计",
+        "tax": "税费",
+        "total": "总计",
+        "pay": "支付 {{amount}}",
+        "clear-all": "清空全部",
+        "cancel-payment": "取消支付",
+        "collect-inputs": {
+          "email": {
+            "title": "邮箱",
+            "description": "请输入您的邮箱地址。"
+          },
+          "phone-number": {
+            "title": "电话号码",
+            "description": "请输入您的电话号码。"
+          }
+        }
+      }
+    },
+    "account": {
+      "title": "账户",
+      "description": "管理您的个人和企业信息。"
+    },
+    "apps": {
+      "title": "应用",
+      "description": "安装应用以将您的业务连接到会计软件、邮件列表等。",
+      "acodei-quickbooks-sync": "Acodei Quickbooks 同步",
+      "xero-sync": "Xero 同步"
+    },
+    "membership": {
+      "title": "会员",
+      "perTimeUnits": {
+        "day": "/ 天",
+        "week": "/ 周",
+        "month": "/ 月",
+        "year": "/ 年"
+      },
+      "price": "价格",
+      "features": "功能",
+      "payment_method": "支付方式",
+      "stripe_balance": "Stripe 余额",
+      "enroll_now": "立即注册",
+      "enrolling": "注册中...",
+      "enrolled": "已注册！",
+      "disclaimer": "点击 {{enroll_now}}，即表示您授权从您的 Stripe 账户余额中定期扣除 {{amount}} {{interval}}。",
+      "insufficient_balance": "您的 Stripe 账户余额 {{balance}} 不足以完成注册。"
+    },
+    "open-storefront": "打开店铺"
+  },
+  "success": {
+    "title": "成功",
+    "description": "{{countdown}} 秒后跳转..."
+  },
+  "checkout": {
+    "shipping_address_header": "配送信息",
+    "billing_address_header": "账单信息",
+    "payments_header": "支付方式",
+    "or": "或",
+    "upsellTitle": "您可能还喜欢",
+    "order_summary": {
+      "title": "订单摘要",
+      "promotion_code_label": "折扣码",
+      "apply_promotion_code": "应用",
+      "subtotal": "小计",
+      "discount": "折扣",
+      "shipping": "配送",
+      "shipping_not_selected": "未选择",
+      "taxes": "税费",
+      "total": "总计",
+      "confirm_order": "确认订单",
+      "processing": "处理中..."
+    },
+    "payment_status": {
+      "succeeded": "支付成功！",
+      "processing": "您的支付正在处理中。",
+      "requires_payment_method": "您的支付未成功，请重试。",
+      "error": "出错了。"
+    },
+    "shipping": {
+      "title": "配送方式",
+      "standard": {
+        "title": "普通配送"
+      },
+      "priority": {
+        "title": "优先配送"
+      },
+      "free": {
+        "title": "免费配送"
+      },
+      "unknown": {
+        "title": "未知配送选项"
+      }
+    },
+    "invalid_promotion_code": "此促销码无效。"
+  },
+  "addToBag": {
+    "buttonText": "加入购物袋"
+  },
+  "buyNow": {
+    "buttonText": "立即购买"
+  },
+  "cartPanel": {
+    "title": "购物车",
+    "closePanel": "关闭面板",
+    "subtotal": "小计",
+    "shippingTaxes": "配送和税费将在结账时计算。",
+    "or": "或",
+    "continueShopping": "继续购物",
+    "checkoutButton": "结账",
+    "chargeButton": "收费",
+    "cancelButton": "取消"
+  },
+  "modals": {
+    "payins": {
+      "title": "收款",
+      "manual-entry-option": "客户将手动输入卡信息",
+      "present-to-terminal-reader-option": "客户将向终端读卡器出示卡"
+    },
+    "create-product": {
+      "title": "创建新产品",
+      "description": "创建一个新产品以提供给您的客户。",
+      "form": {
+        "name": "名称",
+        "description": "描述",
+        "unit-amount": "价格",
+        "currency": "货币",
+        "product-tax-code": "产品税码",
+        "create": "创建",
+        "cancel": "取消",
+        "image": "图片",
+        "category": "类别",
+        "good": "商品",
+        "service": "服务",
+        "studio": "工作室",
+        "start-time": "开始时间",
+        "end-time": "结束时间",
+        "recurring": {
+          "is-recurring": "是否重复？",
+          "frequency": "频率",
+          "day": "每天",
+          "week": "每周",
+          "month": "每月",
+          "year": "每年"
+        }
+      },
+      "error": "创建产品时发生未知错误。"
+    },
+    "create-financial-account": {
+      "title": "创建新金融账户",
+      "description": "创建一个新金融账户来管理您的资金。",
+      "form": {
+        "name": "名称",
+        "currency": "货币",
+        "create": "创建",
+        "cancel": "取消"
+      },
+      "error": "创建金融账户时发生未知错误。您的账户可能不支持所选货币。"
+    },
+    "copy-payment-link": {
+      "title": "复制支付链接",
+      "description": "将此链接发送给您的客户以完成支付。",
+      "form": {
+        "url": "链接",
+        "close": "关闭",
+        "copy": "复制",
+        "copied": "已复制！"
+      }
+    },
+    "create-terminal-location": {
+      "title": "创建新终端位置",
+      "description": "创建一个新终端位置来管理您的终端。",
+      "form": {
+        "name": "名称",
+        "line1": "地址第一行",
+        "line2": "地址第二行",
+        "city": "城市",
+        "state": "省/州",
+        "postal-code": "邮政编码",
+        "country": "国家",
+        "create": "创建",
+        "cancel": "取消"
+      }
+    },
+    "pair-reader": {
+      "title": "配对读卡器",
+      "description": "将读卡器配对到终端位置。",
+      "form": {
+        "registration-code": "注册码",
+        "pair": "配对",
+        "cancel": "取消"
+      }
+    },
+    "create-customer": {
+      "title": "创建客户",
+      "description": "创建一个新客户，包括姓名、邮箱地址和电话号码。",
+      "form": {
+        "name": "姓名",
+        "email": "邮箱",
+        "phone": "电话",
+        "create": "创建",
+        "cancel": "取消"
+      },
+      "error": "创建客户时发生未知错误。"
+    }
+  },
+  "products": {
+    "pro-membership": {
+      "name": "专业会员",
+      "marketing_feature_list": {
+        "enhanced-marketing": "增强营销",
+        "advanced-analytics": "高级分析",
+        "priority-support": "优先支持"
+      }
+    }
+  },
+  "timeUnits": {
+    "hour": "{{value}} 小时",
+    "hours": "{{value}} 小时",
+    "day": "{{value}} 天",
+    "days": "{{value}} 天",
+    "business_day": "{{value}} 个工作日",
+    "business_days": "{{value}} 个工作日",
+    "week": "{{value}} 周",
+    "weeks": "{{value}} 周",
+    "month": "{{value}} 个月",
+    "months": "{{value}} 个月"
+  },
+  "perTimeUnits": {
+    "hour": "/ 小时",
+    "week": "/ 周",
+    "month": "/ 月",
+    "year": "/ 年"
+  },
+  "payment_status": {
+    "succeeded": "支付成功！",
+    "processing": "您的支付正在处理中。",
+    "requires_payment_method": "您的支付未成功，请重试。",
+    "error": "出错了。"
+  },
+  "storefront": {
+    "products": {
+      "title": "产品",
+      "no-products-found": "未找到产品。"
+    }
+  },
+  "onramp": {
+    "cta": {
+      "headline_strong": "享受 8 折优惠",
+      "headline_rest": "当您",
+      "button": "购买加密货币。"
+    },
+    "page": {
+      "title": "购买加密货币"
+    },
+    "errors": {
+      "missing_pk": "未配置 Stripe 可发布密钥",
+      "mount_failed": "挂载入金失败",
+      "create_failed": "创建会话失败"
+    }
+  }
+}
