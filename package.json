@@ -23,7 +23,7 @@
     "dotenv": "^16.4.7",
     "i18next": "^24.2.3",
     "lodash": "^4.17.21",
-    "next": "^15.5.7",
+    "next": "15.5.9",
     "react": "^19.1.2",
     "react-confetti": "^6.4.0",
     "react-currency-input-field": "^3.10.0",
