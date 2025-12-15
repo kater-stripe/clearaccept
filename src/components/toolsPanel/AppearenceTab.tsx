@@ -68,12 +68,12 @@ export const AppearanceTab = ({ className, ...rest }: AppearenceTabProps) => {
         label='Checkout Integration'
         options={
           [
-            { value: 'elements-checkout', label: 'Elements' },
-            { value: 'stripe-checkout', label: 'Checkout (Stripe-hosted)' },
-            { value: 'embedded-checkout', label: 'Checkout (Embedded)' },
+            { value: 'elements-checkout', label: 'Elements w/ PI' },
+            { value: 'stripe-checkout', label: 'Stripe-hosted page' },
+            { value: 'embedded-checkout', label: 'Embedded form' },
             {
               value: 'elements-checkout-with-checkout-sessions',
-              label: 'Elements with Checkout Sessions',
+              label: 'Elements w/ CS',
             },
           ] as const satisfies {
             value: CheckoutMethod;
@@ -101,33 +101,35 @@ export const AppearanceTab = ({ className, ...rest }: AppearenceTabProps) => {
           }
         />
       )}
-      {(checkoutMethod === 'elements-checkout' ||
-        checkoutMethod === 'elements-checkout-with-checkout-sessions') && (
-        <Checkbox
-          label='Express Checkout Element'
-          checked={elementsExpressCheckoutEnabled}
-          onChange={(checked) => {
-            configure('elementsExpressCheckoutEnabled', checked);
-          }}
-        />
-      )}
-      {checkoutMethod === 'elements-checkout' && (
-        <Checkbox
-          label='Address Element'
-          tooltip='Tax will not be calculated without address element'
-          checked={elementsAddressFormEnabled}
-          onChange={(checked) =>
-            configure('elementsAddressFormEnabled', checked)
-          }
-        />
-      )}
-      {checkoutMethod === 'elements-checkout' && (
-        <Checkbox
-          label='Crypto'
-          checked={cryptoEnabled}
-          onChange={(checked) => configure('cryptoEnabled', checked)}
-        />
-      )}
+      <div className='space-y-2'>
+        {(checkoutMethod === 'elements-checkout' ||
+          checkoutMethod === 'elements-checkout-with-checkout-sessions') && (
+          <Checkbox
+            label='Express Checkout Element'
+            checked={elementsExpressCheckoutEnabled}
+            onChange={(checked) => {
+              configure('elementsExpressCheckoutEnabled', checked);
+            }}
+          />
+        )}
+        {checkoutMethod === 'elements-checkout' && (
+          <Checkbox
+            label='Address Element'
+            tooltip='Tax will not be calculated without address element'
+            checked={elementsAddressFormEnabled}
+            onChange={(checked) =>
+              configure('elementsAddressFormEnabled', checked)
+            }
+          />
+        )}
+        {checkoutMethod === 'elements-checkout' && (
+          <Checkbox
+            label='Crypto'
+            checked={cryptoEnabled}
+            onChange={(checked) => configure('cryptoEnabled', checked)}
+          />
+        )}
+      </div>
       <Input
         label='Customer email'
         type='email'
@@ -163,22 +165,24 @@ export const AppearanceTab = ({ className, ...rest }: AppearenceTabProps) => {
         value={chargeType}
         onChange={(chargeType) => configure('chargeType', chargeType)}
       />
-      <Checkbox
-        label='Onboard with issuing'
-        tooltip='When onboarding with the issuing capability enabled, a terms of service agreement will be collected.'
-        checked={issuingCapabilityEnabled}
-        onChange={(issuingCapabilityEnabled) =>
-          configure('issuingCapabilityEnabled', issuingCapabilityEnabled)
-        }
-      />
-      <Checkbox
-        label='Onboard with treasury'
-        tooltip='When onboarding with the treasury capability enabled, a payout bank account will not be collected.'
-        checked={treasuryCapabilityEnabled}
-        onChange={(treasuryCapabilityEnabled) =>
-          configure('treasuryCapabilityEnabled', treasuryCapabilityEnabled)
-        }
-      />
+      <div className='space-y-2'>
+        <Checkbox
+          label='Onboard with issuing'
+          tooltip='When onboarding with the issuing capability enabled, a terms of service agreement will be collected.'
+          checked={issuingCapabilityEnabled}
+          onChange={(issuingCapabilityEnabled) =>
+            configure('issuingCapabilityEnabled', issuingCapabilityEnabled)
+          }
+        />
+        <Checkbox
+          label='Onboard with treasury'
+          tooltip='When onboarding with the treasury capability enabled, a payout bank account will not be collected.'
+          checked={treasuryCapabilityEnabled}
+          onChange={(treasuryCapabilityEnabled) =>
+            configure('treasuryCapabilityEnabled', treasuryCapabilityEnabled)
+          }
+        />
+      </div>
       <Select
         label='Onboarding collection fields'
         options={

@@ -53,7 +53,7 @@ export const ToolsPanel = () => {
   };
 
   return (
-    <div>
+    <div style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
       <h2 className='text-xl font-bold mb-3 text-gray-800'>Settings</h2>
 
       {/* Panel tabs */}

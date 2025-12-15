@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 import { useBoolean } from 'usehooks-ts';
-import { XMarkIcon } from '@heroicons/react/24/solid';
+import { X } from 'lucide-react';
 import type { ToolsPanelTab } from '@/constants/toolsPanelTabs';
 import { ElementsAndEmbeddedComponentsHighlight } from '@/components/toolsPanel/ElementsAndEmbeddedComponentsHighlight';
 
@@ -61,7 +61,7 @@ export const ToolsPanelProvider = ({ children }: PropsWithChildren) => {
           aria-label={isToolsPanelOpen ? 'Close settings' : 'Open settings'}
         >
           {isToolsPanelOpen ? (
-            <XMarkIcon className='h-8 w-8 text-white' />
+            <X className='h-8 w-8 text-white' />
           ) : (
             <Image
               src='/img/icon/stripe.svg'

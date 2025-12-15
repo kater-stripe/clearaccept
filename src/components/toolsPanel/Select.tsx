@@ -26,38 +26,40 @@ export const Select = <T extends string | number, N extends boolean = false>({
     <div>
       <label
         htmlFor={generateHtmlIdFromLabel(label)}
-        className='block mb-2 text-sm font-medium text-gray-700'
+        className='block text-sm font-medium text-gray-700'
       >
         {label}
       </label>
-      <select
-        {...rest}
-        id={generateHtmlIdFromLabel(label)}
-        value={value ?? ''}
-        onChange={(e) => {
-          if (!onChange) {
-            return;
-          }
+      <div className='mt-2 grid grid-cols-1'>
+        <select
+          {...rest}
+          id={generateHtmlIdFromLabel(label)}
+          value={value ?? ''}
+          onChange={(e) => {
+            if (!onChange) {
+              return;
+            }
 
-          const value = e.target.value || undefined;
+            const value = e.target.value || undefined;
 
-          onChange(value as N extends true ? T | undefined : T);
-        }}
-        className='w-full p-2 border border-gray-300 rounded-md text-gray-700 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed'
-      >
-        <option
-          value={''}
-          disabled={!nullable}
-          className={`
+            onChange(value as N extends true ? T | undefined : T);
+          }}
+          className='col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 disabled:opacity-50 disabled:cursor-not-allowed'
+        >
+          <option
+            value={''}
+            disabled={!nullable}
+            className={`
           ${!nullable ? 'hidden' : ''}
         `}
-        />
-        {options.map(({ value, label }) => (
-          <option key={value} value={value}>
-            {label}
-          </option>
-        ))}
-      </select>
+          />
+          {options.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 };

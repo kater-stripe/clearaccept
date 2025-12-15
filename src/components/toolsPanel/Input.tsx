@@ -52,7 +52,7 @@ export const Input = <T extends string>({
 
           onChange((e.target.value ?? '') as T);
         }}
-        className='w-full p-2 border border-gray-300 rounded-md text-gray-700 bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500'
+        className='w-full pl-3 py-[6px] border border-gray-300 rounded-md bg-white sm:text-sm/6 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600'
       />
     </div>
   );
