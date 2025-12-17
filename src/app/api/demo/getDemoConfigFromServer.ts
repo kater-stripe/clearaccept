@@ -6,6 +6,7 @@ export const getDemoConfigFromServer = async (): Promise<
   Partial<DemoConfig>
 > => {
   return {
+    checkoutMethod: process.env.CHECKOUT_METHOD,
     currency: process.env.CURRENCY,
     customHero: process.env.CUSTOM_HERO,
     customLogo: process.env.CUSTOM_LOGO,
