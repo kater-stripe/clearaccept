@@ -20,10 +20,10 @@ export const Hero = ({ className, ...rest }: HeroProps) => {
       <div className='col-span-6 flex flex-col'>
         <div>
           <Logo className='h-10 mb-4 mx-auto sm:mx-0' />
-          <h2 className='w-full text-center font-bold sm:text-left text-2xl tracking-tight text-brand-tertiary lg:text-3xl xl:text-4xl'>
+          <h2 className='w-full text-center font-bold sm:text-left text-2xl tracking-tight text-brand-secondary lg:text-3xl xl:text-4xl'>
             {t('hero.heading')}
           </h2>
-          <p className='w-full text-center sm:text-left mx-auto mt-2 text-sm lg:text-md xl:text-lg text-brand-tertiary-accent mb-4'>
+          <p className='w-full text-center sm:text-left mx-auto mt-2 text-sm lg:text-md xl:text-lg text-brand-secondary-accent mb-4'>
             {t('hero.subheading')}
           </p>
           <a

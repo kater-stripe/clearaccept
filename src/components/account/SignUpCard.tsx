@@ -145,10 +145,10 @@ export const SignUpCard = () => {
           }}
         >
           <div>
-            <p className='text-xl font-semibold text-brand-tertiary'>
+            <p className='text-xl font-semibold text-brand-secondary'>
               {t('sign-up.heading')}
             </p>
-            <p>
+            <p className='text-brand-secondary'>
               {t('sign-up.existing-account')}{' '}
               <Link
                 href={`/${language}/sign-in`}

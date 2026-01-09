@@ -22,7 +22,7 @@ export const Footer = () => {
           <div className='mt-16 xl:col-span-1 xl:mt-0'>
             <div className='md:grid md:grid-cols-3 md:gap-8'>
               <div>
-                <h3 className='text-sm font-semibold leading-6 text-brand-tertiary-contrasting-text'>
+                <h3 className='text-sm font-semibold leading-6 text-brand-secondary-contrasting-text'>
                   {t('footer.col1.title')}
                 </h3>
                 <ul className='mt-6 space-y-4'>
@@ -32,7 +32,7 @@ export const Footer = () => {
                     <li key={index}>
                       <a
                         href='#'
-                        className='text-sm leading-6 text-brand-tertiary-contrasting-text cursor-default'
+                        className='text-sm leading-6 text-brand-secondary-contrasting-text cursor-default'
                       >
                         {link}
                       </a>
@@ -41,7 +41,7 @@ export const Footer = () => {
                 </ul>
               </div>
               <div className='hidden md:block mt-6 md:mt-0'>
-                <h3 className='text-sm font-semibold leading-6 text-brand-tertiary-contrasting-text'>
+                <h3 className='text-sm font-semibold leading-6 text-brand-secondary-contrasting-text'>
                   {t('footer.col2.title')}
                 </h3>
                 <ul className='mt-6 space-y-4'>
@@ -51,7 +51,7 @@ export const Footer = () => {
                     <li key={index}>
                       <a
                         href='#'
-                        className='text-sm leading-6 text-brand-tertiary-contrasting-text cursor-default'
+                        className='text-sm leading-6 text-brand-secondary-contrasting-text cursor-default'
                       >
                         {link}
                       </a>

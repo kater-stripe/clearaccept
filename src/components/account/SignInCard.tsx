@@ -126,7 +126,7 @@ export const SignInCard = () => {
           }}
         >
           <div>
-            <p className='text-xl font-semibold text-brand-tertiary'>
+            <p className='text-xl font-semibold text-brand-secondary'>
               {t('sign-in.heading')}
             </p>
             <p>

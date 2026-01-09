@@ -9,6 +9,7 @@ import {
   ConnectBalances,
   ConnectCapitalFinancingPromotion,
   ConnectInstantPayoutsPromotion,
+  ConnectRecipients,
 } from '@stripe/react-connect-js';
 import { getLatestFinancingOffer as getLatestFinancingOfferAction } from '@/app/api/financing-offers/getLatestFinancingOffer';
 import { Schedule } from '@/components/dashboard/Schedule';
@@ -41,25 +42,26 @@ const DashboardPage = () => {
 
   return (
     <div className='grid grid-cols-12 gap-4'>
-      <Schedule className='col-span-12 lg:col-span-8' />
-      <div className='col-span-12 lg:col-span-4 flex flex-col gap-4'>
+      <div className='col-span-12 lg:col-span-8'>
         <Card>
           <h2 className='text-lg font-semibold mb-4'>
             {t('dashboard.home.balances')}
           </h2>
-          <div
-            id='connect-instant-payouts-promotion'
-            className={`${isInstantPayoutsPromotionShown ? 'mb-4' : ''}`}
-          >
+          <ConnectBalances />
+        </Card>
+      </div>
+      <div className='col-span-12 lg:col-span-4 flex flex-col gap-4'>
+        <Card
+          className={`${isInstantPayoutsPromotionShown ? 'visible' : 'hidden'}`}
+        >
+          <div id='connect-instant-payouts-promotion'>
             <ConnectInstantPayoutsPromotion
               onInstantPayoutsPromotionLoaded={({ promotionShown }) =>
                 setIsInstantPayoutsPromotionShown(promotionShown)
               }
             />
           </div>
-          <div id='connect-balances'>
-            <ConnectBalances />
-          </div>
+          <ConnectRecipients dataSource='customers' />
         </Card>
         {isCapitalEligible && shouldShowPromotion && (
           <Card>

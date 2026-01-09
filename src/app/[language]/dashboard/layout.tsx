@@ -193,7 +193,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className='relative'>
       {/* Mobile Top Navbar */}
-      <div className='lg:hidden bg-brand-primary px-8 py-3 flex items-center justify-between fixed top-0 left-0 right-0 z-50'>
+      <div className='lg:hidden bg-brand-secondary px-8 py-3 flex items-center justify-between fixed top-0 left-0 right-0 z-50'>
         <Logo className='flex-shrink-0 max-h-12' />
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -209,7 +209,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
       <div className='grid grid-cols-12 lg:h-screen'>
         {/* Desktop Sidebar */}
-        <div className='hidden lg:flex lg:col-span-2 bg-brand-primary py-8 flex-col'>
+        <div className='hidden lg:flex lg:col-span-2 bg-brand-secondary py-8 flex-col'>
           <Logo className='mb-6 px-8 flex-shrink-0' />
           <Sidebar />
         </div>

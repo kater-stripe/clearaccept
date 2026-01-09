@@ -286,7 +286,7 @@ export const CreateProductModal = ({
                   {isCreatingProductImageWithFileLink && (
                     <div className='py-2 flex justify-start'>
                       <div>
-                        <LoadingSpinner className='size-8 text-brand-tertiary' />
+                        <LoadingSpinner className='size-8 text-brand-secondary' />
                       </div>
                     </div>
                   )}

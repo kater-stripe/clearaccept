@@ -11,7 +11,7 @@ const IndexPage = () => {
     <div className='relative grow bg-gray-100'>
       <div aria-hidden='true' className='absolute inset-0'>
         <Image
-          src={customHero || '/img/hero/background.jpg'}
+          src={customHero || '/img/hero/background.png'}
           alt='Hero background'
           width={0}
           height={0}

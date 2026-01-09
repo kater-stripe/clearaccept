@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: process.env.DEMOGEN ? 'Stripe | Demo' : 'ZenFlow',
+  title: 'Sage',
   icons: {
     icon: '/img/brand/icon.svg',
   },

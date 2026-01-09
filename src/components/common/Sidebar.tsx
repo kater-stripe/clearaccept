@@ -111,6 +111,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
   const pathname = usePathname();
   const { account, signOut, isCapabilityActive } = useDemoMerchant();
 
+
   const navItems: NavElement[] = useMemo(
     () => [
       {
@@ -183,14 +184,14 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         label: t('dashboard.finance.title'),
         children: [
           ...(isCapabilityActive('treasury') ||
-          isCapabilityActive('card_issuing')
+            isCapabilityActive('card_issuing')
             ? [
-                {
-                  href: `/${language}/dashboard/expenses`,
-                  icon: BuildingLibraryIcon,
-                  label: t('dashboard.expenses.title'),
-                },
-              ]
+              {
+                href: `/${language}/dashboard/expenses`,
+                icon: BuildingLibraryIcon,
+                label: t('dashboard.expenses.title'),
+              },
+            ]
             : []),
           {
             href: `/${language}/dashboard/capital`,
@@ -263,12 +264,12 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
           : account?.identity?.country) ?? '',
       )
         ? [
-            {
-              href: `/${language}/dashboard/membership`,
-              icon: StarIcon,
-              label: t('dashboard.membership.title'),
-            },
-          ]
+          {
+            href: `/${language}/dashboard/membership`,
+            icon: StarIcon,
+            label: t('dashboard.membership.title'),
+          },
+        ]
         : []),
     ],
     [language, t, isCapabilityActive, account],
@@ -302,13 +303,12 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         onClick={() => onMobileMenuClose?.()}
       >
         <button
-          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${
-            isTopLevel
+          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${isTopLevel
               ? 'text-white text-lg py-2'
               : isNested
                 ? 'text-white text-sm py-1.5'
                 : 'text-white text-base py-1.5'
-          }`}
+            }`}
         >
           <item.icon
             className={
@@ -341,11 +341,10 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
       <div key={group.id}>
         <button
           onClick={() => toggleGroup(group.id)}
-          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${
-            isTopLevel
+          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${isTopLevel
               ? 'text-white text-lg py-2'
               : 'text-white text-base py-1.5'
-          }`}
+            }`}
         >
           <group.icon
             className={isTopLevel ? 'size-5 shrink-0' : 'size-4 shrink-0'}
@@ -380,7 +379,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         )}
       </nav>
       <nav className='grid gap-y-2 px-4'>
-        <Link
+        {/* <Link
           href={`/${language}/storefront/${account?.id}`}
           onClick={() => onMobileMenuClose?.()}
           target='_blank'
@@ -392,7 +391,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
             />
             {t('dashboard.open-storefront')}
           </button>
-        </Link>
+        </Link> */}
         <Link
           href={`/${language}/dashboard/account`}
           onClick={() => onMobileMenuClose?.()}

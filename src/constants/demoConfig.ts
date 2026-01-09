@@ -14,7 +14,7 @@ export const DEFAULT_DEMO_CONFIG = {
   currency: process.env.NEXT_PUBLIC_CURRENCY ?? 'usd',
   customHero: process.env.NEXT_PUBLIC_CUSTOM_HERO,
   customLogo: process.env.NEXT_PUBLIC_CUSTOM_LOGO,
-  demoName: process.env.NEXT_PUBLIC_DEMO_NAME ?? 'zenflow',
+  demoName: process.env.NEXT_PUBLIC_DEMO_NAME ?? 'sage',
   language: process.env.NEXT_PUBLIC_LANGUAGE ?? 'en',
   primaryColor: process.env.NEXT_PUBLIC_PRIMARY_COLOR ?? '#221B35',
   secondaryColor: process.env.NEXT_PUBLIC_SECONDARY_COLOR ?? '#F26552',

@@ -46,8 +46,8 @@
     }
   },
   "hero": {
-    "heading": "Simplify your business workflows.",
-    "subheading": "A comprehensive platform designed for service-based businesses.",
+    "heading": "Powering high performance finance.",
+    "subheading": "A comprehensive accounting platform designed for your business.",
     "cta": "Contact support"
   },
   "dashboard": {
@@ -227,7 +227,7 @@
       "acodei-quickbooks-sync": "Acodei Quickbooks Sync"
     },
     "membership": {
-      "title": "Membership",
+      "title": "Subscription",
       "perTimeUnits": {
         "day": "/ day",
         "week": "/ week",
