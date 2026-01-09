@@ -164,7 +164,8 @@
         "delete": "削除",
         "finalize": "確定",
         "send": "送信",
-        "copy-link": "リンクをコピー"
+        "copy-link": "リンクをコピー",
+        "download": "ダウンロード"
       }
     },
     "customers": {

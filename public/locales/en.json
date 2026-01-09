@@ -151,6 +151,18 @@
         "download": "Download"
       }
     },
+    "customers": {
+      "title": "Customers",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "actions": "Actions",
+        "create-customer": "Create new customer",
+        "delete": "Delete"
+      }
+    },
     "tax": {
       "title": "Tax",
       "tax-settings": "Tax Settings",

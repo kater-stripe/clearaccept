@@ -164,7 +164,8 @@
         "delete": "删除",
         "finalize": "确认",
         "send": "发送",
-        "copy-link": "复制链接"
+        "copy-link": "复制链接",
+        "download": "下载"
       }
     },
     "customers": {

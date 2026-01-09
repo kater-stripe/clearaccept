@@ -164,7 +164,8 @@
         "delete": "Delete",
         "finalize": "Finalise",
         "send": "Send",
-        "copy-link": "Copy link"
+        "copy-link": "Copy link",
+        "download": "Download"
       }
     },
     "customers": {
