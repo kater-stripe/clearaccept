@@ -32,9 +32,8 @@ export const Select = <T extends string | number, N extends boolean = false>({
     <div>
       <label
         htmlFor={generateHtmlIdFromLabel(label)}
-        className={`block mb-2 text-sm font-medium text-gray-700 ${
-          hideLabel ? 'hidden' : ''
-        }`}
+        className={`block mb-2 text-sm font-medium text-gray-700 ${hideLabel ? 'hidden' : ''
+          }`}
       >
         {label}
         {required && <span className='text-red-500'> *</span>}
@@ -59,7 +58,7 @@ export const Select = <T extends string | number, N extends boolean = false>({
           value={''}
           disabled={!nullable}
           className={`
-          ${!nullable ? 'hidden' : ''}
+          ${!nullable && !placeholder ? 'hidden' : ''}
         `}
         >
           {placeholder}

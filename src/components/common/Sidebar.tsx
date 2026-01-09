@@ -14,7 +14,6 @@ import {
   Square3Stack3DIcon,
   CalculatorIcon,
   LinkIcon,
-  ArrowTopRightOnSquareIcon,
   DocumentChartBarIcon,
   StarIcon,
   DocumentTextIcon,
@@ -24,7 +23,6 @@ import {
   BriefcaseIcon,
   Cog6ToothIcon,
   EllipsisHorizontalCircleIcon,
-  BuildingStorefrontIcon,
   DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -304,10 +302,10 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
       >
         <button
           className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${isTopLevel
-              ? 'text-white text-lg py-2'
-              : isNested
-                ? 'text-white text-sm py-1.5'
-                : 'text-white text-base py-1.5'
+            ? 'text-white text-lg py-2'
+            : isNested
+              ? 'text-white text-sm py-1.5'
+              : 'text-white text-base py-1.5'
             }`}
         >
           <item.icon
@@ -342,8 +340,8 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         <button
           onClick={() => toggleGroup(group.id)}
           className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${isTopLevel
-              ? 'text-white text-lg py-2'
-              : 'text-white text-base py-1.5'
+            ? 'text-white text-lg py-2'
+            : 'text-white text-base py-1.5'
             }`}
         >
           <group.icon

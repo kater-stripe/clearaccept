@@ -98,6 +98,16 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           title: t('dashboard.payments.title'),
         };
       }
+      case '/dashboard/invoices': {
+        return {
+          title: t('dashboard.invoices.title'),
+        };
+      }
+      case '/dashboard/customers': {
+        return {
+          title: t('dashboard.customers.title'),
+        };
+      }
       case '/dashboard/tax': {
         return {
           title: t('dashboard.tax.title'),
