@@ -151,6 +151,34 @@
         "download": "下载"
       }
     },
+    "invoices": {
+      "title": "发票",
+      "table": {
+        "invoice": "发票",
+        "customer": "客户",
+        "amount": "金额",
+        "status": "状态",
+        "due-date": "到期日",
+        "actions": "操作",
+        "create-invoice": "创建新发票",
+        "delete": "删除",
+        "finalize": "确认",
+        "send": "发送",
+        "copy-link": "复制链接"
+      }
+    },
+    "customers": {
+      "title": "客户",
+      "table": {
+        "name": "姓名",
+        "email": "电子邮件",
+        "phone": "电话",
+        "address": "地址",
+        "actions": "操作",
+        "create-customer": "创建新客户",
+        "delete": "删除"
+      }
+    },
     "tax": {
       "title": "税务",
       "tax-settings": "税务设置",
@@ -382,16 +410,16 @@
     },
     "create-customer": {
       "title": "创建客户",
-      "description": "创建一个新客户，包括姓名、邮箱地址和电话号码。",
+      "description": "创建一个新客户，包括姓名、邮箱、电话和地址。",
       "form": {
         "name": "姓名",
         "email": "邮箱",
         "phone": "电话",
         "address": "地址",
-        "line1": "地址第一行",
-        "line2": "地址第二行",
+        "line1": "地址行1",
+        "line2": "地址行2",
         "city": "城市",
-        "state": "省/州",
+        "state": "省份",
         "postal-code": "邮政编码",
         "country": "国家",
         "create": "创建",
@@ -400,28 +428,28 @@
       "error": "创建客户时发生未知错误。"
     },
     "create-invoice": {
-      "title": "创建新发票",
-      "description": "为您的客户创建一张新发票。",
+      "title": "创建发票",
+      "description": "为客户创建包含明细项目的新发票.",
       "form": {
         "customer": "客户",
         "select-customer": "选择客户",
         "currency": "货币",
         "days-until-due": "到期天数",
-        "line-items": "行项目",
+        "line-items": "明细项目",
         "description": "描述",
         "quantity": "数量",
         "unit-amount": "单价",
-        "add-line-item": "添加行项目",
-        "cancel": "取消",
-        "create": "创建"
+        "add-line-item": "添加明细项目",
+        "create": "创建",
+        "cancel": "取消"
       },
       "error": "创建发票时发生未知错误。"
     },
     "copy-invoice-link": {
       "title": "复制发票链接",
-      "description": "将此链接发送给您的客户以查看和支付发票。",
+      "description": "将此链接发送给您的客户以支付发票。",
       "form": {
-        "url": "链接",
+        "url": "URL",
         "close": "关闭",
         "copy": "复制",
         "copied": "已复制！"

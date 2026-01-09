@@ -151,6 +151,34 @@
         "download": "Download"
       }
     },
+    "invoices": {
+      "title": "Invoices",
+      "table": {
+        "invoice": "Invoice",
+        "customer": "Customer",
+        "amount": "Amount",
+        "status": "Status",
+        "due-date": "Due Date",
+        "actions": "Actions",
+        "create-invoice": "Create new invoice",
+        "delete": "Delete",
+        "finalize": "Finalise",
+        "send": "Send",
+        "copy-link": "Copy link"
+      }
+    },
+    "customers": {
+      "title": "Customers",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "actions": "Actions",
+        "create-customer": "Create new customer",
+        "delete": "Delete"
+      }
+    },
     "tax": {
       "title": "Tax",
       "tax-settings": "Tax Settings",
@@ -382,14 +410,14 @@
     },
     "create-customer": {
       "title": "Create customer",
-      "description": "Create a new customer with their name, email address, and phone number.",
+      "description": "Create a new customer with their name, email address, phone number, and address.",
       "form": {
         "name": "Name",
         "email": "Email",
         "phone": "Phone",
         "address": "Address",
-        "line1": "Line 1",
-        "line2": "Line 2",
+        "line1": "Address Line 1",
+        "line2": "Address Line 2",
         "city": "City",
         "state": "County",
         "postal-code": "Postcode",
@@ -400,26 +428,26 @@
       "error": "An unknown error occurred while creating the customer."
     },
     "create-invoice": {
-      "title": "Create new invoice",
-      "description": "Create a new invoice for your customer.",
+      "title": "Create invoice",
+      "description": "Create a new invoice for a customer with line items.",
       "form": {
         "customer": "Customer",
         "select-customer": "Select a customer",
         "currency": "Currency",
-        "days-until-due": "Days until due",
+        "days-until-due": "Days Until Due",
         "line-items": "Line Items",
         "description": "Description",
-        "quantity": "Quantity",
-        "unit-amount": "Unit Amount",
+        "quantity": "Qty",
+        "unit-amount": "Unit Price",
         "add-line-item": "Add line item",
-        "cancel": "Cancel",
-        "create": "Create"
+        "create": "Create",
+        "cancel": "Cancel"
       },
       "error": "An unknown error occurred while creating the invoice."
     },
     "copy-invoice-link": {
       "title": "Copy invoice link",
-      "description": "Send this link to your customer to view and pay the invoice.",
+      "description": "Send this link to your customer to pay their invoice.",
       "form": {
         "url": "URL",
         "close": "Close",

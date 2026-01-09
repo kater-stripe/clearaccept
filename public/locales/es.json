@@ -151,6 +151,34 @@
         "download": "Descargar"
       }
     },
+    "invoices": {
+      "title": "Facturas",
+      "table": {
+        "invoice": "Factura",
+        "customer": "Cliente",
+        "amount": "Importe",
+        "status": "Estado",
+        "due-date": "Fecha de vencimiento",
+        "actions": "Acciones",
+        "create-invoice": "Crear nueva factura",
+        "delete": "Eliminar",
+        "finalize": "Finalizar",
+        "send": "Enviar",
+        "copy-link": "Copiar enlace"
+      }
+    },
+    "customers": {
+      "title": "Clientes",
+      "table": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "phone": "Teléfono",
+        "address": "Dirección",
+        "actions": "Acciones",
+        "create-customer": "Crear nuevo cliente",
+        "delete": "Eliminar"
+      }
+    },
     "tax": {
       "title": "Impuestos",
       "tax-settings": "Configuración de impuestos",
@@ -382,16 +410,16 @@
     },
     "create-customer": {
       "title": "Crear cliente",
-      "description": "Crea un nuevo cliente con su nombre, dirección de correo electrónico y número de teléfono.",
+      "description": "Crea un nuevo cliente con su nombre, correo electrónico, teléfono y dirección.",
       "form": {
         "name": "Nombre",
         "email": "Correo electrónico",
         "phone": "Teléfono",
         "address": "Dirección",
-        "line1": "Línea 1",
-        "line2": "Línea 2",
+        "line1": "Línea de dirección 1",
+        "line2": "Línea de dirección 2",
         "city": "Ciudad",
-        "state": "Estado/Provincia",
+        "state": "Estado / Provincia",
         "postal-code": "Código postal",
         "country": "País",
         "create": "Crear",
@@ -400,26 +428,26 @@
       "error": "Se produjo un error desconocido al crear el cliente."
     },
     "create-invoice": {
-      "title": "Crear nueva factura",
-      "description": "Crea una nueva factura para tu cliente.",
+      "title": "Crear factura",
+      "description": "Crea una nueva factura para un cliente con artículos de línea.",
       "form": {
         "customer": "Cliente",
         "select-customer": "Seleccionar un cliente",
         "currency": "Moneda",
-        "days-until-due": "Días hasta el vencimiento",
-        "line-items": "Líneas",
+        "days-until-due": "Días hasta vencimiento",
+        "line-items": "Artículos",
         "description": "Descripción",
-        "quantity": "Cantidad",
-        "unit-amount": "Importe unitario",
-        "add-line-item": "Añadir línea",
-        "cancel": "Cancelar",
-        "create": "Crear"
+        "quantity": "Cant.",
+        "unit-amount": "Precio unitario",
+        "add-line-item": "Agregar artículo",
+        "create": "Crear",
+        "cancel": "Cancelar"
       },
       "error": "Se produjo un error desconocido al crear la factura."
     },
     "copy-invoice-link": {
       "title": "Copiar enlace de factura",
-      "description": "Envía este enlace a tu cliente para ver y pagar la factura.",
+      "description": "Envía este enlace a tu cliente para pagar la factura.",
       "form": {
         "url": "URL",
         "close": "Cerrar",

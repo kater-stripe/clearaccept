@@ -151,6 +151,34 @@
         "download": "Scarica"
       }
     },
+    "invoices": {
+      "title": "Fatture",
+      "table": {
+        "invoice": "Fattura",
+        "customer": "Cliente",
+        "amount": "Importo",
+        "status": "Stato",
+        "due-date": "Data di scadenza",
+        "actions": "Azioni",
+        "create-invoice": "Crea nuova fattura",
+        "delete": "Elimina",
+        "finalize": "Finalizza",
+        "send": "Invia",
+        "copy-link": "Copia link"
+      }
+    },
+    "customers": {
+      "title": "Clienti",
+      "table": {
+        "name": "Nome",
+        "email": "Email",
+        "phone": "Telefono",
+        "address": "Indirizzo",
+        "actions": "Azioni",
+        "create-customer": "Crea nuovo cliente",
+        "delete": "Elimina"
+      }
+    },
     "tax": {
       "title": "Tasse",
       "tax-settings": "Impostazioni Fiscali",
@@ -382,17 +410,17 @@
     },
     "create-customer": {
       "title": "Crea cliente",
-      "description": "Crea un nuovo cliente con nome, indirizzo email e numero di telefono.",
+      "description": "Crea un nuovo cliente con nome, email, telefono e indirizzo.",
       "form": {
         "name": "Nome",
         "email": "Email",
         "phone": "Telefono",
         "address": "Indirizzo",
-        "line1": "Indirizzo 1",
-        "line2": "Indirizzo 2",
+        "line1": "Indirizzo riga 1",
+        "line2": "Indirizzo riga 2",
         "city": "Città",
-        "state": "Stato/Provincia",
-        "postal-code": "Codice Postale",
+        "state": "Provincia",
+        "postal-code": "CAP",
         "country": "Paese",
         "create": "Crea",
         "cancel": "Annulla"
@@ -400,8 +428,8 @@
       "error": "Si è verificato un errore sconosciuto durante la creazione del cliente."
     },
     "create-invoice": {
-      "title": "Crea nuova fattura",
-      "description": "Crea una nuova fattura per il tuo cliente.",
+      "title": "Crea fattura",
+      "description": "Crea una nuova fattura per un cliente con voci.",
       "form": {
         "customer": "Cliente",
         "select-customer": "Seleziona un cliente",
@@ -409,17 +437,17 @@
         "days-until-due": "Giorni alla scadenza",
         "line-items": "Voci",
         "description": "Descrizione",
-        "quantity": "Quantità",
-        "unit-amount": "Importo unitario",
+        "quantity": "Qtà",
+        "unit-amount": "Prezzo unitario",
         "add-line-item": "Aggiungi voce",
-        "cancel": "Annulla",
-        "create": "Crea"
+        "create": "Crea",
+        "cancel": "Annulla"
       },
       "error": "Si è verificato un errore sconosciuto durante la creazione della fattura."
     },
     "copy-invoice-link": {
       "title": "Copia link fattura",
-      "description": "Invia questo link al tuo cliente per visualizzare e pagare la fattura.",
+      "description": "Invia questo link al tuo cliente per pagare la fattura.",
       "form": {
         "url": "URL",
         "close": "Chiudi",

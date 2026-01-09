@@ -151,6 +151,34 @@
         "download": "Télécharger"
       }
     },
+    "invoices": {
+      "title": "Factures",
+      "table": {
+        "invoice": "Facture",
+        "customer": "Client",
+        "amount": "Montant",
+        "status": "Statut",
+        "due-date": "Date d'échéance",
+        "actions": "Actions",
+        "create-invoice": "Créer une nouvelle facture",
+        "delete": "Supprimer",
+        "finalize": "Finaliser",
+        "send": "Envoyer",
+        "copy-link": "Copier le lien"
+      }
+    },
+    "customers": {
+      "title": "Clients",
+      "table": {
+        "name": "Nom",
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "address": "Adresse",
+        "actions": "Actions",
+        "create-customer": "Créer un nouveau client",
+        "delete": "Supprimer"
+      }
+    },
     "tax": {
       "title": "Taxes",
       "tax-settings": "Paramètres de taxes",
@@ -382,16 +410,16 @@
     },
     "create-customer": {
       "title": "Créer un client",
-      "description": "Créez un nouveau client avec son nom, son adresse email et son numéro de téléphone.",
+      "description": "Créez un nouveau client avec son nom, email, téléphone et adresse.",
       "form": {
         "name": "Nom",
         "email": "Email",
         "phone": "Téléphone",
         "address": "Adresse",
-        "line1": "Ligne 1",
-        "line2": "Ligne 2",
+        "line1": "Ligne d'adresse 1",
+        "line2": "Ligne d'adresse 2",
         "city": "Ville",
-        "state": "État/Région",
+        "state": "Région / Province",
         "postal-code": "Code postal",
         "country": "Pays",
         "create": "Créer",
@@ -400,26 +428,26 @@
       "error": "Une erreur inconnue s'est produite lors de la création du client."
     },
     "create-invoice": {
-      "title": "Créer une nouvelle facture",
-      "description": "Créez une nouvelle facture pour votre client.",
+      "title": "Créer une facture",
+      "description": "Créez une nouvelle facture pour un client avec des lignes d'articles.",
       "form": {
         "customer": "Client",
         "select-customer": "Sélectionner un client",
         "currency": "Devise",
-        "days-until-due": "Jours jusqu'à l'échéance",
-        "line-items": "Lignes",
+        "days-until-due": "Jours avant échéance",
+        "line-items": "Articles",
         "description": "Description",
-        "quantity": "Quantité",
-        "unit-amount": "Montant unitaire",
-        "add-line-item": "Ajouter une ligne",
-        "cancel": "Annuler",
-        "create": "Créer"
+        "quantity": "Qté",
+        "unit-amount": "Prix unitaire",
+        "add-line-item": "Ajouter un article",
+        "create": "Créer",
+        "cancel": "Annuler"
       },
       "error": "Une erreur inconnue s'est produite lors de la création de la facture."
     },
     "copy-invoice-link": {
       "title": "Copier le lien de la facture",
-      "description": "Envoyez ce lien à votre client pour voir et payer la facture.",
+      "description": "Envoyez ce lien à votre client pour payer la facture.",
       "form": {
         "url": "URL",
         "close": "Fermer",

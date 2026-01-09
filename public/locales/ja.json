@@ -151,6 +151,34 @@
         "download": "ダウンロード"
       }
     },
+    "invoices": {
+      "title": "請求書",
+      "table": {
+        "invoice": "請求書",
+        "customer": "顧客",
+        "amount": "金額",
+        "status": "ステータス",
+        "due-date": "支払期日",
+        "actions": "アクション",
+        "create-invoice": "新しい請求書を作成",
+        "delete": "削除",
+        "finalize": "確定",
+        "send": "送信",
+        "copy-link": "リンクをコピー"
+      }
+    },
+    "customers": {
+      "title": "顧客",
+      "table": {
+        "name": "名前",
+        "email": "メール",
+        "phone": "電話番号",
+        "address": "住所",
+        "actions": "アクション",
+        "create-customer": "新しい顧客を作成",
+        "delete": "削除"
+      }
+    },
     "tax": {
       "title": "税金",
       "tax-settings": "税金設定",
@@ -382,7 +410,7 @@
     },
     "create-customer": {
       "title": "顧客の作成",
-      "description": "名前、メールアドレス、電話番号で新しい顧客を作成します。",
+      "description": "名前、メールアドレス、電話番号、住所で新しい顧客を作成します。",
       "form": {
         "name": "名前",
         "email": "メールアドレス",
@@ -400,26 +428,26 @@
       "error": "顧客作成中に不明なエラーが発生しました。"
     },
     "create-invoice": {
-      "title": "新しい請求書の作成",
-      "description": "顧客向けの新しい請求書を作成します。",
+      "title": "請求書の作成",
+      "description": "顧客の明細付き請求書を作成します。",
       "form": {
         "customer": "顧客",
         "select-customer": "顧客を選択",
         "currency": "通貨",
         "days-until-due": "支払期限までの日数",
-        "line-items": "明細項目",
+        "line-items": "明細",
         "description": "説明",
         "quantity": "数量",
         "unit-amount": "単価",
         "add-line-item": "明細を追加",
-        "cancel": "キャンセル",
-        "create": "作成"
+        "create": "作成",
+        "cancel": "キャンセル"
       },
       "error": "請求書作成中に不明なエラーが発生しました。"
     },
     "copy-invoice-link": {
       "title": "請求書リンクをコピー",
-      "description": "このリンクを顧客に送信して、請求書を確認・支払いできるようにします。",
+      "description": "このリンクを顧客に送信して請求書を支払ってもらいます。",
       "form": {
         "url": "URL",
         "close": "閉じる",

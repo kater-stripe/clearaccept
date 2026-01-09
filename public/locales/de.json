@@ -151,6 +151,34 @@
         "download": "Herunterladen"
       }
     },
+    "invoices": {
+      "title": "Rechnungen",
+      "table": {
+        "invoice": "Rechnung",
+        "customer": "Kunde",
+        "amount": "Betrag",
+        "status": "Status",
+        "due-date": "Fälligkeitsdatum",
+        "actions": "Aktionen",
+        "create-invoice": "Neue Rechnung erstellen",
+        "delete": "Löschen",
+        "finalize": "Abschließen",
+        "send": "Senden",
+        "copy-link": "Link kopieren"
+      }
+    },
+    "customers": {
+      "title": "Kunden",
+      "table": {
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "address": "Adresse",
+        "actions": "Aktionen",
+        "create-customer": "Neuen Kunden erstellen",
+        "delete": "Löschen"
+      }
+    },
     "tax": {
       "title": "Steuern",
       "tax-settings": "Steuereinstellungen",
@@ -382,14 +410,14 @@
     },
     "create-customer": {
       "title": "Kunde erstellen",
-      "description": "Erstellen Sie einen neuen Kunden mit Namen, E-Mail-Adresse und Telefonnummer.",
+      "description": "Erstellen Sie einen neuen Kunden mit Name, E-Mail-Adresse, Telefonnummer und Adresse.",
       "form": {
         "name": "Name",
         "email": "E-Mail",
         "phone": "Telefon",
         "address": "Adresse",
-        "line1": "Zeile 1",
-        "line2": "Zeile 2",
+        "line1": "Adresszeile 1",
+        "line2": "Adresszeile 2",
         "city": "Stadt",
         "state": "Bundesland",
         "postal-code": "Postleitzahl",
@@ -400,8 +428,8 @@
       "error": "Beim Erstellen des Kunden ist ein unbekannter Fehler aufgetreten."
     },
     "create-invoice": {
-      "title": "Neue Rechnung erstellen",
-      "description": "Erstellen Sie eine neue Rechnung für Ihren Kunden.",
+      "title": "Rechnung erstellen",
+      "description": "Erstellen Sie eine neue Rechnung für einen Kunden mit Positionen.",
       "form": {
         "customer": "Kunde",
         "select-customer": "Kunden auswählen",
@@ -409,17 +437,17 @@
         "days-until-due": "Tage bis Fälligkeit",
         "line-items": "Positionen",
         "description": "Beschreibung",
-        "quantity": "Menge",
+        "quantity": "Anz.",
         "unit-amount": "Stückpreis",
         "add-line-item": "Position hinzufügen",
-        "cancel": "Abbrechen",
-        "create": "Erstellen"
+        "create": "Erstellen",
+        "cancel": "Abbrechen"
       },
       "error": "Beim Erstellen der Rechnung ist ein unbekannter Fehler aufgetreten."
     },
     "copy-invoice-link": {
       "title": "Rechnungslink kopieren",
-      "description": "Senden Sie diesen Link an Ihren Kunden, um die Rechnung anzuzeigen und zu bezahlen.",
+      "description": "Senden Sie diesen Link an Ihren Kunden, um die Rechnung zu bezahlen.",
       "form": {
         "url": "URL",
         "close": "Schließen",
