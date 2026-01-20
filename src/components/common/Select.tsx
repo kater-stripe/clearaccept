@@ -5,7 +5,7 @@ import type { ComponentProps } from 'react';
 
 type SelectProps<T, N extends boolean = false> = Omit<
   ComponentProps<'select'>,
-  'onChange'
+  'onChange' | 'placeholder'
 > & {
   label: string;
   nullable?: N;
@@ -13,6 +13,7 @@ type SelectProps<T, N extends boolean = false> = Omit<
   onChange?: (value: N extends true ? T | undefined : T) => void;
   options: { value: T; label: string }[];
   hideLabel?: boolean;
+  placeholder?: string;
 };
 
 export const Select = <T extends string | number, N extends boolean = false>({
@@ -24,6 +25,7 @@ export const Select = <T extends string | number, N extends boolean = false>({
   className,
   required,
   hideLabel = false,
+  placeholder,
   ...rest
 }: SelectProps<T, N>) => {
   return (
@@ -59,7 +61,9 @@ export const Select = <T extends string | number, N extends boolean = false>({
           className={`
           ${!nullable ? 'hidden' : ''}
         `}
-        />
+        >
+          {placeholder}
+        </option>
         {options.map(({ value, label }) => (
           <option key={value} value={value}>
             {label}

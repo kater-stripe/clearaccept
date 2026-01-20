@@ -16,7 +16,7 @@ import { PairReaderModal } from '@/components/terminal/PairReaderModal';
 import { getReadersByLocationId as getReadersByLocationIdAction } from '@/app/api/terminal/readers/getReadersByLocationId';
 import { ReaderRow } from '@/components/terminal/ReaderRow';
 
-const TerminalPage = () => {
+const TerminalSettingsPage = () => {
   const { t } = useTranslation();
 
   const { stripeSecretKey, chargeType, canCreateObjects } = useDemoConfig();
@@ -278,4 +278,4 @@ const TerminalPage = () => {
   );
 };
 
-export default TerminalPage;
+export default TerminalSettingsPage;

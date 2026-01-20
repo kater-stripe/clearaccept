@@ -102,7 +102,54 @@
     },
     "payments": {
       "title": "決済",
-      "payment-method-settings": "決済方法設定"
+      "payment-method-settings": "決済方法設定",
+      "settings": {
+        "title": "設定"
+      }
+    },
+    "terminal": {
+      "title": "ターミナル",
+      "settings": {
+        "title": "設定"
+      },
+      "pos": {
+        "title": "POS"
+      },
+      "shop": {
+        "title": "ショップ"
+      }
+    },
+    "more": {
+      "title": "その他"
+    },
+    "customers": {
+      "title": "顧客",
+      "table": {
+        "name": "名前",
+        "email": "メールアドレス",
+        "phone": "電話番号",
+        "address": "住所",
+        "actions": "操作",
+        "create-customer": "新しい顧客を作成",
+        "delete": "削除"
+      }
+    },
+    "invoices": {
+      "title": "請求書",
+      "table": {
+        "invoice": "請求書",
+        "customer": "顧客",
+        "amount": "金額",
+        "status": "ステータス",
+        "due-date": "支払期日",
+        "actions": "操作",
+        "create-invoice": "新しい請求書を作成",
+        "delete": "削除",
+        "finalize": "確定",
+        "send": "送信",
+        "copy-link": "リンクをコピー",
+        "download": "ダウンロード"
+      }
     },
     "tax": {
       "title": "税金",
@@ -111,14 +158,17 @@
       "export-tax-transactions": "税務取引のエクスポート",
       "tax-threshold-monitoring": "課税閾値モニタリング"
     },
+    "taking-payments": {
+      "title": "決済"
+    },
+    "finance": {
+      "title": "資金管理"
+    },
     "reports": {
       "title": "レポート"
     },
     "terminal-and-pos": {
-      "title": "ターミナル＆POS",
-      "description": "実店舗用カード端末を管理し、支払いを受け取りましょう。",
       "terminal": {
-        "tab": "ターミナル",
         "select-location": "場所を選択",
         "terminal-locations": "ターミナル設置場所",
         "readers": "リーダー",
@@ -141,7 +191,6 @@
         }
       },
       "pos": {
-        "tab": "POS",
         "products": "商品",
         "select-location": "場所を選択",
         "select-reader": "リーダーを選択",
@@ -171,14 +220,11 @@
       }
     },
     "account": {
-      "title": "アカウント",
-      "description": "個人情報とビジネス情報を管理します。"
+      "title": "アカウント"
     },
     "apps": {
       "title": "アプリ",
-      "description": "会計ソフト、メーリングリストなどにビジネスを連携するアプリをインストール。",
-      "acodei-quickbooks-sync": "Acodei Quickbooks連携",
-      "xero-sync": "Xero連携"
+      "acodei-quickbooks-sync": "Acodei Quickbooks連携"
     },
     "membership": {
       "title": "メンバーシップ",
@@ -209,11 +255,8 @@
     "billing_address_header": "請求情報",
     "payments_header": "支払い方法",
     "or": "または",
-    "upsellTitle": "こちらもおすすめです",
     "order_summary": {
       "title": "注文概要",
-      "promotion_code_label": "割引コード",
-      "apply_promotion_code": "適用",
       "subtotal": "小計",
       "discount": "割引",
       "shipping": "配送料",
@@ -223,12 +266,6 @@
       "confirm_order": "注文を確定",
       "processing": "処理中..."
     },
-    "payment_status": {
-      "succeeded": "お支払いが完了しました！",
-      "processing": "お支払いを処理中です。",
-      "requires_payment_method": "お支払いが完了しませんでした。もう一度お試しください。",
-      "error": "エラーが発生しました。"
-    },
     "shipping": {
       "title": "配送方法",
       "standard": {
@@ -237,20 +274,13 @@
       "priority": {
         "title": "優先配送"
       },
-      "free": {
-        "title": "無料配送"
-      },
       "unknown": {
         "title": "不明な配送オプション"
       }
-    },
-    "invalid_promotion_code": "このプロモーションコードは無効です。"
+    }
   },
   "addToBag": {
     "buttonText": "カートに追加"
-  },
-  "buyNow": {
-    "buttonText": "今すぐ購入"
   },
   "cartPanel": {
     "title": "ショッピングカート",
@@ -259,9 +289,17 @@
     "shippingTaxes": "配送料と税金は精算時に計算されます。",
     "or": "または",
     "continueShopping": "買い物を続ける",
-    "checkoutButton": "精算へ進む",
-    "chargeButton": "決済する",
-    "cancelButton": "キャンセル"
+    "checkoutButton": "精算へ進む"
+  },
+  "products": {
+    "pro-membership": {
+      "name": "プロメンバーシップ",
+      "marketing_feature_list": {
+        "enhanced-marketing": "強化されたマーケティング",
+        "advanced-analytics": "高度な分析",
+        "priority-support": "優先サポート"
+      }
+    }
   },
   "modals": {
     "payins": {
@@ -284,7 +322,6 @@
         "category": "カテゴリ",
         "good": "物品",
         "service": "サービス",
-        "studio": "スタジオ",
         "start-time": "開始時間",
         "end-time": "終了時間",
         "recurring": {
@@ -350,19 +387,44 @@
         "name": "名前",
         "email": "メールアドレス",
         "phone": "電話番号",
+        "address": "住所",
+        "line1": "住所1",
+        "line2": "住所2",
+        "city": "市区町村",
+        "state": "都道府県",
+        "postal-code": "郵便番号",
+        "country": "国",
         "create": "作成",
         "cancel": "キャンセル"
       },
       "error": "顧客作成中に不明なエラーが発生しました。"
-    }
-  },
-  "products": {
-    "pro-membership": {
-      "name": "プロメンバーシップ",
-      "marketing_feature_list": {
-        "enhanced-marketing": "強化されたマーケティング",
-        "advanced-analytics": "高度な分析",
-        "priority-support": "優先サポート"
+    },
+    "create-invoice": {
+      "title": "新しい請求書の作成",
+      "description": "顧客向けの新しい請求書を作成します。",
+      "form": {
+        "customer": "顧客",
+        "select-customer": "顧客を選択",
+        "currency": "通貨",
+        "days-until-due": "支払期限までの日数",
+        "line-items": "明細項目",
+        "description": "説明",
+        "quantity": "数量",
+        "unit-amount": "単価",
+        "add-line-item": "明細を追加",
+        "cancel": "キャンセル",
+        "create": "作成"
+      },
+      "error": "請求書作成中に不明なエラーが発生しました。"
+    },
+    "copy-invoice-link": {
+      "title": "請求書リンクをコピー",
+      "description": "このリンクを顧客に送信して、請求書を確認・支払いできるようにします。",
+      "form": {
+        "url": "URL",
+        "close": "閉じる",
+        "copy": "コピー",
+        "copied": "コピーしました！"
       }
     }
   },

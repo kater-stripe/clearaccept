@@ -5,8 +5,11 @@ import {
   ConnectDocuments,
   ConnectReportingChart,
 } from '@stripe/react-connect-js';
+import { useTranslation } from 'react-i18next';
 
 const ReportsPage = () => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>

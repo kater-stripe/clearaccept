@@ -102,7 +102,54 @@
     },
     "payments": {
       "title": "支付",
-      "payment-method-settings": "支付方式设置"
+      "payment-method-settings": "支付方式设置",
+      "settings": {
+        "title": "设置"
+      }
+    },
+    "terminal": {
+      "title": "终端",
+      "settings": {
+        "title": "设置"
+      },
+      "pos": {
+        "title": "收银系统"
+      },
+      "shop": {
+        "title": "商店"
+      }
+    },
+    "more": {
+      "title": "更多"
+    },
+    "customers": {
+      "title": "客户",
+      "table": {
+        "name": "姓名",
+        "email": "邮箱",
+        "phone": "电话",
+        "address": "地址",
+        "actions": "操作",
+        "create-customer": "创建新客户",
+        "delete": "删除"
+      }
+    },
+    "invoices": {
+      "title": "发票",
+      "table": {
+        "invoice": "发票",
+        "customer": "客户",
+        "amount": "金额",
+        "status": "状态",
+        "due-date": "到期日",
+        "actions": "操作",
+        "create-invoice": "创建新发票",
+        "delete": "删除",
+        "finalize": "确定",
+        "send": "发送",
+        "copy-link": "复制链接",
+        "download": "下载"
+      }
     },
     "tax": {
       "title": "税务",
@@ -111,14 +158,17 @@
       "export-tax-transactions": "导出税务交易",
       "tax-threshold-monitoring": "税务阈值监控"
     },
+    "taking-payments": {
+      "title": "支付"
+    },
+    "finance": {
+      "title": "财务"
+    },
     "reports": {
       "title": "报告"
     },
     "terminal-and-pos": {
-      "title": "终端和收银系统",
-      "description": "管理实体卡终端并接受支付。",
       "terminal": {
-        "tab": "终端",
         "select-location": "选择位置",
         "terminal-locations": "终端位置",
         "readers": "读卡器",
@@ -141,7 +191,6 @@
         }
       },
       "pos": {
-        "tab": "收银系统",
         "products": "产品",
         "select-location": "选择位置",
         "select-reader": "选择读卡器",
@@ -171,14 +220,11 @@
       }
     },
     "account": {
-      "title": "账户",
-      "description": "管理您的个人和企业信息。"
+      "title": "账户"
     },
     "apps": {
       "title": "应用",
-      "description": "安装应用以将您的业务连接到会计软件、邮件列表等。",
-      "acodei-quickbooks-sync": "Acodei Quickbooks 同步",
-      "xero-sync": "Xero 同步"
+      "acodei-quickbooks-sync": "Acodei Quickbooks 同步"
     },
     "membership": {
       "title": "会员",
@@ -209,11 +255,8 @@
     "billing_address_header": "账单信息",
     "payments_header": "支付方式",
     "or": "或",
-    "upsellTitle": "您可能还喜欢",
     "order_summary": {
       "title": "订单摘要",
-      "promotion_code_label": "折扣码",
-      "apply_promotion_code": "应用",
       "subtotal": "小计",
       "discount": "折扣",
       "shipping": "配送",
@@ -223,12 +266,6 @@
       "confirm_order": "确认订单",
       "processing": "处理中..."
     },
-    "payment_status": {
-      "succeeded": "支付成功！",
-      "processing": "您的支付正在处理中。",
-      "requires_payment_method": "您的支付未成功，请重试。",
-      "error": "出错了。"
-    },
     "shipping": {
       "title": "配送方式",
       "standard": {
@@ -237,20 +274,13 @@
       "priority": {
         "title": "优先配送"
       },
-      "free": {
-        "title": "免费配送"
-      },
       "unknown": {
         "title": "未知配送选项"
       }
-    },
-    "invalid_promotion_code": "此促销码无效。"
+    }
   },
   "addToBag": {
     "buttonText": "加入购物袋"
-  },
-  "buyNow": {
-    "buttonText": "立即购买"
   },
   "cartPanel": {
     "title": "购物车",
@@ -259,9 +289,17 @@
     "shippingTaxes": "配送和税费将在结账时计算。",
     "or": "或",
     "continueShopping": "继续购物",
-    "checkoutButton": "结账",
-    "chargeButton": "收费",
-    "cancelButton": "取消"
+    "checkoutButton": "结账"
+  },
+  "products": {
+    "pro-membership": {
+      "name": "专业会员",
+      "marketing_feature_list": {
+        "enhanced-marketing": "增强营销",
+        "advanced-analytics": "高级分析",
+        "priority-support": "优先支持"
+      }
+    }
   },
   "modals": {
     "payins": {
@@ -284,7 +322,6 @@
         "category": "类别",
         "good": "商品",
         "service": "服务",
-        "studio": "工作室",
         "start-time": "开始时间",
         "end-time": "结束时间",
         "recurring": {
@@ -350,19 +387,44 @@
         "name": "姓名",
         "email": "邮箱",
         "phone": "电话",
+        "address": "地址",
+        "line1": "地址第一行",
+        "line2": "地址第二行",
+        "city": "城市",
+        "state": "省/州",
+        "postal-code": "邮政编码",
+        "country": "国家",
         "create": "创建",
         "cancel": "取消"
       },
       "error": "创建客户时发生未知错误。"
-    }
-  },
-  "products": {
-    "pro-membership": {
-      "name": "专业会员",
-      "marketing_feature_list": {
-        "enhanced-marketing": "增强营销",
-        "advanced-analytics": "高级分析",
-        "priority-support": "优先支持"
+    },
+    "create-invoice": {
+      "title": "创建新发票",
+      "description": "为您的客户创建一张新发票。",
+      "form": {
+        "customer": "客户",
+        "select-customer": "选择客户",
+        "currency": "货币",
+        "days-until-due": "到期天数",
+        "line-items": "行项目",
+        "description": "描述",
+        "quantity": "数量",
+        "unit-amount": "单价",
+        "add-line-item": "添加行项目",
+        "cancel": "取消",
+        "create": "创建"
+      },
+      "error": "创建发票时发生未知错误。"
+    },
+    "copy-invoice-link": {
+      "title": "复制发票链接",
+      "description": "将此链接发送给您的客户以查看和支付发票。",
+      "form": {
+        "url": "链接",
+        "close": "关闭",
+        "copy": "复制",
+        "copied": "已复制！"
       }
     }
   },

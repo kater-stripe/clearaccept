@@ -102,7 +102,54 @@
     },
     "payments": {
       "title": "Paiements",
-      "payment-method-settings": "Paramètres des méthodes de paiement"
+      "payment-method-settings": "Paramètres des méthodes de paiement",
+      "settings": {
+        "title": "Paramètres"
+      }
+    },
+    "terminal": {
+      "title": "Terminal",
+      "settings": {
+        "title": "Paramètres"
+      },
+      "pos": {
+        "title": "PDV"
+      },
+      "shop": {
+        "title": "Boutique"
+      }
+    },
+    "more": {
+      "title": "Plus"
+    },
+    "customers": {
+      "title": "Clients",
+      "table": {
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "address": "Adresse",
+        "actions": "Actions",
+        "create-customer": "Créer un nouveau client",
+        "delete": "Supprimer"
+      }
+    },
+    "invoices": {
+      "title": "Factures",
+      "table": {
+        "invoice": "Facture",
+        "customer": "Client",
+        "amount": "Montant",
+        "status": "Statut",
+        "due-date": "Date d'échéance",
+        "actions": "Actions",
+        "create-invoice": "Créer une nouvelle facture",
+        "delete": "Supprimer",
+        "finalize": "Finaliser",
+        "send": "Envoyer",
+        "copy-link": "Copier le lien",
+        "download": "Télécharger"
+      }
     },
     "tax": {
       "title": "Taxes",
@@ -111,14 +158,17 @@
       "export-tax-transactions": "Exporter les transactions fiscales",
       "tax-threshold-monitoring": "Surveillance des seuils fiscaux"
     },
+    "taking-payments": {
+      "title": "Paiements"
+    },
+    "finance": {
+      "title": "Finance"
+    },
     "reports": {
       "title": "Rapports"
     },
     "terminal-and-pos": {
-      "title": "Terminal et PDV",
-      "description": "Gérez les terminaux de carte physiques et acceptez des paiements.",
       "terminal": {
-        "tab": "Terminal",
         "select-location": "Sélectionnez un emplacement",
         "terminal-locations": "Emplacements des terminaux",
         "readers": "Lecteurs",
@@ -141,7 +191,6 @@
         }
       },
       "pos": {
-        "tab": "PDV",
         "products": "Produits",
         "select-location": "Sélectionnez un emplacement",
         "select-reader": "Sélectionnez un lecteur",
@@ -171,14 +220,11 @@
       }
     },
     "account": {
-      "title": "Compte",
-      "description": "Gérez vos informations personnelles et professionnelles."
+      "title": "Compte"
     },
     "apps": {
       "title": "Applications",
-      "description": "Installez des applications pour connecter votre entreprise à votre logiciel de comptabilité, listes de diffusion, et plus encore.",
-      "acodei-quickbooks-sync": "Synchronisation Acodei Quickbooks",
-      "xero-sync": "Synchronisation Xero"
+      "acodei-quickbooks-sync": "Synchronisation Acodei Quickbooks"
     },
     "membership": {
       "title": "Adhésion",
@@ -209,11 +255,8 @@
     "billing_address_header": "Informations de facturation",
     "payments_header": "Méthode de paiement",
     "or": "ou",
-    "upsellTitle": "Vous pourriez également aimer",
     "order_summary": {
       "title": "Résumé de la commande",
-      "promotion_code_label": "Code de réduction",
-      "apply_promotion_code": "Appliquer",
       "subtotal": "Sous-total",
       "discount": "Réduction",
       "shipping": "Livraison",
@@ -223,12 +266,6 @@
       "confirm_order": "Confirmer la commande",
       "processing": "Traitement en cours..."
     },
-    "payment_status": {
-      "succeeded": "Paiement réussi !",
-      "processing": "Votre paiement est en cours de traitement.",
-      "requires_payment_method": "Votre paiement n'a pas réussi, veuillez réessayer.",
-      "error": "Une erreur s'est produite."
-    },
     "shipping": {
       "title": "Mode de livraison",
       "standard": {
@@ -237,20 +274,13 @@
       "priority": {
         "title": "Livraison prioritaire"
       },
-      "free": {
-        "title": "Livraison gratuite"
-      },
       "unknown": {
         "title": "Option de livraison inconnue"
       }
-    },
-    "invalid_promotion_code": "Ce code promotionnel n'est pas valide."
+    }
   },
   "addToBag": {
     "buttonText": "Ajouter au panier"
-  },
-  "buyNow": {
-    "buttonText": "Acheter maintenant"
   },
   "cartPanel": {
     "title": "Panier d'achat",
@@ -259,9 +289,17 @@
     "shippingTaxes": "Frais de livraison et taxes calculés à la caisse.",
     "or": "ou",
     "continueShopping": "Continuer vos achats",
-    "checkoutButton": "Passer à la caisse",
-    "chargeButton": "Facturer",
-    "cancelButton": "Annuler"
+    "checkoutButton": "Passer à la caisse"
+  },
+  "products": {
+    "pro-membership": {
+      "name": "Adhésion Pro",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Marketing amélioré",
+        "advanced-analytics": "Analyses avancées",
+        "priority-support": "Support prioritaire"
+      }
+    }
   },
   "modals": {
     "payins": {
@@ -284,7 +322,6 @@
         "category": "Catégorie",
         "good": "Bien",
         "service": "Service",
-        "studio": "Studio",
         "start-time": "Heure de début",
         "end-time": "Heure de fin",
         "recurring": {
@@ -350,19 +387,44 @@
         "name": "Nom",
         "email": "Email",
         "phone": "Téléphone",
+        "address": "Adresse",
+        "line1": "Ligne 1",
+        "line2": "Ligne 2",
+        "city": "Ville",
+        "state": "État/Région",
+        "postal-code": "Code postal",
+        "country": "Pays",
         "create": "Créer",
         "cancel": "Annuler"
       },
       "error": "Une erreur inconnue s'est produite lors de la création du client."
-    }
-  },
-  "products": {
-    "pro-membership": {
-      "name": "Adhésion Pro",
-      "marketing_feature_list": {
-        "enhanced-marketing": "Marketing amélioré",
-        "advanced-analytics": "Analyses avancées",
-        "priority-support": "Support prioritaire"
+    },
+    "create-invoice": {
+      "title": "Créer une nouvelle facture",
+      "description": "Créez une nouvelle facture pour votre client.",
+      "form": {
+        "customer": "Client",
+        "select-customer": "Sélectionner un client",
+        "currency": "Devise",
+        "days-until-due": "Jours jusqu'à l'échéance",
+        "line-items": "Lignes",
+        "description": "Description",
+        "quantity": "Quantité",
+        "unit-amount": "Montant unitaire",
+        "add-line-item": "Ajouter une ligne",
+        "cancel": "Annuler",
+        "create": "Créer"
+      },
+      "error": "Une erreur inconnue s'est produite lors de la création de la facture."
+    },
+    "copy-invoice-link": {
+      "title": "Copier le lien de la facture",
+      "description": "Envoyez ce lien à votre client pour voir et payer la facture.",
+      "form": {
+        "url": "URL",
+        "close": "Fermer",
+        "copy": "Copier",
+        "copied": "Copié !"
       }
     }
   },

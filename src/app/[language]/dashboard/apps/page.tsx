@@ -1,7 +1,6 @@
 'use client';
 
 import { Card } from '@/components/common/Card';
-import { useDemoConfig } from '@/context/DemoConfigContext';
 import {
   ConnectAppInstall,
   ConnectAppViewport,
@@ -10,7 +9,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const AppsPage = () => {
-  const { primaryColor } = useDemoConfig();
   const [isAcodeiQuickbooksSyncInstalled, setIsAcodeiQuickbooksSyncInstalled] =
     useState(false);
   // const [isXeroSyncInstalled, setIsXeroSyncInstalled] = useState(false);

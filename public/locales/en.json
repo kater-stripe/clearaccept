@@ -102,7 +102,54 @@
     },
     "payments": {
       "title": "Payments",
-      "payment-method-settings": "Payment Method Settings"
+      "payment-method-settings": "Payment Method Settings",
+      "settings": {
+        "title": "Settings"
+      }
+    },
+    "terminal": {
+      "title": "Terminal",
+      "settings": {
+        "title": "Settings"
+      },
+      "pos": {
+        "title": "POS"
+      },
+      "shop": {
+        "title": "Shop"
+      }
+    },
+    "more": {
+      "title": "More"
+    },
+    "customers": {
+      "title": "Customers",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "actions": "Actions",
+        "create-customer": "Create new customer",
+        "delete": "Delete"
+      }
+    },
+    "invoices": {
+      "title": "Invoices",
+      "table": {
+        "invoice": "Invoice",
+        "customer": "Customer",
+        "amount": "Amount",
+        "status": "Status",
+        "due-date": "Due Date",
+        "actions": "Actions",
+        "create-invoice": "Create new invoice",
+        "delete": "Delete",
+        "finalize": "Finalize",
+        "send": "Send",
+        "copy-link": "Copy link",
+        "download": "Download"
+      }
     },
     "tax": {
       "title": "Tax",
@@ -111,14 +158,17 @@
       "export-tax-transactions": "Export Tax Transactions",
       "tax-threshold-monitoring": "Tax Threshold Monitoring"
     },
+    "taking-payments": {
+      "title": "Payments"
+    },
+    "finance": {
+      "title": "Finance"
+    },
     "reports": {
       "title": "Reports"
     },
     "terminal-and-pos": {
-      "title": "Terminal & POS",
-      "description": "Manage physical card terminals and take payments.",
       "terminal": {
-        "tab": "Terminal",
         "select-location": "Select a location",
         "terminal-locations": "Terminal Locations",
         "readers": "Readers",
@@ -141,7 +191,6 @@
         }
       },
       "pos": {
-        "tab": "POS",
         "products": "Products",
         "select-location": "Select a location",
         "select-reader": "Select a reader",
@@ -171,14 +220,11 @@
       }
     },
     "account": {
-      "title": "Account",
-      "description": "Manage your personal and business details."
+      "title": "Account"
     },
     "apps": {
       "title": "Apps",
-      "description": "Install apps to connect your business to your accounting software, mailing lists, and more.",
-      "acodei-quickbooks-sync": "Acodei Quickbooks Sync",
-      "xero-sync": "Xero Sync"
+      "acodei-quickbooks-sync": "Acodei Quickbooks Sync"
     },
     "membership": {
       "title": "Membership",
@@ -209,11 +255,8 @@
     "billing_address_header": "Billing Information",
     "payments_header": "Payment Method",
     "or": "or",
-    "upsellTitle": "You may also like",
     "order_summary": {
       "title": "Order Summary",
-      "promotion_code_label": "Discount code",
-      "apply_promotion_code": "Apply",
       "subtotal": "Subtotal",
       "discount": "Discount",
       "shipping": "Shipping",
@@ -223,12 +266,6 @@
       "confirm_order": "Confirm order",
       "processing": "Processing..."
     },
-    "payment_status": {
-      "succeeded": "Payment succeeded!",
-      "processing": "Your payment is processing.",
-      "requires_payment_method": "Your payment was not successful, please try again.",
-      "error": "Something went wrong."
-    },
     "shipping": {
       "title": "Delivery Method",
       "standard": {
@@ -237,20 +274,13 @@
       "priority": {
         "title": "Priority shipping"
       },
-      "free": {
-        "title": "Free shipping"
-      },
       "unknown": {
         "title": "Unknown shipping option"
       }
-    },
-    "invalid_promotion_code": "This promotion code is invalid."
+    }
   },
   "addToBag": {
     "buttonText": "Add to bag"
-  },
-  "buyNow": {
-    "buttonText": "Buy now"
   },
   "cartPanel": {
     "title": "Shopping cart",
@@ -259,9 +289,17 @@
     "shippingTaxes": "Shipping and taxes calculated at checkout.",
     "or": "or",
     "continueShopping": "Continue Shopping",
-    "checkoutButton": "Checkout",
-    "chargeButton": "Charge",
-    "cancelButton": "Cancel"
+    "checkoutButton": "Checkout"
+  },
+  "products": {
+    "pro-membership": {
+      "name": "Pro Membership",
+      "marketing_feature_list": {
+        "enhanced-marketing": "Enhanced marketing",
+        "advanced-analytics": "Advanced analytics",
+        "priority-support": "Priority support"
+      }
+    }
   },
   "modals": {
     "payins": {
@@ -284,7 +322,6 @@
         "category": "Category",
         "good": "Good",
         "service": "Service",
-        "studio": "Studio",
         "start-time": "Start Time",
         "end-time": "End Time",
         "recurring": {
@@ -350,19 +387,44 @@
         "name": "Name",
         "email": "Email",
         "phone": "Phone",
+        "address": "Address",
+        "line1": "Line 1",
+        "line2": "Line 2",
+        "city": "City",
+        "state": "State",
+        "postal-code": "Postal Code",
+        "country": "Country",
         "create": "Create",
         "cancel": "Cancel"
       },
       "error": "An unknown error occurred while creating the customer."
-    }
-  },
-  "products": {
-    "pro-membership": {
-      "name": "Pro Membership",
-      "marketing_feature_list": {
-        "enhanced-marketing": "Enhanced marketing",
-        "advanced-analytics": "Advanced analytics",
-        "priority-support": "Priority support"
+    },
+    "create-invoice": {
+      "title": "Create new invoice",
+      "description": "Create a new invoice for your customer.",
+      "form": {
+        "customer": "Customer",
+        "select-customer": "Select a customer",
+        "currency": "Currency",
+        "days-until-due": "Days until due",
+        "line-items": "Line Items",
+        "description": "Description",
+        "quantity": "Quantity",
+        "unit-amount": "Unit Amount",
+        "add-line-item": "Add line item",
+        "cancel": "Cancel",
+        "create": "Create"
+      },
+      "error": "An unknown error occurred while creating the invoice."
+    },
+    "copy-invoice-link": {
+      "title": "Copy invoice link",
+      "description": "Send this link to your customer to view and pay the invoice.",
+      "form": {
+        "url": "URL",
+        "close": "Close",
+        "copy": "Copy",
+        "copied": "Copied!"
       }
     }
   },

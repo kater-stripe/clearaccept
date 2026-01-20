@@ -108,10 +108,33 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           title: t('dashboard.reports.title'),
         };
       }
-      case '/dashboard/terminal-and-pos/pos':
-      case '/dashboard/terminal-and-pos/terminal': {
+      case '/dashboard/payments/terminal/pos':
         return {
-          title: t('dashboard.terminal-and-pos.title'),
+          title: t('dashboard.terminal.pos.title'),
+        };
+      case '/dashboard/payments/terminal/settings': {
+        return {
+          title: t('dashboard.terminal.settings.title'),
+        };
+      }
+      case '/dashboard/payments/terminal/shop': {
+        return {
+          title: t('dashboard.terminal.shop.title'),
+        };
+      }
+      case '/dashboard/payments/settings': {
+        return {
+          title: t('dashboard.payments.settings.title'),
+        };
+      }
+      case '/dashboard/customers': {
+        return {
+          title: t('dashboard.customers.title'),
+        };
+      }
+      case '/dashboard/payments/invoices': {
+        return {
+          title: t('dashboard.invoices.title'),
         };
       }
       case '/dashboard/account': {
