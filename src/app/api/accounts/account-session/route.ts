@@ -146,12 +146,17 @@ export const POST = async (request: NextRequest) => {
         enabled: true,
         features: {
           destination_on_behalf_of_charge_management: true,
+          capture_payments: true,
+          refund_management: true,
+          dispute_management: true,
         },
       },
       payment_disputes: {
         enabled: true,
         features: {
           destination_on_behalf_of_charge_management: true,
+          dispute_management: true,
+          refund_management: true,
         },
       },
       payment_method_settings: {
