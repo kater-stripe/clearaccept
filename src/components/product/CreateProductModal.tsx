@@ -306,7 +306,7 @@ export const CreateProductModal = ({
                     <div id='connect-product-tax-code-selector'>
                       <ConnectProductTaxCodeSelector
                         onTaxCodeSelect={(taxCode) => {
-                          setProductTaxCode(taxCode);
+                          setProductTaxCode(taxCode ?? undefined);
                         }}
                       />
                     </div>
