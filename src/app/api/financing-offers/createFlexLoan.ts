@@ -1,8 +1,8 @@
 'use server';
 
-import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
+import { initializeStripe } from '@/utils/initializeStripe';
+import { plain } from '@/utils/plain';
 
 type CreateFlexLoanParams = {
   accountId: string;
@@ -19,7 +19,7 @@ export const createFlexLoan = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey, {
+  const stripe = initializeStripe(stripeSecretKey, {
     // @ts-ignore
     apiVersion: `${STRIPE_API_VERSION}; embedded_connect_beta=v2`,
   });

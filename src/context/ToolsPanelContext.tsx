@@ -20,9 +20,9 @@ const ToolsPanelContext = createContext<{
   setActiveTab: (tab: ToolsPanelTab) => void;
 }>({
   isToolsPanelOpen: false,
-  toggleToolsPanelOpen: () => {},
+  toggleToolsPanelOpen: () => { },
   activeTab: 'Appearance',
-  setActiveTab: () => {},
+  setActiveTab: () => { },
 });
 
 export const ToolsPanelProvider = ({ children }: PropsWithChildren) => {
@@ -41,14 +41,12 @@ export const ToolsPanelProvider = ({ children }: PropsWithChildren) => {
     >
       <ElementsAndEmbeddedComponentsHighlight />
       <div
-        className={`flex flex-col ${
-          isToolsPanelOpen ? 'h-screen overflow-hidden' : 'min-h-screen'
-        } bg-pattern`}
+        className={`flex flex-col ${isToolsPanelOpen ? 'h-screen overflow-hidden' : 'min-h-screen'
+          } bg-pattern`}
       >
         <div
-          className={`fixed left-0 top-0 h-full w-64 bg-white shadow-xl p-4 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
-            isToolsPanelOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+          className={`fixed left-0 top-0 h-full w-64 bg-white shadow-xl p-4 transform transition-transform duration-300 ease-in-out overflow-y-auto ${isToolsPanelOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
           style={{
             zIndex: 100,
           }}
@@ -73,11 +71,10 @@ export const ToolsPanelProvider = ({ children }: PropsWithChildren) => {
           )}
         </button>
         <div
-          className={`flex flex-col grow transition-all ease-in-out font-[Sohne] ${
-            isToolsPanelOpen
+          className={`flex flex-col grow transition-all ease-in-out font-[Sohne] ${isToolsPanelOpen
               ? 'overflow-scroll shadow-xl md:translate-x-[calc(120px+18%)] md:translate-y-[5vh] md:scale-x-[0.68] md:scale-y-[0.72] lg:translate-x-[calc(108px+15%)] lg:scale-x-[0.73] lg:scale-y-[0.77] xl:translate-x-[calc(105px+11%)] xl:scale-x-[0.81] xl:scale-y-[0.85] md:border md:border-gray-200 md:rounded-xl'
               : 'md:translate-x-0 md:translate-y-0 md:scale-100 lg:translate-x-0 lg:scale-100 xl:translate-x-0 xl:scale-100'
-          } transform origin-top-left duration-${isToolsPanelOpen ? '300' : '700'}
+            } transform origin-top-left duration-${isToolsPanelOpen ? '300' : '700'}
         `}
         >
           {children}

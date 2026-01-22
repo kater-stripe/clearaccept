@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type LineItem = {
   description: string;
@@ -35,7 +35,7 @@ export const createInvoice = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const stripeAccountOption =
     chargeType === 'direct' ? { stripeAccount: accountId } : undefined;

@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import { Stripe } from 'stripe';
 
 type DeleteReaderParams = {
   readerId: string;
@@ -23,7 +23,7 @@ export const deleteReader = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const deletedReader = await stripe.terminal.readers.del(
     readerId,

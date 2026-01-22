@@ -1,6 +1,6 @@
 'use server';
 
-import Stripe from 'stripe';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
 type CreateBalancePaySubscriptionParams = {
@@ -20,7 +20,7 @@ export const createBalancePaySubscription = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const account = await stripe.accounts.retrieve(accountId);
 

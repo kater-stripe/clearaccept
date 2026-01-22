@@ -10,6 +10,7 @@
     "format": "prettier . --write"
   },
   "dependencies": {
+    "@demoeng/tools-panel": "file:../demoeng-tools-panel",
     "@demoeng/utils": "github:stripe-demos/demoeng-utils#main",
     "@faker-js/faker": "^9.9.0",
     "@headlessui/react": "^2.1.3",

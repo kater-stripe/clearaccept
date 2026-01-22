@@ -1,7 +1,7 @@
 'use server';
 
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type CreateTestRiskInterventionParams = {
   accountId: string;
@@ -18,7 +18,7 @@ export const createRiskIntervention = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const riskInterventionResponse = await stripe.rawRequest(
     'POST',

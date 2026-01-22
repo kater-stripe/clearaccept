@@ -1,7 +1,7 @@
 'use server';
 
-import Stripe from 'stripe';
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 
 type CancelSubscriptionParams = {
   subscriptionId: string;
@@ -22,7 +22,7 @@ export const cancelSubscription = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   await stripe.subscriptions.cancel(
     subscriptionId,

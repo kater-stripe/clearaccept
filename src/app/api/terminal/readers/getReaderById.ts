@@ -1,6 +1,7 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 import Stripe from 'stripe';
 
@@ -21,7 +22,7 @@ export const getReaderById = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   try {
     const reader = await stripe.terminal.readers.retrieve(

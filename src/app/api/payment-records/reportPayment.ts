@@ -3,10 +3,10 @@
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 import { hasGate } from '@demoeng/utils/has-gate';
 import { randomUUID } from 'node:crypto';
-import Stripe from 'stripe';
 
 type ReportPaymentParams = {
   customPaymentMethodId: string;
@@ -42,7 +42,7 @@ export const reportPayment = async ({
     return;
   }
 
-  const stripe = new Stripe(stripeSecretKey, {
+  const stripe = initializeStripe(stripeSecretKey, {
     // @ts-expect-error
     apiVersion: `${STRIPE_API_VERSION}; payment_records_beta=v1`,
   });

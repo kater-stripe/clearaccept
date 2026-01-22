@@ -4,8 +4,8 @@ import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
 import { DemoConfig } from '@/types/demoConfig';
 import type { Item } from '@/types/item';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type CreateHostedCheckoutSessionParams = {
   items: Item[];
@@ -42,7 +42,7 @@ export const createHostedCheckoutSession = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const taxSettings = await stripe.tax.settings.retrieve(
     chargeType === 'direct'

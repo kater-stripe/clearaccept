@@ -4,8 +4,9 @@ import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
 import type { DemoConfig } from '@/types/demoConfig';
 import type { Item } from '@/types/item';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 
 type CreateEmbeddedCheckoutSessionParams = {
   items: Item[];
@@ -40,7 +41,7 @@ export const createEmbeddedCheckoutSession = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const taxSettings = await stripe.tax.settings.retrieve(
     chargeType === 'direct'

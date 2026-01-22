@@ -3,8 +3,8 @@
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { DemoConfig } from '@/types/demoConfig';
 import type { Item } from '@/types/item';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type CreatePaymentIntentParams = {
   items: Item[];
@@ -42,7 +42,7 @@ export const createPaymentIntent = async ({
     0,
   );
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const discount = applyOnrampDiscount ? Math.floor(subtotal * 0.2) : 0;
   const discountedSubtotal = Math.max(0, subtotal - discount);

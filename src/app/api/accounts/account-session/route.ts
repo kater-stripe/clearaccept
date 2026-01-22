@@ -1,9 +1,10 @@
 'use server';
 
+import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 import { type NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
-import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
+import type Stripe from 'stripe';
 
 export type CreateAccountSessionRequestBody = {
   accountId: string;
@@ -33,8 +34,7 @@ export const POST = async (request: NextRequest) => {
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey, {
-    // @ts-expect-error
+  const stripe = initializeStripe(stripeSecretKey, {
     apiVersion: `${STRIPE_API_VERSION};embedded_connect_beta=v2`,
   });
 

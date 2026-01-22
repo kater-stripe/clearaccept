@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type GetReadersByLocationIdParams = {
   locationId: string;
@@ -25,7 +25,7 @@ export const getReadersByLocationId = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const { data: readers } = await stripe.terminal.readers.list(
     {

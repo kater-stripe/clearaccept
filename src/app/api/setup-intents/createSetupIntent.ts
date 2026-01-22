@@ -1,8 +1,8 @@
 'use server';
 
-import Stripe from 'stripe';
-import { plain } from '@/utils/plain';
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
+import { plain } from '@/utils/plain';
 
 type CreateSetupIntentParams = {
   stripeSecretKey?: string;
@@ -23,7 +23,7 @@ export const createSetupIntent = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const setupIntent = await stripe.setupIntents.create(
     {

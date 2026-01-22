@@ -1,8 +1,8 @@
 'use server';
 
-import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
+import { plain } from '@/utils/plain';
 
 type GetSubscriptionsByCustomerParams = {
   stripeSecretKey?: string;
@@ -23,7 +23,7 @@ export const getSubscriptionsByCustomer = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const maxRetries = 3 as const;
   let retries = 0;

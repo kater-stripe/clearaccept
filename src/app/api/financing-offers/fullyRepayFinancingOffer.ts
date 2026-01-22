@@ -1,7 +1,7 @@
 'use server';
 
-import Stripe from 'stripe';
 import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
+import { initializeStripe } from '@/utils/initializeStripe';
 
 type FullyRepayFinancingOfferParams = {
   stripeSecretKey?: string;
@@ -18,7 +18,7 @@ export const fullyRepayFinancingOffer = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey, {
+  const stripe = initializeStripe(stripeSecretKey, {
     // @ts-ignore
     apiVersion: `${STRIPE_API_VERSION}; embedded_connect_beta=v2`,
   });

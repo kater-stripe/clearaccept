@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type CreateCustomerParams = {
   email: string;
@@ -36,7 +36,7 @@ export const createCustomer = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const customer = await stripe.customers.create(
     {

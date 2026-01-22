@@ -1,8 +1,8 @@
 'use server';
 
-import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
+import { plain } from '@/utils/plain';
 
 type GetLocationsParams = {
   stripeSecretKey?: string;
@@ -21,7 +21,7 @@ export const getLocations = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const { data: locations } = await stripe.terminal.locations.list(
     /**

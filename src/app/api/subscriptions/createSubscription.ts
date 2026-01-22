@@ -1,10 +1,11 @@
 'use server';
 
+import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { DemoConfig } from '@/types/demoConfig';
 import type { Item } from '@/types/item';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import type { CurrencyCode } from '@/constants/currencyCodes';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 
 type CreateSubscriptionParams = {
   stripeSecretKey?: string;
@@ -33,7 +34,7 @@ export const createSubscription = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const recurringItems = items.filter((item) => item.price.recurring !== null);
 

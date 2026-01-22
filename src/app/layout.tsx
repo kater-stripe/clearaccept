@@ -4,7 +4,6 @@ import '@/styles/global.css';
 
 import { DemoConfigProvider } from '@/context/DemoConfigContext';
 import { DemoCustomerProvider } from '@/context/DemoCustomerContext';
-import { ToolsPanelProvider } from '@/context/ToolsPanelContext';
 import { CartProvider } from '@/context/CartContext';
 import Script from 'next/script';
 import { Suspense, type PropsWithChildren } from 'react';
@@ -12,6 +11,8 @@ import { QueryClientProvider } from '@/context/QueryClientContext';
 import { UmamiProvider } from '@/context/UmamiContext';
 import { DemoMerchantProvider } from '@/context/DemoMerchantContext';
 import { HandleCallbacksProvider } from '@/components/checkout/HandleCallbacks';
+import { ToolsPanelProvider } from '@demoeng/tools-panel';
+import { Cog6ToothIcon } from '@heroicons/react/20/solid';
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   const nodeEnv = process.env.NODE_ENV;
@@ -75,9 +76,64 @@ const RootLayout = ({ children }: PropsWithChildren) => {
                 <DemoMerchantProvider>
                   <CartProvider>
                     <DemoCustomerProvider>
-                      <ToolsPanelProvider>
+                      <ToolsPanelProvider config={{
+                        apiActivity: {
+                          enabled: true,
+                          open: false,
+                        },
+                        demoConfig: {
+                          enabled: true,
+                          open: false,
+                          tabs: [
+                            {
+                              icon: <Cog6ToothIcon />,
+                              title: 'Main Settings',
+                              items: [
+                                {
+                                  type: 'dropdown',
+                                  label: 'Language',
+                                  options: [
+                                    {
+                                      label: 'English',
+                                      value: 'en' as const,
+                                    },
+                                    {
+                                      label: 'French',
+                                      value: 'fr' as const,
+                                    },
+                                    {
+                                      label: 'Spanish',
+                                      value: 'es' as const,
+                                    },
+                                    {
+                                      label: 'German',
+                                      value: 'de' as const,
+                                    },
+                                    {
+                                      label: 'Italian',
+                                      value: 'it' as const,
+                                    },
+                                    {
+                                      label: 'Japanese',
+                                      value: 'ja' as const,
+                                    },
+                                    {
+                                      label: 'Chinese (Simplified)',
+                                      value: 'zh' as const,
+                                    },
+                                  ],
+                                  value: 'en' as const,
+                                  onChange: (value) => { }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }}>
                         <HandleCallbacksProvider>
-                          {children}
+                          <div className='bg-white'>
+                            {children}
+                          </div>
                         </HandleCallbacksProvider>
                       </ToolsPanelProvider>
                     </DemoCustomerProvider>

@@ -2,8 +2,9 @@
 
 import type { DemoConfig } from '@/types/demoConfig';
 import type { Item } from '@/types/item';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 
 type ConfirmPaymentIntentParams = {
   readerId: string;
@@ -30,7 +31,7 @@ export const confirmPaymentIntent = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const reader = await stripe.terminal.readers.confirmPaymentIntent(
     readerId,

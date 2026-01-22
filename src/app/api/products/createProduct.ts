@@ -2,8 +2,8 @@
 
 import { CurrencyCode } from '@/constants/currencyCodes';
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type CreateProductParams = {
   name: string;
@@ -42,7 +42,7 @@ export const createProduct = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   try {
     const product = await stripe.products.create(

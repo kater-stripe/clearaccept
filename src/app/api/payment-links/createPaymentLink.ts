@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import { Stripe } from 'stripe';
 
 type CreatePaymentLinkParams = {
   priceId: string;
@@ -23,7 +23,7 @@ export const createPaymentLinkAction = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   /**
    * If we're using direct charges, the CA owns the price object.

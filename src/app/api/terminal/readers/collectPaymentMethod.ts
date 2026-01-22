@@ -3,8 +3,8 @@
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { DemoConfig } from '@/types/demoConfig';
 import type { Item } from '@/types/item';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type CollectPaymentMethodParams = {
   readerId: string;
@@ -36,7 +36,7 @@ export const collectPaymentMethod = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const hasSubscriptionInCart = items.some(
     (item) => item.price.recurring !== null,

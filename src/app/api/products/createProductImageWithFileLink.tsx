@@ -1,7 +1,7 @@
 'use server';
 
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type CreateProductParams = {
   stripeSecretKey?: string;
@@ -18,7 +18,7 @@ export const createProductImageWithFileLink = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const arrayBufferLike = new Uint8Array(image);
 

@@ -1,7 +1,7 @@
 'use server';
 
-import Stripe from 'stripe';
 import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
+import { initializeStripe } from '@/utils/initializeStripe';
 
 type FetchEphemeralKeyParams = {
   issuingCard: string;
@@ -22,7 +22,7 @@ export const fetchEphemeralKey = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const ephemeralKey = await stripe.ephemeralKeys.create(
     {

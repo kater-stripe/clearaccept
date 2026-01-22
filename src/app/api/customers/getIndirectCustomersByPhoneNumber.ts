@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type GetIndirectCustomersByPhoneNumberParams = {
   phoneNumber: string;
@@ -23,7 +23,7 @@ export const getIndirectCustomersByPhoneNumber = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const { data: customers } = await stripe.customers.list(
     {

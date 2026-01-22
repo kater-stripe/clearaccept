@@ -1,12 +1,13 @@
 'use server';
 
 import type { CountryCode } from '@/constants/countryCodes';
-import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
-import { Mock } from '@demoeng/utils/mock';
-import { Language as MockLanguage } from '@demoeng/utils/languages';
-import { CountryCode as MockCountryCode } from '@demoeng/utils/countries';
 import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
+import { initializeStripe } from '@/utils/initializeStripe';
+import { plain } from '@/utils/plain';
+import { CountryCode as MockCountryCode } from '@demoeng/utils/countries';
+import { Language as MockLanguage } from '@demoeng/utils/languages';
+import { Mock } from '@demoeng/utils/mock';
+import type Stripe from 'stripe';
 
 type CreateAccountParams = {
   countryCode: CountryCode;
@@ -33,8 +34,7 @@ export const createAccount = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey, {
-    // @ts-expect-error
+  const stripe = initializeStripe(stripeSecretKey, {
     apiVersion: `${STRIPE_API_VERSION}${useV2Accounts ? '' : ';embedded_connect_beta=v2'}`,
   });
 

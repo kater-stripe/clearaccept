@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type GetPaymentIntentByIdParams = {
   id: string;
@@ -25,7 +25,7 @@ export const getPaymentIntentById = async ({
     );
   }
 
-  const stripe = new Stripe(stripePublishableKey);
+  const stripe = initializeStripe(stripePublishableKey);
 
   const paymentIntent = await stripe.paymentIntents.retrieve(
     id,

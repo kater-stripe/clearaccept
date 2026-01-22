@@ -1,8 +1,9 @@
 'use server';
 
 import type { CurrencyCode } from '@/constants/currencyCodes';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 
 type CreateFinancialAccountParams = {
   name: string;
@@ -23,7 +24,7 @@ export const createFinancialAccount = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const account = await stripe.accounts.retrieve(accountId);
 

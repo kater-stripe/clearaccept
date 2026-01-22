@@ -1,6 +1,6 @@
 'use server';
 
-import Stripe from 'stripe';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
 type GetBalancePaySubscriptionParams = {
@@ -18,7 +18,7 @@ export const getBalancePaySubscription = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const { data: customers } = await stripe.customers.list({
     email: email,

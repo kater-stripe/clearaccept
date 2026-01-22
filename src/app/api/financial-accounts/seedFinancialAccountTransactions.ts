@@ -1,9 +1,9 @@
 'use server';
 
-import type { Language } from '@demoeng/utils/languages';
+import { initializeStripe } from '@/utils/initializeStripe';
 import type { CountryCode } from '@demoeng/utils/countries';
+import type { Language } from '@demoeng/utils/languages';
 import { Mock } from '@demoeng/utils/mock';
-import Stripe from 'stripe';
 
 type SeedFinancialAccountTransactionsParams = {
   seedCredits: boolean;
@@ -26,7 +26,7 @@ export const seedFinancialAccountTransactions = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const account = await stripe.accounts.retrieve(accountId);
 

@@ -7,6 +7,7 @@ import type {
   OnrampSession,
 } from '@/types/onramp';
 import { DestinationCurrency, DestinationNetwork } from '@/types/onramp';
+import { initializeStripe } from '@/utils/initializeStripe';
 import Stripe from 'stripe';
 
 const OnrampSessions = Stripe.StripeResource.extend({
@@ -66,7 +67,7 @@ export const createOnrampSession = async ({
     payload.destination_amount = String(amount.destination_amount);
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
   const onramps = new OnrampSessions(stripe);
   const session = await onramps.create(payload);
 

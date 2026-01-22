@@ -1,8 +1,9 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 
 type CreateTerminalLocationParams = {
   display_name: string;
@@ -32,7 +33,7 @@ export const createTerminalLocation = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   let configurationId: string | undefined = undefined;
 

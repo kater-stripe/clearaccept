@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import { Stripe } from 'stripe';
 
 type CreateReaderParams = {
   locationId: string;
@@ -25,7 +25,7 @@ export const createReader = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const reader = await stripe.terminal.readers.create(
     {

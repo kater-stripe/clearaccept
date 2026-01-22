@@ -3,8 +3,8 @@
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { DemoConfig } from '@/types/demoConfig';
 import type { Item } from '@/types/item';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type SetReaderDisplayParams = {
   readerId: string;
@@ -33,7 +33,7 @@ export const setReaderDisplay = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   if (items.length === 0) {
     const reader = await stripe.terminal.readers.cancelAction(

@@ -1,7 +1,8 @@
 'use server';
 
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 
 type GetAccountByEmailParams = {
   email: string;
@@ -18,7 +19,7 @@ export const getAccountByEmail = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const { data: customers } = await stripe.customers.list({
     email,

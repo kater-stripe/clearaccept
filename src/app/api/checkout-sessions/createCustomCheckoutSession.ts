@@ -5,9 +5,10 @@ import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
 import { DemoConfig } from '@/types/demoConfig';
 import type { Item } from '@/types/item';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 import type { StripeCheckoutShippingOption } from '@stripe/stripe-js';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 
 type CreateCustomCheckoutSessionParams = {
   items: Item[];
@@ -44,7 +45,7 @@ export const createCustomCheckoutSession = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const taxSettings = await stripe.tax.settings.retrieve(
     chargeType === 'direct'

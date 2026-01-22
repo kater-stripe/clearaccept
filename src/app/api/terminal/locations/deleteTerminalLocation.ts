@@ -1,8 +1,8 @@
 'use server';
 
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type DeleteTerminalLocationParams = {
   stripeSecretKey?: string;
@@ -23,7 +23,7 @@ export const deleteTerminalLocation = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   /**
    * If we are using direct charges, we delete the readers and location on the CA.

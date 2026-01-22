@@ -1,6 +1,6 @@
 'use server';
 
-import Stripe from 'stripe';
+import { initializeStripe } from '@/utils/initializeStripe';
 
 export const getPlatformAccount = async ({
   stripeSecretKey = process.env.STRIPE_SECRET_KEY,
@@ -13,7 +13,7 @@ export const getPlatformAccount = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const { default_currency, country } = await stripe.accounts.retrieve();
 

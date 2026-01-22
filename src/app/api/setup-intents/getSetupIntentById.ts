@@ -1,8 +1,8 @@
 'use server';
 
-import Stripe from 'stripe';
-import { plain } from '@/utils/plain';
 import type { DemoConfig } from '@/types/demoConfig';
+import { initializeStripe } from '@/utils/initializeStripe';
+import { plain } from '@/utils/plain';
 
 type GetSetupIntentByIdParams = {
   stripePublishableKey?: string;
@@ -25,7 +25,7 @@ export const getSetupIntentById = async ({
     );
   }
 
-  const stripe = new Stripe(stripePublishableKey);
+  const stripe = initializeStripe(stripePublishableKey);
 
   const setupIntent = await stripe.setupIntents.retrieve(
     id,

@@ -1,7 +1,7 @@
 'use server';
 
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type GetFinancialAccountsParams = {
   accountId: string;
@@ -20,7 +20,7 @@ export const getFinancialAccounts = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const { data: financialAccounts } =
     await stripe.treasury.financialAccounts.list(

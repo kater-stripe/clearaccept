@@ -1,7 +1,7 @@
 'use server';
 
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type GetBalancesParams = {
   accountId?: string;
@@ -18,7 +18,7 @@ export const getBalances = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const balances = await stripe.balance.retrieve({
     ...(accountId ? { stripeAccount: accountId } : {}),

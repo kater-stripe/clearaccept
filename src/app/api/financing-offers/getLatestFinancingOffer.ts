@@ -1,7 +1,7 @@
 'use server';
 
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import Stripe from 'stripe';
 
 type GetFinancingOffersParams = {
   accountId: string;
@@ -18,7 +18,7 @@ export const getLatestFinancingOffer = async ({
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey);
+  const stripe = initializeStripe(stripeSecretKey);
 
   const { data: offers } = await stripe.capital.financingOffers.list({
     connected_account: accountId,
