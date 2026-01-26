@@ -81,7 +81,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
               {
                 type: 'text-input',
                 label: 'Customer Email',
-                value: customerEmail ?? null,
+                value: customerEmail ?? '',
                 onChange: (value: DemoCustomer['email']) => {
                   updateCustomer('email', value);
                 }
@@ -133,7 +133,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
               {
                 type: 'text-input',
                 label: 'Stripe Publishable Key',
-                value: stripePublishableKey !== DEFAULT_DEMO_CONFIG.stripePublishableKey ? (stripePublishableKey ?? null) : null,
+                value: stripePublishableKey !== DEFAULT_DEMO_CONFIG.stripePublishableKey ? (stripePublishableKey ?? '') : '',
                 onChange: (value: DemoConfig['stripePublishableKey']) => {
                   configure('stripePublishableKey', value || DEFAULT_DEMO_CONFIG.stripePublishableKey);
                 }
@@ -141,7 +141,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
               {
                 type: 'text-input',
                 label: 'Stripe Secret Key',
-                value: stripeSecretKey ?? null,
+                value: stripeSecretKey ?? '',
                 onChange: (value: DemoConfig['stripeSecretKey']) => {
                   configure('stripeSecretKey', value || DEFAULT_DEMO_CONFIG.stripeSecretKey);
                 }
@@ -218,7 +218,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
               {
                 type: 'text-input',
                 label: 'Merchant Email',
-                value: merchantEmail,
+                value: merchantEmail ?? '',
                 onChange: (value: DemoMerchant['email']) => {
                   updateMerchant('email', value);
                 }
