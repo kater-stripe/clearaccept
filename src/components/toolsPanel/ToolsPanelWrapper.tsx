@@ -9,6 +9,9 @@ import { generateRandomEmail } from '@/utils/generateRandomEmail';
 import { CURRENCY_CODES } from '@/constants/currencyCodes';
 import { DEFAULT_DEMO_CONFIG } from '@/constants/demoConfig';
 import { ToolsPanelProvider } from '@demoeng/tools-panel';
+import type { DemoConfig } from '@/types/demoConfig';
+import type { DemoCustomer } from '@/types/demoCustomer';
+import type { DemoMerchant } from '@/types/demoMerchant';
 
 export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
   const { resetDemoConfig, configure, language, currency, checkoutMethod, elementsStyle, elementsExpressCheckoutEnabled, elementsAddressFormEnabled, cryptoEnabled, stripePublishableKey, stripeSecretKey, onboardingType, chargeType, useV2Accounts, treasuryCapabilityEnabled, onboardCollectionFields, capitalFinancingPromotionLayout } = useDemoConfig();
@@ -57,7 +60,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   { label: 'Chinese (Simplified)', value: 'zh' },
                 ] as const,
                 value: language,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['language']) => {
                   configure('language', value);
                 }
               },
@@ -71,7 +74,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   { label: 'Elements w/ CS', value: 'elements-checkout-with-checkout-sessions' },
                 ],
                 value: checkoutMethod,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['checkoutMethod']) => {
                   configure('checkoutMethod', value);
                 }
               },
@@ -79,7 +82,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'text-input',
                 label: 'Customer Email',
                 value: customerEmail ?? null,
-                onChange: (value) => {
+                onChange: (value: DemoCustomer['email']) => {
                   updateCustomer('email', value);
                 }
               },
@@ -95,7 +98,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   { label: 'Tabs', value: 'tabs' },
                 ],
                 value: elementsStyle,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['elementsStyle']) => {
                   configure('elementsStyle', value);
                 }
               },
@@ -103,7 +106,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'checkbox',
                 label: 'Express Checkout Element',
                 value: elementsExpressCheckoutEnabled,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['elementsExpressCheckoutEnabled']) => {
                   configure('elementsExpressCheckoutEnabled', value);
                 }
               },
@@ -111,7 +114,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'checkbox',
                 label: 'Address Element',
                 value: elementsAddressFormEnabled,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['elementsAddressFormEnabled']) => {
                   configure('elementsAddressFormEnabled', value);
                 }
               },
@@ -119,7 +122,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'checkbox',
                 label: 'Crypto Enabled',
                 value: cryptoEnabled,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['cryptoEnabled']) => {
                   configure('cryptoEnabled', value);
                 }
               }
@@ -131,7 +134,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'text-input',
                 label: 'Stripe Publishable Key',
                 value: stripePublishableKey !== DEFAULT_DEMO_CONFIG.stripePublishableKey ? (stripePublishableKey ?? null) : null,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['stripePublishableKey']) => {
                   configure('stripePublishableKey', value || DEFAULT_DEMO_CONFIG.stripePublishableKey);
                 }
               },
@@ -139,7 +142,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'text-input',
                 label: 'Stripe Secret Key',
                 value: stripeSecretKey ?? null,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['stripeSecretKey']) => {
                   configure('stripeSecretKey', value || DEFAULT_DEMO_CONFIG.stripeSecretKey);
                 }
               },
@@ -155,7 +158,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   { label: 'Embedded', value: 'embedded' },
                 ],
                 value: onboardingType,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['onboardingType']) => {
                   configure('onboardingType', value);
                 }
               },
@@ -168,7 +171,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   { label: 'Destination (On Behalf Of)', value: 'destination-on-behalf-of' },
                 ],
                 value: chargeType,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['chargeType']) => {
                   configure('chargeType', value);
                 }
               },
@@ -176,7 +179,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'checkbox',
                 label: 'Use V2 Accounts',
                 value: useV2Accounts,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['useV2Accounts']) => {
                   configure('useV2Accounts', value);
                 }
               },
@@ -184,7 +187,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'checkbox',
                 label: 'Onboard with Treasury',
                 value: treasuryCapabilityEnabled ?? false,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['treasuryCapabilityEnabled']) => {
                   configure('treasuryCapabilityEnabled', value);
                 }
               },
@@ -196,7 +199,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   { label: 'Currently Due', value: 'currently_due' },
                 ],
                 value: onboardCollectionFields,
-                onChange: (value) => {
+                onChange: (value: DemoConfig['onboardCollectionFields']) => {
                   configure('onboardCollectionFields', value);
                 }
               },
@@ -208,7 +211,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   { label: 'Full', value: 'full' },
                 ],
                 value: capitalFinancingPromotionLayout ?? 'banner',
-                onChange: (value) => {
+                onChange: (value: DemoConfig['capitalFinancingPromotionLayout']) => {
                   configure('capitalFinancingPromotionLayout', value);
                 }
               },
@@ -216,7 +219,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 type: 'text-input',
                 label: 'Merchant Email',
                 value: merchantEmail,
-                onChange: (value) => {
+                onChange: (value: DemoMerchant['email']) => {
                   updateMerchant('email', value);
                 }
               },
@@ -227,7 +230,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
       }
     }}>
       {children}
-    </ToolsPanelProvider>
+    </ToolsPanelProvider >
   );
 };
 
