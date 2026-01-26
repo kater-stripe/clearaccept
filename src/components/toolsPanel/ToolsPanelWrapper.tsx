@@ -132,7 +132,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 label: 'Stripe Publishable Key',
                 value: stripePublishableKey !== DEFAULT_DEMO_CONFIG.stripePublishableKey ? (stripePublishableKey ?? null) : null,
                 onChange: (value) => {
-                  configure('stripePublishableKey', value);
+                  configure('stripePublishableKey', value || DEFAULT_DEMO_CONFIG.stripePublishableKey);
                 }
               },
               {
@@ -140,7 +140,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 label: 'Stripe Secret Key',
                 value: stripeSecretKey ?? null,
                 onChange: (value) => {
-                  configure('stripeSecretKey', value);
+                  configure('stripeSecretKey', value || DEFAULT_DEMO_CONFIG.stripeSecretKey);
                 }
               },
             ]
