@@ -43,7 +43,6 @@ export const reportPayment = async ({
   }
 
   const stripe = initializeStripe(stripeSecretKey, {
-    // @ts-expect-error
     apiVersion: `${STRIPE_API_VERSION}; payment_records_beta=v1`,
   });
 
