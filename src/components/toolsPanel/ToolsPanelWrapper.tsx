@@ -25,7 +25,7 @@ import { fullyRepayFinancingOffer } from '@/app/api/financing-offers/fullyRepayF
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
-  const { resetDemoConfig, configure, language, currency, checkoutMethod, elementsStyle, elementsExpressCheckoutEnabled, elementsAddressFormEnabled, cryptoEnabled, stripePublishableKey, stripeSecretKey, onboardingType, chargeType, useV2Accounts, treasuryCapabilityEnabled, onboardCollectionFields, capitalFinancingPromotionLayout } = useDemoConfig();
+  const { resetDemoConfig, configure, language, currency, checkoutMethod, elementsStyle, elementsExpressCheckoutEnabled, elementsAddressFormEnabled, cryptoEnabled, stripePublishableKey, stripeSecretKey, onboardingType, chargeType, useV2Accounts, treasuryCapabilityEnabled, issuingCapabilityEnabled, onboardCollectionFields, capitalFinancingPromotionLayout } = useDemoConfig();
   const { clearCart } = useCart();
   const { signOut: signOutCustomer, updateCustomer, email: customerEmail } = useDemoCustomer();
   const { signOut: signOutMerchant, email: merchantEmail, updateMerchant, isSignedIn: isMerchantSignedIn, account, isCapabilityActive, isCapitalEligible } = useDemoMerchant();
@@ -279,7 +279,8 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 value: elementsAddressFormEnabled,
                 onChange: (value: DemoConfig['elementsAddressFormEnabled']) => {
                   configure('elementsAddressFormEnabled', value);
-                }
+                },
+                tooltip: 'Tax will not be calculated without Address Element enabled.'
               },
               {
                 type: 'checkbox',
@@ -369,7 +370,8 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 disabled: isMerchantSignedIn,
                 onChange: (value: DemoConfig['useV2Accounts']) => {
                   configure('useV2Accounts', value);
-                }
+                },
+                tooltip: 'If enabled, new accounts will be created using the V2 Accounts API.'
               },
               {
                 type: 'checkbox',
@@ -377,7 +379,17 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 value: treasuryCapabilityEnabled ?? false,
                 onChange: (value: DemoConfig['treasuryCapabilityEnabled']) => {
                   configure('treasuryCapabilityEnabled', value);
-                }
+                },
+                tooltip: 'When onboarding with treasury capability enabled, an external bank account will not be collected.'
+              },
+              {
+                type: 'checkbox',
+                label: 'Onboard with Issuing',
+                value: issuingCapabilityEnabled ?? false,
+                onChange: (value: DemoConfig['issuingCapabilityEnabled']) => {
+                  configure('issuingCapabilityEnabled', value);
+                },
+                tooltip: 'When onboarding with issuing capability enabled, a terms of service agreement will be collected.'
               },
               {
                 type: 'dropdown',
