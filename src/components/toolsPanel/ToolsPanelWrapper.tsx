@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode } from 'react';
+import { type ReactNode, useRef, useState } from 'react';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { useCart } from '@/context/CartContext';
 import { useDemoCustomer } from '@/context/DemoCustomerContext';
@@ -12,12 +12,175 @@ import { ToolsPanelProvider } from '@demoeng/tools-panel';
 import type { DemoConfig } from '@/types/demoConfig';
 import type { DemoCustomer } from '@/types/demoCustomer';
 import type { DemoMerchant } from '@/types/demoMerchant';
+import { seedIssuing } from '@/app/api/issuing/seedIssuing';
+import { seedFinancialAccountTransactions } from '@/app/api/financial-accounts/seedFinancialAccountTransactions';
+import { seedTransactions } from '@/app/api/payment-intents/seedTransactions';
+import { createFlexLoan } from '@/app/api/financing-offers/createFlexLoan';
+import { createRiskIntervention } from '@/app/api/accounts/createRiskIntervention';
+import { getLatestFinancingOffer } from '@/app/api/financing-offers/getLatestFinancingOffer';
+import { expireFinancingOffer } from '@/app/api/financing-offers/expireFinancingOffer';
+import { approveApplication } from '@/app/api/financing-offers/approveApplication';
+import { rejectApplication } from '@/app/api/financing-offers/rejectApplication';
+import { fullyRepayFinancingOffer } from '@/app/api/financing-offers/fullyRepayFinancingOffer';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
   const { resetDemoConfig, configure, language, currency, checkoutMethod, elementsStyle, elementsExpressCheckoutEnabled, elementsAddressFormEnabled, cryptoEnabled, stripePublishableKey, stripeSecretKey, onboardingType, chargeType, useV2Accounts, treasuryCapabilityEnabled, onboardCollectionFields, capitalFinancingPromotionLayout } = useDemoConfig();
   const { clearCart } = useCart();
   const { signOut: signOutCustomer, updateCustomer, email: customerEmail } = useDemoCustomer();
-  const { signOut: signOutMerchant, email: merchantEmail, updateMerchant, isSignedIn: isMerchantSignedIn } = useDemoMerchant();
+  const { signOut: signOutMerchant, email: merchantEmail, updateMerchant, isSignedIn: isMerchantSignedIn, account, isCapabilityActive, isCapitalEligible } = useDemoMerchant();
+
+  // Seeding checkbox states
+  const [shouldSeedRiskIntervention, setShouldSeedRiskIntervention] = useState(false);
+  const [shouldSeedTransactions, setShouldSeedTransactions] = useState(false);
+  const [shouldSeedCredits, setShouldSeedCredits] = useState(false);
+  const [shouldSeedDebits, setShouldSeedDebits] = useState(false);
+  const [shouldSeedCardholders, setShouldSeedCardholders] = useState(false);
+  const [shouldSeedCards, setShouldSeedCards] = useState(false);
+  const [shouldSeedCaptures, setShouldSeedCaptures] = useState(false);
+  const [shouldSeedRefunds, setShouldSeedRefunds] = useState(false);
+
+  // Seeding mutations
+  const {
+    mutateAsync: startSeedingTransactions,
+    isPending: isSeedingTransactions,
+    error: seedingTransactionsError,
+  } = useMutation({
+    mutationFn: seedTransactions,
+  });
+
+  const {
+    mutateAsync: startSeedingIssuing,
+    isPending: isSeedingIssuing,
+    error: seedingIssuingError,
+  } = useMutation({
+    mutationFn: seedIssuing,
+  });
+
+  const {
+    mutateAsync: startSeedingFinancialAccountTransactions,
+    isPending: isSeedingFinancialAccountTransactions,
+    error: seedingFinancialAccountTransactionsError,
+  } = useMutation({
+    mutationFn: seedFinancialAccountTransactions,
+  });
+
+  const {
+    mutateAsync: startSeedingRiskIntervention,
+    isPending: isSeedingRiskIntervention,
+    error: seedingRiskInterventionError,
+  } = useMutation({
+    mutationFn: createRiskIntervention,
+  });
+
+  const isSeeding = isSeedingTransactions || isSeedingIssuing || isSeedingFinancialAccountTransactions || isSeedingRiskIntervention;
+
+  const seedingErrors = [
+    seedingTransactionsError?.message,
+    seedingIssuingError?.message,
+    seedingFinancialAccountTransactionsError?.message,
+    seedingRiskInterventionError?.message,
+  ].filter(Boolean);
+
+  // Financing offer state
+  const [waitingForFinancingOfferToUpdate, setWaitingForFinancingOfferToUpdate] = useState(false);
+  const latestFinancingOfferRef = useRef<Awaited<ReturnType<typeof getLatestFinancingOffer>> | null>(null);
+
+  const { data: latestFinancingOffer } = useQuery({
+    queryKey: ['latest-financing-offer', account?.id, stripeSecretKey],
+    queryFn: async () => {
+      const result = await getLatestFinancingOffer({
+        accountId: account!.id,
+        stripeSecretKey,
+      });
+
+      if (waitingForFinancingOfferToUpdate && result?.status !== latestFinancingOfferRef.current?.status) {
+        window.location.reload();
+        // We wait for the page to reload. This is a bit of a hack to ensure we don't update the state before the page has reloaded.
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
+
+      latestFinancingOfferRef.current = result;
+      return result;
+    },
+    refetchInterval: waitingForFinancingOfferToUpdate ? 1000 : false,
+    enabled: isMerchantSignedIn && !!account && isCapitalEligible,
+  });
+
+  // Financing offer mutations
+  const { mutate: startCreatingFlexLoan, isPending: isCreatingFlexLoan } = useMutation({
+    mutationKey: ['create-flex-loan', account?.id, stripeSecretKey],
+    mutationFn: createFlexLoan,
+    onSuccess: () => {
+      setWaitingForFinancingOfferToUpdate(true);
+    },
+  });
+
+  const { mutate: startExpiringFinancingOffer, isPending: isExpiringFinancingOffer } = useMutation({
+    mutationKey: ['expire-financing-offer', stripeSecretKey],
+    mutationFn: expireFinancingOffer,
+    onSuccess: () => {
+      setWaitingForFinancingOfferToUpdate(true);
+    },
+  });
+
+  const {
+    mutate: startApprovingApplication,
+    isPending: isApprovingApplication,
+    error: approveApplicationError,
+  } = useMutation({
+    mutationKey: ['approve-application', stripeSecretKey],
+    mutationFn: approveApplication,
+    onSuccess: (result) => {
+      if (result?.message) {
+        throw new Error(result.message);
+      }
+      setWaitingForFinancingOfferToUpdate(true);
+    },
+  });
+
+  const {
+    mutate: startRejectingApplication,
+    isPending: isRejectingApplication,
+    error: rejectApplicationError,
+  } = useMutation({
+    mutationKey: ['reject-application', stripeSecretKey],
+    mutationFn: rejectApplication,
+    onSuccess: (result) => {
+      if (result?.message) {
+        throw new Error(result.message);
+      }
+      setWaitingForFinancingOfferToUpdate(true);
+    },
+  });
+
+  const { mutate: startFullyRepayingFinancingOffer, isPending: isFullyRepayingFinancingOffer } = useMutation({
+    mutationKey: ['fully-repay-financing-offer', stripeSecretKey],
+    mutationFn: fullyRepayFinancingOffer,
+    onSuccess: () => {
+      setWaitingForFinancingOfferToUpdate(true);
+    },
+  });
+
+  const isFinancingActionPending = isCreatingFlexLoan || isExpiringFinancingOffer || isApprovingApplication || isRejectingApplication || isFullyRepayingFinancingOffer || waitingForFinancingOfferToUpdate;
+
+  // Flex loan conditional display logic
+  const shouldShowDeliverFlexLoanAction = isCapitalEligible && (
+    !latestFinancingOffer ||
+    (latestFinancingOffer.status !== 'delivered' &&
+      latestFinancingOffer.status !== 'completed' &&
+      latestFinancingOffer.status !== 'accepted' &&
+      latestFinancingOffer.status !== 'paid_out')
+  );
+
+  const shouldShowExpireAction = isCapitalEligible && latestFinancingOffer && (
+    latestFinancingOffer.status === 'completed' ||
+    latestFinancingOffer.status === 'delivered'
+  );
+
+  const shouldShowApprovalAction = isCapitalEligible && latestFinancingOffer?.status === 'accepted';
+  const shouldShowRejectionAction = isCapitalEligible && latestFinancingOffer?.status === 'accepted';
+  const shouldShowFullyRepayAction = isCapitalEligible && latestFinancingOffer?.status === 'paid_out';
 
   const onReset = () => {
     resetDemoConfig();
@@ -250,9 +413,214 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
               },
             ]
           },
-          seedingAndTestHelpers: {
-            items: []
-          }
+          ...(isMerchantSignedIn && account ? {
+            seedingAndTestHelpers: {
+              items: [
+                // Account seeding
+                {
+                  type: 'checkbox' as const,
+                  label: 'Risk Intervention',
+                  value: shouldSeedRiskIntervention,
+                  disabled: isSeeding,
+                  onChange: (value: boolean) => setShouldSeedRiskIntervention(value),
+                },
+                // Payments seeding
+                {
+                  type: 'checkbox' as const,
+                  label: 'Transactions',
+                  value: shouldSeedTransactions,
+                  disabled: isSeeding,
+                  onChange: (value: boolean) => setShouldSeedTransactions(value),
+                },
+                // Treasury seeding (only if capability active)
+                ...(isCapabilityActive('treasury') ? [
+                  {
+                    type: 'checkbox' as const,
+                    label: 'Treasury Credits',
+                    value: shouldSeedCredits,
+                    disabled: isSeeding,
+                    onChange: (value: boolean) => setShouldSeedCredits(value),
+                  },
+                  {
+                    type: 'checkbox' as const,
+                    label: 'Treasury Debits',
+                    value: shouldSeedDebits,
+                    disabled: isSeeding,
+                    onChange: (value: boolean) => setShouldSeedDebits(value),
+                  },
+                ] : []),
+                // Issuing seeding (only if capability active)
+                ...(isCapabilityActive('card_issuing') ? [
+                  {
+                    type: 'checkbox' as const,
+                    label: 'Cardholders',
+                    value: shouldSeedCardholders,
+                    disabled: isSeeding,
+                    onChange: (value: boolean) => {
+                      setShouldSeedCardholders(value);
+                      if (!value) {
+                        setShouldSeedCards(false);
+                        setShouldSeedCaptures(false);
+                        setShouldSeedRefunds(false);
+                      }
+                    },
+                  },
+                  {
+                    type: 'checkbox' as const,
+                    label: 'Cards',
+                    value: shouldSeedCards,
+                    disabled: isSeeding || !shouldSeedCardholders,
+                    onChange: (value: boolean) => {
+                      setShouldSeedCards(value);
+                      if (!value) {
+                        setShouldSeedCaptures(false);
+                        setShouldSeedRefunds(false);
+                      }
+                    },
+                  },
+                  {
+                    type: 'checkbox' as const,
+                    label: 'Captures',
+                    value: shouldSeedCaptures,
+                    disabled: isSeeding || !shouldSeedCards,
+                    onChange: (value: boolean) => {
+                      setShouldSeedCaptures(value);
+                      if (!value) {
+                        setShouldSeedRefunds(false);
+                      }
+                    },
+                  },
+                  {
+                    type: 'checkbox' as const,
+                    label: 'Refunds',
+                    value: shouldSeedRefunds,
+                    disabled: isSeeding || !shouldSeedCaptures,
+                    onChange: (value: boolean) => setShouldSeedRefunds(value),
+                  },
+                ] : []),
+                // Show seeding errors if any
+                ...(seedingErrors.length > 0 ? [{
+                  type: 'alert' as const,
+                  message: seedingErrors.join(', '),
+                }] : []),
+                // Start seeding button
+                {
+                  type: 'button' as const,
+                  label: isSeeding ? 'Seeding...' : 'Start Seeding',
+                  disabled: isSeeding || (!shouldSeedRiskIntervention && !shouldSeedTransactions && !shouldSeedCredits && !shouldSeedDebits && !shouldSeedCardholders),
+                  onClick: async () => {
+                    await Promise.all([
+                      shouldSeedRiskIntervention ? startSeedingRiskIntervention({
+                        accountId: account.id,
+                        stripeSecretKey,
+                      }) : null,
+                      shouldSeedTransactions ? startSeedingTransactions({
+                        accountId: account.id,
+                        stripeSecretKey,
+                        language,
+                        chargeType,
+                      }) : null,
+                      (shouldSeedCredits || shouldSeedDebits) ? startSeedingFinancialAccountTransactions({
+                        accountId: account.id,
+                        stripeSecretKey,
+                        language,
+                        seedCredits: shouldSeedCredits,
+                        seedDebits: shouldSeedDebits,
+                      }) : null,
+                      shouldSeedCardholders ? startSeedingIssuing({
+                        accountId: account.id,
+                        stripeSecretKey,
+                        language,
+                        seedCardholders: shouldSeedCardholders,
+                        seedCards: shouldSeedCards,
+                        seedCaptures: shouldSeedCaptures,
+                        seedRefunds: shouldSeedRefunds,
+                      }) : null,
+                    ]);
+
+                    if (seedingErrors.length === 0) {
+                      window.location.reload();
+                    }
+                  },
+                },
+                // Capital / Flex Loan section (only if capital eligible)
+                ...(isCapitalEligible ? [
+                  {
+                    type: 'separator' as const,
+                  },
+                  // Show error if approve/reject failed
+                  ...(approveApplicationError ? [{
+                    type: 'alert' as const,
+                    message: approveApplicationError.message,
+                  }] : []),
+                  ...(rejectApplicationError ? [{
+                    type: 'alert' as const,
+                    message: rejectApplicationError.message,
+                  }] : []),
+                  // Deliver Flex Loan Offer
+                  ...(shouldShowDeliverFlexLoanAction ? [{
+                    type: 'button' as const,
+                    label: isFinancingActionPending ? 'Creating...' : 'Deliver Flex Loan Offer',
+                    disabled: isSeeding || isFinancingActionPending,
+                    onClick: () => {
+                      startCreatingFlexLoan({
+                        accountId: account.id,
+                        stripeSecretKey,
+                      });
+                    },
+                  }] : []),
+                  // Expire Offer
+                  ...(shouldShowExpireAction && latestFinancingOffer ? [{
+                    type: 'button' as const,
+                    label: isFinancingActionPending ? 'Expiring...' : 'Expire Offer',
+                    disabled: isSeeding || isFinancingActionPending,
+                    onClick: () => {
+                      startExpiringFinancingOffer({
+                        offerId: latestFinancingOffer.id,
+                        stripeSecretKey,
+                      });
+                    },
+                  }] : []),
+                  // Approve Application
+                  ...(shouldShowApprovalAction && latestFinancingOffer ? [{
+                    type: 'button' as const,
+                    label: isFinancingActionPending ? 'Approving...' : 'Approve Application',
+                    disabled: isSeeding || isFinancingActionPending,
+                    onClick: () => {
+                      startApprovingApplication({
+                        offerId: latestFinancingOffer.id,
+                        stripeSecretKey,
+                      });
+                    },
+                  }] : []),
+                  // Reject Application
+                  ...(shouldShowRejectionAction && latestFinancingOffer ? [{
+                    type: 'button' as const,
+                    label: isFinancingActionPending ? 'Rejecting...' : 'Reject Application',
+                    disabled: isSeeding || isFinancingActionPending,
+                    onClick: () => {
+                      startRejectingApplication({
+                        offerId: latestFinancingOffer.id,
+                        stripeSecretKey,
+                      });
+                    },
+                  }] : []),
+                  // Fully Repay Offer
+                  ...(shouldShowFullyRepayAction && latestFinancingOffer ? [{
+                    type: 'button' as const,
+                    label: isFinancingActionPending ? 'Repaying...' : 'Fully Repay Offer',
+                    disabled: isSeeding || isFinancingActionPending,
+                    onClick: () => {
+                      startFullyRepayingFinancingOffer({
+                        offerId: latestFinancingOffer.id,
+                        stripeSecretKey,
+                      });
+                    },
+                  }] : []),
+                ] : []),
+              ]
+            }
+          } : {})
         },
         onReset,
       }
