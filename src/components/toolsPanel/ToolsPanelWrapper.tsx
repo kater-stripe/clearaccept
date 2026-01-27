@@ -17,7 +17,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
   const { resetDemoConfig, configure, language, currency, checkoutMethod, elementsStyle, elementsExpressCheckoutEnabled, elementsAddressFormEnabled, cryptoEnabled, stripePublishableKey, stripeSecretKey, onboardingType, chargeType, useV2Accounts, treasuryCapabilityEnabled, onboardCollectionFields, capitalFinancingPromotionLayout } = useDemoConfig();
   const { clearCart } = useCart();
   const { signOut: signOutCustomer, updateCustomer, email: customerEmail } = useDemoCustomer();
-  const { signOut: signOutMerchant, email: merchantEmail, updateMerchant } = useDemoMerchant();
+  const { signOut: signOutMerchant, email: merchantEmail, updateMerchant, isSignedIn: isMerchantSignedIn } = useDemoMerchant();
 
   const onReset = () => {
     resetDemoConfig();
@@ -130,13 +130,25 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
           },
           apiKeysAndEnvironment: {
             items: [
+              ...(isMerchantSignedIn ? [{
+                type: 'alert' as const,
+                message: 'You are signed in. To edit these settings, please sign out first.',
+                content: [{
+                  type: 'button' as const,
+                  label: 'Sign Out',
+                  onClick: () => {
+                    signOutMerchant();
+                  }
+                }]
+              }] : []),
               {
                 type: 'text-input',
                 label: 'Stripe Publishable Key',
                 value: stripePublishableKey !== DEFAULT_DEMO_CONFIG.stripePublishableKey ? (stripePublishableKey ?? '') : '',
                 onChange: (value: DemoConfig['stripePublishableKey']) => {
                   configure('stripePublishableKey', value || DEFAULT_DEMO_CONFIG.stripePublishableKey);
-                }
+                },
+                disabled: isMerchantSignedIn
               },
               {
                 type: 'text-input',
@@ -144,7 +156,8 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 value: stripeSecretKey ?? '',
                 onChange: (value: DemoConfig['stripeSecretKey']) => {
                   configure('stripeSecretKey', value || DEFAULT_DEMO_CONFIG.stripeSecretKey);
-                }
+                },
+                disabled: isMerchantSignedIn
               },
             ]
           },
@@ -175,10 +188,22 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   configure('chargeType', value);
                 }
               },
+              ...(isMerchantSignedIn ? [{
+                type: 'alert' as const,
+                message: 'You are signed in. To change "Use V2 Accounts", please sign out first.',
+                content: [{
+                  type: 'button' as const,
+                  label: 'Sign Out',
+                  onClick: () => {
+                    signOutMerchant();
+                  }
+                }]
+              }] : []),
               {
                 type: 'checkbox',
                 label: 'Use V2 Accounts',
                 value: useV2Accounts,
+                disabled: isMerchantSignedIn,
                 onChange: (value: DemoConfig['useV2Accounts']) => {
                   configure('useV2Accounts', value);
                 }
@@ -224,6 +249,9 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                 }
               },
             ]
+          },
+          seedingAndTestHelpers: {
+            items: []
           }
         },
         onReset,
