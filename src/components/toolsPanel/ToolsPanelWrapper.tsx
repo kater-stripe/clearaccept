@@ -202,7 +202,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
           integrationAndLocalization: {
             items: [
               {
-                type: 'dropdown',
+                type: 'combobox',
                 label: 'Currency',
                 options: CURRENCY_CODES.map((currency) => ({ label: currency.toUpperCase(), value: currency })),
                 value: currency,
