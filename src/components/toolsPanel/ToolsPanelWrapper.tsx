@@ -25,7 +25,7 @@ import { fullyRepayFinancingOffer } from '@/app/api/financing-offers/fullyRepayF
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
-  const { resetDemoConfig, configure, language, currency, checkoutMethod, elementsStyle, elementsExpressCheckoutEnabled, elementsAddressFormEnabled, cryptoEnabled, stripePublishableKey, stripeSecretKey, onboardingType, chargeType, useV2Accounts, treasuryCapabilityEnabled, issuingCapabilityEnabled, onboardCollectionFields, capitalFinancingPromotionLayout } = useDemoConfig();
+  const { resetDemoConfig, configure, language, currency, checkoutMethod, elementsStyle, elementsExpressCheckoutEnabled, elementsAddressFormEnabled, cryptoEnabled, stripePublishableKey, stripeSecretKey, onboardingType, chargeType, storerCapabilityEnabled, issuingCapabilityEnabled, onboardCollectionFields, capitalFinancingPromotionLayout } = useDemoConfig();
   const { clearCart } = useCart();
   const { signOut: signOutCustomer, updateCustomer, email: customerEmail } = useDemoCustomer();
   const { signOut: signOutMerchant, email: merchantEmail, updateMerchant, isSignedIn: isMerchantSignedIn, account, isCapabilityActive, isCapitalEligible } = useDemoMerchant();
@@ -227,71 +227,71 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   configure('language', value);
                 }
               },
-              {
-                type: 'dropdown',
-                label: 'Checkout Integration',
-                options: [
-                  { label: 'Elements w/ PI', value: 'elements-checkout' },
-                  { label: 'Stripe-hosted page', value: 'hosted-checkout' },
-                  { label: 'Embedded form', value: 'embedded-checkout' },
-                  { label: 'Elements w/ CS', value: 'elements-checkout-with-checkout-sessions' },
-                ],
-                value: checkoutMethod,
-                onChange: (value: DemoConfig['checkoutMethod']) => {
-                  configure('checkoutMethod', value);
-                }
-              },
-              {
-                type: 'text-input',
-                label: 'Customer Email',
-                value: customerEmail ?? '',
-                onChange: (value: DemoCustomer['email']) => {
-                  updateCustomer('email', value);
-                }
-              },
+              // {
+              //   type: 'dropdown',
+              //   label: 'Checkout Integration',
+              //   options: [
+              //     { label: 'Elements w/ PI', value: 'elements-checkout' },
+              //     { label: 'Stripe-hosted page', value: 'hosted-checkout' },
+              //     { label: 'Embedded form', value: 'embedded-checkout' },
+              //     { label: 'Elements w/ CS', value: 'elements-checkout-with-checkout-sessions' },
+              //   ],
+              //   value: checkoutMethod,
+              //   onChange: (value: DemoConfig['checkoutMethod']) => {
+              //     configure('checkoutMethod', value);
+              //   }
+              // },
+              // {
+              //   type: 'text-input',
+              //   label: 'Customer Email',
+              //   value: customerEmail ?? '',
+              //   onChange: (value: DemoCustomer['email']) => {
+              //     updateCustomer('email', value);
+              //   }
+              // },
             ]
           },
-          checkout: {
-            items: [
-              {
-                type: 'dropdown',
-                label: 'Elements Style',
-                options: [
-                  { label: 'Accordion', value: 'accordion' },
-                  { label: 'Tabs', value: 'tabs' },
-                ],
-                value: elementsStyle,
-                onChange: (value: DemoConfig['elementsStyle']) => {
-                  configure('elementsStyle', value);
-                }
-              },
-              {
-                type: 'checkbox',
-                label: 'Express Checkout Element',
-                value: elementsExpressCheckoutEnabled,
-                onChange: (value: DemoConfig['elementsExpressCheckoutEnabled']) => {
-                  configure('elementsExpressCheckoutEnabled', value);
-                }
-              },
-              {
-                type: 'checkbox',
-                label: 'Address Element',
-                value: elementsAddressFormEnabled,
-                onChange: (value: DemoConfig['elementsAddressFormEnabled']) => {
-                  configure('elementsAddressFormEnabled', value);
-                },
-                tooltip: 'Tax will not be calculated without Address Element enabled.'
-              },
-              {
-                type: 'checkbox',
-                label: 'Crypto Enabled',
-                value: cryptoEnabled,
-                onChange: (value: DemoConfig['cryptoEnabled']) => {
-                  configure('cryptoEnabled', value);
-                }
-              }
-            ],
-          },
+          // checkout: {
+          //   items: [
+          //     {
+          //       type: 'dropdown',
+          //       label: 'Elements Style',
+          //       options: [
+          //         { label: 'Accordion', value: 'accordion' },
+          //         { label: 'Tabs', value: 'tabs' },
+          //       ],
+          //       value: elementsStyle,
+          //       onChange: (value: DemoConfig['elementsStyle']) => {
+          //         configure('elementsStyle', value);
+          //       }
+          //     },
+          //     {
+          //       type: 'checkbox',
+          //       label: 'Express Checkout Element',
+          //       value: elementsExpressCheckoutEnabled,
+          //       onChange: (value: DemoConfig['elementsExpressCheckoutEnabled']) => {
+          //         configure('elementsExpressCheckoutEnabled', value);
+          //       }
+          //     },
+          //     {
+          //       type: 'checkbox',
+          //       label: 'Address Element',
+          //       value: elementsAddressFormEnabled,
+          //       onChange: (value: DemoConfig['elementsAddressFormEnabled']) => {
+          //         configure('elementsAddressFormEnabled', value);
+          //       },
+          //       tooltip: 'Tax will not be calculated without Address Element enabled.'
+          //     },
+          //     {
+          //       type: 'checkbox',
+          //       label: 'Crypto Enabled',
+          //       value: cryptoEnabled,
+          //       onChange: (value: DemoConfig['cryptoEnabled']) => {
+          //         configure('cryptoEnabled', value);
+          //       }
+          //     }
+          //   ],
+          // },
           apiKeysAndEnvironment: {
             items: [
               ...(isMerchantSignedIn ? [{
@@ -352,35 +352,35 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   configure('chargeType', value);
                 }
               },
-              ...(isMerchantSignedIn ? [{
-                type: 'alert' as const,
-                message: 'You are signed in. To change "Use V2 Accounts", please sign out first.',
-                content: [{
-                  type: 'button' as const,
-                  label: 'Sign Out',
-                  onClick: () => {
-                    signOutMerchant();
-                  }
-                }]
-              }] : []),
+              // ...(isMerchantSignedIn ? [{
+              //   type: 'alert' as const,
+              //   message: 'You are signed in. To change "Use V2 Accounts", please sign out first.',
+              //   content: [{
+              //     type: 'button' as const,
+              //     label: 'Sign Out',
+              //     onClick: () => {
+              //       signOutMerchant();
+              //     }
+              //   }]
+              // }] : []),
+              // {
+              //   type: 'checkbox',
+              //   label: 'Use V2 Accounts',
+              //   value: useV2Accounts,
+              //   disabled: isMerchantSignedIn,
+              //   onChange: (value: DemoConfig['useV2Accounts']) => {
+              //     configure('useV2Accounts', value);
+              //   },
+              //   tooltip: 'If enabled, new accounts will be created using the V2 Accounts API.'
+              // },
               {
                 type: 'checkbox',
-                label: 'Use V2 Accounts',
-                value: useV2Accounts,
-                disabled: isMerchantSignedIn,
-                onChange: (value: DemoConfig['useV2Accounts']) => {
-                  configure('useV2Accounts', value);
+                label: 'Onboard with Storer',
+                value: storerCapabilityEnabled ?? false,
+                onChange: (value: DemoConfig['storerCapabilityEnabled']) => {
+                  configure('storerCapabilityEnabled', value);
                 },
-                tooltip: 'If enabled, new accounts will be created using the V2 Accounts API.'
-              },
-              {
-                type: 'checkbox',
-                label: 'Onboard with Treasury',
-                value: treasuryCapabilityEnabled ?? false,
-                onChange: (value: DemoConfig['treasuryCapabilityEnabled']) => {
-                  configure('treasuryCapabilityEnabled', value);
-                },
-                tooltip: 'When onboarding with treasury capability enabled, an external bank account will not be collected.'
+                tooltip: 'When onboarding with storer capability enabled, an external bank account will not be collected.'
               },
               {
                 type: 'checkbox',

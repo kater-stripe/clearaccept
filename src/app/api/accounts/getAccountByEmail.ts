@@ -41,12 +41,7 @@ export const getAccountByEmail = async ({
     };
   }
 
-  const useV2Accounts = customer.metadata.useV2Accounts === 'true';
-
-  let account: Stripe.Account | Stripe.V2.Core.Account;
-
-  if (useV2Accounts) {
-    account = await stripe.v2.core.accounts.retrieve(accountId, {
+  const account = await stripe.v2.core.accounts.retrieve(accountId, {
       include: [
         'requirements',
         'configuration.merchant',
@@ -54,9 +49,6 @@ export const getAccountByEmail = async ({
         'defaults',
       ],
     });
-  } else {
-    account = await stripe.accounts.retrieve(accountId);
-  }
 
   return plain(account);
 };

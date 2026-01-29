@@ -25,10 +25,9 @@ export const DEFAULT_DEMO_CONFIG = {
   capitalFinancingPromotionLayout: 'banner',
   chargeType: process.env.NEXT_PUBLIC_CHARGE_TYPE ?? 'direct',
   onboardingType: process.env.NEXT_PUBLIC_ONBOARDING_TYPE ?? 'embedded',
-  treasuryCapabilityEnabled: false,
+  storerCapabilityEnabled: true,
   issuingCapabilityEnabled: true,
   onboardCollectionFields: 'eventually_due',
-  useV2Accounts: false,
   checkoutMethod:
     process.env.NEXT_PUBLIC_CHECKOUT_METHOD ?? 'elements-checkout',
   elementsStyle: 'accordion',

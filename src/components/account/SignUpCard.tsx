@@ -23,10 +23,9 @@ export const SignUpCard = () => {
     stripeSecretKey,
     language,
     onboardingType,
-    treasuryCapabilityEnabled,
+    storerCapabilityEnabled,
     issuingCapabilityEnabled,
     onboardCollectionFields,
-    useV2Accounts,
     country: defaultCountryCode,
   } = useDemoConfig();
 
@@ -109,10 +108,9 @@ export const SignUpCard = () => {
               email,
               language,
               countryCode: country?.id ?? 'US',
-              treasuryCapabilityEnabled,
+              storerCapabilityEnabled,
               issuingCapabilityEnabled,
               stripeSecretKey,
-              useV2Accounts,
             });
 
             if (onboardingType === 'hosted') {
@@ -120,19 +118,12 @@ export const SignUpCard = () => {
                 return;
               }
 
-              if (account.object === 'v2.core.account') {
-                if (
-                  account.requirements?.summary?.minimum_deadline?.status !==
-                  'past_due'
-                ) {
-                  router.push(`/${language}/dashboard`);
-                  return;
-                }
-              } else {
-                if (account.details_submitted) {
-                  router.push(`/${language}/dashboard`);
-                  return;
-                }
+              if (
+                account.requirements?.summary?.minimum_deadline?.status !==
+                'past_due'
+              ) {
+                router.push(`/${language}/dashboard`);
+                return;
               }
 
               createHostedOnboardingLink({
@@ -209,8 +200,8 @@ export const SignUpCard = () => {
             className='w-32 h-10'
           >
             {isCreatingAccount ||
-            isCreatingHostedOnboardingLink ||
-            !!hostedOnboardingLink ? (
+              isCreatingHostedOnboardingLink ||
+              !!hostedOnboardingLink ? (
               <LoadingSpinner className='size-4' strokeWidth={3} />
             ) : (
               <>

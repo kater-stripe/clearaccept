@@ -62,7 +62,7 @@ const FinancialAccountsAndIssuingPage = () => {
         onClose={() => setIsCreateFinancialAccountModalOpen(false)}
       />
       <div>
-        {isCapabilityActive('treasury') && (
+        {true && (
           <Card>
             <h2 className='text-lg font-semibold mb-4'>
               {t('dashboard.expenses.financial-accounts')}
