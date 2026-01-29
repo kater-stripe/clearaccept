@@ -25,6 +25,9 @@ export const getAccountById = async ({
       include: [
         'requirements',
         'configuration.merchant',
+        'configuration.storer',
+        'configuration.recipient',
+        'configuration.storer',
         'identity',
         'defaults',
       ],

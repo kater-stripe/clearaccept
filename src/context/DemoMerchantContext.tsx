@@ -285,7 +285,11 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
       return false;
     }
 
-    const capabilities = account.configuration?.merchant?.capabilities;
+    const capabilities = {
+      ...(account.configuration?.merchant?.capabilities ?? {}),
+      ...(account.configuration?.storer?.capabilities ?? {}),
+      ...(account.configuration?.recipient?.capabilities ?? {}),
+    }
 
     const capabilityObject = get(capabilities, capabilityPath);
 

@@ -45,6 +45,9 @@ export const getAccountByEmail = async ({
       include: [
         'requirements',
         'configuration.merchant',
+        'configuration.storer',
+        'configuration.recipient',
+        'configuration.storer',
         'identity',
         'defaults',
       ],

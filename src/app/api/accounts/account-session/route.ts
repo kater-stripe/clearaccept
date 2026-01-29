@@ -1,10 +1,9 @@
 'use server';
 
-import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 import { type NextRequest, NextResponse } from 'next/server';
-import type Stripe from 'stripe';
+import { Stripe } from 'stripe';
 
 export type CreateAccountSessionRequestBody = {
   accountId: string;
@@ -34,11 +33,17 @@ export const POST = async (request: NextRequest) => {
     );
   }
 
-  const stripe = initializeStripe(stripeSecretKey, {
-    apiVersion: `${STRIPE_API_VERSION};embedded_connect_beta=v2`,
-  });
+  const stripe = initializeStripe(stripeSecretKey);
 
-  const account = await stripe.accounts.retrieve(accountId);
+  // const account = await stripe.v2.core.accounts.retrieve(accountId, {
+  //   include: [
+  //     'defaults',
+  //     'configuration.customer',
+  //     'configuration.merchant',
+  //     'configuration.recipient',
+  //     'configuration.storer'
+  //   ],
+  // });
 
   const accountSession = await stripe.accountSessions.create({
     account: accountId,
@@ -94,48 +99,48 @@ export const POST = async (request: NextRequest) => {
           instant_payouts: true,
         },
       },
-      ...(account.capabilities?.treasury === 'active'
-        ? {
-            financial_account: {
-              enabled: true,
-              features: {
-                disable_stripe_user_authentication: true,
-                transfer_balance: true,
-                send_money: true,
-                external_account_collection: true,
-              },
-            },
-            financial_account_transactions: {
-              enabled: true,
-              features: {
-                card_spend_dispute_management: true,
-              },
-            },
-          }
-        : {}),
-      ...(account.capabilities?.card_issuing === 'active'
-        ? {
-            issuing_card: {
-              enabled: true,
-              features: {
-                card_management: true,
-                cardholder_management: true,
-                card_spend_dispute_management: true,
-                spend_control_management: true,
-              },
-            },
-            issuing_cards_list: {
-              enabled: true,
-              features: {
-                disable_stripe_user_authentication: true,
-                card_management: true,
-                cardholder_management: true,
-                card_spend_dispute_management: true,
-                spend_control_management: true,
-              },
-            },
-          }
-        : {}),
+      // ...(Object.entries(account.configuration?.storer?.capabilities?.holds_currencies ?? {}).some(([_currency, capability]) => capability?.status === 'active')
+      //   ? {
+      //       financial_account: {
+      //         enabled: true,
+      //         features: {
+      //           disable_stripe_user_authentication: true,
+      //           transfer_balance: true,
+      //           send_money: true,
+      //           external_account_collection: true,
+      //         },
+      //       },
+      //       financial_account_transactions: {
+      //         enabled: true,
+      //         features: {
+      //           card_spend_dispute_management: true,
+      //         },
+      //       },
+      //     }
+      //   : {}),
+      // ...(account.capabilities?.card_issuing === 'active'
+      //   ? {
+      //       issuing_card: {
+      //         enabled: true,
+      //         features: {
+      //           card_management: true,
+      //           cardholder_management: true,
+      //           card_spend_dispute_management: true,
+      //           spend_control_management: true,
+      //         },
+      //       },
+      //       issuing_cards_list: {
+      //         enabled: true,
+      //         features: {
+      //           disable_stripe_user_authentication: true,
+      //           card_management: true,
+      //           cardholder_management: true,
+      //           card_spend_dispute_management: true,
+      //           spend_control_management: true,
+      //         },
+      //       },
+      //     }
+      //   : {}),
       notification_banner: {
         enabled: true,
         features: {
@@ -212,6 +217,8 @@ export const POST = async (request: NextRequest) => {
         },
       },
     },
+  }, {
+    apiVersion: '2025-12-15.preview;embedded_connect_beta=v2'
   });
 
   return NextResponse.json(

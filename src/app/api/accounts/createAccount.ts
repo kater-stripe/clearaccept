@@ -303,13 +303,6 @@ export const createAccount = async ({
     crypto_payments: {
       requested: true,
     },
-    ...(storerCapabilityEnabled
-      ? {
-          treasury: {
-            requested: true,
-          },
-        }
-      : {}),
     ...(issuingCapabilityEnabled
       ? {
           card_issuing: {

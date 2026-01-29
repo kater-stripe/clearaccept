@@ -181,7 +181,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         icon: BriefcaseIcon,
         label: t('dashboard.finance.title'),
         children: [
-          ...(isCapabilityActive('treasury') ||
+          ...(isCapabilityActive('holds_currencies.usd') || isCapabilityActive('holds_currencies.gbp') || isCapabilityActive('holds_currencies.eur') ||
             isCapabilityActive('card_issuing')
             ? [
               {
@@ -214,7 +214,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
             label: t('dashboard.reports.title'),
           },
           {
-            href: `/${language}/dashboard/apps`,
+            href: 'https://apps-homebox.onrender.com/?redirect=/integrations/xero',
             icon: LinkIcon,
             label: t('dashboard.apps.title'),
           },
