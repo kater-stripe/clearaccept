@@ -32,7 +32,7 @@ export const seedIssuing = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  const account = await stripe.accounts.retrieve(accountId);
+  const account = await stripe.v2.core.accounts.retrieve(accountId);
 
   try {
     if (seedCardholders === undefined) {
@@ -41,8 +41,10 @@ export const seedIssuing = async ({
       };
     }
 
+    const country = (account.identity?.country?.toUpperCase() ?? 'US') as CountryCode;
+
     const mock = new Mock({
-      country: (account.country?.toUpperCase() ?? 'US') as CountryCode,
+      country,
       language: language,
       validForConnect: false,
     });
@@ -59,7 +61,7 @@ export const seedIssuing = async ({
           billing: {
             address: {
               city: address?.city! || address_kana?.city!,
-              country: account.country! ?? 'US',
+              country,
               line1: address?.line1! || address_kana?.line1!,
               postal_code: address?.postal_code! || address_kana?.postal_code!,
               state: address?.state! || address_kana?.state!,
@@ -94,7 +96,7 @@ export const seedIssuing = async ({
           {
             cardholder: cardholder.id,
             type: 'virtual',
-            currency: account.default_currency ?? 'usd',
+            currency: account.defaults?.currency ?? 'usd',
             status: 'active',
           },
           {

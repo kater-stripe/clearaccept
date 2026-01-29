@@ -61,30 +61,29 @@ export const createAccount = async ({
             },
           },
         },
-        storer: {
-          capabilities: {
-            financial_addresses: {
-              bank_accounts: {
-                requested: true,
+        ...(storerCapabilityEnabled ? {
+          storer: {
+            capabilities: {
+              financial_addresses: {
+                bank_accounts: {
+                  requested: true,
+                }
+              },
+              holds_currencies: {
+                ...(countryCode === 'US' ? {
+                  usd: {
+                    requested: true,
+                  }
+                } : {}),
+                ...(countryCode === 'GB' ? {
+                  gbp: {
+                    requested: true,
+                  },
+                } : {}),
               }
             },
-            holds_currencies: {
-              ...(countryCode === 'US' ? {
-                usd: {
-                  requested: true,
-                }
-              } : {}),
-              ...(countryCode === 'GB' ? {
-                gbp: {
-                  requested: true,
-                },
-                eur: {
-                  requested: true,
-                }
-              } : {}),
-            }
-          },
-        }
+          }
+        } : {}),
       },
       identity: {
         country: countryCode,

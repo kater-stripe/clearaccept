@@ -27,11 +27,11 @@ export const seedTransactions = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  const account = await stripe.accounts.retrieve(accountId);
+  const account = await stripe.v2.core.accounts.retrieve(accountId);
 
   try {
     const mock = new Mock({
-      country: (account.country?.toUpperCase() ?? 'US') as CountryCode,
+      country: (account.identity?.country?.toUpperCase() ?? 'US') as CountryCode,
       language,
       validForConnect: false,
     });
@@ -153,7 +153,7 @@ export const seedTransactions = async ({
         await stripe.paymentIntents.create(
           {
             amount,
-            currency: account.default_currency ?? 'usd',
+            currency: account.defaults?.currency ?? 'usd',
             customer: customers[customerIndex].id,
             payment_method: paymentMethod.id,
             confirm: true,

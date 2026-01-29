@@ -22,7 +22,7 @@ export const createBalancePaySubscription = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  const account = await stripe.accounts.retrieve(accountId);
+  const account = await stripe.v2.core.accounts.retrieve(accountId);
 
   const { data: prices } = await stripe.prices.list({
     lookup_keys: ['membership'],
@@ -62,7 +62,7 @@ export const createBalancePaySubscription = async ({
     items: [
       {
         price_data: {
-          currency: account.default_currency ?? 'usd',
+          currency: account.defaults?.currency ?? 'usd',
           product: membershipPrice.product as string,
           recurring: {
             interval: membershipPrice.recurring?.interval ?? 'month',

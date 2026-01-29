@@ -28,7 +28,7 @@ export const seedFinancialAccountTransactions = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  const account = await stripe.accounts.retrieve(accountId);
+  const account = await stripe.v2.core.accounts.retrieve(accountId);
 
   try {
     if (!seedCredits && !seedDebits) {
@@ -67,7 +67,7 @@ export const seedFinancialAccountTransactions = async ({
       } while (!hasActiveFinancialAddresses);
 
       const mock = new Mock({
-        country: (account.country?.toUpperCase() ?? 'US') as CountryCode,
+        country: (account.identity?.country?.toUpperCase() ?? 'US') as CountryCode,
         language: language,
         validForConnect: false,
       });
@@ -80,7 +80,7 @@ export const seedFinancialAccountTransactions = async ({
           await stripe.testHelpers.treasury.receivedCredits.create(
             {
               financial_account: financialAccount.id,
-              currency: account.default_currency ?? 'usd',
+              currency: account.defaults?.currency ?? 'usd',
               network:
                 mock.integer({ min: 0, max: 1 }) === 0
                   ? 'us_domestic_wire'
@@ -103,7 +103,7 @@ export const seedFinancialAccountTransactions = async ({
             await stripe.testHelpers.treasury.receivedDebits.create(
               {
                 financial_account: financialAccount.id,
-                currency: account.default_currency ?? 'usd',
+                currency: account.defaults?.currency ?? 'usd',
                 network: 'ach',
                 amount: mock.integer({ min: 10000, max: 150000 }),
                 initiating_payment_method_details: {

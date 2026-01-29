@@ -35,10 +35,7 @@ export const CreateFinancialAccountModal = ({
 
   const [name, setName] = useState('');
 
-  const defaultCurrency =
-    (account?.object === 'v2.core.account'
-      ? account?.defaults?.currency
-      : account?.default_currency) ?? 'usd';
+  const defaultCurrency = account?.defaults?.currency ?? 'usd';
 
   const [currency, setCurrency] = useState<CurrencyCode>(
     defaultCurrency as CurrencyCode,

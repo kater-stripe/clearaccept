@@ -24,7 +24,7 @@ export const createFlexLoan = async ({
     apiVersion: `${STRIPE_API_VERSION}; embedded_connect_beta=v2`,
   });
 
-  const account = await stripe.accounts.retrieve(accountId);
+  const account = await stripe.v2.core.accounts.retrieve(accountId);
 
   const response = await stripe.rawRequest(
     'POST',
@@ -40,7 +40,7 @@ export const createFlexLoan = async ({
       is_fixed_term: false,
       'loan_repayment_details[repayment_interval_duration_days]': 60,
       'loan_repayment_details[target_payback_weeks]': 42,
-      country: account.country ?? 'US',
+      country: account.identity?.country ?? 'US',
       connected_account: accountId,
     },
   );

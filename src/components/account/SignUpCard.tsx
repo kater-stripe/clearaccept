@@ -79,10 +79,7 @@ export const SignUpCard = () => {
                * Refreshes the account data from Stripe, which is good practice after onboarding is completed.
                */
               await getAccountByEmail({
-                email:
-                  account?.object === 'v2.core.account'
-                    ? account?.contact_email!
-                    : account?.email!,
+                email: account?.contact_email!,
                 stripeSecretKey,
               });
 

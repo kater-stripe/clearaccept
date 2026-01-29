@@ -2,7 +2,6 @@
 
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import type Stripe from 'stripe';
 
 type GetAccountByIdParams = {
   id: string;
@@ -21,10 +20,8 @@ export const getAccountById = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  let account: Stripe.Account | Stripe.V2.Core.Account;
-
   try {
-    account = await stripe.v2.core.accounts.retrieve(id, {
+    const account = await stripe.v2.core.accounts.retrieve(id, {
       include: [
         'requirements',
         'configuration.merchant',
@@ -32,17 +29,13 @@ export const getAccountById = async ({
         'defaults',
       ],
     });
-  } catch {
-    try {
-      account = await stripe.accounts.retrieve(id);
-    } catch (error) {
-      console.error('Uable to get account by id', error);
 
-      return {
-        message: 'sign-in.errors.account-not-found',
-      };
-    }
+    return plain(account);
+  } catch (error) {
+    console.error('Unable to get account by id', error);
+
+    return {
+      message: 'sign-in.errors.account-not-found',
+    };
   }
-
-  return plain(account);
 };

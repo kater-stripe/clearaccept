@@ -54,11 +54,7 @@ export const SignInCard = () => {
       {isSignedIn &&
       onboardingType === 'embedded' &&
       account &&
-      ((account.object === 'v2.core.account' &&
-        account.requirements?.summary?.minimum_deadline?.status ===
-          'past_due') ||
-        (account.object !== 'v2.core.account' &&
-          !account.details_submitted)) ? (
+      account.requirements?.summary?.minimum_deadline?.status === 'past_due' ? (
         <div id='connect-account-onboarding'>
           <ConnectAccountOnboarding
             onExit={async () => {
@@ -66,10 +62,7 @@ export const SignInCard = () => {
                * Refreshes the account data from Stripe, which is good practice after onboarding is completed.
                */
               await getAccountByEmail({
-                email:
-                  account?.object === 'v2.core.account'
-                    ? account?.contact_email!
-                    : account?.email!,
+                email: account?.contact_email!,
                 stripeSecretKey,
               });
 
@@ -101,19 +94,12 @@ export const SignInCard = () => {
                 return;
               }
 
-              if (account.object === 'v2.core.account') {
-                if (
-                  account.requirements?.summary?.minimum_deadline?.status !==
-                  'past_due'
-                ) {
-                  router.push(`/${language}/dashboard`);
-                  return;
-                }
-              } else {
-                if (account.details_submitted) {
-                  router.push(`/${language}/dashboard`);
-                  return;
-                }
+              if (
+                account.requirements?.summary?.minimum_deadline?.status !==
+                'past_due'
+              ) {
+                router.push(`/${language}/dashboard`);
+                return;
               }
 
               createHostedOnboardingLink({

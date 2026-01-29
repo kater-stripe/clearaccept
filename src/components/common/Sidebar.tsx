@@ -256,11 +256,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         'CH',
         'GB',
         'US',
-      ].includes(
-        (account?.object === 'account'
-          ? account.country
-          : account?.identity?.country) ?? '',
-      )
+      ].includes(account?.identity?.country ?? '')
         ? [
           {
             href: `/${language}/dashboard/membership`,

@@ -86,9 +86,7 @@ const MembershipPage = () => {
       },
     });
 
-  const defaultCurrency = ((account?.object === 'account'
-    ? account.default_currency
-    : account?.defaults?.currency) ?? 'usd') as CurrencyCode;
+  const defaultCurrency = (account?.defaults?.currency ?? 'usd') as CurrencyCode;
 
   const isEnrolled = balancePaySubscription?.status === 'active';
 

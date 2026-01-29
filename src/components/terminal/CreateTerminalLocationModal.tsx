@@ -39,10 +39,7 @@ export const CreateTerminalLocationModal = ({
   const [state, setState] = useState('');
   const [postalCode, setPostalCode] = useState('');
 
-  const defaultCountry =
-    (account?.object === 'v2.core.account'
-      ? account?.identity?.country
-      : account?.country) ?? 'US';
+  const defaultCountry = account?.identity?.country ?? 'US';
 
   const [country, setCountry] = useState(defaultCountry);
 

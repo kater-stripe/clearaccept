@@ -40,36 +40,17 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const headings = useMemo(() => {
     switch (pathnameWithoutLanguage) {
       case '/dashboard': {
-        let title = t('dashboard.home.greeting', {
+        const title = t('dashboard.home.greeting', {
           name:
-            account?.object === 'v2.core.account'
-              ? account?.contact_email
-              : account?.email,
-        });
-
-        if (account?.object === 'v2.core.account') {
-          title = t('dashboard.home.greeting', {
-            name:
-              account?.identity?.business_details?.registered_name ||
-              `${account?.identity?.individual?.given_name} ${
-                account?.identity?.individual?.surname
+            account?.identity?.business_details?.registered_name ||
+            `${account?.identity?.individual?.given_name} ${account?.identity?.individual?.surname
               }`.trim(),
-          });
-        } else {
-          title = t('dashboard.home.greeting', {
-            name:
-              account?.business_profile?.name ??
-              `${account?.individual?.first_name} ${account?.individual?.last_name}`.trim(),
-          });
-        }
+        });
 
         return {
           title,
           subtitle: t('dashboard.home.greeting-subtitle', {
-            email:
-              account?.object === 'v2.core.account'
-                ? account?.contact_email
-                : account?.email,
+            email: account?.contact_email,
           }),
         };
       }
@@ -175,10 +156,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
         return {
           title: t('dashboard.home.greeting', {
-            name:
-              account?.object === 'v2.core.account'
-                ? account?.contact_email!
-                : account?.email!,
+            name: account?.contact_email!,
           }),
         };
       }
@@ -193,9 +171,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   if (
     !isSignedIn ||
     !account ||
-    (account.object === 'v2.core.account' &&
-      account.requirements?.summary?.minimum_deadline?.status === 'past_due') ||
-    (account.object === 'account' && !account.details_submitted)
+    account.requirements?.summary?.minimum_deadline?.status === 'past_due'
   ) {
     return <LoadingOverlay />;
   }
@@ -226,9 +202,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
         {/* Mobile Sliding Menu */}
         <div
-          className={`lg:hidden fixed inset-y-0 left-0 z-40 w-full bg-brand-primary transform transition-transform duration-300 ease-in-out ${
-            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+          className={`lg:hidden fixed inset-y-0 left-0 z-40 w-full bg-brand-primary transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
         >
           <div className='py-8 flex flex-col h-full pt-16'>
             <Sidebar onMobileMenuClose={() => setIsMobileMenuOpen(false)} />

@@ -29,25 +29,25 @@ import { get } from 'lodash';
 
 const DemoMerchantContext = createContext<
   | (DemoMerchant & {
-      updateMerchant: <T extends keyof DemoMerchant>(
-        key: T,
-        value: DemoMerchant[T],
-      ) => void;
-      isSignedIn: boolean;
-      signOut: () => void;
-      createAccount: (
-        params: Parameters<typeof createAccountAction>[0],
-      ) => ReturnType<typeof createAccountAction>;
-      isCreatingAccount: boolean;
-      createAccountError: Error | null;
-      getAccountByEmail: (
-        params: Parameters<typeof getAccountByEmailAction>[0],
-      ) => ReturnType<typeof getAccountByEmailAction>;
-      isGettingAccountByEmail: boolean;
-      getAccountByEmailError: Error | null;
-      isCapabilityActive: (capabilityPath: string) => boolean;
-      isCapitalEligible: boolean;
-    })
+    updateMerchant: <T extends keyof DemoMerchant>(
+      key: T,
+      value: DemoMerchant[T],
+    ) => void;
+    isSignedIn: boolean;
+    signOut: () => void;
+    createAccount: (
+      params: Parameters<typeof createAccountAction>[0],
+    ) => ReturnType<typeof createAccountAction>;
+    isCreatingAccount: boolean;
+    createAccountError: Error | null;
+    getAccountByEmail: (
+      params: Parameters<typeof getAccountByEmailAction>[0],
+    ) => ReturnType<typeof getAccountByEmailAction>;
+    isGettingAccountByEmail: boolean;
+    getAccountByEmailError: Error | null;
+    isCapabilityActive: (capabilityPath: string) => boolean;
+    isCapitalEligible: boolean;
+  })
   | null
 >(null);
 
@@ -112,15 +112,10 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
           throw new Error(accountOrErrorMessage.message);
         }
 
-        const email =
-          accountOrErrorMessage.object === 'v2.core.account'
-            ? accountOrErrorMessage.contact_email
-            : accountOrErrorMessage.email;
-
         setDemoMerchant((previousMerchant) => ({
           ...previousMerchant,
           account: accountOrErrorMessage,
-          email: email!,
+          email: accountOrErrorMessage.contact_email!,
         }));
       },
     });
@@ -153,16 +148,13 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
     const updateAccount = async () => {
       const response = accountIdFromParams
         ? await getAccountById({
-            id: accountIdFromParams,
-            stripeSecretKey,
-          })
+          id: accountIdFromParams,
+          stripeSecretKey,
+        })
         : await getAccountByEmail({
-            email:
-              demoMerchant.account!.object === 'v2.core.account'
-                ? demoMerchant.account!.contact_email!
-                : demoMerchant.account!.email!,
-            stripeSecretKey,
-          });
+          email: demoMerchant.account!.contact_email!,
+          stripeSecretKey,
+        });
 
       /**
        * If we get signed out mid-update (due to resetting settings or something else), we shouldn't continue with the account update.
@@ -187,17 +179,10 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
          * If we don't have account details submitted (meaning onboarding wasn't completed)
          * redirect back to the home page to show either embedded/hosted Connect onboarding.
          */
-        if (account.object === 'v2.core.account') {
-          if (
-            account.requirements?.summary?.minimum_deadline?.status ===
-            'past_due'
-          ) {
-            router.push(`/${language}`);
-          }
-        } else {
-          if (!account.details_submitted) {
-            router.push(`/${language}`);
-          }
+        if (
+          account.requirements?.summary?.minimum_deadline?.status === 'past_due'
+        ) {
+          router.push(`/${language}`);
         }
       } else if (!pathnameWithoutLanguage.startsWith('/storefront')) {
         // If we're anywhere else in the application besides the storefront.
@@ -206,17 +191,10 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
          * If we have an account, the account details were submitted (meaning onboarding was completed)
          * and we're not in the dashboard, redirect to the dashboard.
          */
-        if (account.object === 'v2.core.account') {
-          if (
-            account.requirements?.summary?.minimum_deadline?.status !==
-            'past_due'
-          ) {
-            router.push(`/${language}/dashboard`);
-          }
-        } else {
-          if (account.details_submitted) {
-            router.push(`/${language}/dashboard`);
-          }
+        if (
+          account.requirements?.summary?.minimum_deadline?.status !== 'past_due'
+        ) {
+          router.push(`/${language}/dashboard`);
         }
       }
 
@@ -275,7 +253,7 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
       locale:
         language === 'en-GB'
           ? language
-          : `${language}-${(demoMerchant.account.object === 'account' ? demoMerchant.account.country : demoMerchant.account.identity?.country) ?? 'US'}`,
+          : `${language}-${demoMerchant.account.identity?.country ?? 'US'}`,
     });
   }, [demoMerchant.account]);
 
@@ -286,11 +264,7 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
       return false;
     }
 
-    return ['US', 'FR', 'GB'].includes(
-      (account.object === 'account'
-        ? account.country
-        : account.identity?.country) ?? '',
-    );
+    return ['US', 'FR', 'GB'].includes(account.identity?.country ?? '');
   }, [demoMerchant.account]);
 
   /**
@@ -311,19 +285,11 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
       return false;
     }
 
-    if (account?.object === 'v2.core.account') {
-      const capabilities = account.configuration?.merchant?.capabilities;
-
-      const capabilityObject = get(capabilities, capabilityPath);
-
-      return capabilityObject?.status === 'active';
-    }
-
-    const capabilities = account.capabilities;
+    const capabilities = account.configuration?.merchant?.capabilities;
 
     const capabilityObject = get(capabilities, capabilityPath);
 
-    return capabilityObject === 'active';
+    return capabilityObject?.status === 'active';
   };
 
   const demoMerchantContext = {

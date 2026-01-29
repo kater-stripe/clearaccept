@@ -8,24 +8,12 @@ export const StorefrontHeader = () => {
   const { openCart, items } = useCart();
 
   const title = useMemo(() => {
-    let title =
-      account?.object === 'v2.core.account'
-        ? account?.contact_email
-        : account?.email;
-
-    if (account?.object === 'v2.core.account') {
-      title =
-        account?.identity?.business_details?.registered_name ||
-        `${account?.identity?.individual?.given_name} ${
-          account?.identity?.individual?.surname
-        }`.trim();
-    } else {
-      title =
-        account?.business_profile?.name ??
-        `${account?.individual?.first_name} ${account?.individual?.last_name}`.trim();
-    }
-
-    return title;
+    return (
+      account?.identity?.business_details?.registered_name ||
+      `${account?.identity?.individual?.given_name} ${
+        account?.identity?.individual?.surname
+      }`.trim()
+    );
   }, [account]);
 
   return (

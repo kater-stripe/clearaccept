@@ -41,10 +41,7 @@ export const CreateInvoiceModal = ({
   const { account } = useDemoMerchant();
   const { stripeSecretKey, chargeType } = useDemoConfig();
 
-  const defaultCurrency =
-    (account?.object === 'v2.core.account'
-      ? account?.defaults?.currency
-      : account?.default_currency) ?? 'usd';
+  const defaultCurrency = account?.defaults?.currency ?? 'usd';
 
   const [customerId, setCustomerId] = useState<string>('');
   const [currency, setCurrency] = useState<CurrencyCode>(

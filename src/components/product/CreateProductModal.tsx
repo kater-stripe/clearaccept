@@ -42,10 +42,7 @@ export const CreateProductModal = ({
   const [description, setDescription] = useState<string | undefined>(undefined);
   const [unitAmount, setUnitAmount] = useState(0);
 
-  const defaultCurrency =
-    (account?.object === 'v2.core.account'
-      ? account?.defaults?.currency
-      : account?.default_currency) ?? 'usd';
+  const defaultCurrency = account?.defaults?.currency ?? 'usd';
 
   const [currency, setCurrency] = useState<CurrencyCode>(
     defaultCurrency as CurrencyCode,

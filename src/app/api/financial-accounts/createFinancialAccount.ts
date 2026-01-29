@@ -26,13 +26,13 @@ export const createFinancialAccount = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  const account = await stripe.accounts.retrieve(accountId);
+  const account = await stripe.v2.core.accounts.retrieve(accountId);
 
   try {
     const financialAccount = await stripe.treasury.financialAccounts.create(
       {
         display_name: name,
-        supported_currencies: [currency ?? account.default_currency ?? 'usd'],
+        supported_currencies: [currency ?? account.defaults?.currency ?? 'usd'],
       },
       {
         stripeAccount: accountId,
