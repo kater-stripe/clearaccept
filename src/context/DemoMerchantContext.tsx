@@ -289,6 +289,8 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
       ...(account.configuration?.merchant?.capabilities ?? {}),
       ...(account.configuration?.storer?.capabilities ?? {}),
       ...(account.configuration?.recipient?.capabilities ?? {}),
+      // @ts-expect-error
+      ...(account.configuration?.card_creator?.capabilities ?? {}),
     }
 
     const capabilityObject = get(capabilities, capabilityPath);

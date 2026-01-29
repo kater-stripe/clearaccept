@@ -35,15 +35,17 @@ export const POST = async (request: NextRequest) => {
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  // const account = await stripe.v2.core.accounts.retrieve(accountId, {
-  //   include: [
-  //     'defaults',
-  //     'configuration.customer',
-  //     'configuration.merchant',
-  //     'configuration.recipient',
-  //     'configuration.storer'
-  //   ],
-  // });
+  // @ts-expect-error
+  const account = await stripe.v2.core.accounts.retrieve(accountId, {
+    include: [
+      'defaults',
+      'configuration.customer',
+      'configuration.merchant',
+      'configuration.recipient',
+      'configuration.storer',
+      'configuration.card_creator'
+    ],
+  });
 
   const accountSession = await stripe.accountSessions.create({
     account: accountId,
@@ -118,29 +120,30 @@ export const POST = async (request: NextRequest) => {
       //       },
       //     }
       //   : {}),
-      // ...(account.capabilities?.card_issuing === 'active'
-      //   ? {
-      //       issuing_card: {
-      //         enabled: true,
-      //         features: {
-      //           card_management: true,
-      //           cardholder_management: true,
-      //           card_spend_dispute_management: true,
-      //           spend_control_management: true,
-      //         },
-      //       },
-      //       issuing_cards_list: {
-      //         enabled: true,
-      //         features: {
-      //           disable_stripe_user_authentication: true,
-      //           card_management: true,
-      //           cardholder_management: true,
-      //           card_spend_dispute_management: true,
-      //           spend_control_management: true,
-      //         },
-      //       },
-      //     }
-      //   : {}),
+      // @ts-expect-error
+      ...(account.configuration?.card_creator?.capabilities?.commercial?.stripe?.charge_card?.status === 'active'
+        ? {
+            issuing_card: {
+              enabled: true,
+              features: {
+                card_management: true,
+                cardholder_management: true,
+                card_spend_dispute_management: true,
+                spend_control_management: true,
+              },
+            },
+            issuing_cards_list: {
+              enabled: true,
+              features: {
+                disable_stripe_user_authentication: true,
+                card_management: true,
+                cardholder_management: true,
+                card_spend_dispute_management: true,
+                spend_control_management: true,
+              },
+            },
+          }
+        : {}),
       notification_banner: {
         enabled: true,
         features: {

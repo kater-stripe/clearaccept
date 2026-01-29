@@ -462,7 +462,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   },
                 ] : []),
                 // Issuing seeding (only if capability active)
-                ...(isCapabilityActive('card_issuing') ? [
+                ...(isCapabilityActive('commercial.stripe.charge_card') ? [
                   {
                     type: 'checkbox' as const,
                     label: 'Cardholders',

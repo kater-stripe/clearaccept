@@ -182,7 +182,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         label: t('dashboard.finance.title'),
         children: [
           ...(isCapabilityActive('holds_currencies.usd') || isCapabilityActive('holds_currencies.gbp') || isCapabilityActive('holds_currencies.eur') ||
-            isCapabilityActive('card_issuing')
+            isCapabilityActive('commercial.stripe.charge_card')
             ? [
               {
                 href: `/${language}/dashboard/expenses`,

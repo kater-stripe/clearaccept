@@ -48,7 +48,7 @@ const FinancialAccountsAndIssuingPage = () => {
         accountId: account!.id,
         stripeSecretKey,
       }),
-    enabled: isCapabilityActive('card_issuing'),
+    enabled: isCapabilityActive('commercial.stripe.charge_card'),
   });
 
   const { mutateAsync: fetchEphemeralKey } = useMutation({
@@ -92,7 +92,7 @@ const FinancialAccountsAndIssuingPage = () => {
             </div>
           </Card>
         )}
-        {isCapabilityActive('card_issuing') && (
+        {isCapabilityActive('commercial.stripe.charge_card') && (
           <>
             <Card className='mt-4 flex flex-col gap-4'>
               <h2 className='text-lg font-semibold'>

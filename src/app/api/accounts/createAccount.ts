@@ -61,6 +61,19 @@ export const createAccount = async ({
             },
           },
         },
+        ...(issuingCapabilityEnabled ? {
+          card_creator: {
+            capabilities: {
+              commercial: {
+                stripe: {
+                  charge_card: {
+                    requested: true,
+                  }
+                }
+              }
+            }
+          }
+        } : {}),
         ...(storerCapabilityEnabled ? {
           storer: {
             capabilities: {
