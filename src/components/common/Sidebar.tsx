@@ -117,11 +117,11 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         icon: HomeIcon,
         label: t('dashboard.home.title'),
       },
-      {
-        href: `/${language}/dashboard/products`,
-        icon: BanknotesIcon,
-        label: t('dashboard.products.title'),
-      },
+      // {
+      //   href: `/${language}/dashboard/products`,
+      //   icon: BanknotesIcon,
+      //   label: t('dashboard.products.title'),
+      // },
       {
         href: `/${language}/dashboard/customers`,
         icon: UsersIcon,
@@ -147,28 +147,28 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
             icon: DocumentTextIcon,
             label: t('dashboard.invoices.title'),
           },
-          {
-            id: 'terminal',
-            icon: DevicePhoneMobileIcon,
-            label: t('dashboard.terminal.title'),
-            children: [
-              {
-                href: `/${language}/dashboard/payments/terminal/settings`,
-                icon: Cog6ToothIcon,
-                label: t('dashboard.terminal.settings.title'),
-              },
-              {
-                href: `/${language}/dashboard/payments/terminal/pos`,
-                icon: POSIcon,
-                label: t('dashboard.terminal.pos.title'),
-              },
-              // {
-              //   href: `/${language}/dashboard/payments/terminal/shop`,
-              //   icon: BuildingStorefrontIcon,
-              //   label: t('dashboard.terminal.shop.title'),
-              // },
-            ],
-          },
+          // {
+          //   id: 'terminal',
+          //   icon: DevicePhoneMobileIcon,
+          //   label: t('dashboard.terminal.title'),
+          //   children: [
+          //     {
+          //       href: `/${language}/dashboard/payments/terminal/settings`,
+          //       icon: Cog6ToothIcon,
+          //       label: t('dashboard.terminal.settings.title'),
+          //     },
+          //     {
+          //       href: `/${language}/dashboard/payments/terminal/pos`,
+          //       icon: POSIcon,
+          //       label: t('dashboard.terminal.pos.title'),
+          //     },
+          //     // {
+          //     //   href: `/${language}/dashboard/payments/terminal/shop`,
+          //     //   icon: BuildingStorefrontIcon,
+          //     //   label: t('dashboard.terminal.shop.title'),
+          //     // },
+          //   ],
+          // },
           {
             href: `/${language}/dashboard/tax`,
             icon: CalculatorIcon,
