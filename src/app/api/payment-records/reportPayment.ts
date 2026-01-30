@@ -42,10 +42,8 @@ export const reportPayment = async ({
     return;
   }
 
-  const stripe = initializeStripe(stripeSecretKey, {
-    apiVersion: `${STRIPE_API_VERSION}; payment_records_beta=v1`,
-  });
-
+  const stripe = initializeStripe(stripeSecretKey);
+  
   const secondsSinceEpoch = Math.floor(Date.now() / 1000);
 
   const paymentRecord = await stripe.paymentRecords.reportPayment(
