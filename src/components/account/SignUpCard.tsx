@@ -197,8 +197,8 @@ export const SignUpCard = () => {
             className='w-32 h-10'
           >
             {isCreatingAccount ||
-              isCreatingHostedOnboardingLink ||
-              !!hostedOnboardingLink ? (
+            isCreatingHostedOnboardingLink ||
+            !!hostedOnboardingLink ? (
               <LoadingSpinner className='size-4' strokeWidth={3} />
             ) : (
               <>

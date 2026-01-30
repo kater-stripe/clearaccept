@@ -77,9 +77,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
                     <DemoCustomerProvider>
                       <ToolsPanelWrapper>
                         <HandleCallbacksProvider>
-                          <div className='bg-white'>
-                            {children}
-                          </div>
+                          <div className='bg-white'>{children}</div>
                         </HandleCallbacksProvider>
                       </ToolsPanelWrapper>
                     </DemoCustomerProvider>

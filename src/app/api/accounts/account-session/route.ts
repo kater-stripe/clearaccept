@@ -43,186 +43,190 @@ export const POST = async (request: NextRequest) => {
       'configuration.merchant',
       'configuration.recipient',
       'configuration.storer',
-      'configuration.card_creator'
+      'configuration.card_creator',
     ],
   });
 
-  const accountSession = await stripe.accountSessions.create({
-    account: accountId,
-    components: {
-      account_onboarding: {
-        enabled: true,
-        features: {
-          disable_stripe_user_authentication: true,
-          external_account_collection: true,
+  const accountSession = await stripe.accountSessions.create(
+    {
+      account: accountId,
+      components: {
+        account_onboarding: {
+          enabled: true,
+          features: {
+            disable_stripe_user_authentication: true,
+            external_account_collection: true,
+          },
         },
-      },
-      account_management: {
-        enabled: true,
-        features: {
-          disable_stripe_user_authentication: true,
+        account_management: {
+          enabled: true,
+          features: {
+            disable_stripe_user_authentication: true,
+          },
         },
-      },
-      balances: {
-        enabled: true,
-        features: {
-          disable_stripe_user_authentication: true,
-          edit_payout_schedule: true,
-          external_account_collection: true,
-          instant_payouts: true,
-          standard_payouts: true,
+        balances: {
+          enabled: true,
+          features: {
+            disable_stripe_user_authentication: true,
+            edit_payout_schedule: true,
+            external_account_collection: true,
+            instant_payouts: true,
+            standard_payouts: true,
+          },
         },
-      },
-      capital_financing: {
-        enabled: true,
-      },
-      capital_financing_application: {
-        enabled: true,
-      },
-      capital_financing_promotion: {
-        enabled: true,
-      },
-      disputes_list: {
-        enabled: true,
-        features: {
-          destination_on_behalf_of_charge_management: true,
+        capital_financing: {
+          enabled: true,
         },
-      },
-      documents: {
-        enabled: true,
-      },
-      export_tax_transactions: {
-        enabled: true,
-      },
-      instant_payouts_promotion: {
-        enabled: true,
-        features: {
-          disable_stripe_user_authentication: true,
-          instant_payouts: true,
+        capital_financing_application: {
+          enabled: true,
         },
-      },
-      // ...(Object.entries(account.configuration?.storer?.capabilities?.holds_currencies ?? {}).some(([_currency, capability]) => capability?.status === 'active')
-      //   ? {
-      //       financial_account: {
-      //         enabled: true,
-      //         features: {
-      //           disable_stripe_user_authentication: true,
-      //           transfer_balance: true,
-      //           send_money: true,
-      //           external_account_collection: true,
-      //         },
-      //       },
-      //       financial_account_transactions: {
-      //         enabled: true,
-      //         features: {
-      //           card_spend_dispute_management: true,
-      //         },
-      //       },
-      //     }
-      //   : {}),
-      // @ts-expect-error
-      ...(account.configuration?.card_creator?.capabilities?.commercial?.stripe?.charge_card?.status === 'active'
-        ? {
-            issuing_card: {
-              enabled: true,
-              features: {
-                card_management: true,
-                cardholder_management: true,
-                card_spend_dispute_management: true,
-                spend_control_management: true,
+        capital_financing_promotion: {
+          enabled: true,
+        },
+        disputes_list: {
+          enabled: true,
+          features: {
+            destination_on_behalf_of_charge_management: true,
+          },
+        },
+        documents: {
+          enabled: true,
+        },
+        export_tax_transactions: {
+          enabled: true,
+        },
+        instant_payouts_promotion: {
+          enabled: true,
+          features: {
+            disable_stripe_user_authentication: true,
+            instant_payouts: true,
+          },
+        },
+        // ...(Object.entries(account.configuration?.storer?.capabilities?.holds_currencies ?? {}).some(([_currency, capability]) => capability?.status === 'active')
+        //   ? {
+        //       financial_account: {
+        //         enabled: true,
+        //         features: {
+        //           disable_stripe_user_authentication: true,
+        //           transfer_balance: true,
+        //           send_money: true,
+        //           external_account_collection: true,
+        //         },
+        //       },
+        //       financial_account_transactions: {
+        //         enabled: true,
+        //         features: {
+        //           card_spend_dispute_management: true,
+        //         },
+        //       },
+        //     }
+        //   : {}),
+        // @ts-expect-error
+        ...(account.configuration?.card_creator?.capabilities?.commercial
+          ?.stripe?.charge_card?.status === 'active'
+          ? {
+              issuing_card: {
+                enabled: true,
+                features: {
+                  card_management: true,
+                  cardholder_management: true,
+                  card_spend_dispute_management: true,
+                  spend_control_management: true,
+                },
               },
-            },
-            issuing_cards_list: {
-              enabled: true,
-              features: {
-                disable_stripe_user_authentication: true,
-                card_management: true,
-                cardholder_management: true,
-                card_spend_dispute_management: true,
-                spend_control_management: true,
+              issuing_cards_list: {
+                enabled: true,
+                features: {
+                  disable_stripe_user_authentication: true,
+                  card_management: true,
+                  cardholder_management: true,
+                  card_spend_dispute_management: true,
+                  spend_control_management: true,
+                },
               },
-            },
-          }
-        : {}),
-      notification_banner: {
-        enabled: true,
-        features: {
-          disable_stripe_user_authentication: true,
+            }
+          : {}),
+        notification_banner: {
+          enabled: true,
+          features: {
+            disable_stripe_user_authentication: true,
+          },
         },
-      },
-      payment_details: {
-        enabled: true,
-        features: {
-          destination_on_behalf_of_charge_management: true,
-          capture_payments: true,
-          refund_management: true,
-          dispute_management: true,
+        payment_details: {
+          enabled: true,
+          features: {
+            destination_on_behalf_of_charge_management: true,
+            capture_payments: true,
+            refund_management: true,
+            dispute_management: true,
+          },
         },
-      },
-      payment_disputes: {
-        enabled: true,
-        features: {
-          destination_on_behalf_of_charge_management: true,
-          dispute_management: true,
-          refund_management: true,
+        payment_disputes: {
+          enabled: true,
+          features: {
+            destination_on_behalf_of_charge_management: true,
+            dispute_management: true,
+            refund_management: true,
+          },
         },
-      },
-      payment_method_settings: {
-        enabled: true,
-      },
-      payments: {
-        enabled: true,
-        features: {
-          destination_on_behalf_of_charge_management: true,
+        payment_method_settings: {
+          enabled: true,
         },
-      },
-      payouts: {
-        enabled: true,
-        features: {
-          disable_stripe_user_authentication: true,
-          edit_payout_schedule: true,
-          external_account_collection: true,
-          instant_payouts: true,
-          standard_payouts: true,
+        payments: {
+          enabled: true,
+          features: {
+            destination_on_behalf_of_charge_management: true,
+          },
         },
-      },
-      payouts_list: {
-        enabled: true,
-      },
-      product_tax_code_selector: {
-        enabled: true,
-      },
-      // recipients: {
-      //   enabled: true,
-      // },
-      tax_registrations: {
-        enabled: true,
-      },
-      tax_settings: {
-        enabled: true,
-      },
-      tax_threshold_monitoring: {
-        enabled: true,
-      },
-      reporting_chart: {
-        enabled: true,
-      },
-      app_install: {
-        enabled: true,
-        features: {
-          allowed_apps: ['com.example.acodeistripeapp', 'com.xero.stripeapp'],
+        payouts: {
+          enabled: true,
+          features: {
+            disable_stripe_user_authentication: true,
+            edit_payout_schedule: true,
+            external_account_collection: true,
+            instant_payouts: true,
+            standard_payouts: true,
+          },
         },
-      },
-      app_viewport: {
-        enabled: true,
-        features: {
-          allowed_apps: ['com.example.acodeistripeapp', 'com.xero.stripeapp'],
+        payouts_list: {
+          enabled: true,
+        },
+        product_tax_code_selector: {
+          enabled: true,
+        },
+        // recipients: {
+        //   enabled: true,
+        // },
+        tax_registrations: {
+          enabled: true,
+        },
+        tax_settings: {
+          enabled: true,
+        },
+        tax_threshold_monitoring: {
+          enabled: true,
+        },
+        reporting_chart: {
+          enabled: true,
+        },
+        app_install: {
+          enabled: true,
+          features: {
+            allowed_apps: ['com.example.acodeistripeapp', 'com.xero.stripeapp'],
+          },
+        },
+        app_viewport: {
+          enabled: true,
+          features: {
+            allowed_apps: ['com.example.acodeistripeapp', 'com.xero.stripeapp'],
+          },
         },
       },
     },
-  }, {
-    apiVersion: '2025-12-15.preview;embedded_connect_beta=v2'
-  });
+    {
+      apiVersion: '2025-12-15.preview;embedded_connect_beta=v2',
+    },
+  );
 
   return NextResponse.json(
     plain(accountSession) satisfies CreateAccountSessionResponse,

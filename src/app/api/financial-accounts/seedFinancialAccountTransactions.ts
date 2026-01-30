@@ -67,7 +67,8 @@ export const seedFinancialAccountTransactions = async ({
       } while (!hasActiveFinancialAddresses);
 
       const mock = new Mock({
-        country: (account.identity?.country?.toUpperCase() ?? 'US') as CountryCode,
+        country: (account.identity?.country?.toUpperCase() ??
+          'US') as CountryCode,
         language: language,
         validForConnect: false,
       });

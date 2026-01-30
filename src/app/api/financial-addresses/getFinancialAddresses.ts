@@ -23,12 +23,18 @@ export const getFinancialAddresses = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   const { data: financialAddresses } =
-    await stripe.v2.moneyManagement.financialAddresses.list({
-      financial_account: financialAccountId,
-      include: ['credentials.gb_bank_account.account_number', 'credentials.us_bank_account.account_number']
-    }, {
-      stripeAccount: accountId,
-    });
+    await stripe.v2.moneyManagement.financialAddresses.list(
+      {
+        financial_account: financialAccountId,
+        include: [
+          'credentials.gb_bank_account.account_number',
+          'credentials.us_bank_account.account_number',
+        ],
+      },
+      {
+        stripeAccount: accountId,
+      },
+    );
 
   return plain(financialAddresses);
 };

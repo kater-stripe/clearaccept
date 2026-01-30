@@ -31,7 +31,8 @@ export const seedTransactions = async ({
 
   try {
     const mock = new Mock({
-      country: (account.identity?.country?.toUpperCase() ?? 'US') as CountryCode,
+      country: (account.identity?.country?.toUpperCase() ??
+        'US') as CountryCode,
       language,
       validForConnect: false,
     });

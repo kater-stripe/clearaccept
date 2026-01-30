@@ -82,7 +82,11 @@
       "create-financial-account": "创建金融账户",
       "financial-account": {
         "title": "金融账户",
-        "transactions": "交易记录"
+        "transactions": "交易记录",
+        "overview": "账户概览",
+        "bank-details": "银行账户详情",
+        "balances": "余额",
+        "no-transactions": "暂无交易记录"
       },
       "available-balances": "可用余额：",
       "financial-accounts": "金融账户",

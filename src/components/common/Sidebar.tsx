@@ -109,7 +109,6 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
   const pathname = usePathname();
   const { account, signOut, isCapabilityActive } = useDemoMerchant();
 
-
   const navItems: NavElement[] = useMemo(
     () => [
       {
@@ -181,15 +180,17 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         icon: BriefcaseIcon,
         label: t('dashboard.finance.title'),
         children: [
-          ...(isCapabilityActive('holds_currencies.usd') || isCapabilityActive('holds_currencies.gbp') || isCapabilityActive('holds_currencies.eur') ||
-            isCapabilityActive('commercial.stripe.charge_card')
+          ...(isCapabilityActive('holds_currencies.usd') ||
+          isCapabilityActive('holds_currencies.gbp') ||
+          isCapabilityActive('holds_currencies.eur') ||
+          isCapabilityActive('commercial.stripe.charge_card')
             ? [
-              {
-                href: `/${language}/dashboard/expenses`,
-                icon: BuildingLibraryIcon,
-                label: t('dashboard.expenses.title'),
-              },
-            ]
+                {
+                  href: `/${language}/dashboard/expenses`,
+                  icon: BuildingLibraryIcon,
+                  label: t('dashboard.expenses.title'),
+                },
+              ]
             : []),
           {
             href: `/${language}/dashboard/capital`,
@@ -258,12 +259,12 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         'US',
       ].includes(account?.identity?.country ?? '')
         ? [
-          {
-            href: `/${language}/dashboard/membership`,
-            icon: StarIcon,
-            label: t('dashboard.membership.title'),
-          },
-        ]
+            {
+              href: `/${language}/dashboard/membership`,
+              icon: StarIcon,
+              label: t('dashboard.membership.title'),
+            },
+          ]
         : []),
     ],
     [language, t, isCapabilityActive, account],
@@ -297,12 +298,13 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         onClick={() => onMobileMenuClose?.()}
       >
         <button
-          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${isTopLevel
-            ? 'text-white text-lg py-2'
-            : isNested
-              ? 'text-white text-sm py-1.5'
-              : 'text-white text-base py-1.5'
-            }`}
+          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${
+            isTopLevel
+              ? 'text-white text-lg py-2'
+              : isNested
+                ? 'text-white text-sm py-1.5'
+                : 'text-white text-base py-1.5'
+          }`}
         >
           <item.icon
             className={
@@ -335,10 +337,11 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
       <div key={group.id}>
         <button
           onClick={() => toggleGroup(group.id)}
-          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${isTopLevel
-            ? 'text-white text-lg py-2'
-            : 'text-white text-base py-1.5'
-            }`}
+          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${
+            isTopLevel
+              ? 'text-white text-lg py-2'
+              : 'text-white text-base py-1.5'
+          }`}
         >
           <group.icon
             className={isTopLevel ? 'size-5 shrink-0' : 'size-4 shrink-0'}

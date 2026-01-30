@@ -41,7 +41,8 @@ export const seedIssuing = async ({
       };
     }
 
-    const country = (account.identity?.country?.toUpperCase() ?? 'US') as CountryCode;
+    const country = (account.identity?.country?.toUpperCase() ??
+      'US') as CountryCode;
 
     const mock = new Mock({
       country,

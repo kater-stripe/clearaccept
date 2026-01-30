@@ -64,8 +64,8 @@ export const InvoiceRow = ({ invoice }: InvoiceRowProps) => {
 
   const customer =
     typeof invoice.customer === 'object' &&
-      invoice.customer &&
-      !('deleted' in invoice.customer)
+    invoice.customer &&
+    !('deleted' in invoice.customer)
       ? invoice.customer
       : null;
   const customerName = customer?.name || customer?.email || 'Unknown';

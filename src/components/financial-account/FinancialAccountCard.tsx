@@ -24,15 +24,17 @@ export const FinancialAccountCard = ({
 
   const { account } = useDemoMerchant();
 
-  const { data: financialAddresses, isPending: isFinancialAddressesLoading } = useQuery({
-    queryKey: ['financial-addresses', financialAccount.id],
-    queryFn: () => getFinancialAddressesAction({
-      financialAccountId: financialAccount.id,
-      stripeSecretKey,
-      accountId: account!.id,
-    }),
-    enabled: !!account,
-  });
+  const { data: financialAddresses, isPending: isFinancialAddressesLoading } =
+    useQuery({
+      queryKey: ['financial-addresses', financialAccount.id],
+      queryFn: () =>
+        getFinancialAddressesAction({
+          financialAccountId: financialAccount.id,
+          stripeSecretKey,
+          accountId: account!.id,
+        }),
+      enabled: !!account,
+    });
 
   const financialAddress = financialAddresses?.[0];
 

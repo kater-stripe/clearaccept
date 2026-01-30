@@ -82,7 +82,11 @@
       "create-financial-account": "金融口座を作成",
       "financial-account": {
         "title": "金融口座",
-        "transactions": "取引履歴"
+        "transactions": "取引履歴",
+        "overview": "口座概要",
+        "bank-details": "銀行口座情報",
+        "balances": "残高",
+        "no-transactions": "取引履歴はまだありません"
       },
       "available-balances": "利用可能な残高：",
       "financial-accounts": "金融口座",

@@ -29,25 +29,25 @@ import { get } from 'lodash';
 
 const DemoMerchantContext = createContext<
   | (DemoMerchant & {
-    updateMerchant: <T extends keyof DemoMerchant>(
-      key: T,
-      value: DemoMerchant[T],
-    ) => void;
-    isSignedIn: boolean;
-    signOut: () => void;
-    createAccount: (
-      params: Parameters<typeof createAccountAction>[0],
-    ) => ReturnType<typeof createAccountAction>;
-    isCreatingAccount: boolean;
-    createAccountError: Error | null;
-    getAccountByEmail: (
-      params: Parameters<typeof getAccountByEmailAction>[0],
-    ) => ReturnType<typeof getAccountByEmailAction>;
-    isGettingAccountByEmail: boolean;
-    getAccountByEmailError: Error | null;
-    isCapabilityActive: (capabilityPath: string) => boolean;
-    isCapitalEligible: boolean;
-  })
+      updateMerchant: <T extends keyof DemoMerchant>(
+        key: T,
+        value: DemoMerchant[T],
+      ) => void;
+      isSignedIn: boolean;
+      signOut: () => void;
+      createAccount: (
+        params: Parameters<typeof createAccountAction>[0],
+      ) => ReturnType<typeof createAccountAction>;
+      isCreatingAccount: boolean;
+      createAccountError: Error | null;
+      getAccountByEmail: (
+        params: Parameters<typeof getAccountByEmailAction>[0],
+      ) => ReturnType<typeof getAccountByEmailAction>;
+      isGettingAccountByEmail: boolean;
+      getAccountByEmailError: Error | null;
+      isCapabilityActive: (capabilityPath: string) => boolean;
+      isCapitalEligible: boolean;
+    })
   | null
 >(null);
 
@@ -148,13 +148,13 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
     const updateAccount = async () => {
       const response = accountIdFromParams
         ? await getAccountById({
-          id: accountIdFromParams,
-          stripeSecretKey,
-        })
+            id: accountIdFromParams,
+            stripeSecretKey,
+          })
         : await getAccountByEmail({
-          email: demoMerchant.account!.contact_email!,
-          stripeSecretKey,
-        });
+            email: demoMerchant.account!.contact_email!,
+            stripeSecretKey,
+          });
 
       /**
        * If we get signed out mid-update (due to resetting settings or something else), we shouldn't continue with the account update.
@@ -291,7 +291,7 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
       ...(account.configuration?.recipient?.capabilities ?? {}),
       // @ts-expect-error
       ...(account.configuration?.card_creator?.capabilities ?? {}),
-    }
+    };
 
     const capabilityObject = get(capabilities, capabilityPath);
 

@@ -43,17 +43,17 @@ export const getAccountByEmail = async ({
 
   // @ts-expect-error
   const account = await stripe.v2.core.accounts.retrieve(accountId, {
-      include: [
-        'requirements',
-        'configuration.merchant',
-        'configuration.storer',
-        'configuration.recipient',
-        'configuration.card_creator',
-        'configuration.storer',
-        'identity',
-        'defaults',
-      ],
-    });
+    include: [
+      'requirements',
+      'configuration.merchant',
+      'configuration.storer',
+      'configuration.recipient',
+      'configuration.card_creator',
+      'configuration.storer',
+      'identity',
+      'defaults',
+    ],
+  });
 
   return plain(account);
 };

@@ -82,7 +82,11 @@
       "create-financial-account": "Finanzkonto erstellen",
       "financial-account": {
         "title": "Finanzkonto",
-        "transactions": "Transaktionen"
+        "transactions": "Transaktionen",
+        "overview": "Kontoübersicht",
+        "bank-details": "Bankverbindung",
+        "balances": "Salden",
+        "no-transactions": "Noch keine Transaktionen"
       },
       "available-balances": "Verfügbares Guthaben:",
       "financial-accounts": "Finanzkonten",

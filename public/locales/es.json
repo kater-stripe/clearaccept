@@ -82,7 +82,11 @@
       "create-financial-account": "Crear cuenta financiera",
       "financial-account": {
         "title": "Cuenta financiera",
-        "transactions": "Transacciones"
+        "transactions": "Transacciones",
+        "overview": "Resumen de la cuenta",
+        "bank-details": "Datos bancarios",
+        "balances": "Saldos",
+        "no-transactions": "Aún no hay transacciones"
       },
       "available-balances": "Saldos disponibles:",
       "financial-accounts": "Cuentas financieras",

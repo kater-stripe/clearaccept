@@ -45,77 +45,79 @@ export const createAccount = async ({
   }
 
   const account = await stripe.v2.core.accounts.create({
-      contact_email: email,
-      configuration: {
-        merchant: {
-          capabilities: {
-            card_payments: {
-              requested: true,
-            },
+    contact_email: email,
+    configuration: {
+      merchant: {
+        capabilities: {
+          card_payments: {
+            requested: true,
           },
         },
-        customer: {
-          capabilities: {
-            automatic_indirect_tax: {
-              requested: true,
-            },
+      },
+      customer: {
+        capabilities: {
+          automatic_indirect_tax: {
+            requested: true,
           },
         },
-        ...(issuingCapabilityEnabled ? {
-          card_creator: {
-            capabilities: {
-              commercial: {
-                stripe: {
-                  charge_card: {
-                    requested: true,
-                  }
-                }
-              }
-            }
-          }
-        } : {}),
-        ...(storerCapabilityEnabled ? {
-          storer: {
-            capabilities: {
-              financial_addresses: {
-                bank_accounts: {
-                  requested: true,
-                }
+      },
+      ...(issuingCapabilityEnabled
+        ? {
+            card_creator: {
+              capabilities: {
+                commercial: {
+                  stripe: {
+                    charge_card: {
+                      requested: true,
+                    },
+                  },
+                },
               },
-              holds_currencies: {
-                ...(countryCode === 'US' ? {
-                  usd: {
-                    requested: true,
-                  }
-                } : {}),
-                ...(countryCode === 'GB' ? {
-                  gbp: {
+            },
+          }
+        : {}),
+      ...(storerCapabilityEnabled
+        ? {
+            storer: {
+              capabilities: {
+                financial_addresses: {
+                  bank_accounts: {
                     requested: true,
                   },
-                } : {}),
-              }
+                },
+                holds_currencies: {
+                  ...(countryCode === 'US'
+                    ? {
+                        usd: {
+                          requested: true,
+                        },
+                      }
+                    : {}),
+                  ...(countryCode === 'GB'
+                    ? {
+                        gbp: {
+                          requested: true,
+                        },
+                      }
+                    : {}),
+                },
+              },
             },
           }
-        } : {}),
+        : {}),
+    },
+    identity: {
+      country: countryCode,
+    },
+    defaults: {
+      responsibilities: {
+        fees_collector: 'application',
+        losses_collector: 'application',
       },
-      identity: {
-        country: countryCode,
-      },
-      defaults: {
-        responsibilities: {
-          fees_collector: 'application',
-          losses_collector: 'application',
-        },
-      },
-      dashboard: 'none',
-      include: [
-        'requirements',
-        'configuration.merchant',
-        'identity',
-        'defaults',
-      ],
-    });
-
+    },
+    dashboard: 'none',
+    include: ['requirements', 'configuration.merchant', 'identity', 'defaults'],
+  });
 
   const mock = new Mock({
     language: language as MockLanguage,
@@ -201,42 +203,14 @@ export const createAccount = async ({
       date_of_birth: person.dob,
     });
 
-      const typedAccount = account as Stripe.V2.Core.Account;
+    const typedAccount = account as Stripe.V2.Core.Account;
 
-      await stripe.v2.core.accounts.update(account.id, {
-        configuration: {
-          merchant: {
-            mcc,
-            support: {
-              url: 'https://accessible.stripe.com',
-              address: addresses.address
-                ? {
-                    ...addresses.address,
-                    country: addresses.address.country.toLowerCase(),
-                  }
-                : {
-                    ...addresses.address_kana,
-                    country: addresses.address_kana!.country.toLowerCase(),
-                  },
-              email: mock.email({
-                companyNames,
-              }),
-              phone: mock.phoneNumber(),
-            },
-          },
-        },
-        identity: {
-          entity_type: 'company',
-          business_details: {
-            registered_name: companyNames.name,
-            annual_revenue: {
-              amount: {
-                value: mock.integer({ min: 10_000, max: 1_000_000 }) * 100,
-                currency: typedAccount.defaults?.currency ?? 'usd',
-              },
-              fiscal_year_end: `${new Date().getFullYear() - 1}-12-30`,
-            },
-            estimated_worker_count: mock.integer({ min: 2, max: 100 }),
+    await stripe.v2.core.accounts.update(account.id, {
+      configuration: {
+        merchant: {
+          mcc,
+          support: {
+            url: 'https://accessible.stripe.com',
             address: addresses.address
               ? {
                   ...addresses.address,
@@ -246,10 +220,38 @@ export const createAccount = async ({
                   ...addresses.address_kana,
                   country: addresses.address_kana!.country.toLowerCase(),
                 },
+            email: mock.email({
+              companyNames,
+            }),
             phone: mock.phoneNumber(),
           },
         },
-      });
+      },
+      identity: {
+        entity_type: 'company',
+        business_details: {
+          registered_name: companyNames.name,
+          annual_revenue: {
+            amount: {
+              value: mock.integer({ min: 10_000, max: 1_000_000 }) * 100,
+              currency: typedAccount.defaults?.currency ?? 'usd',
+            },
+            fiscal_year_end: `${new Date().getFullYear() - 1}-12-30`,
+          },
+          estimated_worker_count: mock.integer({ min: 2, max: 100 }),
+          address: addresses.address
+            ? {
+                ...addresses.address,
+                country: addresses.address.country.toLowerCase(),
+              }
+            : {
+                ...addresses.address_kana,
+                country: addresses.address_kana!.country.toLowerCase(),
+              },
+          phone: mock.phoneNumber(),
+        },
+      },
+    });
   }
 
   if (shouldPrefillIndividual) {
@@ -257,57 +259,55 @@ export const createAccount = async ({
 
     const addresses = mock.addresses();
 
-      await stripe.v2.core.accounts.persons.create(account.id, {
-        given_name:
-          individualNames.first_name || individualNames.first_name_kana,
-        surname: individualNames.last_name || individualNames.last_name_kana,
-        phone: mock.phoneNumber(),
-        email: mock.email({
-          individualNames,
-        }),
-        address: addresses.address
-          ? {
-              ...addresses.address,
-              country: addresses.address.country.toLowerCase(),
-            }
-          : {
-              ...addresses.address_kana,
-              country: addresses.address_kana!.country.toLowerCase(),
-            },
-        date_of_birth: {
-          day: 1,
-          month: 1,
-          year: 1901,
-        },
-      });
+    await stripe.v2.core.accounts.persons.create(account.id, {
+      given_name: individualNames.first_name || individualNames.first_name_kana,
+      surname: individualNames.last_name || individualNames.last_name_kana,
+      phone: mock.phoneNumber(),
+      email: mock.email({
+        individualNames,
+      }),
+      address: addresses.address
+        ? {
+            ...addresses.address,
+            country: addresses.address.country.toLowerCase(),
+          }
+        : {
+            ...addresses.address_kana,
+            country: addresses.address_kana!.country.toLowerCase(),
+          },
+      date_of_birth: {
+        day: 1,
+        month: 1,
+        year: 1901,
+      },
+    });
 
-      await stripe.v2.core.accounts.update(account.id, {
-        configuration: {
-          merchant: {
-            mcc,
-            support: {
-              url: 'https://accessible.stripe.com',
-              address: addresses.address
-                ? {
-                    ...addresses.address,
-                    country: addresses.address.country.toLowerCase(),
-                  }
-                : {
-                    ...addresses.address_kana,
-                    country: addresses.address_kana!.country.toLowerCase(),
-                  },
-              email: mock.email({
-                individualNames,
-              }),
-              phone: mock.phoneNumber(),
-            },
+    await stripe.v2.core.accounts.update(account.id, {
+      configuration: {
+        merchant: {
+          mcc,
+          support: {
+            url: 'https://accessible.stripe.com',
+            address: addresses.address
+              ? {
+                  ...addresses.address,
+                  country: addresses.address.country.toLowerCase(),
+                }
+              : {
+                  ...addresses.address_kana,
+                  country: addresses.address_kana!.country.toLowerCase(),
+                },
+            email: mock.email({
+              individualNames,
+            }),
+            phone: mock.phoneNumber(),
           },
         },
-        identity: {
-          entity_type: 'individual',
-        },
-      });
-
+      },
+      identity: {
+        entity_type: 'individual',
+      },
+    });
   }
 
   const capabilities:

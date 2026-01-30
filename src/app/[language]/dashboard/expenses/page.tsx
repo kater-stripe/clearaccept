@@ -2,6 +2,7 @@
 
 import { getFinancialAccounts as getFinancialAccountsAction } from '@/app/api/financial-accounts/getFinancialAccounts';
 import { Card } from '@/components/common/Card';
+import { Skeleton } from '@/components/common/Skeleton';
 import { FinancialAccountCard } from '@/components/financial-account/FinancialAccountCard';
 import { CreateFinancialAccountModal } from '@/components/financial-account/CreateFinancialAccountModal';
 import { useDemoConfig } from '@/context/DemoConfigContext';
@@ -70,9 +71,9 @@ const FinancialAccountsAndIssuingPage = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
               {isFinancialAccountsLoading && (
                 <>
-                  <div className='min-h-36 bg-gray-100 animate animate-pulse' />
-                  <div className='min-h-36 bg-gray-100 animate animate-pulse' />
-                  <div className='min-h-36 bg-gray-100 animate animate-pulse' />
+                  <Skeleton className='min-h-36' />
+                  <Skeleton className='min-h-36' />
+                  <Skeleton className='min-h-36' />
                 </>
               )}
               {financialAccounts?.map((financialAccount) => (
@@ -98,9 +99,7 @@ const FinancialAccountsAndIssuingPage = () => {
               <h2 className='text-lg font-semibold'>
                 {t('dashboard.expenses.issuing-balances')}
               </h2>
-              {isBalancesLoading && (
-                <div className='h-20 w-full bg-gray-100 animate animate-pulse' />
-              )}
+              {isBalancesLoading && <Skeleton className='h-20 w-full' />}
               {balances?.issuing?.available.map((balance) => (
                 <IssuingBalance key={balance.currency} balance={balance} />
               ))}

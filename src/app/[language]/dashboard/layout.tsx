@@ -43,8 +43,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         const title = t('dashboard.home.greeting', {
           name:
             account?.identity?.business_details?.registered_name ||
-            `${account?.identity?.individual?.given_name} ${account?.identity?.individual?.surname
-              }`.trim(),
+            `${account?.identity?.individual?.given_name} ${
+              account?.identity?.individual?.surname
+            }`.trim(),
         });
 
         return {
@@ -202,8 +203,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
         {/* Mobile Sliding Menu */}
         <div
-          className={`lg:hidden fixed inset-y-0 left-0 z-40 w-full bg-brand-primary transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-            }`}
+          className={`lg:hidden fixed inset-y-0 left-0 z-40 w-full bg-brand-primary transform transition-transform duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
         >
           <div className='py-8 flex flex-col h-full pt-16'>
             <Sidebar onMobileMenuClose={() => setIsMobileMenuOpen(false)} />

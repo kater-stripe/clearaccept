@@ -82,7 +82,11 @@
       "create-financial-account": "Create Financial Account",
       "financial-account": {
         "title": "Financial Account",
-        "transactions": "Transactions"
+        "transactions": "Transactions",
+        "overview": "Account Overview",
+        "bank-details": "Bank Details",
+        "balances": "Balances",
+        "no-transactions": "No transactions yet"
       },
       "available-balances": "Available balances:",
       "financial-accounts": "Financial Accounts",

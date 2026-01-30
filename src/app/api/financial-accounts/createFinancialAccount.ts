@@ -29,18 +29,19 @@ export const createFinancialAccount = async ({
   const account = await stripe.v2.core.accounts.retrieve(accountId);
 
   try {
-    const financialAccount = await stripe.v2.moneyManagement.financialAccounts.create(
-      {
-        display_name: name,
-        type: 'storage',
-        storage: {
-          holds_currencies: [currency ?? account.defaults?.currency ?? 'usd'],
+    const financialAccount =
+      await stripe.v2.moneyManagement.financialAccounts.create(
+        {
+          display_name: name,
+          type: 'storage',
+          storage: {
+            holds_currencies: [currency ?? account.defaults?.currency ?? 'usd'],
+          },
         },
-      },
-      {
-        stripeAccount: accountId,
-      },
-    );
+        {
+          stripeAccount: accountId,
+        },
+      );
 
     const features: Stripe.Treasury.FinancialAccountCreateParams.Features = {
       card_issuing: {
