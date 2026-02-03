@@ -1,17 +1,22 @@
 'use client';
 
 import { Card } from '@/components/common/Card';
+import { Button } from '@/components/common/Button';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { useDemoConfig } from '@/context/DemoConfigContext';
-import { getFinancialAccount as getFinancialAccountAction } from '@/app/api/financial-accounts/getFinancialAccount';
+import { getFinancialAccount as getFinancialAccountAction } from '@/app/api/money-management/financial-accounts/getFinancialAccount';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
-import { getFinancialAccountTransactions as getFinancialAccountTransactionsAction } from '@/app/api/financial-accounts/getFinancialAccountTransactions';
+import { getFinancialAccountTransactions as getFinancialAccountTransactionsAction } from '@/app/api/money-management/financial-accounts/getFinancialAccountTransactions';
 import { formatPrice } from '@/utils/formatPrice';
+import { MoveMoneyModal } from '@/components/financial-account/MoveMoneyModal';
+import { TransferModal } from '@/components/financial-account/TransferModal';
+import { PaymentModal } from '@/components/financial-account/PaymentModal';
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
+import { useState } from 'react';
 
 const FinancialAccountPage = () => {
   const { financialAccountId } = useParams<{ financialAccountId: string }>();
@@ -20,6 +25,10 @@ const FinancialAccountPage = () => {
   const { account } = useDemoMerchant();
 
   const { t } = useTranslation();
+
+  const [isMoveMoneyModalOpen, setIsMoveMoneyModalOpen] = useState(false);
+  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const { data: financialAccount, isPending: isAccountPending } = useQuery({
     queryKey: ['financial-account', financialAccountId],
@@ -107,29 +116,60 @@ const FinancialAccountPage = () => {
 
   return (
     <div className='space-y-4'>
+      {/* Move Money Modals */}
+      {financialAccount && (
+        <>
+          <MoveMoneyModal
+            open={isMoveMoneyModalOpen}
+            onClose={() => setIsMoveMoneyModalOpen(false)}
+            financialAccount={financialAccount}
+            onSelectTransfer={() => setIsTransferModalOpen(true)}
+            onSelectPayment={() => setIsPaymentModalOpen(true)}
+          />
+          <TransferModal
+            open={isTransferModalOpen}
+            onClose={() => setIsTransferModalOpen(false)}
+            sourceFinancialAccount={financialAccount}
+          />
+          <PaymentModal
+            open={isPaymentModalOpen}
+            onClose={() => setIsPaymentModalOpen(false)}
+            sourceFinancialAccount={financialAccount}
+          />
+        </>
+      )}
+
       {/* Balances Card - Stripe Dashboard Style */}
       <Card>
-        <h2 className='text-lg font-semibold mb-4'>
-          {financialAccount?.display_name ||
-            t('dashboard.expenses.financial-account.overview')}
-        </h2>
+        <div className='flex items-start justify-between'>
+          <h2 className='text-lg font-semibold'>
+            {financialAccount?.display_name ||
+              t('dashboard.expenses.financial-account.overview')}
+          </h2>
+          <Button
+            onClick={() => setIsMoveMoneyModalOpen(true)}
+            disabled={isAccountPending || !financialAccount}
+          >
+            {t('dashboard.expenses.financial-account.move-money')}
+          </Button>
+        </div>
 
         {isAccountPending ? (
-          <div>
+          <div className='mt-4'>
             <Skeleton className='h-4 w-28 mb-2' />
             <Skeleton className='h-10 w-40' />
           </div>
         ) : financialAccount?.balance ? (
-          <div>
+          <div className='mt-4'>
             {/* Top Section - Available Balance */}
             <div>
               <p className='text-sm text-gray-500 mb-1'>Available balance</p>
               <p className='text-3xl font-semibold text-gray-900'>
                 {totalBalance
                   ? formatBalanceAmount(
-                    totalBalance.value,
-                    totalBalance.currency,
-                  )
+                      totalBalance.value,
+                      totalBalance.currency,
+                    )
                   : formatBalanceAmount(0, 'usd')}
               </p>
             </div>
@@ -139,51 +179,57 @@ const FinancialAccountPage = () => {
               .length > 0 ||
               Object.keys(financialAccount.balance.outbound_pending || {})
                 .length > 0) && (
-                <div className='border-t border-gray-200 pt-4 mt-4'>
-                  <div className='flex gap-12'>
-                    {Object.keys(financialAccount.balance.inbound_pending || {})
-                      .length > 0 && (
-                        <div>
-                          <p className='text-sm text-gray-500 mb-1'>
-                            Inbound pending
-                          </p>
-                          {Object.entries(
-                            financialAccount.balance.inbound_pending,
-                          ).map(([currency, balance]) => (
-                            <p
-                              key={currency}
-                              className='text-lg font-semibold text-gray-900'
-                            >
-                              {formatBalanceAmount(balance?.value, balance?.currency)}
-                            </p>
-                          ))}
-                        </div>
-                      )}
+              <div className='border-t border-gray-200 pt-4 mt-4'>
+                <div className='flex gap-12'>
+                  {Object.keys(financialAccount.balance.inbound_pending || {})
+                    .length > 0 && (
+                    <div>
+                      <p className='text-sm text-gray-500 mb-1'>
+                        Inbound pending
+                      </p>
+                      {Object.entries(
+                        financialAccount.balance.inbound_pending,
+                      ).map(([currency, balance]) => (
+                        <p
+                          key={currency}
+                          className='text-lg font-semibold text-gray-900'
+                        >
+                          {formatBalanceAmount(
+                            balance?.value,
+                            balance?.currency,
+                          )}
+                        </p>
+                      ))}
+                    </div>
+                  )}
 
-                    {Object.keys(financialAccount.balance.outbound_pending || {})
-                      .length > 0 && (
-                        <div>
-                          <p className='text-sm text-gray-500 mb-1'>
-                            Outbound pending
-                          </p>
-                          {Object.entries(
-                            financialAccount.balance.outbound_pending,
-                          ).map(([currency, balance]) => (
-                            <p
-                              key={currency}
-                              className='text-lg font-semibold text-gray-900'
-                            >
-                              {formatBalanceAmount(balance?.value, balance?.currency)}
-                            </p>
-                          ))}
-                        </div>
-                      )}
-                  </div>
+                  {Object.keys(financialAccount.balance.outbound_pending || {})
+                    .length > 0 && (
+                    <div>
+                      <p className='text-sm text-gray-500 mb-1'>
+                        Outbound pending
+                      </p>
+                      {Object.entries(
+                        financialAccount.balance.outbound_pending,
+                      ).map(([currency, balance]) => (
+                        <p
+                          key={currency}
+                          className='text-lg font-semibold text-gray-900'
+                        >
+                          {formatBalanceAmount(
+                            balance?.value,
+                            balance?.currency,
+                          )}
+                        </p>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
+            )}
           </div>
         ) : (
-          <p className='text-gray-500 text-sm'>
+          <p className='text-gray-500 text-sm mt-4'>
             No balance information available
           </p>
         )}
@@ -274,58 +320,59 @@ const FinancialAccountPage = () => {
                             <div className='space-y-1'>
                               {transaction.balance_impact?.available?.value !==
                                 0 && (
-                                  <span
-                                    className={`block ${(transaction.balance_impact?.available
+                                <span
+                                  className={`block ${
+                                    (transaction.balance_impact?.available
                                       ?.value ?? 0) > 0
                                       ? 'text-green-600'
                                       : 'text-red-600'
-                                      }`}
-                                  >
-                                    Available:{' '}
-                                    {(transaction.balance_impact?.available
-                                      ?.value ?? 0) > 0
-                                      ? '+'
-                                      : ''}
-                                    {formatBalanceAmount(
-                                      transaction.balance_impact?.available
-                                        ?.value,
-                                      transaction.balance_impact?.available
-                                        ?.currency,
-                                    )}
-                                  </span>
-                                )}
+                                  }`}
+                                >
+                                  Available:{' '}
+                                  {(transaction.balance_impact?.available
+                                    ?.value ?? 0) > 0
+                                    ? '+'
+                                    : ''}
+                                  {formatBalanceAmount(
+                                    transaction.balance_impact?.available
+                                      ?.value,
+                                    transaction.balance_impact?.available
+                                      ?.currency,
+                                  )}
+                                </span>
+                              )}
                               {transaction.balance_impact?.inbound_pending
                                 ?.value !== 0 && (
-                                  <span className='block text-blue-600'>
-                                    Inbound:{' '}
-                                    {(transaction.balance_impact?.inbound_pending
-                                      ?.value ?? 0) > 0
-                                      ? '+'
-                                      : ''}
-                                    {formatBalanceAmount(
-                                      transaction.balance_impact?.inbound_pending
-                                        ?.value,
-                                      transaction.balance_impact?.inbound_pending
-                                        ?.currency,
-                                    )}
-                                  </span>
-                                )}
+                                <span className='block text-blue-600'>
+                                  Inbound:{' '}
+                                  {(transaction.balance_impact?.inbound_pending
+                                    ?.value ?? 0) > 0
+                                    ? '+'
+                                    : ''}
+                                  {formatBalanceAmount(
+                                    transaction.balance_impact?.inbound_pending
+                                      ?.value,
+                                    transaction.balance_impact?.inbound_pending
+                                      ?.currency,
+                                  )}
+                                </span>
+                              )}
                               {transaction.balance_impact?.outbound_pending
                                 ?.value !== 0 && (
-                                  <span className='block text-orange-600'>
-                                    Outbound:{' '}
-                                    {(transaction.balance_impact?.outbound_pending
-                                      ?.value ?? 0) > 0
-                                      ? '+'
-                                      : ''}
-                                    {formatBalanceAmount(
-                                      transaction.balance_impact?.outbound_pending
-                                        ?.value,
-                                      transaction.balance_impact?.outbound_pending
-                                        ?.currency,
-                                    )}
-                                  </span>
-                                )}
+                                <span className='block text-orange-600'>
+                                  Outbound:{' '}
+                                  {(transaction.balance_impact?.outbound_pending
+                                    ?.value ?? 0) > 0
+                                    ? '+'
+                                    : ''}
+                                  {formatBalanceAmount(
+                                    transaction.balance_impact?.outbound_pending
+                                      ?.value,
+                                    transaction.balance_impact?.outbound_pending
+                                      ?.currency,
+                                  )}
+                                </span>
+                              )}
                             </div>
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm'>

@@ -11,7 +11,7 @@ import { Input } from '../common/Input';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import { CURRENCY_CODES, CurrencyCode } from '@/constants/currencyCodes';
 import { useEffect, useState } from 'react';
-import { createFinancialAccount as createFinancialAccountAction } from '@/app/api/financial-accounts/createFinancialAccount';
+import { createFinancialAccount as createFinancialAccountAction } from '@/app/api/money-management/financial-accounts/createFinancialAccount';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { Button } from '../common/Button';

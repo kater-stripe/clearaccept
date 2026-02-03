@@ -1,6 +1,6 @@
 'use client';
 
-import { getFinancialAccounts as getFinancialAccountsAction } from '@/app/api/financial-accounts/getFinancialAccounts';
+import { getFinancialAccounts as getFinancialAccountsAction } from '@/app/api/money-management/financial-accounts/getFinancialAccounts';
 import { Card } from '@/components/common/Card';
 import { Skeleton } from '@/components/common/Skeleton';
 import { FinancialAccountCard } from '@/components/financial-account/FinancialAccountCard';

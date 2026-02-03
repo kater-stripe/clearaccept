@@ -6,7 +6,7 @@ import type { CurrencyCode } from '@/constants/currencyCodes';
 import { useRouter } from 'next/navigation';
 import { CurrencyPill } from './CurrencyPill';
 import { useQuery } from '@tanstack/react-query';
-import { getFinancialAddresses as getFinancialAddressesAction } from '@/app/api/financial-addresses/getFinancialAddresses';
+import { getFinancialAddresses as getFinancialAddressesAction } from '@/app/api/money-management/financial-addresses/getFinancialAddresses';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 
 type FinancialAccountCardProps = {

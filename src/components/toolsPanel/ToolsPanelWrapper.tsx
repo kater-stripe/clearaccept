@@ -13,7 +13,7 @@ import type { DemoConfig } from '@/types/demoConfig';
 import type { DemoCustomer } from '@/types/demoCustomer';
 import type { DemoMerchant } from '@/types/demoMerchant';
 import { seedIssuing } from '@/app/api/issuing/seedIssuing';
-import { seedFinancialAccountTransactions } from '@/app/api/financial-accounts/seedFinancialAccountTransactions';
+import { seedFinancialAccountTransactions } from '@/app/api/money-management/financial-accounts/seedFinancialAccountTransactions';
 import { seedTransactions } from '@/app/api/payment-intents/seedTransactions';
 import { createFlexLoan } from '@/app/api/financing-offers/createFlexLoan';
 import { createRiskIntervention } from '@/app/api/accounts/createRiskIntervention';

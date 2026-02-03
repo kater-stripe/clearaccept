@@ -29,6 +29,6 @@ export const getFinancialAccount = async ({
         stripeAccount: accountId,
       },
     );
-    
+
   return plain(financialAccount);
 };

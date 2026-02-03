@@ -43,7 +43,7 @@ export const reportPayment = async ({
   }
 
   const stripe = initializeStripe(stripeSecretKey);
-  
+
   const secondsSinceEpoch = Math.floor(Date.now() / 1000);
 
   const paymentRecord = await stripe.paymentRecords.reportPayment(

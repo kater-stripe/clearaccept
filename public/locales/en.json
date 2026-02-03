@@ -86,7 +86,8 @@
         "overview": "Account Overview",
         "bank-details": "Bank Details",
         "balances": "Balances",
-        "no-transactions": "No transactions yet"
+        "no-transactions": "No transactions yet",
+        "move-money": "Move money"
       },
       "available-balances": "Available balances:",
       "financial-accounts": "Financial Accounts",
@@ -442,6 +443,66 @@
         "copy": "Copy",
         "copied": "Copied!"
       }
+    },
+    "move-money": {
+      "title": "Move money",
+      "description": "Choose how you'd like to move money from {{accountName}}.",
+      "cancel": "Cancel",
+      "transfer": {
+        "title": "Transfer",
+        "description": "Transfer money to another financial account or external bank account."
+      },
+      "payment": {
+        "title": "Payment",
+        "description": "Pay money to a third-party, supplier, or contractor."
+      }
+    },
+    "transfer": {
+      "title": "Transfer funds",
+      "description": "Transfer money from {{accountName}} to your own account.",
+      "error": "An unknown error occurred while creating the transfer.",
+      "form": {
+        "destination-type": "Destination",
+        "financial-account": "Financial Account",
+        "external-bank": "External Bank Account",
+        "destination-account": "Destination account",
+        "destination-bank": "Destination bank account",
+        "select-destination-account": "Select a financial account",
+        "select-destination-bank": "Select a bank account",
+        "loading-accounts": "Loading financial accounts...",
+        "loading-banks": "Loading bank accounts...",
+        "no-accounts-available": "No other financial accounts available. Create another financial account to transfer funds between accounts.",
+        "no-banks-available": "No external bank accounts linked. Add a bank account to transfer funds externally.",
+        "currency": "Currency",
+        "amount": "Amount ({{available}} {{currency}} available)",
+        "insufficient-funds": "Insufficient funds for this transfer.",
+        "cancel": "Cancel",
+        "transfer": "Transfer"
+      }
+    },
+    "payment": {
+      "title": "Send payment",
+      "description": "Send a payment from {{accountName}} to a third-party.",
+      "error": "An unknown error occurred while sending the payment.",
+      "form": {
+        "destination": "Destination",
+        "select-destination": "Select a destination",
+        "loading-payout-methods": "Loading payment methods...",
+        "no-payout-methods-available": "No payment methods available. Add a bank account or card to send payments.",
+        "currency": "Currency",
+        "amount": "Amount ({{available}} {{currency}} available)",
+        "insufficient-funds": "Insufficient funds for this payment.",
+        "description": "Description (optional)",
+        "description-placeholder": "Payment for services...",
+        "cancel": "Cancel",
+        "send-payment": "Send payment"
+      }
+    },
+    "outbound-transfer": {
+      "error": "An unknown error occurred while creating the outbound transfer."
+    },
+    "outbound-payment": {
+      "error": "An unknown error occurred while creating the outbound payment."
     }
   },
   "timeUnits": {
