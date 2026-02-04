@@ -27,30 +27,47 @@ type AddRecipientModalProps = {
 
 type EntityType = 'individual' | 'company';
 
-// Supported countries for recipients (based on Global Payouts documentation)
+// Supported countries for recipients - only US, GB, and IBAN (European) countries
+// These are the countries supported by manual bank account entry
 const SUPPORTED_COUNTRIES = [
+  // US (routing number + account number)
   { value: 'us', label: 'United States' },
+  // GB (sort code + account number)
   { value: 'gb', label: 'United Kingdom' },
-  { value: 'ca', label: 'Canada' },
-  { value: 'au', label: 'Australia' },
-  { value: 'nz', label: 'New Zealand' },
-  { value: 'sg', label: 'Singapore' },
-  { value: 'hk', label: 'Hong Kong' },
-  { value: 'jp', label: 'Japan' },
+  // IBAN countries (SEPA zone + other European countries)
+  { value: 'at', label: 'Austria' },
+  { value: 'be', label: 'Belgium' },
+  { value: 'bg', label: 'Bulgaria' },
+  { value: 'hr', label: 'Croatia' },
+  { value: 'cy', label: 'Cyprus' },
+  { value: 'cz', label: 'Czech Republic' },
+  { value: 'dk', label: 'Denmark' },
+  { value: 'ee', label: 'Estonia' },
+  { value: 'fi', label: 'Finland' },
   { value: 'fr', label: 'France' },
   { value: 'de', label: 'Germany' },
-  { value: 'es', label: 'Spain' },
-  { value: 'it', label: 'Italy' },
-  { value: 'nl', label: 'Netherlands' },
-  { value: 'be', label: 'Belgium' },
-  { value: 'at', label: 'Austria' },
-  { value: 'ch', label: 'Switzerland' },
-  { value: 'se', label: 'Sweden' },
-  { value: 'no', label: 'Norway' },
-  { value: 'dk', label: 'Denmark' },
-  { value: 'fi', label: 'Finland' },
+  { value: 'gr', label: 'Greece' },
+  { value: 'hu', label: 'Hungary' },
+  { value: 'is', label: 'Iceland' },
   { value: 'ie', label: 'Ireland' },
+  { value: 'it', label: 'Italy' },
+  { value: 'lv', label: 'Latvia' },
+  { value: 'li', label: 'Liechtenstein' },
+  { value: 'lt', label: 'Lithuania' },
+  { value: 'lu', label: 'Luxembourg' },
+  { value: 'mt', label: 'Malta' },
+  { value: 'mc', label: 'Monaco' },
+  { value: 'nl', label: 'Netherlands' },
+  { value: 'no', label: 'Norway' },
+  { value: 'pl', label: 'Poland' },
   { value: 'pt', label: 'Portugal' },
+  { value: 'ro', label: 'Romania' },
+  { value: 'sm', label: 'San Marino' },
+  { value: 'sk', label: 'Slovakia' },
+  { value: 'si', label: 'Slovenia' },
+  { value: 'es', label: 'Spain' },
+  { value: 'se', label: 'Sweden' },
+  { value: 'ch', label: 'Switzerland' },
 ];
 
 export const AddRecipientModal = ({

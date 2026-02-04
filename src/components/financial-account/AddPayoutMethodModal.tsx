@@ -134,9 +134,6 @@ export const AddPayoutMethodModal = ({
     return false;
   })();
 
-  // Check if the country is supported
-  const isCountrySupported = country === 'us' || country === 'gb' || isIban;
-
   return (
     <Dialog open={open} onClose={onClose} className='relative z-30'>
       <DialogBackdrop
@@ -266,17 +263,6 @@ export const AddPayoutMethodModal = ({
                   />
                 )}
 
-                {/* Unsupported countries */}
-                {!isCountrySupported && (
-                  <div className='p-4 bg-yellow-50 border border-yellow-200 rounded-md'>
-                    <p className='text-sm text-yellow-800'>
-                      {t('modals.add-payout-method.form.unsupported-country', {
-                        country: country.toUpperCase(),
-                      })}
-                    </p>
-                  </div>
-                )}
-
                 <div className='mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md'>
                   <p className='text-sm text-blue-800'>
                     {t('modals.add-payout-method.form.info-message')}
@@ -294,11 +280,7 @@ export const AddPayoutMethodModal = ({
                 </Button>
                 <Button
                   className='w-full'
-                  disabled={
-                    isCreatingSetupIntent ||
-                    !isFormValid ||
-                    !isCountrySupported
-                  }
+                  disabled={isCreatingSetupIntent || !isFormValid}
                   type='submit'
                 >
                   {isCreatingSetupIntent ? (

@@ -87,7 +87,10 @@
         "bank-details": "Bank Details",
         "balances": "Balances",
         "no-transactions": "No transactions yet",
-        "move-money": "Move money"
+        "move-money": "Move money",
+        "use-for-payouts": "Use for payouts",
+        "manage-auto-payouts": "Manage payouts",
+        "auto-payouts-active": "Used for automatic payouts"
       },
       "available-balances": "Available balances:",
       "financial-accounts": "Financial Accounts",
@@ -523,7 +526,7 @@
         "surname-placeholder": "Doe",
         "registered-name": "Registered company name",
         "registered-name-placeholder": "Acme Corporation",
-        "info-message": "After creating the recipient, you'll choose how to add their payout details.",
+        "info-message": "After creating the recipient, you'll add their payout details.",
         "cancel": "Cancel",
         "create": "Create recipient"
       }
@@ -566,7 +569,6 @@
         "routing-number-placeholder": "110000000",
         "sort-code": "Sort code",
         "sort-code-placeholder": "108800",
-        "unsupported-country": "Manual bank account entry is currently only supported for US, GB, and IBAN (European) accounts. Country: {{country}}",
         "info-message": "This bank account will be set as the default payout method for this recipient.",
         "cancel": "Cancel",
         "add": "Add bank account"
@@ -577,6 +579,27 @@
     },
     "outbound-payment": {
       "error": "An unknown error occurred while creating the outbound payment."
+    },
+    "use-for-payouts": {
+      "title": "Use for payouts",
+      "title-manage": "Manage automatic payouts",
+      "description": "Automatically transfer payment proceeds from your payments balance to {{accountName}}.",
+      "transfer-all": "Transfer all funds",
+      "transfer-all-description": "Automatically transfer all available payment proceeds to this financial account.",
+      "target-amount": "Maintain target balance",
+      "target-amount-description": "Transfer funds until this financial account reaches a target balance.",
+      "target-amount-label": "Target balance",
+      "info": "When enabled, funds from your payments balance will automatically be transferred to this financial account after each payout cycle.",
+      "currently-enabled": "Automatic payouts enabled",
+      "currently-enabled-description": "Payment proceeds are being automatically transferred to {{accountName}}.",
+      "cancel": "Cancel",
+      "enable": "Enable automatic payouts",
+      "enabling": "Enabling...",
+      "disable": "Disable",
+      "disabling": "Disabling...",
+      "success": "Automatic payouts enabled!",
+      "success-description": "Payment proceeds will now be automatically transferred to {{accountName}}.",
+      "error": "An unknown error occurred while configuring automatic payouts."
     }
   },
   "timeUnits": {
