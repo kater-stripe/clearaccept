@@ -6,7 +6,8 @@ import { plain } from '@/utils/plain';
 type CreateOutboundPaymentParams = {
   accountId: string;
   fromFinancialAccountId: string;
-  recipientId: string;
+  recipientAccountId: string;
+  payoutMethodId: string;
   amount: number;
   currency: string;
   description?: string;
@@ -16,7 +17,8 @@ type CreateOutboundPaymentParams = {
 export const createOutboundPayment = async ({
   accountId,
   fromFinancialAccountId,
-  recipientId,
+  recipientAccountId,
+  payoutMethodId,
   amount,
   currency,
   description,
@@ -39,7 +41,8 @@ export const createOutboundPayment = async ({
             currency,
           },
           to: {
-            recipient: recipientId,
+            recipient: recipientAccountId,
+            payout_method: payoutMethodId,
             currency,
           },
           amount: {
@@ -56,7 +59,7 @@ export const createOutboundPayment = async ({
     return plain(outboundPayment);
   } catch (error) {
     console.error(
-      `Unable to create outbound payment from ${fromFinancialAccountId}`,
+      `Unable to create outbound payment from ${fromFinancialAccountId} to recipient ${recipientAccountId} via payout method ${payoutMethodId}`,
       error,
     );
 

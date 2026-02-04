@@ -17,6 +17,7 @@ import { Input } from '../common/Input';
 import { CurrencyInput } from '../common/CurrencyInput';
 import { Alert } from '../common/Alert';
 import { LoadingSpinner } from '../common/LoadingSpinner';
+import { getRecipients as getRecipientsAction } from '@/app/api/accounts/getRecipients';
 import { getPayoutMethods as getPayoutMethodsAction } from '@/app/api/money-management/payout-methods/getPayoutMethods';
 import { createOutboundPayment as createOutboundPaymentAction } from '@/app/api/money-management/outbound-payments/createOutboundPayment';
 import type { Stripe } from 'stripe';
@@ -38,6 +39,7 @@ export const PaymentModal = ({
   const { account } = useDemoMerchant();
   const queryClient = useQueryClient();
 
+  const [recipientAccountId, setRecipientAccountId] = useState<string>('');
   const [payoutMethodId, setPayoutMethodId] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
@@ -53,15 +55,26 @@ export const PaymentModal = ({
   const availableBalance =
     sourceFinancialAccount.balance?.available?.[currency]?.value || 0;
 
-  // Fetch payout methods
-  const { data: payoutMethods, isPending: isLoadingPayoutMethods } = useQuery({
-    queryKey: ['payout-methods', account?.id, stripeSecretKey],
+  // Fetch recipients that belong to the connected account (logged-in merchant)
+  const { data: recipients, isPending: isLoadingRecipients } = useQuery({
+    queryKey: ['recipients', account?.id, stripeSecretKey],
     queryFn: () =>
-      getPayoutMethodsAction({
+      getRecipientsAction({
         accountId: account!.id,
         stripeSecretKey,
       }),
     enabled: !!account && open,
+  });
+
+  // Fetch payout methods for selected recipient account
+  const { data: payoutMethods, isPending: isLoadingPayoutMethods } = useQuery({
+    queryKey: ['payout-methods', recipientAccountId, stripeSecretKey],
+    queryFn: () =>
+      getPayoutMethodsAction({
+        accountId: recipientAccountId,
+        stripeSecretKey,
+      }),
+    enabled: !!recipientAccountId && open,
   });
 
   // Filter to only bank accounts and cards
@@ -74,10 +87,16 @@ export const PaymentModal = ({
     );
   }, [payoutMethods]);
 
+  // Reset payout method when recipient account changes
+  useEffect(() => {
+    setPayoutMethodId('');
+  }, [recipientAccountId]);
+
   // Reset form when modal closes
   useEffect(() => {
     if (!open) {
       const resetTimeout = setTimeout(() => {
+        setRecipientAccountId('');
         setPayoutMethodId('');
         setAmount(0);
         setDescription('');
@@ -122,7 +141,8 @@ export const PaymentModal = ({
     createPayment({
       accountId: account.id,
       fromFinancialAccountId: sourceFinancialAccount.id,
-      recipientId: payoutMethodId, // Using payout method as the recipient
+      recipientAccountId,
+      payoutMethodId,
       amount,
       currency,
       description: description || undefined,
@@ -131,7 +151,19 @@ export const PaymentModal = ({
   };
 
   const isPaymentFormValid =
-    payoutMethodId && amount > 0 && amount <= availableBalance;
+    recipientAccountId &&
+    payoutMethodId &&
+    amount > 0 &&
+    amount <= availableBalance;
+
+  // Get label for account
+  const getAccountLabel = (acc: Stripe.V2.Core.Account): string => {
+    const name =
+      acc.identity?.business_details?.registered_name ||
+      acc.contact_email ||
+      acc.id;
+    return name;
+  };
 
   // Get label for payout method
   const getPayoutMethodLabel = (
@@ -181,37 +213,57 @@ export const PaymentModal = ({
               )}
 
               <div className='mt-4 flex flex-col gap-y-4'>
+                {/* Recipient Account Selection */}
+                <Select
+                  label={t('modals.payment.form.recipient-account')}
+                  value={recipientAccountId}
+                  onChange={(value) => setRecipientAccountId(value || '')}
+                  options={
+                    recipients?.map((acc) => ({
+                      value: acc.id,
+                      label: getAccountLabel(acc as Stripe.V2.Core.Account),
+                    })) || []
+                  }
+                  placeholder={
+                    isLoadingRecipients
+                      ? t('modals.payment.form.loading-accounts')
+                      : !recipients || recipients.length === 0
+                        ? t('modals.payment.form.no-accounts-available')
+                        : t('modals.payment.form.select-recipient-account')
+                  }
+                  disabled={
+                    isLoadingRecipients || !recipients || recipients.length === 0
+                  }
+                  nullable
+                  required
+                />
+
                 {/* Payout Method Selection */}
-                <div>
-                  {isLoadingPayoutMethods ? (
-                    <div className='flex items-center gap-2 p-3 bg-gray-50 rounded-md'>
-                      <LoadingSpinner className='size-4' strokeWidth={3} />
-                      <span className='text-sm text-gray-500'>
-                        {t('modals.payment.form.loading-payout-methods')}
-                      </span>
-                    </div>
-                  ) : !availablePayoutMethods ||
-                    availablePayoutMethods.length === 0 ? (
-                    <div className='p-4 bg-yellow-50 border border-yellow-200 rounded-md'>
-                      <p className='text-sm text-yellow-700'>
-                        {t('modals.payment.form.no-payout-methods-available')}
-                      </p>
-                    </div>
-                  ) : (
-                    <Select
-                      label={t('modals.payment.form.destination')}
-                      value={payoutMethodId}
-                      onChange={(value) => setPayoutMethodId(value || '')}
-                      options={availablePayoutMethods.map((pm) => ({
-                        value: pm.id,
-                        label: getPayoutMethodLabel(pm),
-                      }))}
-                      placeholder={t('modals.payment.form.select-destination')}
-                      nullable
-                      required
-                    />
-                  )}
-                </div>
+                <Select
+                  label={t('modals.payment.form.destination')}
+                  value={payoutMethodId}
+                  onChange={(value) => setPayoutMethodId(value || '')}
+                  options={availablePayoutMethods.map((pm) => ({
+                    value: pm.id,
+                    label: getPayoutMethodLabel(pm),
+                  }))}
+                  placeholder={
+                    !recipientAccountId
+                      ? t('modals.payment.form.select-account-first')
+                      : isLoadingPayoutMethods
+                        ? t('modals.payment.form.loading-payout-methods')
+                        : availablePayoutMethods.length === 0
+                          ? t('modals.payment.form.no-payout-methods-available')
+                          : t('modals.payment.form.select-destination')
+                  }
+                  disabled={
+                    !recipientAccountId ||
+                    isLoadingPayoutMethods ||
+                    availablePayoutMethods.length === 0
+                  }
+                  nullable
+                  required
+                />
 
                 {/* Currency Selection */}
                 {availableCurrencies.length > 1 && (
@@ -268,6 +320,7 @@ export const PaymentModal = ({
                   disabled={
                     isCreatingPayment ||
                     !isPaymentFormValid ||
+                    isLoadingRecipients ||
                     isLoadingPayoutMethods
                   }
                   type='submit'

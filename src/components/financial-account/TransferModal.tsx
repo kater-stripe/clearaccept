@@ -228,72 +228,50 @@ export const TransferModal = ({
 
                 {/* Destination Selection - Financial Account */}
                 {destinationType === 'financial-account' && (
-                  <>
-                    {isLoadingAccounts ? (
-                      <div className='flex items-center gap-2 p-3 bg-gray-50 rounded-md'>
-                        <LoadingSpinner className='size-4' strokeWidth={3} />
-                        <span className='text-sm text-gray-500'>
-                          {t('modals.transfer.form.loading-accounts')}
-                        </span>
-                      </div>
-                    ) : destinationAccounts.length === 0 ? (
-                      <div className='p-4 bg-yellow-50 border border-yellow-200 rounded-md'>
-                        <p className='text-sm text-yellow-700'>
-                          {t('modals.transfer.form.no-accounts-available')}
-                        </p>
-                      </div>
-                    ) : (
-                      <Select
-                        label={t('modals.transfer.form.destination-account')}
-                        value={destinationId}
-                        onChange={(value) => setDestinationId(value || '')}
-                        options={destinationAccounts.map((fa) => ({
-                          value: fa.id,
-                          label: fa.display_name || fa.id,
-                        }))}
-                        placeholder={t(
-                          'modals.transfer.form.select-destination-account',
-                        )}
-                        nullable
-                        required
-                      />
-                    )}
-                  </>
+                  <Select
+                    label={t('modals.transfer.form.destination-account')}
+                    value={destinationId}
+                    onChange={(value) => setDestinationId(value || '')}
+                    options={destinationAccounts.map((fa) => ({
+                      value: fa.id,
+                      label: fa.display_name || fa.id,
+                    }))}
+                    placeholder={
+                      isLoadingAccounts
+                        ? t('modals.transfer.form.loading-accounts')
+                        : destinationAccounts.length === 0
+                          ? t('modals.transfer.form.no-accounts-available')
+                          : t('modals.transfer.form.select-destination-account')
+                    }
+                    disabled={isLoadingAccounts || destinationAccounts.length === 0}
+                    nullable
+                    required
+                  />
                 )}
 
                 {/* Destination Selection - External Bank */}
                 {destinationType === 'external-bank' && (
-                  <>
-                    {isLoadingPayoutMethods ? (
-                      <div className='flex items-center gap-2 p-3 bg-gray-50 rounded-md'>
-                        <LoadingSpinner className='size-4' strokeWidth={3} />
-                        <span className='text-sm text-gray-500'>
-                          {t('modals.transfer.form.loading-banks')}
-                        </span>
-                      </div>
-                    ) : externalBankAccounts.length === 0 ? (
-                      <div className='p-4 bg-yellow-50 border border-yellow-200 rounded-md'>
-                        <p className='text-sm text-yellow-700'>
-                          {t('modals.transfer.form.no-banks-available')}
-                        </p>
-                      </div>
-                    ) : (
-                      <Select
-                        label={t('modals.transfer.form.destination-bank')}
-                        value={destinationId}
-                        onChange={(value) => setDestinationId(value || '')}
-                        options={externalBankAccounts.map((pm) => ({
-                          value: pm.id,
-                          label: getPayoutMethodLabel(pm),
-                        }))}
-                        placeholder={t(
-                          'modals.transfer.form.select-destination-bank',
-                        )}
-                        nullable
-                        required
-                      />
-                    )}
-                  </>
+                  <Select
+                    label={t('modals.transfer.form.destination-bank')}
+                    value={destinationId}
+                    onChange={(value) => setDestinationId(value || '')}
+                    options={externalBankAccounts.map((pm) => ({
+                      value: pm.id,
+                      label: getPayoutMethodLabel(pm),
+                    }))}
+                    placeholder={
+                      isLoadingPayoutMethods
+                        ? t('modals.transfer.form.loading-banks')
+                        : externalBankAccounts.length === 0
+                          ? t('modals.transfer.form.no-banks-available')
+                          : t('modals.transfer.form.select-destination-bank')
+                    }
+                    disabled={
+                      isLoadingPayoutMethods || externalBankAccounts.length === 0
+                    }
+                    nullable
+                    required
+                  />
                 )}
 
                 {/* Currency Selection */}
