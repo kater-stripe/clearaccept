@@ -108,8 +108,8 @@ export const UseForPayoutsModal = ({
                     <div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
                         <DialogPanel className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl sm:my-8 sm:w-full sm:max-w-md sm:p-6'>
                             <div className='flex flex-col items-center justify-center py-8'>
-                                <div className='w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4'>
-                                    <CheckCircleIcon className='w-10 h-10 text-green-600' />
+                                <div className='w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center mb-4'>
+                                    <CheckCircleIcon className='w-10 h-10 text-black' />
                                 </div>
                                 <h3 className='text-lg font-semibold text-gray-900'>
                                     {t('modals.use-for-payouts.success')}

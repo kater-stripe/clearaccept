@@ -360,28 +360,28 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
               items: [
                 ...(isMerchantSignedIn
                   ? [
-                      {
-                        type: 'alert' as const,
-                        message:
-                          'You are signed in. To edit these settings, please sign out first.',
-                        content: [
-                          {
-                            type: 'button' as const,
-                            label: 'Sign Out',
-                            onClick: () => {
-                              signOutMerchant();
-                            },
+                    {
+                      type: 'alert' as const,
+                      message:
+                        'You are signed in. To edit these settings, please sign out first.',
+                      content: [
+                        {
+                          type: 'button' as const,
+                          label: 'Sign Out',
+                          onClick: () => {
+                            signOutMerchant();
                           },
-                        ],
-                      },
-                    ]
+                        },
+                      ],
+                    },
+                  ]
                   : []),
                 {
                   type: 'text-input',
                   label: 'Stripe Publishable Key',
                   value:
                     stripePublishableKey !==
-                    DEFAULT_DEMO_CONFIG.stripePublishableKey
+                      DEFAULT_DEMO_CONFIG.stripePublishableKey
                       ? (stripePublishableKey ?? '')
                       : '',
                   onChange: (value: DemoConfig['stripePublishableKey']) => {
@@ -464,8 +464,6 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   onChange: (value: DemoConfig['storerCapabilityEnabled']) => {
                     configure('storerCapabilityEnabled', value);
                   },
-                  tooltip:
-                    'When onboarding with storer capability enabled, an external bank account will not be collected.',
                 },
                 {
                   type: 'checkbox',
@@ -515,287 +513,287 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
             },
             ...(isMerchantSignedIn && account
               ? {
-                  seedingAndTestHelpers: {
-                    items: [
-                      // Account seeding
-                      {
-                        type: 'checkbox' as const,
-                        label: 'Risk Intervention',
-                        value: shouldSeedRiskIntervention,
-                        disabled: isSeeding,
-                        onChange: (value: boolean) =>
-                          setShouldSeedRiskIntervention(value),
+                seedingAndTestHelpers: {
+                  items: [
+                    // Account seeding
+                    {
+                      type: 'checkbox' as const,
+                      label: 'Risk Intervention',
+                      value: shouldSeedRiskIntervention,
+                      disabled: isSeeding,
+                      onChange: (value: boolean) =>
+                        setShouldSeedRiskIntervention(value),
+                    },
+                    // Payments seeding
+                    {
+                      type: 'checkbox' as const,
+                      label: 'Transactions',
+                      value: shouldSeedTransactions,
+                      disabled: isSeeding,
+                      onChange: (value: boolean) =>
+                        setShouldSeedTransactions(value),
+                    },
+                    // Treasury seeding (only if capability active)
+                    ...(isCapabilityActive('treasury')
+                      ? [
+                        {
+                          type: 'checkbox' as const,
+                          label: 'Treasury Credits',
+                          value: shouldSeedCredits,
+                          disabled: isSeeding,
+                          onChange: (value: boolean) =>
+                            setShouldSeedCredits(value),
+                        },
+                        {
+                          type: 'checkbox' as const,
+                          label: 'Treasury Debits',
+                          value: shouldSeedDebits,
+                          disabled: isSeeding,
+                          onChange: (value: boolean) =>
+                            setShouldSeedDebits(value),
+                        },
+                      ]
+                      : []),
+                    // Issuing seeding (only if capability active)
+                    ...(isCapabilityActive('commercial.stripe.charge_card')
+                      ? [
+                        {
+                          type: 'checkbox' as const,
+                          label: 'Cardholders',
+                          value: shouldSeedCardholders,
+                          disabled: isSeeding,
+                          onChange: (value: boolean) => {
+                            setShouldSeedCardholders(value);
+                            if (!value) {
+                              setShouldSeedCards(false);
+                              setShouldSeedCaptures(false);
+                              setShouldSeedRefunds(false);
+                            }
+                          },
+                        },
+                        {
+                          type: 'checkbox' as const,
+                          label: 'Cards',
+                          value: shouldSeedCards,
+                          disabled: isSeeding || !shouldSeedCardholders,
+                          onChange: (value: boolean) => {
+                            setShouldSeedCards(value);
+                            if (!value) {
+                              setShouldSeedCaptures(false);
+                              setShouldSeedRefunds(false);
+                            }
+                          },
+                        },
+                        {
+                          type: 'checkbox' as const,
+                          label: 'Captures',
+                          value: shouldSeedCaptures,
+                          disabled: isSeeding || !shouldSeedCards,
+                          onChange: (value: boolean) => {
+                            setShouldSeedCaptures(value);
+                            if (!value) {
+                              setShouldSeedRefunds(false);
+                            }
+                          },
+                        },
+                        {
+                          type: 'checkbox' as const,
+                          label: 'Refunds',
+                          value: shouldSeedRefunds,
+                          disabled: isSeeding || !shouldSeedCaptures,
+                          onChange: (value: boolean) =>
+                            setShouldSeedRefunds(value),
+                        },
+                      ]
+                      : []),
+                    // Show seeding errors if any
+                    ...(seedingErrors.length > 0
+                      ? [
+                        {
+                          type: 'alert' as const,
+                          message: seedingErrors.join(', '),
+                        },
+                      ]
+                      : []),
+                    // Start seeding button
+                    {
+                      type: 'button' as const,
+                      label: isSeeding ? 'Seeding...' : 'Start Seeding',
+                      disabled:
+                        isSeeding ||
+                        (!shouldSeedRiskIntervention &&
+                          !shouldSeedTransactions &&
+                          !shouldSeedCredits &&
+                          !shouldSeedDebits &&
+                          !shouldSeedCardholders),
+                      onClick: async () => {
+                        await Promise.all([
+                          shouldSeedRiskIntervention
+                            ? startSeedingRiskIntervention({
+                              accountId: account.id,
+                              stripeSecretKey,
+                            })
+                            : null,
+                          shouldSeedTransactions
+                            ? startSeedingTransactions({
+                              accountId: account.id,
+                              stripeSecretKey,
+                              language,
+                              chargeType,
+                            })
+                            : null,
+                          shouldSeedCredits || shouldSeedDebits
+                            ? startSeedingFinancialAccountTransactions({
+                              accountId: account.id,
+                              stripeSecretKey,
+                              language,
+                              seedCredits: shouldSeedCredits,
+                              seedDebits: shouldSeedDebits,
+                            })
+                            : null,
+                          shouldSeedCardholders
+                            ? startSeedingIssuing({
+                              accountId: account.id,
+                              stripeSecretKey,
+                              language,
+                              seedCardholders: shouldSeedCardholders,
+                              seedCards: shouldSeedCards,
+                              seedCaptures: shouldSeedCaptures,
+                              seedRefunds: shouldSeedRefunds,
+                            })
+                            : null,
+                        ]);
+
+                        if (seedingErrors.length === 0) {
+                          window.location.reload();
+                        }
                       },
-                      // Payments seeding
-                      {
-                        type: 'checkbox' as const,
-                        label: 'Transactions',
-                        value: shouldSeedTransactions,
-                        disabled: isSeeding,
-                        onChange: (value: boolean) =>
-                          setShouldSeedTransactions(value),
-                      },
-                      // Treasury seeding (only if capability active)
-                      ...(isCapabilityActive('treasury')
-                        ? [
-                            {
-                              type: 'checkbox' as const,
-                              label: 'Treasury Credits',
-                              value: shouldSeedCredits,
-                              disabled: isSeeding,
-                              onChange: (value: boolean) =>
-                                setShouldSeedCredits(value),
-                            },
-                            {
-                              type: 'checkbox' as const,
-                              label: 'Treasury Debits',
-                              value: shouldSeedDebits,
-                              disabled: isSeeding,
-                              onChange: (value: boolean) =>
-                                setShouldSeedDebits(value),
-                            },
-                          ]
-                        : []),
-                      // Issuing seeding (only if capability active)
-                      ...(isCapabilityActive('commercial.stripe.charge_card')
-                        ? [
-                            {
-                              type: 'checkbox' as const,
-                              label: 'Cardholders',
-                              value: shouldSeedCardholders,
-                              disabled: isSeeding,
-                              onChange: (value: boolean) => {
-                                setShouldSeedCardholders(value);
-                                if (!value) {
-                                  setShouldSeedCards(false);
-                                  setShouldSeedCaptures(false);
-                                  setShouldSeedRefunds(false);
-                                }
-                              },
-                            },
-                            {
-                              type: 'checkbox' as const,
-                              label: 'Cards',
-                              value: shouldSeedCards,
-                              disabled: isSeeding || !shouldSeedCardholders,
-                              onChange: (value: boolean) => {
-                                setShouldSeedCards(value);
-                                if (!value) {
-                                  setShouldSeedCaptures(false);
-                                  setShouldSeedRefunds(false);
-                                }
-                              },
-                            },
-                            {
-                              type: 'checkbox' as const,
-                              label: 'Captures',
-                              value: shouldSeedCaptures,
-                              disabled: isSeeding || !shouldSeedCards,
-                              onChange: (value: boolean) => {
-                                setShouldSeedCaptures(value);
-                                if (!value) {
-                                  setShouldSeedRefunds(false);
-                                }
-                              },
-                            },
-                            {
-                              type: 'checkbox' as const,
-                              label: 'Refunds',
-                              value: shouldSeedRefunds,
-                              disabled: isSeeding || !shouldSeedCaptures,
-                              onChange: (value: boolean) =>
-                                setShouldSeedRefunds(value),
-                            },
-                          ]
-                        : []),
-                      // Show seeding errors if any
-                      ...(seedingErrors.length > 0
-                        ? [
+                    },
+                    // Capital / Flex Loan section (only if capital eligible)
+                    ...(isCapitalEligible
+                      ? [
+                        {
+                          type: 'separator' as const,
+                        },
+                        // Show error if approve/reject failed
+                        ...(approveApplicationError
+                          ? [
                             {
                               type: 'alert' as const,
-                              message: seedingErrors.join(', '),
+                              message: approveApplicationError.message,
                             },
                           ]
-                        : []),
-                      // Start seeding button
-                      {
-                        type: 'button' as const,
-                        label: isSeeding ? 'Seeding...' : 'Start Seeding',
-                        disabled:
-                          isSeeding ||
-                          (!shouldSeedRiskIntervention &&
-                            !shouldSeedTransactions &&
-                            !shouldSeedCredits &&
-                            !shouldSeedDebits &&
-                            !shouldSeedCardholders),
-                        onClick: async () => {
-                          await Promise.all([
-                            shouldSeedRiskIntervention
-                              ? startSeedingRiskIntervention({
-                                  accountId: account.id,
-                                  stripeSecretKey,
-                                })
-                              : null,
-                            shouldSeedTransactions
-                              ? startSeedingTransactions({
-                                  accountId: account.id,
-                                  stripeSecretKey,
-                                  language,
-                                  chargeType,
-                                })
-                              : null,
-                            shouldSeedCredits || shouldSeedDebits
-                              ? startSeedingFinancialAccountTransactions({
-                                  accountId: account.id,
-                                  stripeSecretKey,
-                                  language,
-                                  seedCredits: shouldSeedCredits,
-                                  seedDebits: shouldSeedDebits,
-                                })
-                              : null,
-                            shouldSeedCardholders
-                              ? startSeedingIssuing({
-                                  accountId: account.id,
-                                  stripeSecretKey,
-                                  language,
-                                  seedCardholders: shouldSeedCardholders,
-                                  seedCards: shouldSeedCards,
-                                  seedCaptures: shouldSeedCaptures,
-                                  seedRefunds: shouldSeedRefunds,
-                                })
-                              : null,
-                          ]);
-
-                          if (seedingErrors.length === 0) {
-                            window.location.reload();
-                          }
-                        },
-                      },
-                      // Capital / Flex Loan section (only if capital eligible)
-                      ...(isCapitalEligible
-                        ? [
+                          : []),
+                        ...(rejectApplicationError
+                          ? [
                             {
-                              type: 'separator' as const,
+                              type: 'alert' as const,
+                              message: rejectApplicationError.message,
                             },
-                            // Show error if approve/reject failed
-                            ...(approveApplicationError
-                              ? [
-                                  {
-                                    type: 'alert' as const,
-                                    message: approveApplicationError.message,
-                                  },
-                                ]
-                              : []),
-                            ...(rejectApplicationError
-                              ? [
-                                  {
-                                    type: 'alert' as const,
-                                    message: rejectApplicationError.message,
-                                  },
-                                ]
-                              : []),
-                            // Deliver Flex Loan Offer
-                            ...(shouldShowDeliverFlexLoanAction
-                              ? [
-                                  {
-                                    type: 'button' as const,
-                                    label: isFinancingActionPending
-                                      ? 'Creating...'
-                                      : 'Deliver Flex Loan Offer',
-                                    disabled:
-                                      isSeeding || isFinancingActionPending,
-                                    onClick: () => {
-                                      startCreatingFlexLoan({
-                                        accountId: account.id,
-                                        stripeSecretKey,
-                                      });
-                                    },
-                                  },
-                                ]
-                              : []),
-                            // Expire Offer
-                            ...(shouldShowExpireAction && latestFinancingOffer
-                              ? [
-                                  {
-                                    type: 'button' as const,
-                                    label: isFinancingActionPending
-                                      ? 'Expiring...'
-                                      : 'Expire Offer',
-                                    disabled:
-                                      isSeeding || isFinancingActionPending,
-                                    onClick: () => {
-                                      startExpiringFinancingOffer({
-                                        offerId: latestFinancingOffer.id,
-                                        stripeSecretKey,
-                                      });
-                                    },
-                                  },
-                                ]
-                              : []),
-                            // Approve Application
-                            ...(shouldShowApprovalAction && latestFinancingOffer
-                              ? [
-                                  {
-                                    type: 'button' as const,
-                                    label: isFinancingActionPending
-                                      ? 'Approving...'
-                                      : 'Approve Application',
-                                    disabled:
-                                      isSeeding || isFinancingActionPending,
-                                    onClick: () => {
-                                      startApprovingApplication({
-                                        offerId: latestFinancingOffer.id,
-                                        stripeSecretKey,
-                                      });
-                                    },
-                                  },
-                                ]
-                              : []),
-                            // Reject Application
-                            ...(shouldShowRejectionAction &&
-                            latestFinancingOffer
-                              ? [
-                                  {
-                                    type: 'button' as const,
-                                    label: isFinancingActionPending
-                                      ? 'Rejecting...'
-                                      : 'Reject Application',
-                                    disabled:
-                                      isSeeding || isFinancingActionPending,
-                                    onClick: () => {
-                                      startRejectingApplication({
-                                        offerId: latestFinancingOffer.id,
-                                        stripeSecretKey,
-                                      });
-                                    },
-                                  },
-                                ]
-                              : []),
-                            // Fully Repay Offer
-                            ...(shouldShowFullyRepayAction &&
-                            latestFinancingOffer
-                              ? [
-                                  {
-                                    type: 'button' as const,
-                                    label: isFinancingActionPending
-                                      ? 'Repaying...'
-                                      : 'Fully Repay Offer',
-                                    disabled:
-                                      isSeeding || isFinancingActionPending,
-                                    onClick: () => {
-                                      startFullyRepayingFinancingOffer({
-                                        offerId: latestFinancingOffer.id,
-                                        stripeSecretKey,
-                                      });
-                                    },
-                                  },
-                                ]
-                              : []),
                           ]
-                        : []),
-                    ],
-                  },
-                }
+                          : []),
+                        // Deliver Flex Loan Offer
+                        ...(shouldShowDeliverFlexLoanAction
+                          ? [
+                            {
+                              type: 'button' as const,
+                              label: isFinancingActionPending
+                                ? 'Creating...'
+                                : 'Deliver Flex Loan Offer',
+                              disabled:
+                                isSeeding || isFinancingActionPending,
+                              onClick: () => {
+                                startCreatingFlexLoan({
+                                  accountId: account.id,
+                                  stripeSecretKey,
+                                });
+                              },
+                            },
+                          ]
+                          : []),
+                        // Expire Offer
+                        ...(shouldShowExpireAction && latestFinancingOffer
+                          ? [
+                            {
+                              type: 'button' as const,
+                              label: isFinancingActionPending
+                                ? 'Expiring...'
+                                : 'Expire Offer',
+                              disabled:
+                                isSeeding || isFinancingActionPending,
+                              onClick: () => {
+                                startExpiringFinancingOffer({
+                                  offerId: latestFinancingOffer.id,
+                                  stripeSecretKey,
+                                });
+                              },
+                            },
+                          ]
+                          : []),
+                        // Approve Application
+                        ...(shouldShowApprovalAction && latestFinancingOffer
+                          ? [
+                            {
+                              type: 'button' as const,
+                              label: isFinancingActionPending
+                                ? 'Approving...'
+                                : 'Approve Application',
+                              disabled:
+                                isSeeding || isFinancingActionPending,
+                              onClick: () => {
+                                startApprovingApplication({
+                                  offerId: latestFinancingOffer.id,
+                                  stripeSecretKey,
+                                });
+                              },
+                            },
+                          ]
+                          : []),
+                        // Reject Application
+                        ...(shouldShowRejectionAction &&
+                          latestFinancingOffer
+                          ? [
+                            {
+                              type: 'button' as const,
+                              label: isFinancingActionPending
+                                ? 'Rejecting...'
+                                : 'Reject Application',
+                              disabled:
+                                isSeeding || isFinancingActionPending,
+                              onClick: () => {
+                                startRejectingApplication({
+                                  offerId: latestFinancingOffer.id,
+                                  stripeSecretKey,
+                                });
+                              },
+                            },
+                          ]
+                          : []),
+                        // Fully Repay Offer
+                        ...(shouldShowFullyRepayAction &&
+                          latestFinancingOffer
+                          ? [
+                            {
+                              type: 'button' as const,
+                              label: isFinancingActionPending
+                                ? 'Repaying...'
+                                : 'Fully Repay Offer',
+                              disabled:
+                                isSeeding || isFinancingActionPending,
+                              onClick: () => {
+                                startFullyRepayingFinancingOffer({
+                                  offerId: latestFinancingOffer.id,
+                                  stripeSecretKey,
+                                });
+                              },
+                            },
+                          ]
+                          : []),
+                      ]
+                      : []),
+                  ],
+                },
+              }
               : {}),
           },
           onReset,
