@@ -279,6 +279,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                   label: 'Language',
                   options: [
                     { label: 'English', value: 'en' },
+                    { label: 'English (UK)', value: 'en-GB' },
                     { label: 'French', value: 'fr' },
                     { label: 'Spanish', value: 'es' },
                     { label: 'German', value: 'de' },
