@@ -4,16 +4,17 @@ import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
 type GetRecipientsParams = {
-  accountId: string;
+  connectedAccountId: string;
   stripeSecretKey?: string;
 };
 
 /**
- * Returns recipient accounts that belong to the connected account (logged-in merchant).
- * Accounts are filtered by metadata.accountId matching the accountId.
+ * Returns recipient accounts that belong to the connected account.
+ * Uses Stripe-Context header to scope the search to the connected account's recipients.
+ * This follows the FA4P (Financial Accounts for Platforms) pattern.
  */
 export const getRecipients = async ({
-  accountId,
+  connectedAccountId,
   stripeSecretKey = process.env.STRIPE_SECRET_KEY,
 }: GetRecipientsParams) => {
   if (!stripeSecretKey) {
@@ -24,29 +25,49 @@ export const getRecipients = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  // Search for customers with metadata.accountId matching the connected account
-  // Since v2 accounts also have a customer representation, we can search customers
-  const { data: customers } = await stripe.customers.search({
-    query: `metadata["accountId"]:"${accountId}"`,
-    limit: 100,
-  });
+  try {
+    // List all v2 accounts scoped to this connected account using Stripe-Context.
+    // When using stripeContext with a connected account ID, only recipients
+    // created under that context will be returned.
+    // Filter by applied_configurations: ['customer'] to only get accounts that
+    // have been configured as customers (recipients for outbound payments in FA4P).
+    const { data: accounts } = await stripe.v2.core.accounts.list(
+      {
+        applied_configurations: ['customer'],
+      },
+      {
+        stripeContext: connectedAccountId,
+      },
+    );
 
-  // Fetch the full v2 account details for each matching customer
-  const accounts = await Promise.all(
-    customers.map(async (customer) => {
-      try {
-        const account = await stripe.v2.core.accounts.retrieve(customer.id, {
-          include: ['identity', 'configuration.merchant'],
-        });
-        return plain(account);
-      } catch {
-        // Account might not exist or be inaccessible
-        return null;
-      }
-    }),
-  );
+    // Return accounts with identity details
+    const accountsWithIdentity = await Promise.all(
+      accounts.map(async (account) => {
+        try {
+          const fullAccount = await stripe.v2.core.accounts.retrieve(
+            account.id,
+            {
+              include: ['identity'],
+            },
+            {
+              stripeContext: connectedAccountId,
+            },
+          );
+          return plain(fullAccount);
+        } catch {
+          // Return the basic account if we can't get full details
+          return plain(account);
+        }
+      }),
+    );
 
-  // Filter out nulls and return valid accounts
-  return accounts.filter((account) => account !== null);
+    return accountsWithIdentity;
+  } catch (error) {
+    console.error(
+      `Unable to get recipients for connected account ${connectedAccountId}`,
+      error,
+    );
+    return [];
+  }
 };
 

@@ -489,7 +489,7 @@
         "select-recipient-account": "Select a recipient account",
         "loading-accounts": "Loading accounts...",
         "no-accounts-available": "No recipient accounts available.",
-        "select-account-first": "Select a recipient account first to see available payout methods.",
+        "select-account-first": "Select a recipient account first.",
         "destination": "Payout method",
         "select-destination": "Select a payout method",
         "loading-payout-methods": "Loading payout methods...",
@@ -500,7 +500,76 @@
         "description": "Description (optional)",
         "description-placeholder": "Payment for services...",
         "cancel": "Cancel",
-        "send-payment": "Send payment"
+        "send-payment": "Send payment",
+        "add-recipient": "Add recipient"
+      }
+    },
+    "add-recipient": {
+      "title": "Add recipient",
+      "description": "Create a new recipient account to send payments to. After creating the recipient, they will need to add their bank account details to receive payments.",
+      "error": "An unknown error occurred while creating the recipient.",
+      "form": {
+        "entity-type": "Recipient type",
+        "individual": "Individual",
+        "company": "Company",
+        "country": "Country",
+        "contact-email": "Contact email",
+        "contact-email-placeholder": "recipient@example.com",
+        "display-name": "Display name",
+        "display-name-placeholder": "John Doe or Acme Corp",
+        "given-name": "First name",
+        "given-name-placeholder": "John",
+        "surname": "Last name",
+        "surname-placeholder": "Doe",
+        "registered-name": "Registered company name",
+        "registered-name-placeholder": "Acme Corporation",
+        "info-message": "After creating the recipient, you'll choose how to add their payout details.",
+        "cancel": "Cancel",
+        "create": "Create recipient"
+      }
+    },
+    "recipient-payout-options": {
+      "title": "Add payout details",
+      "description": "Choose how to add payout details for {{recipientName}}.",
+      "onboarding-link-error": "An unknown error occurred while generating the onboarding link.",
+      "share-link": {
+        "title": "Share onboarding link",
+        "description": "Generate a secure link to send to the recipient so they can add their own bank account details."
+      },
+      "manual-entry": {
+        "title": "Add manually",
+        "description": "Enter the recipient's bank account details yourself if you have them available."
+      },
+      "link-generated": "Onboarding link generated!",
+      "link-instructions": "Share this link with the recipient to complete their onboarding:",
+      "copy": "Copy link",
+      "copied": "Copied!",
+      "done": "Done",
+      "cancel": "Cancel"
+    },
+    "add-payout-method": {
+      "title": "Add bank account",
+      "description": "Add a {{bankType}} bank account for {{recipientName}} ({{country}}).",
+      "error": "An unknown error occurred while adding the bank account.",
+      "form": {
+        "account-type": "Account type",
+        "checking": "Checking",
+        "savings": "Savings",
+        "account-holder-name": "Account holder name",
+        "account-holder-name-placeholder": "Full name on account",
+        "account-number": "Account number",
+        "account-number-placeholder": "000123456789",
+        "gb-account-number-placeholder": "00012345",
+        "iban": "IBAN",
+        "iban-placeholder": "DE89370400440532013000",
+        "routing-number": "Routing number",
+        "routing-number-placeholder": "110000000",
+        "sort-code": "Sort code",
+        "sort-code-placeholder": "108800",
+        "unsupported-country": "Manual bank account entry is currently only supported for US, GB, and IBAN (European) accounts. Country: {{country}}",
+        "info-message": "This bank account will be set as the default payout method for this recipient.",
+        "cancel": "Cancel",
+        "add": "Add bank account"
       }
     },
     "outbound-transfer": {

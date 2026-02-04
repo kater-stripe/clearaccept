@@ -67,12 +67,14 @@ export const TransferModal = ({
     enabled: !!account && open,
   });
 
-  // Fetch payout methods for external bank accounts
+  // Fetch payout methods for the connected account's own external bank accounts
+  // Note: No recipientAccountId means we're fetching the CA's own payout methods
   const { data: payoutMethods, isPending: isLoadingPayoutMethods } = useQuery({
     queryKey: ['payout-methods', account?.id, stripeSecretKey],
     queryFn: () =>
       getPayoutMethodsAction({
-        accountId: account!.id,
+        connectedAccountId: account!.id,
+        // No recipientAccountId - fetching CA's own payout methods for transfers
         stripeSecretKey,
       }),
     enabled: !!account && open,

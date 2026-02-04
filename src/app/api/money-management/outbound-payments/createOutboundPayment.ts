@@ -4,7 +4,7 @@ import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
 type CreateOutboundPaymentParams = {
-  accountId: string;
+  connectedAccountId: string;
   fromFinancialAccountId: string;
   recipientAccountId: string;
   payoutMethodId: string;
@@ -14,8 +14,13 @@ type CreateOutboundPaymentParams = {
   stripeSecretKey?: string;
 };
 
+/**
+ * Creates an outbound payment from a connected account's financial account to a recipient.
+ * Uses Stripe-Context header with the connected account ID.
+ * This follows the FA4P (Financial Accounts for Platforms) pattern.
+ */
 export const createOutboundPayment = async ({
-  accountId,
+  connectedAccountId,
   fromFinancialAccountId,
   recipientAccountId,
   payoutMethodId,
@@ -33,6 +38,8 @@ export const createOutboundPayment = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   try {
+    // Create outbound payment from connected account's financial account
+    // Use stripeContext with the connected account ID for v2 APIs
     const outboundPayment =
       await stripe.v2.moneyManagement.outboundPayments.create(
         {
@@ -52,7 +59,7 @@ export const createOutboundPayment = async ({
           description: description || 'Payment to third-party',
         },
         {
-          stripeAccount: accountId,
+          stripeContext: connectedAccountId,
         },
       );
 

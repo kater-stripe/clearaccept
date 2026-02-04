@@ -17,6 +17,8 @@ import { Input } from '../common/Input';
 import { CurrencyInput } from '../common/CurrencyInput';
 import { Alert } from '../common/Alert';
 import { LoadingSpinner } from '../common/LoadingSpinner';
+import { AddRecipientModal } from './AddRecipientModal';
+import { AddPayoutMethodModal } from './AddPayoutMethodModal';
 import { getRecipients as getRecipientsAction } from '@/app/api/accounts/getRecipients';
 import { getPayoutMethods as getPayoutMethodsAction } from '@/app/api/money-management/payout-methods/getPayoutMethods';
 import { createOutboundPayment as createOutboundPaymentAction } from '@/app/api/money-management/outbound-payments/createOutboundPayment';
@@ -43,6 +45,17 @@ export const PaymentModal = ({
   const [payoutMethodId, setPayoutMethodId] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
+  const [isAddRecipientModalOpen, setIsAddRecipientModalOpen] =
+    useState<boolean>(false);
+  const [isAddPayoutMethodModalOpen, setIsAddPayoutMethodModalOpen] =
+    useState<boolean>(false);
+  const [createdRecipientAccount, setCreatedRecipientAccount] =
+    useState<Stripe.V2.Core.Account | null>(null);
+  // Track locally created recipients (Customer Search API has indexing delays)
+  // Using 'any' because the response from createRecipient goes through plain() and loses the Stripe Response type
+  const [locallyCreatedRecipients, setLocallyCreatedRecipients] = useState<
+    any[]
+  >([]);
 
   // Get available currencies from source account
   const availableCurrencies = Object.keys(
@@ -56,26 +69,45 @@ export const PaymentModal = ({
     sourceFinancialAccount.balance?.available?.[currency]?.value || 0;
 
   // Fetch recipients that belong to the connected account (logged-in merchant)
-  const { data: recipients, isPending: isLoadingRecipients } = useQuery({
+  const {
+    data: recipients,
+    isPending: isLoadingRecipients,
+    refetch: refetchRecipients,
+  } = useQuery({
     queryKey: ['recipients', account?.id, stripeSecretKey],
     queryFn: () =>
       getRecipientsAction({
-        accountId: account!.id,
+        connectedAccountId: account!.id,
         stripeSecretKey,
       }),
     enabled: !!account && open,
   });
 
   // Fetch payout methods for selected recipient account
+  // Requires both connected account ID and recipient account ID for FA4P context
   const { data: payoutMethods, isPending: isLoadingPayoutMethods } = useQuery({
-    queryKey: ['payout-methods', recipientAccountId, stripeSecretKey],
+    queryKey: ['payout-methods', account?.id, recipientAccountId, stripeSecretKey],
     queryFn: () =>
       getPayoutMethodsAction({
-        accountId: recipientAccountId,
+        connectedAccountId: account!.id,
+        recipientAccountId,
         stripeSecretKey,
       }),
-    enabled: !!recipientAccountId && open,
+    enabled: !!account && !!recipientAccountId && open,
   });
+
+  // Merge fetched recipients with locally created ones (handles search indexing delay)
+  const allRecipients = useMemo(() => {
+    const fetchedRecipients = recipients || [];
+    // Add locally created recipients that aren't already in the fetched list
+    const merged = [...fetchedRecipients];
+    for (const localRecipient of locallyCreatedRecipients) {
+      if (!merged.some((r) => r.id === localRecipient.id)) {
+        merged.push(localRecipient);
+      }
+    }
+    return merged;
+  }, [recipients, locallyCreatedRecipients]);
 
   // Filter to only bank accounts and cards
   const availablePayoutMethods = useMemo(() => {
@@ -101,6 +133,7 @@ export const PaymentModal = ({
         setAmount(0);
         setDescription('');
         setCurrency(defaultCurrency);
+        setLocallyCreatedRecipients([]);
       }, 300);
       return () => clearTimeout(resetTimeout);
     }
@@ -139,7 +172,7 @@ export const PaymentModal = ({
     if (!account) return;
 
     createPayment({
-      accountId: account.id,
+      connectedAccountId: account.id,
       fromFinancialAccountId: sourceFinancialAccount.id,
       recipientAccountId,
       payoutMethodId,
@@ -156,13 +189,21 @@ export const PaymentModal = ({
     amount > 0 &&
     amount <= availableBalance;
 
-  // Get label for account
+  // Get label for account - show individual name or business name
   const getAccountLabel = (acc: Stripe.V2.Core.Account): string => {
-    const name =
-      acc.identity?.business_details?.registered_name ||
-      acc.contact_email ||
-      acc.id;
-    return name;
+    // For individuals, construct name from given_name and surname
+    if (acc.identity?.individual) {
+      const { given_name, surname } = acc.identity.individual;
+      if (given_name || surname) {
+        return [given_name, surname].filter(Boolean).join(' ');
+      }
+    }
+    // For companies, use registered name
+    if (acc.identity?.business_details?.registered_name) {
+      return acc.identity.business_details.registered_name;
+    }
+    // Fallback to display_name, contact_email, or id
+    return acc.display_name || acc.contact_email || acc.id;
   };
 
   // Get label for payout method
@@ -178,164 +219,213 @@ export const PaymentModal = ({
     return pm.id;
   };
 
+  // Handle successful recipient creation - go directly to add payout method
+  const handleRecipientCreated = (account: Stripe.V2.Core.Account) => {
+    setCreatedRecipientAccount(account);
+    // Add to locally created recipients (search index has delays)
+    setLocallyCreatedRecipients((prev) => [...prev, account]);
+    setIsAddPayoutMethodModalOpen(true);
+    // Also refetch in background for eventual consistency
+    refetchRecipients();
+  };
+
+  // Handle payout method added successfully
+  const handlePayoutMethodAdded = () => {
+    // Auto-select the newly created recipient
+    if (createdRecipientAccount && account) {
+      setRecipientAccountId(createdRecipientAccount.id);
+      // Invalidate payout methods cache so it fetches for the new recipient
+      queryClient.invalidateQueries({
+        queryKey: ['payout-methods', account.id, createdRecipientAccount.id],
+      });
+    }
+    setIsAddPayoutMethodModalOpen(false);
+    setCreatedRecipientAccount(null);
+    refetchRecipients();
+  };
+
   return (
-    <Dialog open={open} onClose={onClose} className='relative z-10'>
-      <DialogBackdrop
-        transition
-        className='fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in'
+    <>
+      <AddRecipientModal
+        open={isAddRecipientModalOpen}
+        onClose={() => setIsAddRecipientModalOpen(false)}
+        onSuccess={() => { }}
+        onRecipientCreated={handleRecipientCreated}
       />
 
-      <form onSubmit={handleSubmitPayment}>
-        <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
-          <div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
-            <DialogPanel
-              transition
-              className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:data-closed:translate-y-0 sm:data-closed:scale-95'
-            >
-              <div>
-                <DialogTitle
-                  as='h3'
-                  className='text-lg font-semibold text-gray-900'
-                >
-                  {t('modals.payment.title')}
-                </DialogTitle>
-                <p className='mt-1 text-sm text-gray-500'>
-                  {t('modals.payment.description', {
-                    accountName: sourceFinancialAccount.display_name,
-                  })}
-                </p>
-              </div>
+      {createdRecipientAccount && account && (
+        <AddPayoutMethodModal
+          open={isAddPayoutMethodModalOpen}
+          onClose={() => setIsAddPayoutMethodModalOpen(false)}
+          connectedAccountId={account.id}
+          recipientAccount={createdRecipientAccount}
+          onSuccess={handlePayoutMethodAdded}
+        />
+      )}
 
-              {!isCreatingPayment && paymentError && (
-                <div className='mt-4'>
-                  <Alert>{t('modals.payment.error')}</Alert>
+      <Dialog open={open} onClose={onClose} className='relative z-10'>
+        <DialogBackdrop
+          transition
+          className='fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in'
+        />
+
+        <form onSubmit={handleSubmitPayment}>
+          <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
+            <div className='flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0'>
+              <DialogPanel
+                transition
+                className='relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:data-closed:translate-y-0 sm:data-closed:scale-95'
+              >
+                <div>
+                  <DialogTitle
+                    as='h3'
+                    className='text-lg font-semibold text-gray-900'
+                  >
+                    {t('modals.payment.title')}
+                  </DialogTitle>
+                  <p className='mt-1 text-sm text-gray-500'>
+                    {t('modals.payment.description', {
+                      accountName: sourceFinancialAccount.display_name,
+                    })}
+                  </p>
                 </div>
-              )}
 
-              <div className='mt-4 flex flex-col gap-y-4'>
-                {/* Recipient Account Selection */}
-                <Select
-                  label={t('modals.payment.form.recipient-account')}
-                  value={recipientAccountId}
-                  onChange={(value) => setRecipientAccountId(value || '')}
-                  options={
-                    recipients?.map((acc) => ({
-                      value: acc.id,
-                      label: getAccountLabel(acc as Stripe.V2.Core.Account),
-                    })) || []
-                  }
-                  placeholder={
-                    isLoadingRecipients
-                      ? t('modals.payment.form.loading-accounts')
-                      : !recipients || recipients.length === 0
-                        ? t('modals.payment.form.no-accounts-available')
-                        : t('modals.payment.form.select-recipient-account')
-                  }
-                  disabled={
-                    isLoadingRecipients || !recipients || recipients.length === 0
-                  }
-                  nullable
-                  required
-                />
-
-                {/* Payout Method Selection */}
-                <Select
-                  label={t('modals.payment.form.destination')}
-                  value={payoutMethodId}
-                  onChange={(value) => setPayoutMethodId(value || '')}
-                  options={availablePayoutMethods.map((pm) => ({
-                    value: pm.id,
-                    label: getPayoutMethodLabel(pm),
-                  }))}
-                  placeholder={
-                    !recipientAccountId
-                      ? t('modals.payment.form.select-account-first')
-                      : isLoadingPayoutMethods
-                        ? t('modals.payment.form.loading-payout-methods')
-                        : availablePayoutMethods.length === 0
-                          ? t('modals.payment.form.no-payout-methods-available')
-                          : t('modals.payment.form.select-destination')
-                  }
-                  disabled={
-                    !recipientAccountId ||
-                    isLoadingPayoutMethods ||
-                    availablePayoutMethods.length === 0
-                  }
-                  nullable
-                  required
-                />
-
-                {/* Currency Selection */}
-                {availableCurrencies.length > 1 && (
-                  <Select
-                    label={t('modals.payment.form.currency')}
-                    value={currency}
-                    onChange={setCurrency}
-                    options={availableCurrencies.map((curr) => ({
-                      value: curr,
-                      label: curr.toUpperCase(),
-                    }))}
-                    required
-                  />
+                {!isCreatingPayment && paymentError && (
+                  <div className='mt-4'>
+                    <Alert>{t('modals.payment.error')}</Alert>
+                  </div>
                 )}
 
-                {/* Amount */}
-                <div>
-                  <CurrencyInput
-                    label={t('modals.payment.form.amount', {
-                      available: (availableBalance / 100).toFixed(2),
-                      currency: currency.toUpperCase(),
-                    })}
-                    currency={currency as CurrencyCode}
-                    onChange={setAmount}
+                <div className='mt-4 flex flex-col gap-y-4'>
+                  {/* Recipient Account Selection */}
+                  <div>
+                    <Select
+                      label={t('modals.payment.form.recipient-account')}
+                      value={recipientAccountId}
+                      onChange={(value) => setRecipientAccountId(value || '')}
+                      options={allRecipients.map((acc) => ({
+                        value: acc.id,
+                        label: getAccountLabel(acc as Stripe.V2.Core.Account),
+                      }))}
+                      placeholder={
+                        isLoadingRecipients
+                          ? t('modals.payment.form.loading-accounts')
+                          : allRecipients.length === 0
+                            ? t('modals.payment.form.no-accounts-available')
+                            : t('modals.payment.form.select-recipient-account')
+                      }
+                      disabled={isLoadingRecipients || allRecipients.length === 0}
+                      nullable
+                      required
+                    />
+                    <Button
+                      type='button'
+                      onClick={() => setIsAddRecipientModalOpen(true)}
+                      className='mt-2 w-full bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                    >
+                      {t('modals.payment.form.add-recipient')}
+                    </Button>
+                  </div>
+
+                  {/* Payout Method Selection */}
+                  <Select
+                    label={t('modals.payment.form.destination')}
+                    value={payoutMethodId}
+                    onChange={(value) => setPayoutMethodId(value || '')}
+                    options={availablePayoutMethods.map((pm) => ({
+                      value: pm.id,
+                      label: getPayoutMethodLabel(pm),
+                    }))}
+                    placeholder={
+                      !recipientAccountId
+                        ? t('modals.payment.form.select-account-first')
+                        : isLoadingPayoutMethods
+                          ? t('modals.payment.form.loading-payout-methods')
+                          : availablePayoutMethods.length === 0
+                            ? t('modals.payment.form.no-payout-methods-available')
+                            : t('modals.payment.form.select-destination')
+                    }
+                    disabled={
+                      !recipientAccountId ||
+                      isLoadingPayoutMethods ||
+                      availablePayoutMethods.length === 0
+                    }
+                    nullable
                     required
-                    max={availableBalance / 100}
                   />
-                  {amount > availableBalance && (
-                    <p className='mt-1 text-sm text-red-500'>
-                      {t('modals.payment.form.insufficient-funds')}
-                    </p>
+
+                  {/* Currency Selection */}
+                  {availableCurrencies.length > 1 && (
+                    <Select
+                      label={t('modals.payment.form.currency')}
+                      value={currency}
+                      onChange={setCurrency}
+                      options={availableCurrencies.map((curr) => ({
+                        value: curr,
+                        label: curr.toUpperCase(),
+                      }))}
+                      required
+                    />
                   )}
+
+                  {/* Amount */}
+                  <div>
+                    <CurrencyInput
+                      label={t('modals.payment.form.amount', {
+                        available: (availableBalance / 100).toFixed(2),
+                        currency: currency.toUpperCase(),
+                      })}
+                      currency={currency as CurrencyCode}
+                      onChange={setAmount}
+                      required
+                      max={availableBalance / 100}
+                    />
+                    {amount > availableBalance && (
+                      <p className='mt-1 text-sm text-red-500'>
+                        {t('modals.payment.form.insufficient-funds')}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Description */}
+                  <Input
+                    label={t('modals.payment.form.description')}
+                    value={description}
+                    onChange={setDescription}
+                    placeholder={t('modals.payment.form.description-placeholder')}
+                  />
                 </div>
 
-                {/* Description */}
-                <Input
-                  label={t('modals.payment.form.description')}
-                  value={description}
-                  onChange={setDescription}
-                  placeholder={t('modals.payment.form.description-placeholder')}
-                />
-              </div>
-
-              <div className='flex flex-col md:flex-row gap-4 mt-5'>
-                <Button
-                  className='w-full bg-white border border-gray-500 text-gray-500 hover:bg-gray-100'
-                  type='button'
-                  onClick={onClose}
-                >
-                  {t('modals.payment.form.cancel')}
-                </Button>
-                <Button
-                  className='w-full'
-                  disabled={
-                    isCreatingPayment ||
-                    !isPaymentFormValid ||
-                    isLoadingRecipients ||
-                    isLoadingPayoutMethods
-                  }
-                  type='submit'
-                >
-                  {isCreatingPayment ? (
-                    <LoadingSpinner className='size-4' strokeWidth={3} />
-                  ) : (
-                    t('modals.payment.form.send-payment')
-                  )}
-                </Button>
-              </div>
-            </DialogPanel>
+                <div className='flex flex-col md:flex-row gap-4 mt-5'>
+                  <Button
+                    className='w-full bg-white border border-gray-500 text-gray-500 hover:bg-gray-100'
+                    type='button'
+                    onClick={onClose}
+                  >
+                    {t('modals.payment.form.cancel')}
+                  </Button>
+                  <Button
+                    className='w-full'
+                    disabled={
+                      isCreatingPayment ||
+                      !isPaymentFormValid ||
+                      isLoadingRecipients ||
+                      isLoadingPayoutMethods
+                    }
+                    type='submit'
+                  >
+                    {isCreatingPayment ? (
+                      <LoadingSpinner className='size-4' strokeWidth={3} />
+                    ) : (
+                      t('modals.payment.form.send-payment')
+                    )}
+                  </Button>
+                </div>
+              </DialogPanel>
+            </div>
           </div>
-        </div>
-      </form>
-    </Dialog>
+        </form>
+      </Dialog>
+    </>
   );
 };
