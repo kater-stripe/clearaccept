@@ -15,7 +15,7 @@ import type { DemoMerchant } from '@/types/demoMerchant';
 import { seedIssuing } from '@/app/api/issuing/seedIssuing';
 import { seedFinancialAccountTransactions } from '@/app/api/money-management/financial-accounts/seedFinancialAccountTransactions';
 import { seedTransactions } from '@/app/api/payment-intents/seedTransactions';
-import { createFlexLoan } from '@/app/api/financing-offers/createFlexLoan';
+import { createCapitalOffer } from '@/app/api/financing-offers/createCapitalOffer';
 import { createRiskIntervention } from '@/app/api/accounts/createRiskIntervention';
 import { getLatestFinancingOffer } from '@/app/api/financing-offers/getLatestFinancingOffer';
 import { expireFinancingOffer } from '@/app/api/financing-offers/expireFinancingOffer';
@@ -150,11 +150,19 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
     enabled: isMerchantSignedIn && !!account && isCapitalEligible,
   });
 
+  // Get the merchant country to determine which loan type to create
+  const merchantCountry = (account?.identity?.country ?? 'US') as 'US' | 'GB';
+
   // Financing offer mutations
-  const { mutate: startCreatingFlexLoan, isPending: isCreatingFlexLoan } =
+  const { mutate: startCreatingCapitalOffer, isPending: isCreatingCapitalOffer } =
     useMutation({
-      mutationKey: ['create-flex-loan', account?.id, stripeSecretKey],
-      mutationFn: createFlexLoan,
+      mutationKey: [
+        'create-capital-offer',
+        account?.id,
+        stripeSecretKey,
+        merchantCountry,
+      ],
+      mutationFn: createCapitalOffer,
       onSuccess: () => {
         setWaitingForFinancingOfferToUpdate(true);
       },
@@ -213,7 +221,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
   });
 
   const isFinancingActionPending =
-    isCreatingFlexLoan ||
+    isCreatingCapitalOffer ||
     isExpiringFinancingOffer ||
     isApprovingApplication ||
     isRejectingApplication ||
@@ -693,19 +701,22 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                             },
                           ]
                           : []),
-                        // Deliver Flex Loan Offer
+                        // Deliver Capital Offer (Flex Loan for US, YouLend for GB)
                         ...(shouldShowDeliverFlexLoanAction
                           ? [
                             {
                               type: 'button' as const,
                               label: isFinancingActionPending
                                 ? 'Creating...'
-                                : 'Deliver Flex Loan Offer',
+                                : merchantCountry === 'GB'
+                                  ? 'Deliver YouLend Offer (GB)'
+                                  : 'Deliver Flex Loan Offer (US)',
                               disabled:
                                 isSeeding || isFinancingActionPending,
                               onClick: () => {
-                                startCreatingFlexLoan({
+                                startCreatingCapitalOffer({
                                   accountId: account.id,
+                                  country: merchantCountry,
                                   stripeSecretKey,
                                 });
                               },
