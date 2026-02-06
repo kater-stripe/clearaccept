@@ -70,6 +70,16 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           title: t('dashboard.expenses.title'),
         };
       }
+      case '/dashboard/bills': {
+        return {
+          title: t('dashboard.bills.title'),
+        };
+      }
+      case '/dashboard/cards': {
+        return {
+          title: t('dashboard.cards.title'),
+        };
+      }
       case '/dashboard/capital': {
         return {
           title: t('dashboard.capital.title'),
