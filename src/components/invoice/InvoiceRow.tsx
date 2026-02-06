@@ -149,7 +149,7 @@ export const InvoiceRow = ({ invoice }: InvoiceRowProps) => {
                   stripeSecretKey,
                 })
               }
-              className='bg-blue-600 hover:bg-blue-500 text-white'
+              className='bg-blue-600 hover:bg-blue-500 text-black'
             >
               {t('dashboard.invoices.table.finalize')}
             </Button>

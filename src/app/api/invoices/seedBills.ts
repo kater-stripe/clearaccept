@@ -66,10 +66,36 @@ export const seedBills = async ({
 
     const createdInvoices = [];
 
+    // Retrieve full identity details for each supplier account
+    const supplierDetails = await Promise.all(
+      otherAccounts.map(async (a) => {
+        try {
+          const full = await stripe.v2.core.accounts.retrieve(a.id, {
+            include: ['identity'],
+          });
+          return full;
+        } catch {
+          return a;
+        }
+      }),
+    );
+
     // Always create 3 bills, cycling through available supplier accounts
     for (let i = 0; i < 3; i++) {
-      const supplierAccount = otherAccounts[i % otherAccounts.length];
+      const supplierAccount = supplierDetails[i % supplierDetails.length];
       const billTemplate = SUPPLIER_BILLS[i];
+
+      // Derive supplier name: business name > individual name > display name > fallback
+      const identity = supplierAccount.identity as Record<string, any> | undefined;
+      const businessName = identity?.business_details?.registered_name;
+      const individualGiven = identity?.individual?.given_name;
+      const individualSurname = identity?.individual?.surname;
+      const individualName =
+        individualGiven && individualSurname
+          ? `${individualGiven} ${individualSurname}`
+          : individualGiven || individualSurname || null;
+      const supplierName =
+        businessName || individualName || supplierAccount.display_name || billTemplate.supplierName;
 
       // Create a customer in the supplier's CA representing the current merchant
       const customer = await stripe.customers.create(
@@ -93,7 +119,7 @@ export const seedBills = async ({
           metadata: {
             type: 'supplier-bill',
             billToAccountId: accountId,
-            supplierName: billTemplate.supplierName,
+            supplierName,
           },
         },
         { stripeAccount: supplierAccount.id },
