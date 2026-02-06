@@ -74,8 +74,29 @@
         "create-payment-link": "Create payment link"
       }
     },
+    "accounts": {
+      "title": "Accounts"
+    },
+    "bills": {
+      "title": "Bills",
+      "table": {
+        "supplier": "Supplier",
+        "invoice-number": "Invoice #",
+        "amount": "Amount",
+        "status": "Status",
+        "due-date": "Due Date",
+        "actions": "Actions",
+        "pay": "Pay",
+        "mark-paid": "Mark as paid"
+      },
+      "empty": "No bills to pay.",
+      "empty-description": "When you receive invoices from suppliers, they will appear here."
+    },
+    "cards": {
+      "title": "Cards"
+    },
     "expenses": {
-      "title": "Expenses",
+      "title": "Accounts",
       "financial-account-card": {
         "ending-in": "Ending in {{last4}}"
       },

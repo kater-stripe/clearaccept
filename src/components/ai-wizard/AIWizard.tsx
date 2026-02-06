@@ -2,6 +2,7 @@
 
 import { createCapitalOffer } from '@/app/api/financing-offers/createCapitalOffer';
 import { getLatestFinancingOffer } from '@/app/api/financing-offers/getLatestFinancingOffer';
+import { getBills } from '@/app/api/invoices/getBills';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import { SparklesIcon, XMarkIcon } from '@heroicons/react/24/outline';
@@ -41,7 +42,7 @@ const LoadingSpinner = () => (
 
 export const AIWizard = () => {
     const { language, stripeSecretKey } = useDemoConfig();
-    const { account, isSignedIn, isCapitalEligible } = useDemoMerchant();
+    const { account, isSignedIn, isCapitalEligible, isCapabilityActive } = useDemoMerchant();
     const router = useRouter();
     const pathname = usePathname();
 
@@ -80,9 +81,41 @@ export const AIWizard = () => {
         mutationFn: createCapitalOffer,
     });
 
-    // Pages where we show the capital suggestion
+    // Pages where we show suggestions
     const capitalSuggestionPages = ['/dashboard/payments'];
     const isOnCapitalSuggestionPage = capitalSuggestionPages.includes(pathnameWithoutLanguage);
+    const isOnBillsPage = pathnameWithoutLanguage === '/dashboard/bills';
+
+    // Query for existing bills (only when on bills page)
+    const { data: bills } = useQuery({
+        queryKey: ['ai-wizard-bills', account?.id, stripeSecretKey],
+        queryFn: async () => {
+            if (!account?.id) return [];
+            return getBills({
+                accountId: account.id,
+                stripeSecretKey,
+            });
+        },
+        enabled: isSignedIn && !!account && isOnBillsPage,
+    });
+
+    const hasBills = bills && bills.length > 0;
+
+    // Check if we should show the issuing card suggestion on bills page
+    const shouldShowIssuingSuggestion = useMemo(() => {
+        if (!isSignedIn || !account) return false;
+        if (!isOnBillsPage) return false;
+        if (!isCapabilityActive('commercial.stripe.charge_card')) return false;
+        if (!hasBills) return false;
+        return true;
+    }, [isSignedIn, account, isOnBillsPage, isCapabilityActive, hasBills]);
+
+    // Handle issuing card action - navigate to cards page
+    const handleIssuingAction = async () => {
+        router.push(`/${language}/dashboard/cards`);
+        setIsOpen(false);
+        setIsMinimized(true);
+    };
 
     // Check if we should show a capital offer suggestion
     const shouldShowCapitalSuggestion = useMemo(() => {
@@ -153,8 +186,17 @@ export const AIWizard = () => {
                 action: handleCapitalOfferAction,
             };
         }
+        if (shouldShowIssuingSuggestion) {
+            return {
+                id: 'issuing-for-bills',
+                message:
+                    'You have outstanding bills to pay. Consider using an issuing card for better spend tracking and control.',
+                actionLabel: 'View issuing cards',
+                action: handleIssuingAction,
+            };
+        }
         return null;
-    }, [shouldShowCapitalSuggestion, account, merchantCountry]);
+    }, [shouldShowCapitalSuggestion, shouldShowIssuingSuggestion, account, merchantCountry]);
 
     // Auto-expand when there's a new suggestion on a new route
     useEffect(() => {
@@ -213,10 +255,10 @@ export const AIWizard = () => {
                                 {/* Action Button */}
                                 <button
                                     onClick={currentSuggestion.action}
-                                    disabled={isCreatingOffer}
+                                    disabled={isCreatingOffer && currentSuggestion.id === 'capital-offer'}
                                     className="w-full bg-brand-primary hover:bg-brand-primary/90 disabled:bg-brand-primary/70 text-brand-primary-contrasting font-medium py-2.5 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
                                 >
-                                    {isCreatingOffer ? (
+                                    {isCreatingOffer && currentSuggestion.id === 'capital-offer' ? (
                                         <LoadingSpinner />
                                     ) : (
                                         currentSuggestion.actionLabel

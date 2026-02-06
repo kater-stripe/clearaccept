@@ -74,8 +74,29 @@
         "create-payment-link": "Zahlungslink erstellen"
       }
     },
+    "accounts": {
+      "title": "Konten"
+    },
+    "bills": {
+      "title": "Rechnungen",
+      "table": {
+        "supplier": "Lieferant",
+        "invoice-number": "Rechnungsnr.",
+        "amount": "Betrag",
+        "status": "Status",
+        "due-date": "Fälligkeitsdatum",
+        "actions": "Aktionen",
+        "pay": "Bezahlen",
+        "mark-paid": "Als bezahlt markieren"
+      },
+      "empty": "Keine Rechnungen zu bezahlen.",
+      "empty-description": "Wenn Sie Rechnungen von Lieferanten erhalten, werden sie hier angezeigt."
+    },
+    "cards": {
+      "title": "Karten"
+    },
     "expenses": {
-      "title": "Ausgaben",
+      "title": "Konten",
       "financial-account-card": {
         "ending-in": "Endet auf {{last4}}"
       },

@@ -74,8 +74,29 @@
         "create-payment-link": "创建支付链接"
       }
     },
+    "accounts": {
+      "title": "账户"
+    },
+    "bills": {
+      "title": "供应商账单",
+      "table": {
+        "supplier": "供应商",
+        "invoice-number": "发票编号",
+        "amount": "金额",
+        "status": "状态",
+        "due-date": "到期日",
+        "actions": "操作",
+        "pay": "支付",
+        "mark-paid": "标记为已付"
+      },
+      "empty": "没有待支付的账单。",
+      "empty-description": "当您收到供应商的发票时，它们将显示在这里。"
+    },
+    "cards": {
+      "title": "卡片"
+    },
     "expenses": {
-      "title": "支出",
+      "title": "账户",
       "financial-account-card": {
         "ending-in": "尾号 {{last4}}"
       },

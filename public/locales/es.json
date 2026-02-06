@@ -74,8 +74,29 @@
         "create-payment-link": "Crear enlace de pago"
       }
     },
+    "accounts": {
+      "title": "Cuentas"
+    },
+    "bills": {
+      "title": "Facturas de proveedores",
+      "table": {
+        "supplier": "Proveedor",
+        "invoice-number": "N.º de factura",
+        "amount": "Importe",
+        "status": "Estado",
+        "due-date": "Fecha de vencimiento",
+        "actions": "Acciones",
+        "pay": "Pagar",
+        "mark-paid": "Marcar como pagada"
+      },
+      "empty": "No hay facturas por pagar.",
+      "empty-description": "Cuando recibas facturas de proveedores, aparecerán aquí."
+    },
+    "cards": {
+      "title": "Tarjetas"
+    },
     "expenses": {
-      "title": "Gastos",
+      "title": "Cuentas",
       "financial-account-card": {
         "ending-in": "Terminada en {{last4}}"
       },

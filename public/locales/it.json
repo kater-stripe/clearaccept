@@ -74,8 +74,29 @@
         "create-payment-link": "Crea link di pagamento"
       }
     },
+    "accounts": {
+      "title": "Conti"
+    },
+    "bills": {
+      "title": "Fatture fornitori",
+      "table": {
+        "supplier": "Fornitore",
+        "invoice-number": "N. fattura",
+        "amount": "Importo",
+        "status": "Stato",
+        "due-date": "Data di scadenza",
+        "actions": "Azioni",
+        "pay": "Paga",
+        "mark-paid": "Segna come pagata"
+      },
+      "empty": "Nessuna fattura da pagare.",
+      "empty-description": "Quando ricevi fatture dai fornitori, appariranno qui."
+    },
+    "cards": {
+      "title": "Carte"
+    },
     "expenses": {
-      "title": "Spese",
+      "title": "Conti",
       "financial-account-card": {
         "ending-in": "Termina con {{last4}}"
       },

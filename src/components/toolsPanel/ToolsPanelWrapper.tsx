@@ -22,6 +22,7 @@ import { expireFinancingOffer } from '@/app/api/financing-offers/expireFinancing
 import { approveApplication } from '@/app/api/financing-offers/approveApplication';
 import { rejectApplication } from '@/app/api/financing-offers/rejectApplication';
 import { fullyRepayFinancingOffer } from '@/app/api/financing-offers/fullyRepayFinancingOffer';
+import { seedBills } from '@/app/api/invoices/seedBills';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
@@ -102,6 +103,14 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
     error: seedingRiskInterventionError,
   } = useMutation({
     mutationFn: createRiskIntervention,
+  });
+
+  const {
+    mutateAsync: startSeedingBills,
+    isPending: isSeedingBills,
+    error: seedingBillsError,
+  } = useMutation({
+    mutationFn: seedBills,
   });
 
   const isSeeding =
@@ -674,6 +683,35 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                         ]);
 
                         if (seedingErrors.length === 0) {
+                          window.location.reload();
+                        }
+                      },
+                    },
+                    // Bills seeding section
+                    {
+                      type: 'separator' as const,
+                    },
+                    ...(seedingBillsError
+                      ? [
+                        {
+                          type: 'alert' as const,
+                          message: seedingBillsError.message,
+                        },
+                      ]
+                      : []),
+                    {
+                      type: 'button' as const,
+                      label: isSeedingBills
+                        ? 'Generating Bills...'
+                        : 'Generate Bills',
+                      disabled: isSeeding || isSeedingBills,
+                      onClick: async () => {
+                        await startSeedingBills({
+                          accountId: account.id,
+                          stripeSecretKey,
+                        });
+
+                        if (!seedingBillsError) {
                           window.location.reload();
                         }
                       },

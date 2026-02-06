@@ -74,8 +74,29 @@
         "create-payment-link": "Créer un lien de paiement"
       }
     },
+    "accounts": {
+      "title": "Comptes"
+    },
+    "bills": {
+      "title": "Factures fournisseurs",
+      "table": {
+        "supplier": "Fournisseur",
+        "invoice-number": "N° de facture",
+        "amount": "Montant",
+        "status": "Statut",
+        "due-date": "Date d'échéance",
+        "actions": "Actions",
+        "pay": "Payer",
+        "mark-paid": "Marquer comme payée"
+      },
+      "empty": "Aucune facture à payer.",
+      "empty-description": "Lorsque vous recevez des factures de fournisseurs, elles apparaîtront ici."
+    },
+    "cards": {
+      "title": "Cartes"
+    },
     "expenses": {
-      "title": "Dépenses",
+      "title": "Comptes",
       "financial-account-card": {
         "ending-in": "Se terminant par {{last4}}"
       },

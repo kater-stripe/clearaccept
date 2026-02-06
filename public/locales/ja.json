@@ -74,8 +74,29 @@
         "create-payment-link": "決済リンクを作成"
       }
     },
+    "accounts": {
+      "title": "アカウント"
+    },
+    "bills": {
+      "title": "請求書",
+      "table": {
+        "supplier": "仕入先",
+        "invoice-number": "請求書番号",
+        "amount": "金額",
+        "status": "ステータス",
+        "due-date": "支払期日",
+        "actions": "アクション",
+        "pay": "支払う",
+        "mark-paid": "支払済みにする"
+      },
+      "empty": "支払うべき請求書はありません。",
+      "empty-description": "仕入先からの請求書を受け取ると、ここに表示されます。"
+    },
+    "cards": {
+      "title": "カード"
+    },
     "expenses": {
-      "title": "支出",
+      "title": "アカウント",
       "financial-account-card": {
         "ending-in": "末尾番号 {{last4}}"
       },

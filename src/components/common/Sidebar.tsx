@@ -180,15 +180,28 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         icon: BriefcaseIcon,
         label: t('dashboard.finance.title'),
         children: [
+          {
+            href: `/${language}/dashboard/bills`,
+            icon: DocumentTextIcon,
+            label: t('dashboard.bills.title'),
+          },
           ...(isCapabilityActive('holds_currencies.usd') ||
           isCapabilityActive('holds_currencies.gbp') ||
-          isCapabilityActive('holds_currencies.eur') ||
-          isCapabilityActive('commercial.stripe.charge_card')
+          isCapabilityActive('holds_currencies.eur')
             ? [
                 {
                   href: `/${language}/dashboard/expenses`,
                   icon: BuildingLibraryIcon,
-                  label: t('dashboard.expenses.title'),
+                  label: t('dashboard.accounts.title'),
+                },
+              ]
+            : []),
+          ...(isCapabilityActive('commercial.stripe.charge_card')
+            ? [
+                {
+                  href: `/${language}/dashboard/cards`,
+                  icon: CreditCardIcon,
+                  label: t('dashboard.cards.title'),
                 },
               ]
             : []),
