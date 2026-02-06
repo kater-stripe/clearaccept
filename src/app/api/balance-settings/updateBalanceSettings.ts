@@ -1,6 +1,6 @@
 'use server';
 
-import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
 type UpdateBalanceSettingsParams = {
@@ -36,25 +36,26 @@ export const updateBalanceSettings = async ({
     );
   }
 
-  const body = new URLSearchParams();
+  const stripe = initializeStripe(stripeSecretKey);
   const currencyKey = currency.toLowerCase();
+
+  // Build the params using URLSearchParams since automatic_transfer_rules_by_currency
+  // uses a nested array structure not covered by the SDK's typed params
+  const body = new URLSearchParams();
 
   if (enabled) {
     // Configure automatic transfer rules to send funds to the v2 FA
-    // Structure: payments[payouts][automatic_transfer_rules_by_currency][<currency>][0][payout_method|type|transfer_up_to_amount]
     body.append(
       `payments[payouts][automatic_transfer_rules_by_currency][${currencyKey}][0][payout_method]`,
       financialAccountId,
     );
 
     if (transferAllFunds) {
-      // Transfer all available funds to the FA
       body.append(
         `payments[payouts][automatic_transfer_rules_by_currency][${currencyKey}][0][type]`,
         'transfer_all',
       );
     } else if (targetAmount !== undefined) {
-      // Transfer until target amount is reached in the FA
       body.append(
         `payments[payouts][automatic_transfer_rules_by_currency][${currencyKey}][0][type]`,
         'transfer_up_to_amount',
@@ -72,40 +73,29 @@ export const updateBalanceSettings = async ({
     );
   }
 
-  const res = await fetch('https://api.stripe.com/v1/balance_settings', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Stripe-Version': STRIPE_API_VERSION,
-      ...(accountId ? { 'Stripe-Account': accountId } : {}),
-      Authorization: `Bearer ${stripeSecretKey}`,
-    },
-    body: body.toString(),
-  });
+  try {
+    const result = await stripe.rawRequest('POST', '/v1/balance_settings', {
+      ...Object.fromEntries(body.entries()),
+    }, {
+      ...(accountId ? { stripeAccount: accountId } : {}),
+    });
 
-  if (!res.ok) {
-    try {
-      const error = await res.json();
-      console.error('Unable to update balance settings:', error);
-      return {
-        success: false,
-        message:
-          error?.error?.message ||
-          'An error occurred while updating balance settings.',
-      };
-    } catch {
-      return {
-        success: false,
-        message: 'An error occurred while updating balance settings.',
-      };
-    }
+    // log request id
+    console.log(result.lastResponse.requestId);
+
+    return {
+      success: true,
+      data: plain(result),
+    };
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'An error occurred while updating balance settings.';
+    console.error('Unable to update balance settings:', error);
+    return {
+      success: false,
+      message,
+    };
   }
-
-  const balanceSettings = await res.json();
-
-  return {
-    success: true,
-    data: plain(balanceSettings),
-  };
 };
-

@@ -1,6 +1,6 @@
 'use server';
 
-import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
 type GetBalanceSettingsParams = {
@@ -22,27 +22,17 @@ export const getBalanceSettings = async ({
     );
   }
 
-  const res = await fetch('https://api.stripe.com/v1/balance_settings', {
-    method: 'GET',
-    headers: {
-      'Stripe-Version': STRIPE_API_VERSION,
-      ...(accountId ? { 'Stripe-Account': accountId } : {}),
-      Authorization: `Bearer ${stripeSecretKey}`,
-    },
-  });
+  const stripe = initializeStripe(stripeSecretKey);
 
-  if (!res.ok) {
-    try {
-      const error = await res.json();
-      console.error('Unable to get balance settings:', error);
-      return null;
-    } catch {
-      return null;
-    }
+  try {
+    const balanceSettings = await stripe.balanceSettings.retrieve(
+      {},
+      accountId ? { stripeAccount: accountId } : undefined,
+    );
+
+    return plain(balanceSettings);
+  } catch (error) {
+    console.error('Unable to get balance settings:', error);
+    return null;
   }
-
-  const balanceSettings = await res.json();
-
-  return plain(balanceSettings);
 };
-

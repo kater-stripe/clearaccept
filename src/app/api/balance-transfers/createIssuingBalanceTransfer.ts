@@ -1,6 +1,7 @@
 'use server';
 
-import { CurrencyCode } from '@/constants/currencyCodes';
+import type { CurrencyCode } from '@/constants/currencyCodes';
+import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
 type CreateIssuingBalanceTransferParams = {
@@ -18,42 +19,34 @@ export const createIssuingBalanceTransfer = async ({
 }: CreateIssuingBalanceTransferParams) => {
   if (!stripeSecretKey) {
     throw new Error(
-      'Unable to get account balance because neither a secret key was provided nor one was found in the environment variables.',
+      'Unable to create issuing balance transfer because neither a secret key was provided nor one was found in the environment variables.',
     );
   }
 
-  const balanceTransferRes = await fetch(
-    'https://api.stripe.com/v1/balance_transfers',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Stripe-Version': '2025-07-30.preview',
-        ...(accountId ? { 'Stripe-Account': accountId } : {}),
-        Authorization: `Bearer ${stripeSecretKey}`,
-      },
-      body: new URLSearchParams({
+  const stripe = initializeStripe(stripeSecretKey);
+
+  try {
+    const balanceTransfer = await stripe.rawRequest(
+      'POST',
+      '/v1/balance_transfers',
+      {
         amount: amount.toString(),
         currency,
         'source_balance[type]': 'payments',
         'destination_balance[type]': 'issuing',
-      }).toString(),
-    },
-  );
+      },
+      {
+        ...(accountId ? { stripeAccount: accountId } : {}),
+        apiVersion: '2025-07-30.preview',
+      },
+    );
 
-  if (!balanceTransferRes.ok) {
-    try {
-      console.error('Unable to create issuing balance transfer.');
-
-      console.error(await balanceTransferRes.json());
-    } catch {}
+    return plain(balanceTransfer);
+  } catch (error) {
+    console.error('Unable to create issuing balance transfer:', error);
 
     return {
       message: 'dashboard.expenses.issuing-topups.error',
     };
   }
-
-  const balanceTransfer = await balanceTransferRes.json();
-
-  return plain(balanceTransfer);
 };
