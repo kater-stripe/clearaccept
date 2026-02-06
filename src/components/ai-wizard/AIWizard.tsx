@@ -81,7 +81,7 @@ export const AIWizard = () => {
     });
 
     // Pages where we show the capital suggestion
-    const capitalSuggestionPages = ['/dashboard/payments', '/dashboard'];
+    const capitalSuggestionPages = ['/dashboard/payments'];
     const isOnCapitalSuggestionPage = capitalSuggestionPages.includes(pathnameWithoutLanguage);
 
     // Check if we should show a capital offer suggestion
