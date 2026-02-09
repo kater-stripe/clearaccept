@@ -101,6 +101,14 @@ export const createAccount = async ({
                       }
                     : {}),
                 },
+                outbound_transfers: {
+                  financial_accounts: {
+                    requested: true,
+                  },
+                  bank_accounts: {
+                    requested: true,
+                  }
+                },
               },
             },
           }
