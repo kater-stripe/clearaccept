@@ -70,6 +70,9 @@ export const createAccount = async ({
                     charge_card: {
                       requested: true,
                     },
+                    card_issuing_fa_spend_card_stripe: {
+                      requested: true,
+                    },
                   },
                 },
               },
