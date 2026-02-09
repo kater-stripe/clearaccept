@@ -38,7 +38,7 @@ export const createCard = async ({
         currency,
         status,
         ...(financialAccountId
-          ? { financial_account: financialAccountId }
+          ? { financial_account_v2: financialAccountId }
           : {}),
       },
       {

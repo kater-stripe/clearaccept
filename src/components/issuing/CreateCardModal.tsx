@@ -151,14 +151,16 @@ export const CreateCardModal = ({ open, onClose }: CreateCardModalProps) => {
                     isCardholdersLoading
                       ? 'Loading...'
                       : t(
-                          'dashboard.issuing.create-card.select-cardholder-placeholder',
-                        )
+                        'dashboard.issuing.create-card.select-cardholder-placeholder',
+                      )
                   }
                   options={
-                    cardholders?.map((ch) => ({
-                      value: ch.id,
-                      label: ch.name,
-                    })) ?? []
+                    cardholders
+                      ?.filter((ch) => ch.status === 'active')
+                      .map((ch) => ({
+                        value: ch.id,
+                        label: ch.name,
+                      })) ?? []
                   }
                   required
                   disabled={isCardholdersLoading}
@@ -212,8 +214,8 @@ export const CreateCardModal = ({ open, onClose }: CreateCardModalProps) => {
                       isFinancialAccountsLoading
                         ? 'Loading...'
                         : t(
-                            'dashboard.issuing.create-card.select-financial-account-placeholder',
-                          )
+                          'dashboard.issuing.create-card.select-financial-account-placeholder',
+                        )
                     }
                     options={
                       financialAccounts?.map((fa) => {

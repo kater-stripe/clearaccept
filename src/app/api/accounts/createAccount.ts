@@ -318,37 +318,22 @@ export const createAccount = async ({
     });
   }
 
-  const capabilities:
-    | Stripe.AccountCreateParams.Capabilities
-    | Stripe.V2.Core.Account.Configuration.Merchant.Capabilities = {
-    crypto_payments: {
-      requested: true,
-    },
-    ...(issuingCapabilityEnabled
-      ? {
+  // Allows us to use V2 FAs w/ v1 Issuing API. Weird interop imo, but we can solve later.
+  if (issuingCapabilityEnabled) {
+    try {
+      await stripe.accounts.update(account.id, {
+        capabilities: {
           card_issuing: {
             requested: true,
-          },
-        }
-      : {}),
-  };
-
-  for (const [capability, value] of Object.entries(capabilities)) {
-    try {
-      await stripe.v2.core.accounts.update(account.id, {
-        configuration: {
-          merchant: {
-            capabilities: {
-              [capability]: value,
-            },
           },
         },
       });
     } catch (error) {
       console.error(
-        `Unable to request capability ${capability} for account ${account.id}`,
+        `Unable to request v1 card_issuing capability for account ${account.id}`,
         error,
       );
+      // Continue execution - v1 capability is optional if v2 card_creator is configured
     }
   }
 
