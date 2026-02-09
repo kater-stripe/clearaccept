@@ -95,6 +95,96 @@
     "cards": {
       "title": "Cartes"
     },
+    "issuing": {
+      "capability-required": "La fonctionnalité d'émission de cartes n'est pas active sur ce compte.",
+      "no-cards": "Aucune carte trouvée. Créez un titulaire et une carte pour commencer.",
+      "tabs": {
+        "all": "Toutes",
+        "active": "Actives",
+        "inactive": "Inactives",
+        "canceled": "Annulées"
+      },
+      "table": {
+        "card": "Carte",
+        "cardholder": "Titulaire",
+        "currency": "Devise",
+        "funding": "Source de financement",
+        "status": "Statut"
+      },
+      "cardholders": {
+        "title": "Titulaires",
+        "name": "Nom",
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "type": "Type",
+        "status": "Statut",
+        "empty": "Aucun titulaire. Créez-en un pour commencer.",
+        "actions": "Actions",
+        "deactivate": "Désactiver",
+        "activate": "Activer",
+        "deactivate-title": "Désactiver le titulaire",
+        "deactivate-confirm": "Êtes-vous sûr de vouloir désactiver {{name}} ? Ses cartes ne fonctionneront plus.",
+        "activate-title": "Activer le titulaire",
+        "activate-confirm": "Êtes-vous sûr de vouloir réactiver {{name}} ?",
+        "cancel": "Annuler"
+      },
+      "create-cardholder": {
+        "button": "Nouveau titulaire",
+        "title": "Créer un titulaire",
+        "description": "Créez un nouveau titulaire de carte qui pourra recevoir des cartes.",
+        "type": "Type",
+        "first-name": "Prénom",
+        "last-name": "Nom",
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "address-line1": "Adresse ligne 1",
+        "city": "Ville",
+        "postal-code": "Code postal",
+        "state": "Région",
+        "cancel": "Annuler",
+        "create": "Créer le titulaire"
+      },
+      "create-card": {
+        "button": "Nouvelle carte",
+        "title": "Créer une carte",
+        "description": "Créez une nouvelle carte et associez-la optionnellement à un compte financier.",
+        "cardholder": "Titulaire",
+        "select-cardholder-placeholder": "Sélectionner un titulaire",
+        "card-type": "Type de carte",
+        "virtual": "Virtuelle",
+        "physical": "Physique",
+        "initial-status": "Statut initial",
+        "active": "Active",
+        "inactive": "Inactive",
+        "financial-account": "Compte financier (source de financement)",
+        "select-financial-account-placeholder": "Sélectionner un compte financier",
+        "financial-account-help": "Les dépenses de carte seront financées par le compte financier sélectionné.",
+        "cancel": "Annuler",
+        "create": "Créer la carte"
+      },
+      "card-detail": {
+        "title": "Détails de la carte",
+        "cardholder-label": "Titulaire",
+        "expires": "Expire",
+        "show-details": "Afficher les détails",
+        "hide-details": "Masquer les détails",
+        "deactivate": "Désactiver",
+        "activate": "Activer",
+        "cancel-card": "Annuler la carte",
+        "cancel-confirm": "Êtes-vous sûr de vouloir annuler définitivement cette carte ?",
+        "keep-card": "Garder la carte",
+        "type-label": "Type",
+        "currency-label": "Devise",
+        "funding-label": "Source de financement",
+        "created-label": "Créée le",
+        "transactions": "Transactions de carte",
+        "no-transactions": "Aucune transaction pour cette carte.",
+        "txn-date": "Date",
+        "txn-merchant": "Marchand",
+        "txn-amount": "Montant",
+        "txn-type": "Type"
+      }
+    },
     "expenses": {
       "title": "Comptes",
       "financial-account-card": {

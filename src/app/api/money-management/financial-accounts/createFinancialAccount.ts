@@ -43,6 +43,9 @@ export const createFinancialAccount = async ({
         },
       );
 
+    const country = account.identity?.country?.toUpperCase() ?? 'US';
+    const isGB = country === 'GB';
+
     const features: Stripe.Treasury.FinancialAccountCreateParams.Features = {
       card_issuing: {
         requested: true,
@@ -64,11 +67,25 @@ export const createFinancialAccount = async ({
         ach: {
           requested: true,
         },
+        ...(isGB
+          ? {
+              us_domestic_wire: {
+                requested: true,
+              },
+            }
+          : {}),
       },
       outbound_transfers: {
         ach: {
           requested: true,
         },
+        ...(isGB
+          ? {
+              us_domestic_wire: {
+                requested: true,
+              },
+            }
+          : {}),
       },
     };
 

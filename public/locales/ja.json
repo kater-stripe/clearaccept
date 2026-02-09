@@ -95,6 +95,96 @@
     "cards": {
       "title": "カード"
     },
+    "issuing": {
+      "capability-required": "カード発行機能はこのアカウントで有効ではありません。",
+      "no-cards": "カードが見つかりません。カード保有者とカードを作成してください。",
+      "tabs": {
+        "all": "すべて",
+        "active": "有効",
+        "inactive": "無効",
+        "canceled": "キャンセル済み"
+      },
+      "table": {
+        "card": "カード",
+        "cardholder": "カード保有者",
+        "currency": "通貨",
+        "funding": "資金源",
+        "status": "ステータス"
+      },
+      "cardholders": {
+        "title": "カード保有者",
+        "name": "名前",
+        "email": "メール",
+        "phone": "電話",
+        "type": "種類",
+        "status": "ステータス",
+        "empty": "カード保有者がいません。作成してください。",
+        "actions": "操作",
+        "deactivate": "無効化",
+        "activate": "有効化",
+        "deactivate-title": "カード保有者を無効化",
+        "deactivate-confirm": "{{name}}を無効化してもよろしいですか？カードが使えなくなります。",
+        "activate-title": "カード保有者を有効化",
+        "activate-confirm": "{{name}}を再有効化してもよろしいですか？",
+        "cancel": "キャンセル"
+      },
+      "create-cardholder": {
+        "button": "新規カード保有者",
+        "title": "カード保有者を作成",
+        "description": "カードを割り当てることができる新しいカード保有者を作成します。",
+        "type": "種類",
+        "first-name": "名",
+        "last-name": "姓",
+        "email": "メール",
+        "phone": "電話番号",
+        "address-line1": "住所1行目",
+        "city": "市区町村",
+        "postal-code": "郵便番号",
+        "state": "都道府県",
+        "cancel": "キャンセル",
+        "create": "カード保有者を作成"
+      },
+      "create-card": {
+        "button": "新規カード",
+        "title": "カードを作成",
+        "description": "新しいカードを作成し、オプションで金融口座に紐付けます。",
+        "cardholder": "カード保有者",
+        "select-cardholder-placeholder": "カード保有者を選択",
+        "card-type": "カードの種類",
+        "virtual": "バーチャル",
+        "physical": "物理カード",
+        "initial-status": "初期ステータス",
+        "active": "有効",
+        "inactive": "無効",
+        "financial-account": "金融口座（資金源）",
+        "select-financial-account-placeholder": "金融口座を選択",
+        "financial-account-help": "カード支出は選択した金融口座から資金調達されます。",
+        "cancel": "キャンセル",
+        "create": "カードを作成"
+      },
+      "card-detail": {
+        "title": "カード詳細",
+        "cardholder-label": "カード保有者",
+        "expires": "有効期限",
+        "show-details": "詳細を表示",
+        "hide-details": "詳細を非表示",
+        "deactivate": "無効化",
+        "activate": "有効化",
+        "cancel-card": "カードをキャンセル",
+        "cancel-confirm": "このカードを永久にキャンセルしてもよろしいですか？",
+        "keep-card": "カードを保持",
+        "type-label": "種類",
+        "currency-label": "通貨",
+        "funding-label": "資金源",
+        "created-label": "作成日",
+        "transactions": "カード取引",
+        "no-transactions": "このカードの取引はまだありません。",
+        "txn-date": "日付",
+        "txn-merchant": "加盟店",
+        "txn-amount": "金額",
+        "txn-type": "種類"
+      }
+    },
     "expenses": {
       "title": "アカウント",
       "financial-account-card": {

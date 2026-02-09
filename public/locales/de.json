@@ -95,6 +95,96 @@
     "cards": {
       "title": "Karten"
     },
+    "issuing": {
+      "capability-required": "Die Kartenausgabe-Funktion ist für dieses Konto nicht aktiv.",
+      "no-cards": "Keine Karten gefunden. Erstellen Sie einen Karteninhaber und eine Karte.",
+      "tabs": {
+        "all": "Alle",
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "canceled": "Storniert"
+      },
+      "table": {
+        "card": "Karte",
+        "cardholder": "Karteninhaber",
+        "currency": "Währung",
+        "funding": "Finanzierungsquelle",
+        "status": "Status"
+      },
+      "cardholders": {
+        "title": "Karteninhaber",
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "type": "Typ",
+        "status": "Status",
+        "empty": "Noch keine Karteninhaber. Erstellen Sie einen, um zu beginnen.",
+        "actions": "Aktionen",
+        "deactivate": "Deaktivieren",
+        "activate": "Aktivieren",
+        "deactivate-title": "Karteninhaber deaktivieren",
+        "deactivate-confirm": "Sind Sie sicher, dass Sie {{name}} deaktivieren möchten? Die Karten funktionieren dann nicht mehr.",
+        "activate-title": "Karteninhaber aktivieren",
+        "activate-confirm": "Sind Sie sicher, dass Sie {{name}} wieder aktivieren möchten?",
+        "cancel": "Abbrechen"
+      },
+      "create-cardholder": {
+        "button": "Neuer Karteninhaber",
+        "title": "Karteninhaber erstellen",
+        "description": "Erstellen Sie einen neuen Karteninhaber, dem Karten zugewiesen werden können.",
+        "type": "Typ",
+        "first-name": "Vorname",
+        "last-name": "Nachname",
+        "email": "E-Mail",
+        "phone": "Telefonnummer",
+        "address-line1": "Adresszeile 1",
+        "city": "Stadt",
+        "postal-code": "Postleitzahl",
+        "state": "Bundesland",
+        "cancel": "Abbrechen",
+        "create": "Karteninhaber erstellen"
+      },
+      "create-card": {
+        "button": "Neue Karte",
+        "title": "Karte erstellen",
+        "description": "Erstellen Sie eine neue Karte und verknüpfen Sie sie optional mit einem Finanzkonto.",
+        "cardholder": "Karteninhaber",
+        "select-cardholder-placeholder": "Karteninhaber auswählen",
+        "card-type": "Kartentyp",
+        "virtual": "Virtuell",
+        "physical": "Physisch",
+        "initial-status": "Anfangsstatus",
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
+        "financial-account": "Finanzkonto (Finanzierungsquelle)",
+        "select-financial-account-placeholder": "Finanzkonto auswählen",
+        "financial-account-help": "Kartenausgaben werden vom ausgewählten Finanzkonto finanziert.",
+        "cancel": "Abbrechen",
+        "create": "Karte erstellen"
+      },
+      "card-detail": {
+        "title": "Kartendetails",
+        "cardholder-label": "Karteninhaber",
+        "expires": "Gültig bis",
+        "show-details": "Details anzeigen",
+        "hide-details": "Details ausblenden",
+        "deactivate": "Deaktivieren",
+        "activate": "Aktivieren",
+        "cancel-card": "Karte stornieren",
+        "cancel-confirm": "Sind Sie sicher, dass Sie diese Karte dauerhaft stornieren möchten?",
+        "keep-card": "Karte behalten",
+        "type-label": "Typ",
+        "currency-label": "Währung",
+        "funding-label": "Finanzierungsquelle",
+        "created-label": "Erstellt",
+        "transactions": "Kartentransaktionen",
+        "no-transactions": "Noch keine Transaktionen für diese Karte.",
+        "txn-date": "Datum",
+        "txn-merchant": "Händler",
+        "txn-amount": "Betrag",
+        "txn-type": "Typ"
+      }
+    },
     "expenses": {
       "title": "Konten",
       "financial-account-card": {

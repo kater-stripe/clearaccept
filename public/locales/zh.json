@@ -95,6 +95,96 @@
     "cards": {
       "title": "卡片"
     },
+    "issuing": {
+      "capability-required": "此账户未激活卡片发行功能。",
+      "no-cards": "未找到卡片。请先创建持卡人和卡片。",
+      "tabs": {
+        "all": "全部",
+        "active": "活跃",
+        "inactive": "未激活",
+        "canceled": "已取消"
+      },
+      "table": {
+        "card": "卡片",
+        "cardholder": "持卡人",
+        "currency": "货币",
+        "funding": "资金来源",
+        "status": "状态"
+      },
+      "cardholders": {
+        "title": "持卡人",
+        "name": "姓名",
+        "email": "电子邮件",
+        "phone": "电话",
+        "type": "类型",
+        "status": "状态",
+        "empty": "暂无持卡人。请先创建一个。",
+        "actions": "操作",
+        "deactivate": "停用",
+        "activate": "激活",
+        "deactivate-title": "停用持卡人",
+        "deactivate-confirm": "确定要停用{{name}}吗？其卡片将无法使用。",
+        "activate-title": "激活持卡人",
+        "activate-confirm": "确定要重新激活{{name}}吗？",
+        "cancel": "取消"
+      },
+      "create-cardholder": {
+        "button": "新建持卡人",
+        "title": "创建持卡人",
+        "description": "创建一个可以分配卡片的新持卡人。",
+        "type": "类型",
+        "first-name": "名",
+        "last-name": "姓",
+        "email": "电子邮件",
+        "phone": "电话号码",
+        "address-line1": "地址第1行",
+        "city": "城市",
+        "postal-code": "邮编",
+        "state": "省/州",
+        "cancel": "取消",
+        "create": "创建持卡人"
+      },
+      "create-card": {
+        "button": "新建卡片",
+        "title": "创建卡片",
+        "description": "创建新卡片，并可选择关联到金融账户。",
+        "cardholder": "持卡人",
+        "select-cardholder-placeholder": "选择持卡人",
+        "card-type": "卡片类型",
+        "virtual": "虚拟卡",
+        "physical": "实体卡",
+        "initial-status": "初始状态",
+        "active": "活跃",
+        "inactive": "未激活",
+        "financial-account": "金融账户（资金来源）",
+        "select-financial-account-placeholder": "选择金融账户",
+        "financial-account-help": "卡片支出将从所选金融账户提供资金。",
+        "cancel": "取消",
+        "create": "创建卡片"
+      },
+      "card-detail": {
+        "title": "卡片详情",
+        "cardholder-label": "持卡人",
+        "expires": "到期日",
+        "show-details": "显示详情",
+        "hide-details": "隐藏详情",
+        "deactivate": "停用",
+        "activate": "激活",
+        "cancel-card": "取消卡片",
+        "cancel-confirm": "确定要永久取消此卡片吗？此操作无法撤销。",
+        "keep-card": "保留卡片",
+        "type-label": "类型",
+        "currency-label": "货币",
+        "funding-label": "资金来源",
+        "created-label": "创建日期",
+        "transactions": "卡片交易",
+        "no-transactions": "此卡片暂无交易。",
+        "txn-date": "日期",
+        "txn-merchant": "商户",
+        "txn-amount": "金额",
+        "txn-type": "类型"
+      }
+    },
     "expenses": {
       "title": "账户",
       "financial-account-card": {

@@ -95,6 +95,96 @@
     "cards": {
       "title": "Carte"
     },
+    "issuing": {
+      "capability-required": "La funzionalità di emissione carte non è attiva su questo conto.",
+      "no-cards": "Nessuna carta trovata. Crea un titolare e una carta per iniziare.",
+      "tabs": {
+        "all": "Tutte",
+        "active": "Attive",
+        "inactive": "Inattive",
+        "canceled": "Cancellate"
+      },
+      "table": {
+        "card": "Carta",
+        "cardholder": "Titolare",
+        "currency": "Valuta",
+        "funding": "Fonte di finanziamento",
+        "status": "Stato"
+      },
+      "cardholders": {
+        "title": "Titolari",
+        "name": "Nome",
+        "email": "Email",
+        "phone": "Telefono",
+        "type": "Tipo",
+        "status": "Stato",
+        "empty": "Nessun titolare ancora. Creane uno per iniziare.",
+        "actions": "Azioni",
+        "deactivate": "Disattiva",
+        "activate": "Attiva",
+        "deactivate-title": "Disattiva titolare",
+        "deactivate-confirm": "Sei sicuro di voler disattivare {{name}}? Le sue carte non funzioneranno più.",
+        "activate-title": "Attiva titolare",
+        "activate-confirm": "Sei sicuro di voler riattivare {{name}}?",
+        "cancel": "Annulla"
+      },
+      "create-cardholder": {
+        "button": "Nuovo titolare",
+        "title": "Crea titolare",
+        "description": "Crea un nuovo titolare a cui assegnare carte.",
+        "type": "Tipo",
+        "first-name": "Nome",
+        "last-name": "Cognome",
+        "email": "Email",
+        "phone": "Telefono",
+        "address-line1": "Indirizzo riga 1",
+        "city": "Città",
+        "postal-code": "CAP",
+        "state": "Provincia",
+        "cancel": "Annulla",
+        "create": "Crea titolare"
+      },
+      "create-card": {
+        "button": "Nuova carta",
+        "title": "Crea carta",
+        "description": "Crea una nuova carta e collegala opzionalmente a un conto finanziario.",
+        "cardholder": "Titolare",
+        "select-cardholder-placeholder": "Seleziona un titolare",
+        "card-type": "Tipo di carta",
+        "virtual": "Virtuale",
+        "physical": "Fisica",
+        "initial-status": "Stato iniziale",
+        "active": "Attiva",
+        "inactive": "Inattiva",
+        "financial-account": "Conto finanziario (fonte di finanziamento)",
+        "select-financial-account-placeholder": "Seleziona un conto finanziario",
+        "financial-account-help": "La spesa della carta sarà finanziata dal conto finanziario selezionato.",
+        "cancel": "Annulla",
+        "create": "Crea carta"
+      },
+      "card-detail": {
+        "title": "Dettagli carta",
+        "cardholder-label": "Titolare",
+        "expires": "Scade",
+        "show-details": "Mostra dettagli",
+        "hide-details": "Nascondi dettagli",
+        "deactivate": "Disattiva",
+        "activate": "Attiva",
+        "cancel-card": "Cancella carta",
+        "cancel-confirm": "Sei sicuro di voler cancellare permanentemente questa carta?",
+        "keep-card": "Mantieni carta",
+        "type-label": "Tipo",
+        "currency-label": "Valuta",
+        "funding-label": "Fonte di finanziamento",
+        "created-label": "Creata",
+        "transactions": "Transazioni carta",
+        "no-transactions": "Nessuna transazione per questa carta.",
+        "txn-date": "Data",
+        "txn-merchant": "Esercente",
+        "txn-amount": "Importo",
+        "txn-type": "Tipo"
+      }
+    },
     "expenses": {
       "title": "Conti",
       "financial-account-card": {

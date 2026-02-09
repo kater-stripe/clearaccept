@@ -95,6 +95,96 @@
     "cards": {
       "title": "Cards"
     },
+    "issuing": {
+      "capability-required": "The card issuing capability is not active on this account.",
+      "no-cards": "No cards found. Create a cardholder and card to get started.",
+      "tabs": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "canceled": "Cancelled"
+      },
+      "table": {
+        "card": "Card",
+        "cardholder": "Cardholder",
+        "currency": "Currency",
+        "funding": "Funding Source",
+        "status": "Status"
+      },
+      "cardholders": {
+        "title": "Cardholders",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "type": "Type",
+        "status": "Status",
+        "empty": "No cardholders yet. Create one to get started.",
+        "actions": "Actions",
+        "deactivate": "Deactivate",
+        "activate": "Activate",
+        "deactivate-title": "Deactivate Cardholder",
+        "deactivate-confirm": "Are you sure you want to deactivate {{name}}? Their cards will no longer work.",
+        "activate-title": "Activate Cardholder",
+        "activate-confirm": "Are you sure you want to reactivate {{name}}?",
+        "cancel": "Cancel"
+      },
+      "create-cardholder": {
+        "button": "New Cardholder",
+        "title": "Create Cardholder",
+        "description": "Create a new cardholder who can be assigned issuing cards.",
+        "type": "Type",
+        "first-name": "First Name",
+        "last-name": "Last Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "address-line1": "Address Line 1",
+        "city": "City",
+        "postal-code": "Postcode",
+        "state": "County",
+        "cancel": "Cancel",
+        "create": "Create Cardholder"
+      },
+      "create-card": {
+        "button": "New Card",
+        "title": "Create Card",
+        "description": "Create a new issuing card and optionally attach it to a financial account.",
+        "cardholder": "Cardholder",
+        "select-cardholder-placeholder": "Select a cardholder",
+        "card-type": "Card Type",
+        "virtual": "Virtual",
+        "physical": "Physical",
+        "initial-status": "Initial Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "financial-account": "Financial Account (Funding Source)",
+        "select-financial-account-placeholder": "Select a financial account",
+        "financial-account-help": "Card spend will be funded from the selected financial account.",
+        "cancel": "Cancel",
+        "create": "Create Card"
+      },
+      "card-detail": {
+        "title": "Card Details",
+        "cardholder-label": "Cardholder",
+        "expires": "Expires",
+        "show-details": "Show Details",
+        "hide-details": "Hide Details",
+        "deactivate": "Deactivate",
+        "activate": "Activate",
+        "cancel-card": "Cancel Card",
+        "cancel-confirm": "Are you sure you want to permanently cancel this card? This cannot be undone.",
+        "keep-card": "Keep Card",
+        "type-label": "Type",
+        "currency-label": "Currency",
+        "funding-label": "Funding Source",
+        "created-label": "Created",
+        "transactions": "Card Transactions",
+        "no-transactions": "No transactions yet for this card.",
+        "txn-date": "Date",
+        "txn-merchant": "Merchant",
+        "txn-amount": "Amount",
+        "txn-type": "Type"
+      }
+    },
     "expenses": {
       "title": "Accounts",
       "financial-account-card": {

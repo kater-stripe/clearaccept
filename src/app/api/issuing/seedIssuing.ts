@@ -12,6 +12,7 @@ type SeedIssuingParams = {
   seedRefunds: boolean;
   accountId: string;
   language: Language;
+  financialAccountId?: string;
   stripeSecretKey?: string;
 };
 
@@ -23,6 +24,7 @@ export const seedIssuing = async ({
   accountId,
   stripeSecretKey = process.env.STRIPE_SECRET_KEY,
   language,
+  financialAccountId,
 }: SeedIssuingParams) => {
   if (!stripeSecretKey) {
     throw new Error(
@@ -99,6 +101,9 @@ export const seedIssuing = async ({
             type: 'virtual',
             currency: account.defaults?.currency ?? 'usd',
             status: 'active',
+            ...(financialAccountId
+              ? { financial_account: financialAccountId }
+              : {}),
           },
           {
             stripeAccount: accountId,

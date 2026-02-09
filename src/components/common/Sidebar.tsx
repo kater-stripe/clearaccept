@@ -186,35 +186,35 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
             label: t('dashboard.bills.title'),
           },
           ...(isCapabilityActive('holds_currencies.usd') ||
-          isCapabilityActive('holds_currencies.gbp') ||
-          isCapabilityActive('holds_currencies.eur')
+            isCapabilityActive('holds_currencies.gbp') ||
+            isCapabilityActive('holds_currencies.eur')
             ? [
-                {
-                  href: `/${language}/dashboard/expenses`,
-                  icon: BuildingLibraryIcon,
-                  label: t('dashboard.accounts.title'),
-                },
-              ]
+              {
+                href: `/${language}/dashboard/expenses`,
+                icon: BuildingLibraryIcon,
+                label: t('dashboard.accounts.title'),
+              },
+            ]
             : []),
           ...(isCapabilityActive('commercial.stripe.charge_card')
             ? [
-                {
-                  href: `/${language}/dashboard/cards`,
-                  icon: CreditCardIcon,
-                  label: t('dashboard.cards.title'),
-                },
-              ]
+              {
+                href: `/${language}/dashboard/cards`,
+                icon: CreditCardIcon,
+                label: t('dashboard.cards.title'),
+              },
+            ]
             : []),
           {
             href: `/${language}/dashboard/capital`,
             icon: Square3Stack3DIcon,
             label: t('dashboard.capital.title'),
           },
-          {
-            href: `/${language}/dashboard/payouts`,
-            icon: WalletIcon,
-            label: t('dashboard.payouts.title'),
-          },
+          // {
+          //   href: `/${language}/dashboard/payouts`,
+          //   icon: WalletIcon,
+          //   label: t('dashboard.payouts.title'),
+          // },
         ],
       },
       {
@@ -227,11 +227,11 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
             icon: DocumentChartBarIcon,
             label: t('dashboard.reports.title'),
           },
-          {
-            href: 'https://apps-homebox.onrender.com/?redirect=/integrations/xero',
-            icon: LinkIcon,
-            label: t('dashboard.apps.title'),
-          },
+          // {
+          //   href: 'https://apps-homebox.onrender.com/?redirect=/integrations/xero',
+          //   icon: LinkIcon,
+          //   label: t('dashboard.apps.title'),
+          // },
         ],
       },
       /**
@@ -272,12 +272,12 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         'US',
       ].includes(account?.identity?.country ?? '')
         ? [
-            {
-              href: `/${language}/dashboard/membership`,
-              icon: StarIcon,
-              label: t('dashboard.membership.title'),
-            },
-          ]
+          {
+            href: `/${language}/dashboard/membership`,
+            icon: StarIcon,
+            label: t('dashboard.membership.title'),
+          },
+        ]
         : []),
     ],
     [language, t, isCapabilityActive, account],
@@ -311,13 +311,12 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         onClick={() => onMobileMenuClose?.()}
       >
         <button
-          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${
-            isTopLevel
-              ? 'text-white text-lg py-2'
-              : isNested
-                ? 'text-white text-sm py-1.5'
-                : 'text-white text-base py-1.5'
-          }`}
+          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${isTopLevel
+            ? 'text-white text-lg py-2'
+            : isNested
+              ? 'text-white text-sm py-1.5'
+              : 'text-white text-base py-1.5'
+            }`}
         >
           <item.icon
             className={
@@ -350,11 +349,10 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
       <div key={group.id}>
         <button
           onClick={() => toggleGroup(group.id)}
-          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${
-            isTopLevel
-              ? 'text-white text-lg py-2'
-              : 'text-white text-base py-1.5'
-          }`}
+          className={`text-left inline-flex w-full items-center gap-x-2 font-medium hover:bg-white/10 rounded-md px-4 transition duration-150 ${isTopLevel
+            ? 'text-white text-lg py-2'
+            : 'text-white text-base py-1.5'
+            }`}
         >
           <group.icon
             className={isTopLevel ? 'size-5 shrink-0' : 'size-4 shrink-0'}
