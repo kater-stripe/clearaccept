@@ -51,7 +51,6 @@ const CardsPage = () => {
             {t('dashboard.issuing.cardholders.title')}
           </h2>
           <Button
-            colorMode='dark'
             onClick={() => setIsCreateCardholderModalOpen(true)}
           >
             <UserPlusIcon className='size-4' />
