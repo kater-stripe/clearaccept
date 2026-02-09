@@ -213,7 +213,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
         {/* Mobile Sliding Menu */}
         <div
-          className={`lg:hidden fixed inset-y-0 left-0 z-40 w-full bg-brand-primary transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          className={`lg:hidden fixed inset-y-0 left-0 z-40 w-full bg-black transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
         >
           <div className='py-8 flex flex-col h-full pt-16'>
