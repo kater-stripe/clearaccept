@@ -196,7 +196,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
               },
             ]
             : []),
-          ...(isCapabilityActive('commercial.stripe.charge_card')
+          ...(isCapabilityActive('commercial.stripe.prepaid_card')
             ? [
               {
                 href: `/${language}/dashboard/cards`,

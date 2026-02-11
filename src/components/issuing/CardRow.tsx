@@ -33,7 +33,8 @@ export const CardRow = ({ card, onClick }: CardRowProps) => {
         {card.currency}
       </td>
       <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-        {card.financial_account ? (
+        {/* @ts-expect-error */}
+        {card.financial_account_v2 ? (
           <span className='inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2.5 py-0.5 text-xs font-medium'>
             FA linked
           </span>

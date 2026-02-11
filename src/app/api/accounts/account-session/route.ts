@@ -123,7 +123,7 @@ export const POST = async (request: NextRequest) => {
         //   : {}),
         // @ts-expect-error
         ...(account.configuration?.card_creator?.capabilities?.commercial
-          ?.stripe?.charge_card?.status === 'active'
+          ?.stripe?.prepaid_card?.status === 'active'
           ? {
               issuing_card: {
                 enabled: true,

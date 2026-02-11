@@ -266,7 +266,8 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
                   {t('dashboard.issuing.card-detail.funding-label')}
                 </p>
                 <p className='font-medium'>
-                  {card.financial_account ? (
+                  {/* @ts-expect-error */}
+                  {card.financial_account_v2 ? (
                     <span className='inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2.5 py-0.5 text-xs font-medium'>
                       Financial Account
                     </span>

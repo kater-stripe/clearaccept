@@ -67,7 +67,7 @@ export const createAccount = async ({
               capabilities: {
                 commercial: {
                   stripe: {
-                    charge_card: {
+                    prepaid_card: {
                       requested: true,
                     },
                   },

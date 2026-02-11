@@ -105,7 +105,7 @@ export const AIWizard = () => {
     const shouldShowIssuingSuggestion = useMemo(() => {
         if (!isSignedIn || !account) return false;
         if (!isOnBillsPage) return false;
-        if (!isCapabilityActive('commercial.stripe.charge_card')) return false;
+        if (!isCapabilityActive('commercial.stripe.prepaid_card')) return false;
         if (!hasBills) return false;
         return true;
     }, [isSignedIn, account, isOnBillsPage, isCapabilityActive, hasBills]);

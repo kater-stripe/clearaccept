@@ -24,7 +24,7 @@ const CardsPage = () => {
   const [isCreateCardholderModalOpen, setIsCreateCardholderModalOpen] =
     useState(false);
 
-  if (!isCapabilityActive('commercial.stripe.charge_card')) {
+  if (!isCapabilityActive('commercial.stripe.prepaid_card')) {
     return (
       <Card>
         <p className='text-gray-500 text-sm'>
