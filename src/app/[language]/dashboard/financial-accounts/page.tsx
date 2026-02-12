@@ -9,7 +9,7 @@ import { useDemoConfig } from '@/context/DemoConfigContext';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const FinancialAccountsPage = () => {
@@ -32,6 +32,16 @@ const FinancialAccountsPage = () => {
     isCreateFinancialAccountModalOpen,
     setIsCreateFinancialAccountModalOpen,
   ] = useState(false);
+
+  // Sort financial accounts oldest to newest
+  const sortedFinancialAccounts = useMemo(() => {
+    if (!financialAccounts) return [];
+    return [...financialAccounts].sort((a, b) => {
+      const dateA = new Date(a.created).getTime();
+      const dateB = new Date(b.created).getTime();
+      return dateA - dateB;
+    });
+  }, [financialAccounts]);
 
   const canCreateFinancialAccount =
     !isFinancialAccountsLoading &&
@@ -57,7 +67,7 @@ const FinancialAccountsPage = () => {
                 <Skeleton className='min-h-36' />
               </>
             )}
-            {financialAccounts?.map((financialAccount) => (
+            {sortedFinancialAccounts.map((financialAccount) => (
               <FinancialAccountCard
                 key={financialAccount.id}
                 financialAccount={financialAccount}

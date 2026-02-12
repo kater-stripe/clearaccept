@@ -53,7 +53,7 @@ export const FinancialAccountCard = ({
     <Card
       onClick={() => {
         router.push(
-          `/${language}/dashboard/expenses/financial-accounts/${financialAccount.id}`,
+          `/${language}/dashboard/financial-accounts/${financialAccount.id}`,
         );
       }}
       className='min-h-36 border-brand-primary hover:cursor-pointer hover:bg-gray-50'

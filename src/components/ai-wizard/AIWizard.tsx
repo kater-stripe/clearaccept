@@ -2,8 +2,8 @@
 
 import { createCapitalOffer } from '@/app/api/financing-offers/createCapitalOffer';
 import { getLatestFinancingOffer } from '@/app/api/financing-offers/getLatestFinancingOffer';
-import { getBills } from '@/app/api/invoices/getBills';
 import { useDemoConfig } from '@/context/DemoConfigContext';
+import { useFakeBills } from '@/hooks/useFakeBills';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import { SparklesIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -86,19 +86,8 @@ export const AIWizard = () => {
     const isOnCapitalSuggestionPage = capitalSuggestionPages.includes(pathnameWithoutLanguage);
     const isOnBillsPage = pathnameWithoutLanguage === '/dashboard/bills';
 
-    // Query for existing bills (only when on bills page)
-    const { data: bills } = useQuery({
-        queryKey: ['ai-wizard-bills', account?.id, stripeSecretKey],
-        queryFn: async () => {
-            if (!account?.id) return [];
-            return getBills({
-                accountId: account.id,
-                stripeSecretKey,
-            });
-        },
-        enabled: isSignedIn && !!account && isOnBillsPage,
-    });
-
+    // Get bills from local storage
+    const { bills } = useFakeBills();
     const hasBills = bills && bills.length > 0;
 
     // Check if we should show the issuing card suggestion on bills page

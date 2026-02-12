@@ -190,7 +190,7 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
             isCapabilityActive('holds_currencies.eur')
             ? [
               {
-                href: `/${language}/dashboard/expenses`,
+                href: `/${language}/dashboard/financial-accounts`,
                 icon: BuildingLibraryIcon,
                 label: t('dashboard.accounts.title'),
               },

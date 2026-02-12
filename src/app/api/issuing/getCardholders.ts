@@ -22,6 +22,8 @@ export const getCardholders = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
+  const EXCLUDED_CARDHOLDER_IDS = ['ich_1SzOqsIh1x3YP8euwNWgvCwq'];
+
   const { data: cardholders } = await stripe.issuing.cardholders.list(
     {
       limit,
@@ -31,6 +33,9 @@ export const getCardholders = async ({
     },
   );
 
-  return plain(cardholders);
-};
+  const filteredCardholders = cardholders.filter(
+    (cardholder) => !EXCLUDED_CARDHOLDER_IDS.includes(cardholder.id),
+  );
 
+  return plain(filteredCardholders);
+};

@@ -65,7 +65,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           title: t('dashboard.products.title'),
         };
       }
-      case '/dashboard/expenses': {
+      case '/dashboard/financial-accounts': {
         return {
           title: t('dashboard.expenses.title'),
         };
@@ -157,7 +157,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       default: {
         if (
           pathnameWithoutLanguage.startsWith(
-            '/dashboard/expenses/financial-accounts/',
+            '/dashboard/financial-accounts/',
           )
         ) {
           return {

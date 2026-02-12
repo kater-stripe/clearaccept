@@ -87,6 +87,7 @@
         "due-date": "Date d'échéance",
         "actions": "Actions",
         "pay": "Payer",
+        "view": "Voir",
         "mark-paid": "Marquer comme payée"
       },
       "empty": "Aucune facture à payer.",

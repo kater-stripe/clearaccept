@@ -87,6 +87,7 @@
         "due-date": "到期日",
         "actions": "操作",
         "pay": "支付",
+        "view": "查看",
         "mark-paid": "标记为已付"
       },
       "empty": "没有待支付的账单。",

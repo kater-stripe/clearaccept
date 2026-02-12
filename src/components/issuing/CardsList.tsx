@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useState, useMemo } from 'react';
+import { useQuery, useQueries } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import { getCards as getCardsAction } from '@/app/api/issuing/getCards';
+import { getFinancialAccounts as getFinancialAccountsAction } from '@/app/api/money-management/financial-accounts/getFinancialAccounts';
+import { getFinancialAddresses as getFinancialAddressesAction } from '@/app/api/money-management/financial-addresses/getFinancialAddresses';
 import { Skeleton } from '@/components/common/Skeleton';
 import { CardRow } from './CardRow';
 import type Stripe from 'stripe';
@@ -36,6 +38,52 @@ export const CardsList = ({ onCardClick }: CardsListProps) => {
       }),
     enabled: !!account,
   });
+
+  // Fetch financial accounts to get addresses
+  const { data: financialAccounts } = useQuery({
+    queryKey: ['financial-accounts', account?.id, stripeSecretKey],
+    queryFn: () =>
+      getFinancialAccountsAction({
+        accountId: account!.id,
+        stripeSecretKey,
+      }),
+    enabled: !!account,
+  });
+
+  // Fetch financial addresses for each FA
+  const financialAddressQueries = useQueries({
+    queries: (financialAccounts ?? []).map((fa) => ({
+      queryKey: ['financial-addresses', fa.id, stripeSecretKey],
+      queryFn: () =>
+        getFinancialAddressesAction({
+          financialAccountId: fa.id,
+          stripeSecretKey,
+          accountId: account!.id,
+        }),
+      enabled: !!account && !!financialAccounts,
+    })),
+  });
+
+  // Build a map of FA ID -> last4
+  const faLast4Map = useMemo(() => {
+    const map: Record<string, string> = {};
+    financialAddressQueries.forEach((query, index) => {
+      if (query.data && query.data.length > 0 && financialAccounts) {
+        const fa = financialAccounts[index];
+        const address = query.data[0];
+        let last4 = '';
+        if (address?.credentials?.type === 'gb_bank_account') {
+          last4 = address.credentials.gb_bank_account?.last4 ?? '';
+        } else if (address?.credentials?.type === 'us_bank_account') {
+          last4 = address.credentials.us_bank_account?.last4 ?? '';
+        }
+        if (last4) {
+          map[fa.id] = last4;
+        }
+      }
+    });
+    return map;
+  }, [financialAddressQueries, financialAccounts]);
 
   const tabs: { key: CardTab; label: string }[] = [
     { key: 'all', label: t('dashboard.issuing.tabs.all') },
@@ -132,6 +180,7 @@ export const CardsList = ({ onCardClick }: CardsListProps) => {
                         key={card.id}
                         card={card}
                         onClick={onCardClick}
+                        faLast4Map={faLast4Map}
                       />
                     ))
                   ) : (

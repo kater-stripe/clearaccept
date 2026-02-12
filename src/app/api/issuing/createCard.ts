@@ -37,6 +37,18 @@ export const createCard = async ({
         type,
         currency,
         status,
+        spending_controls: {
+          spending_limits: [
+            {
+              amount: 100000000,
+              interval: 'daily',
+            },
+            {
+              amount: 100000000,
+              interval: 'weekly',
+            },
+          ],
+        },
         ...(financialAccountId
           ? { financial_account_v2: financialAccountId }
           : {}),
@@ -55,4 +67,3 @@ export const createCard = async ({
     };
   }
 };
-

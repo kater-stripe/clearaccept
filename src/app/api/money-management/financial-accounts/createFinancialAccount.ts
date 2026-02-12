@@ -3,6 +3,7 @@
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
+import { createFinancialAddress } from '@/app/api/money-management/financial-addresses/createFinancialAddress';
 import type Stripe from 'stripe';
 
 type CreateFinancialAccountParams = {
@@ -106,6 +107,21 @@ export const createFinancialAccount = async ({
           error,
         );
       }
+    }
+
+    // Create a financial address for the account
+    try {
+      await createFinancialAddress({
+        accountId,
+        financialAccountId: financialAccount.id,
+        country: isGB ? 'GB' : 'US',
+        stripeSecretKey,
+      });
+    } catch (error) {
+      console.error(
+        `Unable to create financial address for FA ${financialAccount.id}`,
+        error,
+      );
     }
 
     return plain(financialAccount);

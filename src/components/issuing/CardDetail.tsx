@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import { getCard as getCardAction } from '@/app/api/issuing/getCard';
 import { getCardTransactions as getCardTransactionsAction } from '@/app/api/issuing/getCardTransactions';
 import { updateCard as updateCardAction } from '@/app/api/issuing/updateCard';
+import { getFinancialAddresses as getFinancialAddressesAction } from '@/app/api/money-management/financial-addresses/getFinancialAddresses';
 import { Card } from '@/components/common/Card';
 import { Button } from '@/components/common/Button';
 import { Skeleton } from '@/components/common/Skeleton';
@@ -35,6 +37,7 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
   const { account } = useDemoMerchant();
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const [showSensitive, setShowSensitive] = useState(false);
   const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
@@ -65,6 +68,34 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
       }),
     enabled: !!account,
   });
+
+  // Get the FA ID from the card
+  // @ts-expect-error - financial_account_v2 is not in the type definition
+  const faId = card?.financial_account_v2 as string | undefined;
+
+  // Fetch financial addresses if there's a linked FA
+  const { data: financialAddresses } = useQuery({
+    queryKey: ['financial-addresses', faId, stripeSecretKey],
+    queryFn: () =>
+      getFinancialAddressesAction({
+        financialAccountId: faId!,
+        stripeSecretKey,
+        accountId: account!.id,
+      }),
+    enabled: !!account && !!faId,
+  });
+
+  // Get last4 from financial address
+  const faLast4 = (() => {
+    if (!financialAddresses || financialAddresses.length === 0) return null;
+    const address = financialAddresses[0];
+    if (address?.credentials?.type === 'gb_bank_account') {
+      return address.credentials.gb_bank_account?.last4;
+    } else if (address?.credentials?.type === 'us_bank_account') {
+      return address.credentials.us_bank_account?.last4;
+    }
+    return null;
+  })();
 
   const { mutate: updateCardStatus, isPending: isUpdating } = useMutation({
     mutationFn: updateCardAction,
@@ -158,41 +189,57 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
         ) : card ? (
           <div className='space-y-6'>
             {/* Card Visual */}
-            <div className='bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 text-white max-w-sm'>
-              <div className='flex justify-between items-start mb-8'>
-                <CreditCardIcon className='size-8 text-gray-300' />
-                <CardStatusBadge status={card.status} />
-              </div>
-              <div className='space-y-2'>
-                <p className='text-lg font-mono tracking-widest'>
-                  {showSensitive && card.number
-                    ? card.number.replace(/(.{4})/g, '$1 ').trim()
-                    : `•••• •••• •••• ${card.last4}`}
-                </p>
-                <div className='flex justify-between items-end'>
-                  <div>
-                    <p className='text-xs text-gray-400'>
-                      {t('dashboard.issuing.card-detail.cardholder-label')}
-                    </p>
-                    <p className='text-sm'>
-                      {(card.cardholder as Stripe.Issuing.Cardholder)?.name ||
-                        '-'}
-                    </p>
-                  </div>
-                  <div className='text-right'>
-                    <p className='text-xs text-gray-400'>
-                      {t('dashboard.issuing.card-detail.expires')}
-                    </p>
-                    <p className='text-sm'>
-                      {card.exp_month}/{card.exp_year}
-                    </p>
-                  </div>
-                  {showSensitive && card.cvc && (
-                    <div className='text-right'>
-                      <p className='text-xs text-gray-400'>CVC</p>
-                      <p className='text-sm font-mono'>{card.cvc}</p>
+            <div className='relative max-w-sm overflow-hidden rounded-xl shadow-2xl'>
+              {/* Base black background */}
+              <div className='absolute inset-0 bg-black' />
+              {/* Subtle gradient overlay */}
+              <div className='absolute inset-0 bg-gradient-to-br from-gray-800/30 via-transparent to-gray-900/50' />
+              {/* Diagonal shine effect */}
+              <div className='absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent' />
+              {/* Noise texture overlay */}
+              <div
+                className='absolute inset-0 opacity-[0.15]'
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                }}
+              />
+              {/* Card content */}
+              <div className='relative p-6 text-white'>
+                <div className='flex justify-between items-start mb-8'>
+                  <CreditCardIcon className='size-8 text-gray-400' />
+                  <CardStatusBadge status={card.status} />
+                </div>
+                <div className='space-y-2'>
+                  <p className='text-lg font-mono tracking-widest'>
+                    {showSensitive && card.number
+                      ? card.number.replace(/(.{4})/g, '$1 ').trim()
+                      : `•••• •••• •••• ${card.last4}`}
+                  </p>
+                  <div className='flex justify-between items-end'>
+                    <div>
+                      <p className='text-xs text-gray-500'>
+                        {t('dashboard.issuing.card-detail.cardholder-label')}
+                      </p>
+                      <p className='text-sm'>
+                        {(card.cardholder as Stripe.Issuing.Cardholder)?.name ||
+                          '-'}
+                      </p>
                     </div>
-                  )}
+                    <div className='text-right'>
+                      <p className='text-xs text-gray-500'>
+                        {t('dashboard.issuing.card-detail.expires')}
+                      </p>
+                      <p className='text-sm font-mono'>
+                        {String(card.exp_month).padStart(2, '0')}/{String(card.exp_year).slice(-2)}
+                      </p>
+                    </div>
+                    <div className='text-right min-w-[40px]'>
+                      <p className='text-xs text-gray-500'>CVC</p>
+                      <p className='text-sm font-mono'>
+                        {showSensitive && card.cvc ? card.cvc : '•••'}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -202,6 +249,7 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
               <Button
                 onClick={() => setShowSensitive(!showSensitive)}
                 colorMode='dark'
+                className='!w-38 justify-center'
               >
                 {showSensitive ? (
                   <>
@@ -266,11 +314,17 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
                   {t('dashboard.issuing.card-detail.funding-label')}
                 </p>
                 <p className='font-medium'>
-                  {/* @ts-expect-error */}
-                  {card.financial_account_v2 ? (
-                    <span className='inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2.5 py-0.5 text-xs font-medium'>
-                      Financial Account
-                    </span>
+                  {faId ? (
+                    <button
+                      onClick={() =>
+                        router.push(
+                          `/${language}/dashboard/financial-accounts/${faId}`,
+                        )
+                      }
+                      className='inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2.5 py-0.5 text-xs font-medium hover:bg-blue-200 transition-colors cursor-pointer'
+                    >
+                      FA ••{faLast4 || faId.slice(-4)}
+                    </button>
                   ) : (
                     'Issuing Balance'
                   )}
@@ -359,20 +413,20 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
                             {txn.merchant_data?.name || '-'}
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm font-medium'>
-                            <span
-                              className={
-                                txn.amount > 0
-                                  ? 'text-red-600'
-                                  : 'text-green-600'
-                              }
-                            >
-                              {txn.amount > 0 ? '-' : '+'}
-                              {formatPrice(
-                                Math.abs(txn.amount),
-                                language as SupportedLanguage,
-                                txn.currency as CurrencyCode,
-                              )}
-                            </span>
+                            {(() => {
+                              // Issuing transactions: negative = capture/spending (debit), positive = refund (credit)
+                              const isDebit = txn.amount < 0;
+                              return (
+                                <span className={isDebit ? 'text-red-600' : 'text-green-600'}>
+                                  {isDebit ? '' : '+'}
+                                  {formatPrice(
+                                    txn.amount,
+                                    language as SupportedLanguage,
+                                    txn.currency as CurrencyCode,
+                                  )}
+                                </span>
+                              );
+                            })()}
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize'>
                             {txn.type}

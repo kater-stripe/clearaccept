@@ -26,6 +26,7 @@ import type {
   CreateAccountSessionResponse,
 } from '@/app/api/accounts/account-session/route';
 import { get } from 'lodash';
+import { createDefaultBills, getBillsStorageKey } from '@/utils/bills';
 
 const DemoMerchantContext = createContext<
   | (DemoMerchant & {
@@ -52,7 +53,7 @@ const DemoMerchantContext = createContext<
 >(null);
 
 export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
-  const { demoName, language, primaryColor } = useDemoConfig();
+  const { demoName, language, primaryColor, currency } = useDemoConfig();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -101,6 +102,20 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
         account: accountOrErrorMessage,
         email,
       }));
+
+      // Initialize bills in local storage if they don't exist
+      try {
+        const billsKey = getBillsStorageKey(demoName, accountOrErrorMessage.id);
+        const existingBills = localStorage.getItem(billsKey);
+        const parsedBills = existingBills ? JSON.parse(existingBills) : [];
+        if (!Array.isArray(parsedBills) || parsedBills.length === 0) {
+          const defaultBills = createDefaultBills(currency);
+          localStorage.setItem(billsKey, JSON.stringify(defaultBills));
+        }
+      } catch (e) {
+        // Ignore localStorage errors - bills will be initialized later
+        console.error('Failed to initialize bills:', e);
+      }
     },
   });
 
@@ -184,8 +199,11 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
         ) {
           router.push(`/${language}`);
         }
-      } else if (!pathnameWithoutLanguage.startsWith('/storefront')) {
-        // If we're anywhere else in the application besides the storefront.
+      } else if (
+        !pathnameWithoutLanguage.startsWith('/storefront') &&
+        !pathnameWithoutLanguage.startsWith('/bills')
+      ) {
+        // If we're anywhere else in the application besides the storefront or bills/pay page.
 
         /**
          * If we have an account, the account details were submitted (meaning onboarding was completed)
@@ -218,6 +236,11 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
         ...previousMerchant,
         account: accountOrErrorMessage,
       }));
+
+      // Initialize bills in local storage for new account
+      const billsKey = getBillsStorageKey(demoName, accountOrErrorMessage.id);
+      const defaultBills = createDefaultBills(currency);
+      localStorage.setItem(billsKey, JSON.stringify(defaultBills));
     },
   });
 

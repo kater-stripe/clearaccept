@@ -25,6 +25,11 @@ export const getCards = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
+  // Card IDs and cardholder IDs to exclude from results
+  const EXCLUDED_CARD_IDS = [
+    'ic_1SzROdIh1x3YP8euMrJVL4HB',
+    'ic_1SzROQIh1x3YP8euMTE8qSs4',
+  ];
   const { data: cards } = await stripe.issuing.cards.list(
     {
       limit,
@@ -35,6 +40,10 @@ export const getCards = async ({
     },
   );
 
-  return plain(cards);
-};
+  // Filter out excluded cards and cardholders
+  const filteredCards = cards.filter(
+    (card) => !EXCLUDED_CARD_IDS.includes(card.id),
+  );
 
+  return plain(filteredCards);
+};

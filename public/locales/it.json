@@ -87,6 +87,7 @@
         "due-date": "Data di scadenza",
         "actions": "Azioni",
         "pay": "Paga",
+        "view": "Visualizza",
         "mark-paid": "Segna come pagata"
       },
       "empty": "Nessuna fattura da pagare.",

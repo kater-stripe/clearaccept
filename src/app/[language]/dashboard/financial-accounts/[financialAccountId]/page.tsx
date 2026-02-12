@@ -5,11 +5,13 @@ import { Button } from '@/components/common/Button';
 import { Skeleton } from '@/components/common/Skeleton';
 import { useParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { getFinancialAccount as getFinancialAccountAction } from '@/app/api/money-management/financial-accounts/getFinancialAccount';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import { getFinancialAccountTransactions as getFinancialAccountTransactionsAction } from '@/app/api/money-management/financial-accounts/getFinancialAccountTransactions';
+import { getFinancialAddresses as getFinancialAddressesAction } from '@/app/api/money-management/financial-addresses/getFinancialAddresses';
+import { createFinancialAddress as createFinancialAddressAction } from '@/app/api/money-management/financial-addresses/createFinancialAddress';
 import { formatPrice } from '@/utils/formatPrice';
 import { MoveMoneyModal } from '@/components/financial-account/MoveMoneyModal';
 import { TransferModal } from '@/components/financial-account/TransferModal';
@@ -19,21 +21,25 @@ import { getBalanceSettings as getBalanceSettingsAction } from '@/app/api/balanc
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
 import { useState } from 'react';
-import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
 
 const FinancialAccountPage = () => {
   const { financialAccountId } = useParams<{ financialAccountId: string }>();
 
   const { stripeSecretKey, language } = useDemoConfig();
   const { account } = useDemoMerchant();
+  const router = useRouter();
 
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
 
   const [isMoveMoneyModalOpen, setIsMoveMoneyModalOpen] = useState(false);
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isUseForPayoutsModalOpen, setIsUseForPayoutsModalOpen] =
     useState(false);
+  const [showFullAccountNumber, setShowFullAccountNumber] = useState(false);
 
   const { data: financialAccount, isPending: isAccountPending } = useQuery({
     queryKey: ['financial-account', financialAccountId],
@@ -67,6 +73,64 @@ const FinancialAccountPage = () => {
       }),
     enabled: !!account,
   });
+
+  // Fetch financial addresses for this FA
+  const { data: financialAddresses } = useQuery({
+    queryKey: ['financial-addresses', financialAccountId, stripeSecretKey],
+    queryFn: () =>
+      getFinancialAddressesAction({
+        financialAccountId,
+        stripeSecretKey,
+        accountId: account!.id,
+      }),
+    enabled: !!account,
+  });
+
+  // Check if a financial address exists
+  const hasFinancialAddress = financialAddresses && financialAddresses.length > 0;
+
+  // Get account number info from financial address
+  const { addressLast4, fullAccountNumber } = (() => {
+    const financialAddress = financialAddresses?.[0];
+    if (!financialAddress) return { addressLast4: null, fullAccountNumber: null };
+    if (financialAddress?.credentials?.type === 'gb_bank_account') {
+      return {
+        addressLast4: financialAddress.credentials.gb_bank_account?.last4 ?? null,
+        fullAccountNumber: financialAddress.credentials.gb_bank_account?.account_number ?? null,
+      };
+    } else if (financialAddress?.credentials?.type === 'us_bank_account') {
+      return {
+        addressLast4: financialAddress.credentials.us_bank_account?.last4 ?? null,
+        fullAccountNumber: financialAddress.credentials.us_bank_account?.account_number ?? null,
+      };
+    }
+    return { addressLast4: null, fullAccountNumber: null };
+  })();
+
+  // Mutation for creating a financial address
+  const { mutate: createAddress, isPending: isCreatingAddress } = useMutation({
+    mutationFn: createFinancialAddressAction,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['financial-addresses', financialAccountId],
+      });
+    },
+  });
+
+  // Get the merchant country for creating financial address
+  const merchantCountry = (account?.identity?.country?.toUpperCase() ?? 'US') as
+    | 'US'
+    | 'GB';
+
+  const handleCreateAddress = () => {
+    if (!account) return;
+    createAddress({
+      accountId: account.id,
+      financialAccountId,
+      country: merchantCountry,
+      stripeSecretKey,
+    });
+  };
 
   // Check if this FA is currently set up for automatic payouts
   // Structure: payments.payouts.automatic_transfer_rules_by_currency[currency][0].payout_method
@@ -176,18 +240,55 @@ const FinancialAccountPage = () => {
         </>
       )}
 
+      {/* Header */}
+      <div className='flex items-center gap-4'>
+        <button
+          onClick={() =>
+            router.push(`/${language}/dashboard/financial-accounts`)
+          }
+          className='p-2 hover:bg-gray-100 rounded-md transition-colors'
+        >
+          <ArrowLeftIcon className='size-5' />
+        </button>
+        <h2 className='text-lg font-semibold'>
+          {t('dashboard.expenses.financial-account.title')}
+        </h2>
+      </div>
+
       {/* Balances Card - Stripe Dashboard Style */}
       <Card>
         <div className='flex items-start justify-between'>
-          <div className='flex items-center gap-2'>
-            <h2 className='text-lg font-semibold'>
-              {financialAccount?.display_name ||
-                t('dashboard.expenses.financial-account.overview')}
-            </h2>
-            {isAutoPayoutsEnabled && (
-              <span className='inline-flex items-center rounded-full bg-brand-primary px-2.5 py-0.5 text-xs font-medium text-black'>
-                {t('dashboard.expenses.financial-account.auto-payouts-active')}
-              </span>
+          <div>
+            <div className='flex items-center gap-2'>
+              <h2 className='text-lg font-semibold'>
+                {financialAccount?.display_name ||
+                  t('dashboard.expenses.financial-account.overview')}
+              </h2>
+              {isAutoPayoutsEnabled && (
+                <span className='inline-flex items-center rounded-full bg-brand-primary px-2.5 py-0.5 text-xs font-medium text-black'>
+                  {t('dashboard.expenses.financial-account.auto-payouts-active')}
+                </span>
+              )}
+            </div>
+            {addressLast4 ? (
+              <button
+                onClick={() => setShowFullAccountNumber(!showFullAccountNumber)}
+                className='text-sm text-gray-500 mt-0.5 hover:underline'
+              >
+                {showFullAccountNumber && fullAccountNumber
+                  ? fullAccountNumber
+                  : `••••${addressLast4}`}
+              </button>
+            ) : hasFinancialAddress ? (
+              <p className='text-sm text-gray-400 mt-0.5'>Account number pending</p>
+            ) : (
+              <button
+                onClick={handleCreateAddress}
+                disabled={isCreatingAddress}
+                className='text-sm text-brand-primary hover:underline mt-0.5 disabled:text-gray-400 disabled:no-underline'
+              >
+                {isCreatingAddress ? 'Requesting...' : 'Request account number'}
+              </button>
             )}
           </div>
           <div className='flex gap-2'>
@@ -288,6 +389,7 @@ const FinancialAccountPage = () => {
             No balance information available
           </p>
         )}
+
       </Card>
 
       {/* Transactions Table */}
@@ -365,11 +467,23 @@ const FinancialAccountPage = () => {
                           <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
                             {getCategoryLabel(transaction.category)}
                           </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-900 font-medium'>
-                            {formatBalanceAmount(
-                              transaction.amount?.value,
-                              transaction.amount?.currency,
-                            )}
+                          <td className='whitespace-nowrap px-3 py-4 text-sm font-medium'>
+                            {(() => {
+                              const balanceImpact = transaction.balance_impact?.available?.value ?? 0;
+                              const isDebit = balanceImpact < 0;
+                              const displayValue = isDebit
+                                ? -(transaction.amount?.value ?? 0)
+                                : (transaction.amount?.value ?? 0);
+                              return (
+                                <span className={isDebit ? 'text-red-600' : 'text-green-600'}>
+                                  {isDebit ? '' : '+'}
+                                  {formatBalanceAmount(
+                                    displayValue,
+                                    transaction.amount?.currency,
+                                  )}
+                                </span>
+                              );
+                            })()}
                           </td>
                           <td className='whitespace-nowrap px-3 py-4 text-sm'>
                             <div className='space-y-1'>
@@ -435,7 +549,7 @@ const FinancialAccountPage = () => {
                                 transaction.status,
                               )}`}
                             >
-                              {transaction.status}
+                              {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
                             </span>
                           </td>
                         </tr>
