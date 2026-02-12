@@ -24,8 +24,11 @@ import {
   CreditCardIcon,
   EyeIcon,
   EyeSlashIcon,
+  ClipboardDocumentCheckIcon,
 } from '@heroicons/react/24/outline';
 import type Stripe from 'stripe';
+
+type CopiedField = 'number' | 'expiry' | 'cvc' | null;
 
 type CardDetailProps = {
   cardId: string;
@@ -41,6 +44,17 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
 
   const [showSensitive, setShowSensitive] = useState(false);
   const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
+  const [copiedField, setCopiedField] = useState<CopiedField>(null);
+
+  const copyToClipboard = async (text: string, field: CopiedField) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
 
   const { data: card, isPending: isCardLoading } = useQuery({
     queryKey: ['issuing-card', cardId, account?.id, stripeSecretKey],
@@ -210,11 +224,28 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
                   <CardStatusBadge status={card.status} />
                 </div>
                 <div className='space-y-2'>
-                  <p className='text-lg font-mono tracking-widest'>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      if (showSensitive && card.number) {
+                        copyToClipboard(card.number, 'number');
+                      }
+                    }}
+                    disabled={!showSensitive || !card.number}
+                    className={`text-lg font-mono tracking-widest text-left transition-all ${
+                      showSensitive && card.number
+                        ? 'hover:text-gray-300 cursor-pointer'
+                        : 'cursor-default'
+                    }`}
+                    title={showSensitive && card.number ? 'Click to copy' : undefined}
+                  >
                     {showSensitive && card.number
                       ? card.number.replace(/(.{4})/g, '$1 ').trim()
                       : `•••• •••• •••• ${card.last4}`}
-                  </p>
+                    {copiedField === 'number' && (
+                      <ClipboardDocumentCheckIcon className='inline-block ml-2 size-4 text-green-400' />
+                    )}
+                  </button>
                   <div className='flex justify-between items-end'>
                     <div>
                       <p className='text-xs text-gray-500'>
@@ -225,20 +256,48 @@ export const CardDetail = ({ cardId, onBack }: CardDetailProps) => {
                           '-'}
                       </p>
                     </div>
-                    <div className='text-right'>
+                    <button
+                      type='button'
+                      onClick={() => {
+                        const expiry = `${String(card.exp_month).padStart(2, '0')}${String(card.exp_year).slice(-2)}`;
+                        copyToClipboard(expiry, 'expiry');
+                      }}
+                      className='text-right hover:text-gray-300 cursor-pointer transition-all'
+                      title='Click to copy'
+                    >
                       <p className='text-xs text-gray-500'>
                         {t('dashboard.issuing.card-detail.expires')}
                       </p>
                       <p className='text-sm font-mono'>
                         {String(card.exp_month).padStart(2, '0')}/{String(card.exp_year).slice(-2)}
+                        {copiedField === 'expiry' && (
+                          <ClipboardDocumentCheckIcon className='inline-block ml-1 size-3 text-green-400' />
+                        )}
                       </p>
-                    </div>
-                    <div className='text-right min-w-[40px]'>
+                    </button>
+                    <button
+                      type='button'
+                      onClick={() => {
+                        if (showSensitive && card.cvc) {
+                          copyToClipboard(card.cvc, 'cvc');
+                        }
+                      }}
+                      disabled={!showSensitive || !card.cvc}
+                      className={`text-right min-w-[40px] transition-all ${
+                        showSensitive && card.cvc
+                          ? 'hover:text-gray-300 cursor-pointer'
+                          : 'cursor-default'
+                      }`}
+                      title={showSensitive && card.cvc ? 'Click to copy' : undefined}
+                    >
                       <p className='text-xs text-gray-500'>CVC</p>
                       <p className='text-sm font-mono'>
                         {showSensitive && card.cvc ? card.cvc : '•••'}
+                        {copiedField === 'cvc' && (
+                          <ClipboardDocumentCheckIcon className='inline-block ml-1 size-3 text-green-400' />
+                        )}
                       </p>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
