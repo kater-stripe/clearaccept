@@ -23,11 +23,13 @@ import { approveApplication } from '@/app/api/financing-offers/approveApplicatio
 import { rejectApplication } from '@/app/api/financing-offers/rejectApplication';
 import { fullyRepayFinancingOffer } from '@/app/api/financing-offers/fullyRepayFinancingOffer';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { generateRandomBills, getBillsStorageKey } from '@/utils/bills';
 
 export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
   const {
     resetDemoConfig,
     configure,
+    demoName,
     language,
     currency,
     checkoutMethod,
@@ -676,6 +678,20 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                         if (seedingErrors.length === 0) {
                           window.location.reload();
                         }
+                      },
+                    },
+                    // Generate Bills button
+                    {
+                      type: 'button' as const,
+                      label: 'Generate Bills',
+                      disabled: isSeeding,
+                      onClick: () => {
+                        const billsKey = getBillsStorageKey(demoName, account.id);
+                        const existingBills = localStorage.getItem(billsKey);
+                        const parsedBills = existingBills ? JSON.parse(existingBills) : [];
+                        const newBills = generateRandomBills(currency, 3);
+                        localStorage.setItem(billsKey, JSON.stringify([...parsedBills, ...newBills]));
+                        window.location.reload();
                       },
                     },
                     // Capital / Flex Loan section (only if capital eligible)
