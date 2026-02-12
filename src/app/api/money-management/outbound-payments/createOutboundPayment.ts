@@ -2,6 +2,7 @@
 
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
+import type { Stripe } from 'stripe';
 
 type CreateOutboundPaymentParams = {
   connectedAccountId: string;
@@ -9,7 +10,8 @@ type CreateOutboundPaymentParams = {
   recipientAccountId: string;
   payoutMethodId: string;
   amount: number;
-  currency: string;
+  currency: string; // Source/amount currency (merchant's currency)
+  destinationCurrency?: string; // Destination currency (payout method's currency) - defaults to source currency if not provided
   description?: string;
   stripeSecretKey?: string;
 };
@@ -26,6 +28,7 @@ export const createOutboundPayment = async ({
   payoutMethodId,
   amount,
   currency,
+  destinationCurrency,
   description,
   stripeSecretKey = process.env.STRIPE_SECRET_KEY,
 }: CreateOutboundPaymentParams) => {
@@ -40,6 +43,36 @@ export const createOutboundPayment = async ({
   try {
     // Create outbound payment from connected account's financial account
     // Use stripeContext with the connected account ID for v2 APIs
+    // Use destination currency if provided, otherwise fall back to source currency
+    const toCurrency = destinationCurrency || currency;
+
+    let outboundPaymentQuote: Stripe.V2.MoneyManagement.OutboundPaymentQuote | null =
+      null;
+
+    if (toCurrency !== currency) {
+      outboundPaymentQuote =
+        await stripe.v2.moneyManagement.outboundPaymentQuotes.create(
+          {
+            from: {
+              financial_account: fromFinancialAccountId,
+              currency,
+            },
+            to: {
+              recipient: recipientAccountId,
+              payout_method: payoutMethodId,
+              currency: toCurrency,
+            },
+            amount: {
+              value: amount,
+              currency,
+            },
+          },
+          {
+            stripeContext: connectedAccountId,
+          },
+        );
+    }
+
     const outboundPayment =
       await stripe.v2.moneyManagement.outboundPayments.create(
         {
@@ -50,8 +83,13 @@ export const createOutboundPayment = async ({
           to: {
             recipient: recipientAccountId,
             payout_method: payoutMethodId,
-            currency,
+            currency: toCurrency,
           },
+          ...(outboundPaymentQuote
+            ? {
+                outbound_payment_quote: outboundPaymentQuote.id,
+              }
+            : {}),
           amount: {
             value: amount,
             currency,

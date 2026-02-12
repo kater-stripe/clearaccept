@@ -170,7 +170,7 @@ export const AIWizard = () => {
             return {
                 id: 'capital-offer',
                 message:
-                    'Based on your data signals, it appears your cash flow may be constrained and you could use a loan.',
+                    'Cashflow Constraint Detected: You have a stock purchase order of £30k pending, but current liquid cash is below safety thresholds. Based on your sales history, you qualify for growth financing.',
                 actionLabel: 'Review capital offer',
                 action: handleCapitalOfferAction,
             };

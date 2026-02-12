@@ -80,7 +80,18 @@ export const createRecipient = async ({
         display_name: displayName,
         identity,
         configuration: {
-          customer: {},
+          recipient: {
+            capabilities: {
+              bank_accounts: {
+                local: {
+                  requested: true,
+                },
+                wire: {
+                  requested: true,
+                },
+              },
+            },
+          },
         },
         include: ['identity', 'configuration.customer'],
       },
@@ -103,4 +114,3 @@ export const createRecipient = async ({
     };
   }
 };
-

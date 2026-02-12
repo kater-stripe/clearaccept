@@ -18,11 +18,14 @@ import { TransferModal } from '@/components/financial-account/TransferModal';
 import { PaymentModal } from '@/components/financial-account/PaymentModal';
 import { UseForPayoutsModal } from '@/components/financial-account/UseForPayoutsModal';
 import { getBalanceSettings as getBalanceSettingsAction } from '@/app/api/balance-settings/getBalanceSettings';
+import { CardsList } from '@/components/issuing/CardsList';
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
 import { useState } from 'react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
+
+type FATab = 'transactions' | 'cards';
 
 const FinancialAccountPage = () => {
   const { financialAccountId } = useParams<{ financialAccountId: string }>();
@@ -40,6 +43,7 @@ const FinancialAccountPage = () => {
   const [isUseForPayoutsModalOpen, setIsUseForPayoutsModalOpen] =
     useState(false);
   const [showFullAccountNumber, setShowFullAccountNumber] = useState(false);
+  const [activeTab, setActiveTab] = useState<FATab>('transactions');
 
   const { data: financialAccount, isPending: isAccountPending } = useQuery({
     queryKey: ['financial-account', financialAccountId],
@@ -392,11 +396,35 @@ const FinancialAccountPage = () => {
 
       </Card>
 
-      {/* Transactions Table */}
+      {/* Tabs */}
       <Card>
-        <h2 className='text-lg font-semibold mb-4'>
-          {t('dashboard.expenses.financial-account.transactions')}
-        </h2>
+        <div className='border-b border-gray-200 mb-4'>
+          <nav className='-mb-px flex space-x-6'>
+            <button
+              onClick={() => setActiveTab('transactions')}
+              className={`whitespace-nowrap border-b-2 py-3 px-1 text-sm font-medium transition-colors ${
+                activeTab === 'transactions'
+                  ? 'border-brand-primary text-brand-primary'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+              }`}
+            >
+              {t('dashboard.expenses.financial-account.transactions')}
+            </button>
+            <button
+              onClick={() => setActiveTab('cards')}
+              className={`whitespace-nowrap border-b-2 py-3 px-1 text-sm font-medium transition-colors ${
+                activeTab === 'cards'
+                  ? 'border-brand-primary text-brand-primary'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+              }`}
+            >
+              {t('dashboard.expenses.issuing-cards')}
+            </button>
+          </nav>
+        </div>
+
+        {/* Transactions Tab Content */}
+        {activeTab === 'transactions' && (
         <div className='flow-root'>
           <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
             <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
@@ -572,6 +600,18 @@ const FinancialAccountPage = () => {
             </div>
           </div>
         </div>
+        )}
+
+        {/* Issuing Cards Tab Content */}
+        {activeTab === 'cards' && (
+          <CardsList
+            financialAccountId={financialAccountId}
+            showCreateButton
+            onCardClick={(card) =>
+              router.push(`/${language}/dashboard/cards/${card.id}`)
+            }
+          />
+        )}
       </Card>
     </div>
   );

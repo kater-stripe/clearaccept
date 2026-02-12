@@ -26,14 +26,9 @@ export const getRecipients = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   try {
-    // List all v2 accounts scoped to this connected account using Stripe-Context.
-    // When using stripeContext with a connected account ID, only recipients
-    // created under that context will be returned.
-    // Filter by applied_configurations: ['customer'] to only get accounts that
-    // have been configured as customers (recipients for outbound payments in FA4P).
     const { data: accounts } = await stripe.v2.core.accounts.list(
       {
-        applied_configurations: ['customer'],
+        applied_configurations: ['recipient'],
       },
       {
         stripeContext: connectedAccountId,
@@ -70,4 +65,3 @@ export const getRecipients = async ({
     return [];
   }
 };
-

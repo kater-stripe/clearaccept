@@ -171,6 +171,8 @@ export const PaymentModal = ({
 
     if (!account) return;
 
+    const destinationCurrency = getDestinationCurrency();
+
     createPayment({
       connectedAccountId: account.id,
       fromFinancialAccountId: sourceFinancialAccount.id,
@@ -178,6 +180,7 @@ export const PaymentModal = ({
       payoutMethodId,
       amount,
       currency,
+      destinationCurrency,
       description: description || undefined,
       stripeSecretKey,
     });
@@ -217,6 +220,53 @@ export const PaymentModal = ({
       return `Card ••••${pm.card.last4}`;
     }
     return pm.id;
+  };
+
+  // Infer currency from country code
+  const getCountryCurrency = (countryCode: string | undefined): string => {
+    if (!countryCode) return currency; // fallback to source currency
+    const countryToCurrency: Record<string, string> = {
+      US: 'usd',
+      GB: 'gbp',
+      DE: 'eur',
+      FR: 'eur',
+      IT: 'eur',
+      ES: 'eur',
+      NL: 'eur',
+      BE: 'eur',
+      AT: 'eur',
+      IE: 'eur',
+      PT: 'eur',
+      FI: 'eur',
+      GR: 'eur',
+      CA: 'cad',
+      AU: 'aud',
+      JP: 'jpy',
+      SG: 'sgd',
+      HK: 'hkd',
+      NZ: 'nzd',
+      CH: 'chf',
+      SE: 'sek',
+      NO: 'nok',
+      DK: 'dkk',
+      MX: 'mxn',
+      BR: 'brl',
+    };
+    return countryToCurrency[countryCode] || currency;
+  };
+
+  // Get the destination currency from selected payout method
+  const getDestinationCurrency = (): string | undefined => {
+    if (!payoutMethodId) return undefined;
+    const selectedMethod = availablePayoutMethods.find(pm => pm.id === payoutMethodId);
+    if (!selectedMethod) return undefined;
+
+    if (selectedMethod.type === 'bank_account' && selectedMethod.bank_account) {
+      return getCountryCurrency(selectedMethod.bank_account.country);
+    }
+    // Card type doesn't expose country in the type, so we fall back to source currency
+    // The API will handle currency conversion if needed
+    return undefined;
   };
 
   // Handle successful recipient creation - go directly to add payout method
@@ -353,20 +403,6 @@ export const PaymentModal = ({
                     nullable
                     required
                   />
-
-                  {/* Currency Selection */}
-                  {availableCurrencies.length > 1 && (
-                    <Select
-                      label={t('modals.payment.form.currency')}
-                      value={currency}
-                      onChange={setCurrency}
-                      options={availableCurrencies.map((curr) => ({
-                        value: curr,
-                        label: curr.toUpperCase(),
-                      }))}
-                      required
-                    />
-                  )}
 
                   {/* Amount */}
                   <div>

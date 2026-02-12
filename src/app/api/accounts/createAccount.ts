@@ -107,7 +107,12 @@ export const createAccount = async ({
                   },
                   bank_accounts: {
                     requested: true,
-                  }
+                  },
+                },
+                outbound_payments: {
+                  bank_accounts: {
+                    requested: true,
+                  },
                 },
               },
             },

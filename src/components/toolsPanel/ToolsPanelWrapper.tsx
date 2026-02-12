@@ -680,7 +680,9 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                         }
                       },
                     },
-                    // Generate Bills button
+                    {
+                      type: 'separator' as const,
+                    },
                     {
                       type: 'button' as const,
                       label: 'Generate Bills',

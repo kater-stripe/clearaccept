@@ -25,9 +25,10 @@ import type { SupportedLanguage } from '@/constants/languages';
 type CreateCardModalProps = {
   open: boolean;
   onClose: () => void;
+  defaultFinancialAccountId?: string;
 };
 
-export const CreateCardModal = ({ open, onClose }: CreateCardModalProps) => {
+export const CreateCardModal = ({ open, onClose, defaultFinancialAccountId }: CreateCardModalProps) => {
   const { t } = useTranslation();
   const { account } = useDemoMerchant();
   const { stripeSecretKey, language } = useDemoConfig();
@@ -41,7 +42,13 @@ export const CreateCardModal = ({ open, onClose }: CreateCardModalProps) => {
   const currency = account?.defaults?.currency ?? 'gbp';
 
   useEffect(() => {
-    if (open) return;
+    if (open) {
+      // Set default financial account ID when opening if provided
+      if (defaultFinancialAccountId) {
+        setFinancialAccountId(defaultFinancialAccountId);
+      }
+      return;
+    }
 
     const resetTimeout = setTimeout(() => {
       setCardholderId('');
@@ -51,7 +58,7 @@ export const CreateCardModal = ({ open, onClose }: CreateCardModalProps) => {
     }, 1000);
 
     return () => clearTimeout(resetTimeout);
-  }, [open]);
+  }, [open, defaultFinancialAccountId]);
 
   // Fetch cardholders for the selector
   const { data: cardholders, isPending: isCardholdersLoading } = useQuery({

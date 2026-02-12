@@ -9,21 +9,27 @@ import { getCards as getCardsAction } from '@/app/api/issuing/getCards';
 import { getFinancialAccounts as getFinancialAccountsAction } from '@/app/api/money-management/financial-accounts/getFinancialAccounts';
 import { getFinancialAddresses as getFinancialAddressesAction } from '@/app/api/money-management/financial-addresses/getFinancialAddresses';
 import { Skeleton } from '@/components/common/Skeleton';
+import { Button } from '@/components/common/Button';
 import { CardRow } from './CardRow';
+import { CreateCardModal } from './CreateCardModal';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import type Stripe from 'stripe';
 
 type CardTab = 'all' | 'active' | 'inactive' | 'canceled';
 
 type CardsListProps = {
   onCardClick: (card: Stripe.Issuing.Card) => void;
+  financialAccountId?: string; // Filter to only show cards funded by this FA
+  showCreateButton?: boolean; // Show a create card button
 };
 
-export const CardsList = ({ onCardClick }: CardsListProps) => {
+export const CardsList = ({ onCardClick, financialAccountId, showCreateButton }: CardsListProps) => {
   const { stripeSecretKey } = useDemoConfig();
   const { account } = useDemoMerchant();
   const { t } = useTranslation();
 
   const [activeTab, setActiveTab] = useState<CardTab>('all');
+  const [isCreateCardModalOpen, setIsCreateCardModalOpen] = useState(false);
 
   const statusFilter: Stripe.Issuing.Card.Status | undefined =
     activeTab === 'all' ? undefined : activeTab;
@@ -85,6 +91,16 @@ export const CardsList = ({ onCardClick }: CardsListProps) => {
     return map;
   }, [financialAddressQueries, financialAccounts]);
 
+  // Filter cards by financial account if specified
+  const filteredCards = useMemo(() => {
+    if (!cards) return [];
+    if (!financialAccountId) return cards;
+    return cards.filter((card) => {
+      // @ts-expect-error - financial_account_v2 is not in the type definition
+      return card.financial_account_v2 === financialAccountId;
+    });
+  }, [cards, financialAccountId]);
+
   const tabs: { key: CardTab; label: string }[] = [
     { key: 'all', label: t('dashboard.issuing.tabs.all') },
     { key: 'active', label: t('dashboard.issuing.tabs.active') },
@@ -94,6 +110,23 @@ export const CardsList = ({ onCardClick }: CardsListProps) => {
 
   return (
     <div>
+      {/* Create Card Modal */}
+      <CreateCardModal
+        open={isCreateCardModalOpen}
+        onClose={() => setIsCreateCardModalOpen(false)}
+        defaultFinancialAccountId={financialAccountId}
+      />
+
+      {/* Header with Create Button */}
+      {showCreateButton && (
+        <div className='flex justify-end mb-4'>
+          <Button onClick={() => setIsCreateCardModalOpen(true)}>
+            <PlusIcon className='size-4' />
+            {t('dashboard.issuing.create-card.button')}
+          </Button>
+        </div>
+      )}
+
       {/* Tabs */}
       <div className='border-b border-gray-200 mb-4'>
         <nav className='-mb-px flex space-x-6'>
@@ -174,8 +207,8 @@ export const CardsList = ({ onCardClick }: CardsListProps) => {
                         </td>
                       </tr>
                     ))
-                  ) : cards && cards.length > 0 ? (
-                    cards.map((card) => (
+                  ) : filteredCards && filteredCards.length > 0 ? (
+                    filteredCards.map((card) => (
                       <CardRow
                         key={card.id}
                         card={card}
