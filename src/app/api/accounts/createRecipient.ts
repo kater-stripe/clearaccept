@@ -2,6 +2,9 @@
 
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
+import { CountryCode as MockCountryCode } from '@demoeng/utils/countries';
+import { Mock } from '@demoeng/utils/mock';
+import type Stripe from 'stripe';
 
 type CreateRecipientParams = {
   connectedAccountId: string;
@@ -40,31 +43,63 @@ export const createRecipient = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   try {
+    // Initialize mock data generator for prefilling required fields
+    const mock = new Mock({
+      language: 'en',
+      country: country.toUpperCase() as MockCountryCode,
+      validForConnect: true,
+    });
+
+    const addresses = mock.addresses();
+    const mockAddress = addresses.address
+      ? {
+          ...addresses.address,
+          country: addresses.address.country.toLowerCase(),
+        }
+      : {
+          ...addresses.address_kana,
+          country: addresses.address_kana!.country.toLowerCase(),
+        };
+
     // Build identity based on entity type
     // Country must be uppercase ISO 3166 alpha-2 code
-    const identity: any = {
-      country: country.toUpperCase(),
-      entity_type: entityType,
-    };
-
-    // Generate display name based on entity type
     let displayName: string;
+    let identity: Stripe.V2.Core.AccountCreateParams.Identity;
 
     if (entityType === 'individual') {
       if (!givenName || !surname) {
         throw new Error('Given name and surname are required for individuals');
       }
-      identity.individual = {
-        given_name: givenName,
-        surname: surname,
+      // Prefill individual with address, phone, and DOB for validation
+      identity = {
+        country: country.toUpperCase(),
+        entity_type: 'individual',
+        individual: {
+          given_name: givenName,
+          surname: surname,
+          address: mockAddress,
+          phone: mock.phoneNumber(),
+          date_of_birth: {
+            day: 1,
+            month: 1,
+            year: 1901,
+          },
+        },
       };
       displayName = `${givenName} ${surname}`;
     } else {
       if (!registeredName) {
         throw new Error('Registered name is required for companies');
       }
-      identity.business_details = {
-        registered_name: registeredName,
+      // Prefill business details with address and phone for validation
+      identity = {
+        country: country.toUpperCase(),
+        entity_type: 'company',
+        business_details: {
+          registered_name: registeredName,
+          address: mockAddress,
+          phone: mock.phoneNumber(),
+        },
       };
       displayName = registeredName;
     }
