@@ -2,6 +2,7 @@
 
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
+import { createFinancialAddress } from '@/app/api/money-management/financial-addresses/createFinancialAddress';
 import type { Stripe } from 'stripe';
 
 type CreateOutboundPaymentParams = {
@@ -89,33 +90,37 @@ export const createOutboundPayment = async ({
         );
     }
 
-    const outboundPayment =
-      await stripe.v2.moneyManagement.outboundPayments.create(
-        {
-          from: {
-            financial_account: fromFinancialAccountId,
-            currency,
-          },
-          to: {
-            recipient: recipientAccountId,
-            payout_method: payoutMethodId,
-            currency: toCurrency,
-          },
-          ...(outboundPaymentQuote
-            ? {
-                outbound_payment_quote: outboundPaymentQuote.id,
-              }
-            : {}),
-          amount: {
-            value: amount,
-            currency,
-          },
-          description: description || 'Payment to third-party',
-        },
-        {
-          stripeContext: connectedAccountId,
-        },
+    const paymentBody = {
+      from: { financial_account: fromFinancialAccountId, currency },
+      to: { recipient: recipientAccountId, payout_method: payoutMethodId, currency: toCurrency },
+      ...(outboundPaymentQuote ? { outbound_payment_quote: outboundPaymentQuote.id } : {}),
+      amount: { value: amount, currency },
+      description: description || 'Payment to third-party',
+    };
+
+    let outboundPayment: Stripe.V2.MoneyManagement.OutboundPayment;
+    try {
+      outboundPayment = await stripe.v2.moneyManagement.outboundPayments.create(
+        paymentBody,
+        { stripeContext: connectedAccountId },
       );
+    } catch (firstError: any) {
+      // FA has no active financial address yet — create one and retry once.
+      if (firstError?.code === 'financial_address_creation_required') {
+        await createFinancialAddress({
+          accountId: connectedAccountId,
+          financialAccountId: fromFinancialAccountId,
+          currency,
+          stripeSecretKey,
+        });
+        outboundPayment = await stripe.v2.moneyManagement.outboundPayments.create(
+          paymentBody,
+          { stripeContext: connectedAccountId },
+        );
+      } else {
+        throw firstError;
+      }
+    }
 
     return plain(outboundPayment);
   } catch (error) {
