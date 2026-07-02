@@ -79,7 +79,7 @@ The SDK is pinned to `stripe@^22.4.0-beta.1`. This version is required for `mone
 
 **node_modules patches (lost on `npm install` — re-apply if you reinstall):**
 - `node_modules/@demoeng/tools-panel/src/features/api-activity/create-initialize-stripe.ts` — widen `makeRequest` param types to match v22 SDK's `HttpClientInterface`. *(Note: `@demoeng` packages have since been removed, so this patch is no longer needed.)*
-- `node_modules/stripe/cjs/resources/V2/TestHelpers/FinancialAddresses.d.ts` and the `esm/` copy — add `'sepa_credit_transfer'` to `FinancialAddressCreditParams.Network` type. The API supports it but the SDK type definition omits it.
+- `node_modules/stripe/cjs/resources/V2/TestHelpers/FinancialAddresses.d.ts` and the `esm/` copy — add `'sepa_credit_transfer'` to `FinancialAddressCreditParams.Network` type. The API supports it (gated feature, enabled on this platform) but the SDK type definition omits it.
 
 **Account creation** (`src/app/api/accounts/createAccount.ts`) uses `money_manager` configuration (not the old `storer`). The `buildBusinessStorage()` helper always requests both `inbound` and `outbound` together for the same currency — `business_storage` requires both or neither. A v1 `stripe.accounts.update` for `card_issuing` capability is intentionally kept (v1 interop for Issuing) and silently caught if the platform isn't Issuing-enabled.
 
