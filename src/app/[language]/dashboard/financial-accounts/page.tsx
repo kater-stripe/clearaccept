@@ -84,6 +84,7 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps
     [transactions],
   );
 
+  const isGbpFa = ((fa as any).storage?.holds_currencies as string[] | undefined)?.includes('gbp') ?? false;
   const hasAddress = (addresses?.length ?? 0) > 0;
 
   const bankDetails = useMemo(() => {
@@ -145,10 +146,10 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps
         )}
       </div>
 
-      {/* Bank details */}
-      {isAddressesPending ? (
+      {/* Bank details — only for GBP accounts */}
+      {isGbpFa && isAddressesPending ? (
         <div style={{ height: 40, marginBottom: 16 }} />
-      ) : !bankDetails && !hasAddress ? (
+      ) : isGbpFa && !bankDetails && !hasAddress ? (
         <div style={{ paddingTop: 14, paddingBottom: 14, borderTop: '1px solid #F4F4F4', marginBottom: 16 }}>
           <button
             onClick={() => requestAddress()}
@@ -158,11 +159,11 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps
             {isRequestingAddress ? 'Requesting…' : '+ Request sort code & account number'}
           </button>
         </div>
-      ) : !bankDetails && hasAddress ? (
+      ) : isGbpFa && !bankDetails && hasAddress ? (
         <div style={{ paddingTop: 14, paddingBottom: 14, borderTop: '1px solid #F4F4F4', marginBottom: 16 }}>
           <div style={{ fontSize: 12, color: '#8892A0', fontStyle: 'italic' }}>Bank details provisioning…</div>
         </div>
-      ) : bankDetails ? (
+      ) : isGbpFa && bankDetails ? (
         <div style={{ display: 'flex', gap: 16, marginBottom: 16, paddingTop: 14, paddingBottom: 14, borderTop: '1px solid #F4F4F4' }}>
           {bankDetails.type === 'GB' && bankDetails.sortCode && (
             <div>

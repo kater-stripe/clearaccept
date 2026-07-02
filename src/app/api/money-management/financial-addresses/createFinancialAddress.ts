@@ -22,6 +22,16 @@ export const createFinancialAddress = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
+  // Only GBP financial accounts support GB bank account addresses
+  const fa = await stripe.v2.moneyManagement.financialAccounts.retrieve(
+    financialAccountId,
+    { stripeContext: accountId },
+  );
+  const currencies: string[] = (fa as any).storage?.holds_currencies ?? [];
+  if (!currencies.includes('gbp')) {
+    return null;
+  }
+
   try {
     // v2 API requires Stripe-Context header (stripeContext), not Stripe-Account (stripeAccount)
     const financialAddress =
