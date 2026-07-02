@@ -1,9 +1,8 @@
 'use server';
 
 import { initializeStripe } from '@/utils/initializeStripe';
-import type { CountryCode } from '@demoeng/utils/countries';
-import type { Language } from '@demoeng/utils/languages';
-import { Mock } from '@demoeng/utils/mock';
+import type { CountryCode, Language } from '@/utils/mock';
+import { Mock } from '@/utils/mock';
 
 type SeedIssuingParams = {
   seedCardholders: boolean;

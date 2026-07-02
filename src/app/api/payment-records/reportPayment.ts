@@ -5,7 +5,7 @@ import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 import type { DemoConfig } from '@/types/demoConfig';
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import { hasGate } from '@demoeng/utils/has-gate';
+import { hasGate } from '@/utils/hasGate';
 import { randomUUID } from 'node:crypto';
 
 type ReportPaymentParams = {

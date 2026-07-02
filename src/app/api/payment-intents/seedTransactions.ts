@@ -2,9 +2,7 @@
 
 import type { DemoConfig } from '@/types/demoConfig';
 import { initializeStripe } from '@/utils/initializeStripe';
-import { CountryCode } from '@demoeng/utils/countries';
-import { Language } from '@demoeng/utils/languages';
-import { Mock } from '@demoeng/utils/mock/index';
+import { CountryCode, Language, Mock } from '@/utils/mock';
 
 type SeedTransactionsParams = {
   accountId: string;
@@ -135,7 +133,7 @@ export const seedTransactions = async ({
         const paymentMethod = await stripe.paymentMethods.create(
           {
             type: 'card',
-            card: { token: chosenToken?.value },
+            card: { token: chosenToken as string | undefined },
           },
           chargeType === 'direct'
             ? {

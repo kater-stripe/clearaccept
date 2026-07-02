@@ -2,8 +2,7 @@
 
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import { CountryCode as MockCountryCode } from '@demoeng/utils/countries';
-import { Mock } from '@demoeng/utils/mock';
+import { CountryCode as MockCountryCode, Mock } from '@/utils/mock';
 import type Stripe from 'stripe';
 
 type CreateRecipientParams = {

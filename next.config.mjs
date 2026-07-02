@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  transpilePackages: ['@demoeng/utils', '@demoeng/tools-panel'],
+  transpilePackages: [],
   typescript: {
     ignoreBuildErrors: process.env.BUILD_ENVIRONMENT === 'CUSTOM',
   },

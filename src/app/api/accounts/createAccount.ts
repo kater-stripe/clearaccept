@@ -4,9 +4,7 @@ import type { CountryCode } from '@/constants/countryCodes';
 import { STRIPE_API_VERSION } from '@/constants/stripeApiVersion';
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
-import { CountryCode as MockCountryCode } from '@demoeng/utils/countries';
-import { Language as MockLanguage } from '@demoeng/utils/languages';
-import { Mock } from '@demoeng/utils/mock';
+import { CountryCode as MockCountryCode, Language as MockLanguage, Mock } from '@/utils/mock';
 import { createFinancialAccount } from '@/app/api/money-management/financial-accounts/createFinancialAccount';
 import type Stripe from 'stripe';
 

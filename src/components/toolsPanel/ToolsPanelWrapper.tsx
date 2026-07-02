@@ -8,7 +8,8 @@ import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import { generateRandomEmail } from '@/utils/generateRandomEmail';
 import { CURRENCY_CODES } from '@/constants/currencyCodes';
 import { DEFAULT_DEMO_CONFIG } from '@/constants/demoConfig';
-import { ToolsPanelProvider } from '@demoeng/tools-panel';
+// ToolsPanelProvider removed — @demoeng/tools-panel replaced with passthrough
+const ToolsPanelProvider = ({ children }: { children: React.ReactNode; config?: unknown }) => <>{children}</>;
 import type { DemoConfig } from '@/types/demoConfig';
 import type { DemoCustomer } from '@/types/demoCustomer';
 import type { DemoMerchant } from '@/types/demoMerchant';
@@ -280,7 +281,7 @@ export const ToolsPanelWrapper = ({ children }: { children: ReactNode }) => {
                     value: currency,
                   })),
                   value: currency,
-                  onChange: (value) => {
+                  onChange: (value: DemoConfig['currency']) => {
                     configure('currency', value);
                   },
                 },
