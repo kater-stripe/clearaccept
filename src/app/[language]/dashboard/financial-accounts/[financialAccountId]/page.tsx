@@ -86,10 +86,13 @@ const FinancialAccountPage = () => {
     enabled: !!account,
   });
 
+  const faCurrency: string = ((financialAccount as any)?.storage?.holds_currencies as string[] | undefined)?.[0] ?? 'gbp';
+
   const { mutate: createAddress, isPending: isCreatingAddress } = useMutation({
     mutationFn: () => createFinancialAddressAction({
       accountId: account!.id,
       financialAccountId,
+      currency: faCurrency,
       stripeSecretKey,
     }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', financialAccountId, stripeSecretKey] }),

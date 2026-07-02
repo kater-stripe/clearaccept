@@ -67,8 +67,10 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps
     enabled: !!accountId,
   });
 
+  const faCurrency: string = ((fa as any).storage?.holds_currencies as string[] | undefined)?.[0] ?? 'gbp';
+
   const { mutate: requestAddress, isPending: isRequestingAddress } = useMutation({
-    mutationFn: () => createFinancialAddressAction({ accountId, financialAccountId: fa.id, stripeSecretKey }),
+    mutationFn: () => createFinancialAddressAction({ accountId, financialAccountId: fa.id, currency: faCurrency, stripeSecretKey }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', fa.id, stripeSecretKey] }),
     onError: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', fa.id, stripeSecretKey] }),
   });
@@ -84,7 +86,7 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps
     [transactions],
   );
 
-  const isGbpFa = ((fa as any).storage?.holds_currencies as string[] | undefined)?.includes('gbp') ?? false;
+  const isGbpFa = faCurrency === 'gbp';
   const hasAddress = (addresses?.length ?? 0) > 0;
 
   const bankDetails = useMemo(() => {

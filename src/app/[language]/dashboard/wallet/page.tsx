@@ -276,9 +276,10 @@ const WalletPage = () => {
 
   const handleRequestAddress = () => {
     if (!account || !currentFA) return;
+    const walletCurrency: string = ((currentFA as any).storage?.holds_currencies as string[] | undefined)?.[0] ?? 'gbp';
     createFinancialAddressAction({
       accountId: account.id, financialAccountId: currentFA.id,
-      stripeSecretKey,
+      currency: walletCurrency, stripeSecretKey,
     }).then(() => queryClient.invalidateQueries({ queryKey: ['financial-addresses', currentFA.id] }));
   };
 
