@@ -2,7 +2,7 @@
 
 **ClearAccept** is a fictional embedded-finance SaaS platform for service-based merchants, built as a Stripe sales demo. It showcases Stripe Capital, embedded financial accounts, card issuing, and money movement via Stripe's v2 API.
 
-This repo is a fork of the `demoeng-zenflow` demo (`sage` branch), customised for the ClearAccept brand.
+This repo is built on top of the [`demoeng-zenflow`](https://github.com/stripe-demos/demoeng-zenflow) demo (`sage` branch), customised for the ClearAccept brand. The upstream `sage` branch is the base — all ClearAccept changes live on `main` here.
 
 ---
 
