@@ -214,7 +214,7 @@
       "title": "資金調達",
       "promotions": "キャンペーン",
       "financings": "融資",
-      "financing-application": "融資申請"
+      "financing-promotion": "Financing Offer", "financing-application": "融資申請"
     },
     "payments": {
       "title": "決済",

@@ -214,7 +214,7 @@
       "title": "资本",
       "promotions": "促销",
       "financings": "融资",
-      "financing-application": "融资申请"
+      "financing-promotion": "Financing Offer", "financing-application": "融资申请"
     },
     "payments": {
       "title": "支付",

@@ -51,12 +51,11 @@ type FACardProps = {
   language: string;
   stripeSecretKey: string | undefined;
   accountId: string;
-  country: 'GB' | 'US';
 };
 
 const BORDER_COLORS = ['#77B32A', '#323E48', '#4D5761'];
 
-const FACard = ({ fa, index, language, stripeSecretKey, accountId, country }: FACardProps) => {
+const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps) => {
   const router = useRouter();
   const borderColor = BORDER_COLORS[index % BORDER_COLORS.length];
   const [copied, setCopied] = useState<string | null>(null);
@@ -69,7 +68,7 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId, country }: FA
   });
 
   const { mutate: requestAddress, isPending: isRequestingAddress } = useMutation({
-    mutationFn: () => createFinancialAddressAction({ accountId, financialAccountId: fa.id, country, stripeSecretKey }),
+    mutationFn: () => createFinancialAddressAction({ accountId, financialAccountId: fa.id, stripeSecretKey }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', fa.id, stripeSecretKey] }),
     onError: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', fa.id, stripeSecretKey] }),
   });
@@ -296,7 +295,6 @@ const FinancialAccountsPage = () => {
               language={language}
               stripeSecretKey={stripeSecretKey}
               accountId={account!.id}
-              country={(account?.identity?.country?.toUpperCase() === 'GB' ? 'GB' : 'US') as 'GB' | 'US'}
             />
           ))}
           {/* Add account card */}

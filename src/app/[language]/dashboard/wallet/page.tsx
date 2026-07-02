@@ -271,7 +271,6 @@ const WalletPage = () => {
   }, [transactions, txTab]);
 
   const hasFinancialAddress = financialAddresses && financialAddresses.length > 0;
-  const merchantCountry = (account?.identity?.country?.toUpperCase() ?? 'GB') as 'US' | 'GB';
 
   // ─── Handlers ─────────────────────────────────────────────────────────────
 
@@ -279,7 +278,7 @@ const WalletPage = () => {
     if (!account || !currentFA) return;
     createFinancialAddressAction({
       accountId: account.id, financialAccountId: currentFA.id,
-      country: merchantCountry, stripeSecretKey,
+      stripeSecretKey,
     }).then(() => queryClient.invalidateQueries({ queryKey: ['financial-addresses', currentFA.id] }));
   };
 
@@ -459,6 +458,32 @@ const WalletPage = () => {
               <ICard /> Issue a card
             </button>
           </div>
+        </div>
+
+        {/* Capital promotion banner */}
+        <div style={{
+          background: 'linear-gradient(135deg, #f3f8e9 0%, #eaf3d6 100%)',
+          border: '1px solid #c9dca0', borderLeft: '4px solid #77B32A',
+          borderRadius: 8, padding: '18px 24px', marginBottom: 22,
+          display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' as const,
+        }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 11, color: '#5a881f', fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase' as const, marginBottom: 6 }}>
+              Capital offer available
+            </div>
+            <div style={{ fontSize: 15, fontWeight: 700, color: '#323E48', marginBottom: 4 }}>
+              Your liquidity for the next 3 months is low
+            </div>
+            <div style={{ fontSize: 13, color: '#4D5761', lineHeight: 1.5 }}>
+              Based on your transaction history, you qualify for a pre-approved capital offer. Get up to <strong>£15,400</strong> to keep your business moving.
+            </div>
+          </div>
+          <button
+            onClick={() => router.push(`/${language}/dashboard/capital`)}
+            style={{ flexShrink: 0, background: '#77B32A', color: '#fff', border: 'none', borderRadius: 4, padding: '10px 18px', fontSize: 13, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' as const }}
+          >
+            View offer →
+          </button>
         </div>
 
         {/* AI prompt bar */}

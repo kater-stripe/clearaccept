@@ -59,25 +59,29 @@ export const createCapitalOffer = async ({
     apiVersion: `${STRIPE_API_VERSION}; embedded_connect_beta=v2`,
   });
 
-  const response = await stripe.rawRequest(
-    'POST',
-    '/v1/capital/financing_offers/test_mode',
-    {
-      max_premium_amount: 10000_00,
-      max_advance_amount: 100000_00,
-      max_withhold_rate_str: 0.15,
-      is_refill: false,
-      financing_type: config.financingType,
-      state: 'delivered',
-      is_youlend: config.isYoulend,
-      is_fixed_term: false,
-      'loan_repayment_details[repayment_interval_duration_days]': 60,
-      'loan_repayment_details[target_payback_weeks]': 42,
-      country,
-      connected_account: accountId,
-    },
-  );
-
-  return plain(response);
+  try {
+    const response = await stripe.rawRequest(
+      'POST',
+      '/v1/capital/financing_offers/test_mode',
+      {
+        max_premium_amount: 10000_00,
+        max_advance_amount: 100000_00,
+        max_withhold_rate_str: 0.15,
+        is_refill: false,
+        financing_type: config.financingType,
+        state: 'delivered',
+        is_youlend: config.isYoulend,
+        is_fixed_term: false,
+        'loan_repayment_details[repayment_interval_duration_days]': 60,
+        'loan_repayment_details[target_payback_weeks]': 42,
+        country,
+        connected_account: accountId,
+      },
+    );
+    return plain(response);
+  } catch {
+    // Capital test mode endpoint not available on this platform
+    return null;
+  }
 };
 

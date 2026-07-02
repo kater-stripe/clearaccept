@@ -214,7 +214,7 @@
       "title": "Capital",
       "promotions": "Promotions",
       "financings": "Financings",
-      "financing-application": "Financing Application"
+      "financing-promotion": "Financing Offer", "financing-application": "Financing Application"
     },
     "payments": {
       "title": "Payments",

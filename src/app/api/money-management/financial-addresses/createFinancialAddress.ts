@@ -6,14 +6,12 @@ import { plain } from '@/utils/plain';
 type CreateFinancialAddressParams = {
   accountId: string;
   financialAccountId: string;
-  country?: 'US' | 'GB';
   stripeSecretKey?: string;
 };
 
 export const createFinancialAddress = async ({
   accountId,
   financialAccountId,
-  country = 'US',
   stripeSecretKey = process.env.STRIPE_SECRET_KEY,
 }: CreateFinancialAddressParams) => {
   if (!stripeSecretKey) {
@@ -25,13 +23,12 @@ export const createFinancialAddress = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   try {
-    // Create financial address based on country
     // v2 API requires Stripe-Context header (stripeContext), not Stripe-Account (stripeAccount)
     const financialAddress =
       await stripe.v2.moneyManagement.financialAddresses.create(
         {
           financial_account: financialAccountId,
-          type: country === 'GB' ? 'gb_bank_account' : 'us_bank_account',
+          type: 'gb_bank_account',
         },
         {
           stripeContext: accountId,

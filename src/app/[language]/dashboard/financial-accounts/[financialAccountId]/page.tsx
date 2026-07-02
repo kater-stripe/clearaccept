@@ -90,7 +90,6 @@ const FinancialAccountPage = () => {
     mutationFn: () => createFinancialAddressAction({
       accountId: account!.id,
       financialAccountId,
-      country: (account?.identity?.country?.toUpperCase() === 'GB' ? 'GB' : 'US') as 'GB' | 'US',
       stripeSecretKey,
     }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', financialAccountId, stripeSecretKey] }),
