@@ -37,7 +37,7 @@ export const fundFinancialAccount = async ({
       financialAddressId,
       {
         amount: { value: amount, currency },
-        network: currency === 'gbp' ? 'fps' : currency === 'eur' ? 'sepa_credit_transfer' : 'ach',
+        network: (currency === 'gbp' ? 'fps' : currency === 'eur' ? 'sepa_credit_transfer' : 'ach') as 'fps' | 'ach',
         statement_descriptor: 'ClearAccept Top Up',
       },
       {
