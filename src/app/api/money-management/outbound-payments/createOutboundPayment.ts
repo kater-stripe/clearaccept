@@ -105,8 +105,9 @@ export const createOutboundPayment = async ({
         { stripeContext: connectedAccountId },
       );
     } catch (firstError: any) {
-      // FA has no active financial address yet — create one and retry once.
+      // FA has no active financial address yet — create one (or use the existing pending one) and retry once.
       if (firstError?.code === 'financial_address_creation_required') {
+        // Create the address if it doesn't exist yet (returns null if limit already reached — address exists).
         await createFinancialAddress({
           accountId: connectedAccountId,
           financialAccountId: fromFinancialAccountId,

@@ -43,6 +43,10 @@ export const createFinancialAddress = async ({
     if (error?.code === 'unsupported_currency') {
       return null;
     }
+    if (error?.code === 'financial_addresses_creation_limit_exceeded') {
+      // FA already has an address — caller can proceed with the existing one.
+      return null;
+    }
     console.error(
       `Unable to create financial address for FA ${financialAccountId}`,
       error,
