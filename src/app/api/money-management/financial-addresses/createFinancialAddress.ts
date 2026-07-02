@@ -22,16 +22,6 @@ export const createFinancialAddress = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  // Only GBP financial accounts support GB bank account addresses
-  const fa = await stripe.v2.moneyManagement.financialAccounts.retrieve(
-    financialAccountId,
-    { stripeContext: accountId },
-  );
-  const currencies: string[] = (fa as any).storage?.holds_currencies ?? [];
-  if (!currencies.includes('gbp')) {
-    return null;
-  }
-
   try {
     // v2 API requires Stripe-Context header (stripeContext), not Stripe-Account (stripeAccount)
     const financialAddress =
@@ -46,7 +36,11 @@ export const createFinancialAddress = async ({
       );
 
     return plain(financialAddress);
-  } catch (error) {
+  } catch (error: any) {
+    // Non-GBP FAs don't support gb_bank_account addresses — return null instead of throwing
+    if (error?.code === 'unsupported_currency') {
+      return null;
+    }
     console.error(
       `Unable to create financial address for FA ${financialAccountId}`,
       error,
