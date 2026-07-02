@@ -105,15 +105,24 @@ export const createOutboundPayment = async ({
         { stripeContext: connectedAccountId },
       );
     } catch (firstError: any) {
-      // FA has no active financial address yet — create one (or use the existing pending one) and retry once.
+      // FA has no active financial address yet — create one (or wait for the pending one) then retry.
       if (firstError?.code === 'financial_address_creation_required') {
-        // Create the address if it doesn't exist yet (returns null if limit already reached — address exists).
+        // Create if it doesn't exist; returns null if FA already has one (limit exceeded = pending).
         await createFinancialAddress({
           accountId: connectedAccountId,
           financialAccountId: fromFinancialAccountId,
           currency,
           stripeSecretKey,
         });
+        // Poll up to 10s for the address to become active before retrying the payment.
+        for (let i = 0; i < 10; i++) {
+          const { data: addrs } = await stripe.v2.moneyManagement.financialAddresses.list(
+            { financial_account: fromFinancialAccountId },
+            { stripeContext: connectedAccountId },
+          );
+          if (addrs.some((a: any) => a.status === 'active')) break;
+          await new Promise(r => setTimeout(r, 1000));
+        }
         outboundPayment = await stripe.v2.moneyManagement.outboundPayments.create(
           paymentBody,
           { stripeContext: connectedAccountId },
