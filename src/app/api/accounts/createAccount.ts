@@ -7,6 +7,7 @@ import { plain } from '@/utils/plain';
 import { CountryCode as MockCountryCode } from '@demoeng/utils/countries';
 import { Language as MockLanguage } from '@demoeng/utils/languages';
 import { Mock } from '@demoeng/utils/mock';
+import { createFinancialAccount } from '@/app/api/money-management/financial-accounts/createFinancialAccount';
 import type Stripe from 'stripe';
 
 type CreateAccountParams = {
@@ -23,22 +24,13 @@ type MoneyManagerCapabilities =
   Stripe.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities;
 type BusinessStorage = MoneyManagerCapabilities['business_storage'];
 
-const EURO_COUNTRIES: CountryCode[] = [
-  'AT', 'BE', 'CY', 'DE', 'EE', 'ES', 'FI', 'FR',
-  'GR', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL',
-  'PT', 'SI', 'SK',
-];
+const req = { requested: true as const };
 
-/**
- * Returns business_storage capability block for v2 money_manager.
- * Both inbound and outbound must be requested together for the same currency.
- */
-const buildBusinessStorage = (countryCode: CountryCode): BusinessStorage => {
-  const req = { requested: true as const };
-  if (countryCode === 'GB') return { inbound: { gbp: req }, outbound: { gbp: req } };
-  if (EURO_COUNTRIES.includes(countryCode)) return { inbound: { eur: req }, outbound: { eur: req } };
-  return { inbound: { usd: req }, outbound: { usd: req } };
-};
+/** Always request GBP + EUR + USD — connected accounts can hold any currency the platform holds. */
+const buildBusinessStorage = (): BusinessStorage => ({
+  inbound: { gbp: req, eur: req, usd: req },
+  outbound: { gbp: req, eur: req, usd: req },
+});
 
 export const createAccount = async ({
   countryCode,
@@ -111,7 +103,7 @@ export const createAccount = async ({
             money_manager: {
               capabilities: {
                 received_credits: { bank_accounts: { requested: true } },
-                business_storage: buildBusinessStorage(countryCode),
+                business_storage: buildBusinessStorage(),
                 outbound_payments: {
                   bank_accounts: { requested: true },
                   financial_accounts: { requested: true },
@@ -361,6 +353,20 @@ export const createAccount = async ({
       accountId: account.id,
     },
   });
+
+  // Auto-provision the default GBP financial account for every new connected account.
+  if (storerCapabilityEnabled) {
+    try {
+      await createFinancialAccount({
+        name: 'ClearAccept Wallet',
+        accountId: account.id,
+        currency: 'gbp',
+        stripeSecretKey,
+      });
+    } catch {
+      // Non-fatal: FA can be created manually from the dashboard if this fails.
+    }
+  }
 
   return plain(account);
 };

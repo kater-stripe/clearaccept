@@ -3,15 +3,23 @@
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
+const req = { requested: true as const };
+const MULTI_CURRENCY_STORAGE = {
+  inbound: { gbp: req, eur: req, usd: req },
+  outbound: { gbp: req, eur: req, usd: req },
+};
+
 type CreateFinancialAccountParams = {
   name: string;
   accountId: string;
+  currency?: string;
   stripeSecretKey?: string;
 };
 
 export const createFinancialAccount = async ({
   name,
   accountId,
+  currency,
   stripeSecretKey = process.env.STRIPE_SECRET_KEY,
 }: CreateFinancialAccountParams) => {
   if (!stripeSecretKey) {
@@ -22,33 +30,20 @@ export const createFinancialAccount = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  // Resolve the currency from the account's defaults or the platform env var
-  const account = await stripe.v2.core.accounts.retrieve(accountId, {
-    include: ['defaults'],
-  });
-  const envCurrency = process.env.CURRENCY?.toLowerCase() ?? 'gbp';
-  const currency = account.defaults?.currency ?? envCurrency;
+  // Resolve currency: explicit > account default > env var > gbp
+  const resolvedCurrency = currency ?? (await stripe.v2.core.accounts.retrieve(accountId, { include: ['defaults'] })).defaults?.currency ?? process.env.CURRENCY?.toLowerCase() ?? 'gbp';
 
-  // Ensure the account has business_storage capability for this currency before creating the FA.
-  // This is a no-op if already active; it's needed when the account was created without storerCapabilityEnabled.
+  // Ensure full multi-currency business_storage capability before creating the FA.
+  // No-op if already active; needed when account was created without storerCapabilityEnabled.
   try {
     await stripe.v2.core.accounts.update(accountId, {
       configuration: {
         money_manager: {
           capabilities: {
-            received_credits: { bank_accounts: { requested: true } },
-            business_storage: {
-              inbound: { [currency]: { requested: true } },
-              outbound: { [currency]: { requested: true } },
-            },
-            outbound_payments: {
-              bank_accounts: { requested: true },
-              financial_accounts: { requested: true },
-            },
-            outbound_transfers: {
-              bank_accounts: { requested: true },
-              financial_accounts: { requested: true },
-            },
+            received_credits: { bank_accounts: req },
+            business_storage: MULTI_CURRENCY_STORAGE,
+            outbound_payments: { bank_accounts: req, financial_accounts: req },
+            outbound_transfers: { bank_accounts: req, financial_accounts: req },
           },
         },
       },
@@ -58,20 +53,14 @@ export const createFinancialAccount = async ({
   }
 
   try {
-    // v2 API: use stripeContext (Stripe-Context header), not stripeAccount (Stripe-Account header)
-    // Financial address is provisioned separately once the FA reaches "open" status
     const financialAccount =
       await stripe.v2.moneyManagement.financialAccounts.create(
         {
           display_name: name,
           type: 'storage',
-          storage: {
-            holds_currencies: [currency],
-          },
+          storage: { holds_currencies: [resolvedCurrency] },
         },
-        {
-          stripeContext: accountId,
-        },
+        { stripeContext: accountId },
       );
 
     return plain(financialAccount);
@@ -81,8 +70,6 @@ export const createFinancialAccount = async ({
       error,
     );
 
-    return {
-      message: 'modals.create-financial-account.error',
-    };
+    return { message: 'modals.create-financial-account.error' };
   }
 };

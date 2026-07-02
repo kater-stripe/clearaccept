@@ -31,6 +31,7 @@ export const CreateFinancialAccountModal = ({
   const { stripeSecretKey } = useDemoConfig();
 
   const [name, setName] = useState('');
+  const [currency, setCurrency] = useState<'gbp' | 'eur' | 'usd'>('gbp');
 
   useEffect(() => {
     if (open) {
@@ -39,6 +40,7 @@ export const CreateFinancialAccountModal = ({
 
     const resetTimeout = setTimeout(() => {
       setName('');
+      setCurrency('gbp');
     }, 1000);
 
     return () => clearTimeout(resetTimeout);
@@ -80,6 +82,7 @@ export const CreateFinancialAccountModal = ({
             createFinancialAccount({
               name,
               accountId: account!.id,
+              currency,
               stripeSecretKey,
             });
           }}
@@ -117,6 +120,29 @@ export const CreateFinancialAccountModal = ({
                     onChange={setName}
                     required={true}
                   />
+                  <div>
+                    <label className='block text-sm font-medium text-gray-700 mb-1'>
+                      {t('modals.create-financial-account.form.currency')}
+                    </label>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      {(['gbp', 'eur', 'usd'] as const).map((c) => (
+                        <button
+                          key={c}
+                          type='button'
+                          onClick={() => setCurrency(c)}
+                          style={{
+                            flex: 1, padding: '8px 0', borderRadius: 4, fontSize: 13, fontWeight: 600,
+                            cursor: 'pointer', border: '2px solid',
+                            borderColor: currency === c ? '#77B32A' : '#D8DCE0',
+                            background: currency === c ? '#f3f8e9' : '#fff',
+                            color: currency === c ? '#5a881f' : '#4D5761',
+                          }}
+                        >
+                          {c.toUpperCase()}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
                 <div className='flex flex-col md:flex-row gap-4 mt-5'>
                   <Button
