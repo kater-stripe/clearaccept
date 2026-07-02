@@ -55,7 +55,9 @@ export class Mock {
   }
 
   phoneNumber() {
-    return faker.phone.number({ style: 'international' });
+    // Stripe requires E.164: leading + then digits only, no spaces or punctuation.
+    const raw = faker.phone.number({ style: 'international' });
+    return '+' + raw.replace(/\D/g, '');
   }
 
   email({ individualNames, companyNames }: { individualNames?: { first_name: string; last_name: string }; companyNames?: { name: string } } = {}) {
