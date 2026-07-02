@@ -37,6 +37,7 @@ export const fundFinancialAccount = async ({
       financialAddressId,
       {
         amount: { value: amount, currency },
+        // @ts-ignore — sepa_credit_transfer is supported by the API but missing from the SDK type
         network: currency === 'gbp' ? 'fps' : currency === 'eur' ? 'sepa_credit_transfer' : 'ach',
         statement_descriptor: 'ClearAccept Top Up',
       },
