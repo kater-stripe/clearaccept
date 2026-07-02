@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "git config --global url.\"https://${GITHUB_ACCESS_TOKEN}@github.com/\".insteadOf \"ssh://git@github.com/\" && git config --global url.\"https://${GITHUB_ACCESS_TOKEN}@github.com/\".insteadOf \"git@github.com:\" && npm install",
+  "build": {
+    "env": {
+      "NODE_VERSION": "24"
+    }
+  }
+}
