@@ -24,11 +24,18 @@ type BusinessStorage = MoneyManagerCapabilities['business_storage'];
 
 const req = { requested: true as const };
 
-/** Always request GBP + EUR + USD — connected accounts can hold any currency the platform holds. */
-const buildBusinessStorage = (): BusinessStorage => ({
-  inbound: { gbp: req, eur: req, usd: req },
-  outbound: { gbp: req, eur: req, usd: req },
-});
+const EURO_COUNTRIES: CountryCode[] = [
+  'AT', 'BE', 'CY', 'DE', 'EE', 'ES', 'FI', 'FR',
+  'GR', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL',
+  'PT', 'SI', 'SK',
+];
+
+/** Request business_storage only for the account's home currency to avoid restricted-capability blocks. */
+const buildBusinessStorage = (countryCode: CountryCode): BusinessStorage => {
+  if (countryCode === 'GB') return { inbound: { gbp: req }, outbound: { gbp: req } };
+  if (EURO_COUNTRIES.includes(countryCode)) return { inbound: { eur: req }, outbound: { eur: req } };
+  return { inbound: { usd: req }, outbound: { usd: req } };
+};
 
 export const createAccount = async ({
   countryCode,
@@ -101,7 +108,7 @@ export const createAccount = async ({
             money_manager: {
               capabilities: {
                 received_credits: { bank_accounts: { requested: true } },
-                business_storage: buildBusinessStorage(),
+                business_storage: buildBusinessStorage(countryCode),
                 outbound_payments: {
                   bank_accounts: { requested: true },
                   financial_accounts: { requested: true },

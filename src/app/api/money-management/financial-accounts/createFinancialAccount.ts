@@ -4,10 +4,6 @@ import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 
 const req = { requested: true as const };
-const MULTI_CURRENCY_STORAGE = {
-  inbound: { gbp: req, eur: req, usd: req },
-  outbound: { gbp: req, eur: req, usd: req },
-};
 
 type CreateFinancialAccountParams = {
   name: string;
@@ -33,15 +29,19 @@ export const createFinancialAccount = async ({
   // Resolve currency: explicit > account default > env var > gbp
   const resolvedCurrency = currency ?? (await stripe.v2.core.accounts.retrieve(accountId, { include: ['defaults'] })).defaults?.currency ?? process.env.CURRENCY?.toLowerCase() ?? 'gbp';
 
-  // Ensure full multi-currency business_storage capability before creating the FA.
-  // No-op if already active; needed when account was created without storerCapabilityEnabled.
+  // Request only the capability for the specific currency being created.
+  // Requesting unsupported currencies (e.g. EUR/USD on a GBP-only platform) marks them
+  // "restricted" which then blocks ALL FA operations including GBP ones.
   try {
     await stripe.v2.core.accounts.update(accountId, {
       configuration: {
         money_manager: {
           capabilities: {
             received_credits: { bank_accounts: req },
-            business_storage: MULTI_CURRENCY_STORAGE,
+            business_storage: {
+              inbound: { [resolvedCurrency]: req },
+              outbound: { [resolvedCurrency]: req },
+            },
             outbound_payments: { bank_accounts: req, financial_accounts: req },
             outbound_transfers: { bank_accounts: req, financial_accounts: req },
           },
