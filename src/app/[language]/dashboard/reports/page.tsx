@@ -11,24 +11,20 @@ const ReportsPage = () => {
   const { t } = useTranslation();
 
   return (
-    <div>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-        <Card>
-          <div id='connect-reporting-chart'>
-            <ConnectReportingChart reportName='net_volume' />
-          </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 16 }}>
+        <Card accent='#77B32A'>
+          <ConnectReportingChart reportName='net_volume' />
         </Card>
-        <Card>
-          <div id='connect-reporting-chart'>
-            <ConnectReportingChart reportName='gross_volume' />
-          </div>
+        <Card accent='#323E48'>
+          <ConnectReportingChart reportName='gross_volume' />
         </Card>
       </div>
-      <Card className='mt-4'>
-        <h2 className='text-lg font-semibold mb-4'>Documents</h2>
-        <div id='connect-documents'>
-          <ConnectDocuments />
+      <Card accent='#77B32A'>
+        <div style={{ fontSize: 11, color: '#8892A0', fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: 14 }}>
+          Documents
         </div>
+        <ConnectDocuments />
       </Card>
     </div>
   );

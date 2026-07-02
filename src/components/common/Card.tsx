@@ -1,11 +1,21 @@
 import type { ComponentProps } from 'react';
 
-type CardProps = ComponentProps<'div'>;
+type CardProps = ComponentProps<'div'> & {
+  accent?: string; // left-border color, e.g. '#77B32A'
+};
 
-export const Card = ({ children, className, ...rest }: CardProps) => {
+export const Card = ({ children, className, accent, style, ...rest }: CardProps) => {
   return (
     <div
-      className={`bg-white rounded-lg shadow-md border border-gray-100 p-5 ${className}`}
+      className={className}
+      style={{
+        background: '#fff',
+        borderRadius: 6,
+        boxShadow: '0 2px 8px rgba(0,0,0,.08)',
+        padding: '22px 24px',
+        ...(accent ? { borderLeft: `4px solid ${accent}` } : {}),
+        ...style,
+      }}
       {...rest}
     >
       {children}

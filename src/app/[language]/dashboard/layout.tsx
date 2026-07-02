@@ -232,13 +232,14 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         )}
 
         {/* Main Content */}
-        <div className='col-span-12 lg:col-span-10 min-h-screen pt-16 lg:pt-0 lg:overflow-y-auto'>
+        <div className='col-span-12 lg:col-span-10 min-h-screen pt-16 lg:pt-0 lg:overflow-y-auto' style={{ background: '#F5F7FA' }}>
           <Container>
             {!hideHeadings && (
-              <div>
-                <h1 className='text-3xl font-bold'>{headings.title}</h1>
+              <div style={{ marginBottom: 8 }}>
+                <h1 style={{ fontSize: 28, fontWeight: 700, color: '#323E48', letterSpacing: '-0.02em', margin: 0 }}>{headings.title}</h1>
+                <div style={{ height: 3, width: 40, background: '#77B32A', borderRadius: 2, marginTop: 8 }} />
                 {(headings as { subtitle?: string }).subtitle && (
-                  <p className='text-md text-gray-500'>{(headings as { subtitle?: string }).subtitle}</p>
+                  <p style={{ fontSize: 14, color: '#8892A0', marginTop: 4 }}>{(headings as { subtitle?: string }).subtitle}</p>
                 )}
               </div>
             )}

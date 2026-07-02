@@ -9,8 +9,8 @@ const PaymentSettingsPage = () => {
 
   return (
     <div>
-      <Card>
-        <h2 className='text-lg font-semibold mb-4'>
+      <Card accent='#77B32A'>
+        <h2 style={{ fontSize: 11, color: '#8892A0', fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: 14 }}>
           {t('dashboard.payments.payment-method-settings')}
         </h2>
         <div id='connect-payment-method-settings'>

@@ -26,7 +26,7 @@ const CardsPage = () => {
 
   if (!isCapabilityActive('commercial.stripe.prepaid_card')) {
     return (
-      <Card>
+      <Card accent='#77B32A'>
         <p className='text-gray-500 text-sm'>
           {t('dashboard.issuing.capability-required')}
         </p>
@@ -45,7 +45,7 @@ const CardsPage = () => {
         onClose={() => setIsCreateCardholderModalOpen(false)}
       />
 
-      <Card>
+      <Card accent='#77B32A'>
         <div className='flex items-center justify-between mb-4'>
           <h2 className='text-lg font-semibold'>
             {t('dashboard.issuing.cardholders.title')}
@@ -61,7 +61,7 @@ const CardsPage = () => {
         <CardholdersList />
       </Card>
 
-      <Card className='mt-4'>
+      <Card accent='#323E48' className='mt-4'>
         <div className='flex items-center justify-between mb-4'>
           <h2 className='text-lg font-semibold'>
             {t('dashboard.expenses.issuing-cards')}

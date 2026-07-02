@@ -6,7 +6,7 @@ import { ConnectAccountManagement } from '@stripe/react-connect-js';
 const AccountPage = () => {
   return (
     <div>
-      <Card>
+      <Card accent='#77B32A'>
         <div id='connect-account-management'>
           <ConnectAccountManagement />
         </div>

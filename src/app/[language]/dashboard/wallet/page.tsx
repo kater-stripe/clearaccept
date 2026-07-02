@@ -11,9 +11,6 @@ import { createFinancialAddress as createFinancialAddressAction } from '@/app/ap
 import { fundFinancialAccount as fundFinancialAccountAction } from '@/app/api/money-management/financial-accounts/fundFinancialAccount';
 import { formatPrice } from '@/utils/formatPrice';
 import { Skeleton } from '@/components/common/Skeleton';
-import { MoveMoneyModal } from '@/components/financial-account/MoveMoneyModal';
-import { TransferModal } from '@/components/financial-account/TransferModal';
-import { WithdrawModal } from '@/components/financial-account/WithdrawModal';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import type { CurrencyCode } from '@/constants/currencyCodes';
@@ -139,10 +136,6 @@ const WalletPage = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  // ── Modal state ────────────────────────────────────────────────────────────
-  const [isMoveMoneyModalOpen, setIsMoveMoneyModalOpen] = useState(false);
-  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
-  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
   // ── AI assistant state (matching reference initial state) ──────────────────
   const [aiInput, setAiInput] = useState('');
@@ -185,8 +178,10 @@ const WalletPage = () => {
 
   const currentFA = useMemo(() => {
     if (!financialAccounts || financialAccounts.length === 0) return null;
-    return financialAccounts[0];
+    return [...financialAccounts].sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime())[0];
   }, [financialAccounts]);
+
+  const firstFaId = currentFA?.id ?? null;
 
   // Fetch transactions for every FA in parallel
   const faIds = useMemo(() => financialAccounts?.map(fa => fa.id) ?? [], [financialAccounts]);
@@ -416,18 +411,10 @@ const WalletPage = () => {
           </div>
           <div style={{ display: 'flex', gap: 10, flexShrink: 0 }}>
             <button
-              onClick={() => setIsMoveMoneyModalOpen(true)}
-              disabled={!currentFA}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 14px', borderRadius: 4, fontSize: 13, fontWeight: 600, cursor: 'pointer', background: 'transparent', color: '#4D5761', border: '1px solid #D8DCE0' }}
-            >
-              <ITx /> Move funds
-            </button>
-            <button
-              onClick={() => setIsWithdrawModalOpen(true)}
-              disabled={!currentFA}
+              onClick={() => router.push(`/${language}/dashboard/financial-accounts`)}
               style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 14px', borderRadius: 4, fontSize: 13, fontWeight: 600, cursor: 'pointer', background: '#77B32A', color: '#fff', border: 'none' }}
             >
-              <IBank /> Withdraw to bank
+              See details <IArrowR />
             </button>
           </div>
         </div>
@@ -459,10 +446,16 @@ const WalletPage = () => {
             <p style={{ color: '#cfd4da', fontSize: 13, maxWidth: 540, margin: 0 }}>The ClearAccept Corporate Card draws funds straight from your available balance and pots — no top-ups, no waiting for settlements.</p>
           </div>
           <div style={{ display: 'flex', gap: 10, marginLeft: 'auto', flexShrink: 0, position: 'relative' }}>
-            <button style={{ background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,.3)', padding: '10px 18px', borderRadius: 4, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+            <button
+              onClick={() => firstFaId && router.push(`/${language}/dashboard/financial-accounts/${firstFaId}?tab=cards`)}
+              style={{ background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,.3)', padding: '10px 18px', borderRadius: 4, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
+            >
               View cards
             </button>
-            <button style={{ background: '#77B32A', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: 4, fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <button
+              onClick={() => firstFaId && router.push(`/${language}/dashboard/financial-accounts/${firstFaId}?tab=cards`)}
+              style={{ background: '#77B32A', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: 4, fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+            >
               <ICard /> Issue a card
             </button>
           </div>
@@ -786,28 +779,6 @@ const WalletPage = () => {
         </div>
       )}
 
-      {/* ── Modals ─────────────────────────────────────────────────────────────── */}
-      {currentFA && (
-        <>
-          <MoveMoneyModal
-            open={isMoveMoneyModalOpen}
-            onClose={() => setIsMoveMoneyModalOpen(false)}
-            financialAccount={currentFA as Stripe.V2.MoneyManagement.FinancialAccount}
-            onSelectTransfer={() => { setIsMoveMoneyModalOpen(false); setIsTransferModalOpen(true); }}
-            onSelectPayment={() => { setIsMoveMoneyModalOpen(false); setIsWithdrawModalOpen(true); }}
-          />
-          <TransferModal
-            open={isTransferModalOpen}
-            onClose={() => setIsTransferModalOpen(false)}
-            sourceFinancialAccount={currentFA as Stripe.V2.MoneyManagement.FinancialAccount}
-          />
-          <WithdrawModal
-            open={isWithdrawModalOpen}
-            onClose={() => setIsWithdrawModalOpen(false)}
-            sourceFinancialAccount={currentFA as Stripe.V2.MoneyManagement.FinancialAccount}
-          />
-        </>
-      )}
     </div>
   );
 };

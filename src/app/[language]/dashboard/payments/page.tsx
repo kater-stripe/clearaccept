@@ -9,7 +9,7 @@ const PaymentsPage = () => {
 
   return (
     <div>
-      <Card>
+      <Card accent='#77B32A'>
         <div id='connect-payments'>
           <ConnectPayments />
         </div>

@@ -77,7 +77,7 @@ const AuthorizationsPage = () => {
 
   return (
     <div className='space-y-4'>
-      <Card>
+      <Card accent='#77B32A'>
         {/* Tabs */}
         <div className='border-b border-gray-200 mb-4'>
           <nav className='-mb-px flex space-x-6'>

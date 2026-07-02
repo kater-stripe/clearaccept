@@ -78,7 +78,7 @@ const SuppliersPage = () => {
   return (
     <div className='space-y-4'>
       {/* Recipient list */}
-      <Card>
+      <Card accent='#77B32A'>
         <div className='flex items-center justify-between mb-4'>
           <div>
             <h2 className='text-lg font-semibold'>Suppliers & Recipients</h2>
@@ -158,8 +158,8 @@ const SuppliersPage = () => {
       </Card>
 
       {/* Payment history */}
-      <Card>
-        <h2 className='text-lg font-semibold mb-4'>Payment history</h2>
+      <Card accent='#323E48'>
+        <h2 style={{ fontSize: 11, color: '#8892A0', fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: 14 }}>Payment history</h2>
 
         <div className='flow-root'>
           <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>

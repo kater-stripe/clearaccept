@@ -3,12 +3,13 @@
 import { getFinancialAccounts as getFinancialAccountsAction } from '@/app/api/money-management/financial-accounts/getFinancialAccounts';
 import { createFinancialAccount as createFinancialAccountAction } from '@/app/api/money-management/financial-accounts/createFinancialAccount';
 import { getFinancialAddresses as getFinancialAddressesAction } from '@/app/api/money-management/financial-addresses/getFinancialAddresses';
+import { createFinancialAddress as createFinancialAddressAction } from '@/app/api/money-management/financial-addresses/createFinancialAddress';
 import { getFinancialAccountTransactions as getFinancialAccountTransactionsAction } from '@/app/api/money-management/financial-accounts/getFinancialAccountTransactions';
 import { Skeleton } from '@/components/common/Skeleton';
 import { CreateFinancialAccountModal } from '@/components/financial-account/CreateFinancialAccountModal';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Stripe } from 'stripe';
@@ -50,19 +51,27 @@ type FACardProps = {
   language: string;
   stripeSecretKey: string | undefined;
   accountId: string;
+  country: 'GB' | 'US';
 };
 
 const BORDER_COLORS = ['#77B32A', '#323E48', '#4D5761'];
 
-const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps) => {
+const FACard = ({ fa, index, language, stripeSecretKey, accountId, country }: FACardProps) => {
   const router = useRouter();
   const borderColor = BORDER_COLORS[index % BORDER_COLORS.length];
   const [copied, setCopied] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  const { data: addresses } = useQuery({
+  const { data: addresses, isPending: isAddressesPending } = useQuery({
     queryKey: ['financial-addresses', fa.id, stripeSecretKey],
     queryFn: () => getFinancialAddressesAction({ financialAccountId: fa.id, stripeSecretKey, accountId }),
     enabled: !!accountId,
+  });
+
+  const { mutate: requestAddress, isPending: isRequestingAddress } = useMutation({
+    mutationFn: () => createFinancialAddressAction({ accountId, financialAccountId: fa.id, country, stripeSecretKey }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', fa.id, stripeSecretKey] }),
+    onError: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', fa.id, stripeSecretKey] }),
   });
 
   const { data: transactions } = useQuery({
@@ -75,6 +84,8 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps
     () => transactions?.find(tx => (tx.balance_impact?.available?.value ?? 0) > 0) ?? null,
     [transactions],
   );
+
+  const hasAddress = (addresses?.length ?? 0) > 0;
 
   const bankDetails = useMemo(() => {
     const addr = addresses?.[0];
@@ -136,7 +147,23 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps
       </div>
 
       {/* Bank details */}
-      {bankDetails && (
+      {isAddressesPending ? (
+        <div style={{ height: 40, marginBottom: 16 }} />
+      ) : !bankDetails && !hasAddress ? (
+        <div style={{ paddingTop: 14, paddingBottom: 14, borderTop: '1px solid #F4F4F4', marginBottom: 16 }}>
+          <button
+            onClick={() => requestAddress()}
+            disabled={isRequestingAddress}
+            style={{ fontSize: 12, color: '#77B32A', background: 'none', border: 'none', cursor: isRequestingAddress ? 'not-allowed' : 'pointer', padding: 0, fontWeight: 600, opacity: isRequestingAddress ? 0.6 : 1 }}
+          >
+            {isRequestingAddress ? 'Requesting…' : '+ Request sort code & account number'}
+          </button>
+        </div>
+      ) : !bankDetails && hasAddress ? (
+        <div style={{ paddingTop: 14, paddingBottom: 14, borderTop: '1px solid #F4F4F4', marginBottom: 16 }}>
+          <div style={{ fontSize: 12, color: '#8892A0', fontStyle: 'italic' }}>Bank details provisioning…</div>
+        </div>
+      ) : bankDetails ? (
         <div style={{ display: 'flex', gap: 16, marginBottom: 16, paddingTop: 14, paddingBottom: 14, borderTop: '1px solid #F4F4F4' }}>
           {bankDetails.type === 'GB' && bankDetails.sortCode && (
             <div>
@@ -163,7 +190,7 @@ const FACard = ({ fa, index, language, stripeSecretKey, accountId }: FACardProps
             </div>
           )}
         </div>
-      )}
+      ) : null}
 
       {/* Action */}
       <div style={{ marginTop: 'auto', paddingTop: 14, borderTop: '1px solid #F4F4F4' }}>
@@ -269,6 +296,7 @@ const FinancialAccountsPage = () => {
               language={language}
               stripeSecretKey={stripeSecretKey}
               accountId={account!.id}
+              country={(account?.identity?.country?.toUpperCase() === 'GB' ? 'GB' : 'US') as 'GB' | 'US'}
             />
           ))}
           {/* Add account card */}

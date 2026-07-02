@@ -1,157 +1,137 @@
 'use client';
 
-import { Card } from '@/components/common/Card';
-import { Button } from '@/components/common/Button';
-import { Skeleton } from '@/components/common/Skeleton';
 import { useParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDemoConfig } from '@/context/DemoConfigContext';
-import { getFinancialAccount as getFinancialAccountAction } from '@/app/api/money-management/financial-accounts/getFinancialAccount';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
+import { getFinancialAccount as getFinancialAccountAction } from '@/app/api/money-management/financial-accounts/getFinancialAccount';
 import { getFinancialAccountTransactions as getFinancialAccountTransactionsAction } from '@/app/api/money-management/financial-accounts/getFinancialAccountTransactions';
 import { getFinancialAddresses as getFinancialAddressesAction } from '@/app/api/money-management/financial-addresses/getFinancialAddresses';
 import { createFinancialAddress as createFinancialAddressAction } from '@/app/api/money-management/financial-addresses/createFinancialAddress';
-import { formatPrice } from '@/utils/formatPrice';
+import { fundFinancialAccount as fundFinancialAccountAction } from '@/app/api/money-management/financial-accounts/fundFinancialAccount';
+import { getBalanceSettings as getBalanceSettingsAction } from '@/app/api/balance-settings/getBalanceSettings';
 import { MoveMoneyModal } from '@/components/financial-account/MoveMoneyModal';
 import { TransferModal } from '@/components/financial-account/TransferModal';
 import { PaymentModal } from '@/components/financial-account/PaymentModal';
 import { UseForPayoutsModal } from '@/components/financial-account/UseForPayoutsModal';
-import { getBalanceSettings as getBalanceSettingsAction } from '@/app/api/balance-settings/getBalanceSettings';
-import { fundFinancialAccount as fundFinancialAccountAction } from '@/app/api/money-management/financial-accounts/fundFinancialAccount';
 import { CardsList } from '@/components/issuing/CardsList';
+import { Skeleton } from '@/components/common/Skeleton';
+import { formatPrice } from '@/utils/formatPrice';
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
 import { useState } from 'react';
-import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+// ─── Icons ─────────────────────────────────────────────────────────────────────
+type SvgProps = React.SVGProps<SVGSVGElement>;
+
+const IArrowL = (p: SvgProps) => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+  </svg>
+);
+const ICopy = (p: SvgProps) => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+  </svg>
+);
+const ICheck = (p: SvgProps) => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+);
 
 type FATab = 'transactions' | 'cards';
 
 const FinancialAccountPage = () => {
   const { financialAccountId } = useParams<{ financialAccountId: string }>();
-
   const { stripeSecretKey, language } = useDemoConfig();
   const { account } = useDemoMerchant();
-  const router = useRouter();
-
   const { t } = useTranslation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
 
   const [isMoveMoneyModalOpen, setIsMoveMoneyModalOpen] = useState(false);
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [isUseForPayoutsModalOpen, setIsUseForPayoutsModalOpen] =
-    useState(false);
+  const [isUseForPayoutsModalOpen, setIsUseForPayoutsModalOpen] = useState(false);
   const [showFullAccountNumber, setShowFullAccountNumber] = useState(false);
-  const [activeTab, setActiveTab] = useState<FATab>('transactions');
+  const [activeTab, setActiveTab] = useState<FATab>(searchParams.get('tab') === 'cards' ? 'cards' : 'transactions');
   const [isTopUpPending, setIsTopUpPending] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
 
   const { data: financialAccount, isPending: isAccountPending } = useQuery({
     queryKey: ['financial-account', financialAccountId],
-    queryFn: () =>
-      getFinancialAccountAction({
-        financialAccountId,
-        stripeSecretKey,
-        accountId: account!.id,
-      }),
+    queryFn: () => getFinancialAccountAction({ financialAccountId, stripeSecretKey, accountId: account!.id }),
     enabled: !!account,
   });
 
   const { data: transactions, isPending: isTransactionsPending } = useQuery({
     queryKey: ['financial-account-transactions', financialAccountId],
-    queryFn: () =>
-      getFinancialAccountTransactionsAction({
-        financialAccountId,
-        stripeSecretKey,
-        accountId: account!.id,
-      }),
+    queryFn: () => getFinancialAccountTransactionsAction({ financialAccountId, stripeSecretKey, accountId: account!.id }),
     enabled: !!account,
   });
 
-  // Check if automatic payouts are configured for this FA
   const { data: balanceSettings } = useQuery({
     queryKey: ['balance-settings', account?.id],
-    queryFn: () =>
-      getBalanceSettingsAction({
-        stripeSecretKey,
-        accountId: account!.id,
-      }),
+    queryFn: () => getBalanceSettingsAction({ stripeSecretKey, accountId: account!.id }),
     enabled: !!account,
   });
 
-  // Fetch financial addresses for this FA
   const { data: financialAddresses } = useQuery({
     queryKey: ['financial-addresses', financialAccountId, stripeSecretKey],
-    queryFn: () =>
-      getFinancialAddressesAction({
-        financialAccountId,
-        stripeSecretKey,
-        accountId: account!.id,
-      }),
+    queryFn: () => getFinancialAddressesAction({ financialAccountId, stripeSecretKey, accountId: account!.id }),
     enabled: !!account,
   });
 
-  // Check if a financial address exists
-  const hasFinancialAddress = financialAddresses && financialAddresses.length > 0;
-
-  // Get account number info from financial address
-  const { addressLast4, fullAccountNumber } = (() => {
-    const financialAddress = financialAddresses?.[0];
-    if (!financialAddress) return { addressLast4: null, fullAccountNumber: null };
-    if (financialAddress?.credentials?.type === 'gb_bank_account') {
-      return {
-        addressLast4: financialAddress.credentials.gb_bank_account?.last4 ?? null,
-        fullAccountNumber: financialAddress.credentials.gb_bank_account?.account_number ?? null,
-      };
-    } else if (financialAddress?.credentials?.type === 'us_bank_account') {
-      return {
-        addressLast4: financialAddress.credentials.us_bank_account?.last4 ?? null,
-        fullAccountNumber: financialAddress.credentials.us_bank_account?.account_number ?? null,
-      };
-    }
-    return { addressLast4: null, fullAccountNumber: null };
-  })();
-
-  // Mutation for creating a financial address
   const { mutate: createAddress, isPending: isCreatingAddress } = useMutation({
-    mutationFn: createFinancialAddressAction,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['financial-addresses', financialAccountId],
-      });
-    },
+    mutationFn: () => createFinancialAddressAction({
+      accountId: account!.id,
+      financialAccountId,
+      country: (account?.identity?.country?.toUpperCase() === 'GB' ? 'GB' : 'US') as 'GB' | 'US',
+      stripeSecretKey,
+    }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', financialAccountId, stripeSecretKey] }),
+    onError: () => queryClient.invalidateQueries({ queryKey: ['financial-addresses', financialAccountId, stripeSecretKey] }),
   });
 
-  // Get the merchant country for creating financial address
-  const merchantCountry = (account?.identity?.country?.toUpperCase() ?? 'US') as
-    | 'US'
-    | 'GB';
+  const hasAddress = (financialAddresses?.length ?? 0) > 0;
 
-  const handleCreateAddress = () => {
-    if (!account) return;
-    createAddress({
-      accountId: account.id,
-      financialAccountId,
-      country: merchantCountry,
-      stripeSecretKey,
-    });
-  };
+  const bankDetails = (() => {
+    const addr = financialAddresses?.[0];
+    if (!addr) return null;
+    if (addr.credentials?.type === 'gb_bank_account') {
+      const gb = addr.credentials.gb_bank_account;
+      return { type: 'GB', sortCode: gb?.sort_code, accountNumber: gb?.account_number, last4: gb?.last4 };
+    }
+    if (addr.credentials?.type === 'us_bank_account') {
+      const us = addr.credentials.us_bank_account;
+      return { type: 'US', routingNumber: us?.routing_number, accountNumber: us?.account_number, last4: us?.last4 };
+    }
+    return null;
+  })();
+
+  const isAutoPayoutsEnabled = (() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const rules = (balanceSettings?.payments?.payouts as any)?.automatic_transfer_rules_by_currency;
+    if (!rules) return false;
+    return Object.values(rules).some((currencyRules) =>
+      (currencyRules as Array<{ payout_method: string }>)?.some((rule) => rule.payout_method === financialAccountId),
+    );
+  })();
 
   const handleTopUp = async () => {
-    if (!account || !financialAddresses || financialAddresses.length === 0) return;
-    const faAddr = financialAddresses[0];
+    if (!account || !financialAddresses?.length) return;
     const faCurrency = financialAccount?.storage?.holds_currencies?.[0] ?? 'gbp';
-    // Top up £500 (or $500) as a demo amount — 50000 in minor units
-    const topUpAmount = 50000;
-
     setIsTopUpPending(true);
     try {
       await fundFinancialAccountAction({
         accountId: account.id,
         financialAccountId,
-        financialAddressId: (faAddr as any).id,
-        amount: topUpAmount,
+        financialAddressId: (financialAddresses[0] as any).id,
+        amount: 50000,
         currency: faCurrency,
         stripeSecretKey,
       });
@@ -162,491 +142,249 @@ const FinancialAccountPage = () => {
     }
   };
 
-  // Check if this FA is currently set up for automatic payouts
-  // Structure: payments.payouts.automatic_transfer_rules_by_currency[currency][0].payout_method
-  const isAutoPayoutsEnabled = (() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rules = (balanceSettings?.payments?.payouts as any)?.automatic_transfer_rules_by_currency;
-    if (!rules) return false;
-
-    // Check all currencies for a rule pointing to this FA
-    return Object.values(rules).some((currencyRules) =>
-      (currencyRules as Array<{ payout_method: string }>)?.some(
-        (rule) => rule.payout_method === financialAccountId,
-      ),
-    );
-  })();
-
-  const formatBalanceAmount = (
-    value: number | undefined,
-    currency: string | undefined,
-  ) => {
-    if (value === undefined || currency === undefined) return '-';
-    return formatPrice(
-      value,
-      language as SupportedLanguage,
-      currency as CurrencyCode,
-    );
-  };
-
-  const formatTransactionDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(language || 'en', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+  const copy = (text: string, label: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(label);
+      setTimeout(() => setCopied(null), 2000);
     });
   };
 
-  const getCategoryLabel = (category: string) => {
-    const labels: Record<string, string> = {
-      adjustment: 'Adjustment',
-      currency_conversion: 'Currency Conversion',
-      inbound_transfer: 'Inbound Transfer',
-      outbound_payment: 'Outbound Payment',
-      outbound_transfer: 'Outbound Transfer',
-      received_credit: 'Received Credit',
-      received_debit: 'Received Debit',
-      return: 'Return',
-      stripe_fee: 'Stripe Fee',
-    };
-    return labels[category] || category;
-  };
-
-  const getStatusBadgeClass = (status: string) => {
-    switch (status) {
-      case 'posted':
-        return 'bg-green-100 text-green-800';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'void':
-        return 'bg-gray-100 text-gray-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  // Calculate total balance from available balances
-  const getTotalBalance = () => {
+  const totalBalance = (() => {
     if (!financialAccount?.balance?.available) return null;
     const entries = Object.entries(financialAccount.balance.available);
-    if (entries.length === 0) return null;
-    // Return the first currency's balance as total (typically there's one currency)
-    const [, balance] = entries[0];
-    return balance;
+    return entries.length > 0 ? entries[0][1] : null;
+  })();
+
+  const fmt = (value: number | undefined, currency: string | undefined) => {
+    if (value === undefined || currency === undefined) return '—';
+    return formatPrice(value, language as SupportedLanguage, currency as CurrencyCode);
   };
 
-  const totalBalance = getTotalBalance();
+  const fmtDate = (d: string) => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+  const categoryLabel: Record<string, string> = {
+    adjustment: 'Adjustment', currency_conversion: 'Currency Conversion',
+    inbound_transfer: 'Inbound Transfer', outbound_payment: 'Outbound Payment',
+    outbound_transfer: 'Outbound Transfer', received_credit: 'Received Credit',
+    received_debit: 'Received Debit', return: 'Return', stripe_fee: 'Stripe Fee',
+  };
 
   return (
-    <div className='space-y-4'>
-      {/* Move Money Modals */}
+    <>
       {financialAccount && (
         <>
-          <MoveMoneyModal
-            open={isMoveMoneyModalOpen}
-            onClose={() => setIsMoveMoneyModalOpen(false)}
-            financialAccount={financialAccount}
-            onSelectTransfer={() => setIsTransferModalOpen(true)}
-            onSelectPayment={() => setIsPaymentModalOpen(true)}
-          />
-          <TransferModal
-            open={isTransferModalOpen}
-            onClose={() => setIsTransferModalOpen(false)}
-            sourceFinancialAccount={financialAccount}
-          />
-          <PaymentModal
-            open={isPaymentModalOpen}
-            onClose={() => setIsPaymentModalOpen(false)}
-            sourceFinancialAccount={financialAccount}
-          />
-          <UseForPayoutsModal
-            open={isUseForPayoutsModalOpen}
-            onClose={() => setIsUseForPayoutsModalOpen(false)}
-            financialAccount={financialAccount}
-            isCurrentlyEnabled={isAutoPayoutsEnabled}
-          />
+          <MoveMoneyModal open={isMoveMoneyModalOpen} onClose={() => setIsMoveMoneyModalOpen(false)} financialAccount={financialAccount} onSelectTransfer={() => { setIsMoveMoneyModalOpen(false); setIsTransferModalOpen(true); }} onSelectPayment={() => { setIsMoveMoneyModalOpen(false); setIsPaymentModalOpen(true); }} />
+          <TransferModal open={isTransferModalOpen} onClose={() => setIsTransferModalOpen(false)} sourceFinancialAccount={financialAccount} />
+          <PaymentModal open={isPaymentModalOpen} onClose={() => setIsPaymentModalOpen(false)} sourceFinancialAccount={financialAccount} />
+          <UseForPayoutsModal open={isUseForPayoutsModalOpen} onClose={() => setIsUseForPayoutsModalOpen(false)} financialAccount={financialAccount} isCurrentlyEnabled={isAutoPayoutsEnabled} />
         </>
       )}
 
-      {/* Header */}
-      <div className='flex items-center gap-4'>
-        <button
-          onClick={() =>
-            router.push(`/${language}/dashboard/financial-accounts`)
-          }
-          className='p-2 hover:bg-gray-100 rounded-md transition-colors'
-        >
-          <ArrowLeftIcon className='size-5' />
-        </button>
-        <h2 className='text-lg font-semibold'>
-          {t('dashboard.expenses.financial-account.title')}
-        </h2>
-      </div>
+      {/* Back nav */}
+      <button
+        onClick={() => router.push(`/${language}/dashboard/financial-accounts`)}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600, color: '#8892A0', background: 'none', border: 'none', cursor: 'pointer', padding: 0, marginBottom: 20 }}
+      >
+        <IArrowL /> All accounts
+      </button>
 
-      {/* Balances Card - Stripe Dashboard Style */}
-      <Card>
-        <div className='flex items-start justify-between'>
+      {/* Balance card */}
+      <div style={{ background: '#fff', borderLeft: '4px solid #77B32A', borderRadius: 6, boxShadow: '0 2px 8px rgba(0,0,0,.08)', padding: '24px 28px', marginBottom: 16 }}>
+        {/* Header row */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap' as const, gap: 12, marginBottom: 20 }}>
           <div>
-            <div className='flex items-center gap-2'>
-              <h2 className='text-lg font-semibold'>
-                {financialAccount?.display_name ||
-                  t('dashboard.expenses.financial-account.overview')}
-              </h2>
-              {isAutoPayoutsEnabled && (
-                <span className='inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800'>
-                  {t('dashboard.expenses.financial-account.auto-payouts-active')}
-                </span>
-              )}
-            </div>
-            {addressLast4 ? (
-              <button
-                onClick={() => setShowFullAccountNumber(!showFullAccountNumber)}
-                className='text-sm text-gray-500 mt-0.5 hover:underline'
-              >
-                {showFullAccountNumber && fullAccountNumber
-                  ? fullAccountNumber
-                  : `••••${addressLast4}`}
-              </button>
-            ) : hasFinancialAddress ? (
-              <p className='text-sm text-gray-400 mt-0.5'>Account number pending</p>
+            {isAccountPending ? <Skeleton className='h-6 w-40 mb-1' /> : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <h2 style={{ fontSize: 18, fontWeight: 700, color: '#323E48', margin: 0, letterSpacing: '-0.01em' }}>
+                  {financialAccount?.display_name ?? 'Financial Account'}
+                </h2>
+                {isAutoPayoutsEnabled && (
+                  <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.04em', textTransform: 'uppercase' as const, background: '#f3f8e9', color: '#5a881f', padding: '3px 8px', borderRadius: 999 }}>Auto payouts active</span>
+                )}
+              </div>
+            )}
+            {/* Account number / sort code inline */}
+            {bankDetails ? (
+              <div style={{ display: 'flex', gap: 16, marginTop: 8 }}>
+                {bankDetails.type === 'GB' && bankDetails.sortCode && (
+                  <div>
+                    <div style={{ fontSize: 10, color: '#8892A0', textTransform: 'uppercase' as const, letterSpacing: '.04em', marginBottom: 2 }}>Sort code</div>
+                    <button onClick={() => copy(bankDetails.sortCode!, 'sort')} style={{ display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#323E48', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                      {bankDetails.sortCode} {copied === 'sort' ? <ICheck style={{ color: '#77B32A' }} /> : <ICopy style={{ color: '#8892A0' }} />}
+                    </button>
+                  </div>
+                )}
+                {bankDetails.accountNumber && (
+                  <div>
+                    <div style={{ fontSize: 10, color: '#8892A0', textTransform: 'uppercase' as const, letterSpacing: '.04em', marginBottom: 2 }}>Account number</div>
+                    <button onClick={() => copy(bankDetails.accountNumber!, 'acct')} style={{ display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#323E48', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                      {showFullAccountNumber ? bankDetails.accountNumber : `••••${bankDetails.last4}`}
+                      <span onClick={(e) => { e.stopPropagation(); setShowFullAccountNumber(v => !v); }} style={{ fontSize: 11, color: '#8892A0', cursor: 'pointer', marginLeft: 2 }}>{showFullAccountNumber ? 'hide' : 'show'}</span>
+                      {copied === 'acct' ? <ICheck style={{ color: '#77B32A' }} /> : <ICopy style={{ color: '#8892A0' }} />}
+                    </button>
+                  </div>
+                )}
+                {bankDetails.type === 'US' && bankDetails.routingNumber && (
+                  <div>
+                    <div style={{ fontSize: 10, color: '#8892A0', textTransform: 'uppercase' as const, letterSpacing: '.04em', marginBottom: 2 }}>Routing number</div>
+                    <button onClick={() => copy(bankDetails.routingNumber!, 'routing')} style={{ display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'monospace', fontSize: 13, fontWeight: 600, color: '#323E48', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                      {bankDetails.routingNumber} {copied === 'routing' ? <ICheck style={{ color: '#77B32A' }} /> : <ICopy style={{ color: '#8892A0' }} />}
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : hasAddress ? (
+              <div style={{ fontSize: 12, color: '#8892A0', marginTop: 6, fontStyle: 'italic' }}>Bank details provisioning…</div>
             ) : (
-              <button
-                onClick={handleCreateAddress}
-                disabled={isCreatingAddress}
-                className='text-sm text-brand-primary hover:underline mt-0.5 disabled:text-gray-400 disabled:no-underline'
-              >
-                {isCreatingAddress ? 'Requesting...' : 'Request account number'}
+              <button onClick={() => createAddress()} disabled={isCreatingAddress} style={{ marginTop: 6, fontSize: 12, color: '#77B32A', background: 'none', border: 'none', cursor: isCreatingAddress ? 'not-allowed' : 'pointer', padding: 0, fontWeight: 600, opacity: isCreatingAddress ? 0.6 : 1 }}>
+                {isCreatingAddress ? 'Requesting…' : '+ Request sort code & account number'}
               </button>
             )}
           </div>
-          <div className='flex gap-2'>
-            <Button
+
+          {/* Action buttons */}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' as const }}>
+            <button
               onClick={handleTopUp}
-              disabled={isAccountPending || !financialAccount || !hasFinancialAddress || isTopUpPending}
-              colorMode='dark'
+              disabled={isAccountPending || !financialAccount || !hasAddress || isTopUpPending}
+              style={{ padding: '8px 14px', borderRadius: 4, fontSize: 13, fontWeight: 600, cursor: (!financialAccount || !hasAddress || isTopUpPending) ? 'not-allowed' : 'pointer', background: 'transparent', color: '#4D5761', border: '1px solid #D8DCE0', opacity: (!financialAccount || !hasAddress) ? 0.5 : 1 }}
             >
-              {isTopUpPending ? 'Topping up...' : 'Top Up'}
-            </Button>
-            <Button
+              {isTopUpPending ? 'Topping up…' : 'Top up'}
+            </button>
+            <button
               onClick={() => setIsUseForPayoutsModalOpen(true)}
               disabled={isAccountPending || !financialAccount}
-              colorMode='dark'
+              style={{ padding: '8px 14px', borderRadius: 4, fontSize: 13, fontWeight: 600, cursor: !financialAccount ? 'not-allowed' : 'pointer', background: 'transparent', color: '#4D5761', border: '1px solid #D8DCE0', opacity: !financialAccount ? 0.5 : 1 }}
             >
-              {isAutoPayoutsEnabled
-                ? t('dashboard.expenses.financial-account.manage-auto-payouts')
-                : t('dashboard.expenses.financial-account.use-for-payouts')}
-            </Button>
-            <Button
+              {isAutoPayoutsEnabled ? 'Manage payouts' : 'Use for payouts'}
+            </button>
+            <button
               onClick={() => setIsMoveMoneyModalOpen(true)}
               disabled={isAccountPending || !financialAccount}
+              style={{ padding: '8px 14px', borderRadius: 4, fontSize: 13, fontWeight: 600, cursor: !financialAccount ? 'not-allowed' : 'pointer', background: '#77B32A', color: '#fff', border: 'none', opacity: !financialAccount ? 0.5 : 1 }}
             >
-              {t('dashboard.expenses.financial-account.move-money')}
-            </Button>
+              Move money
+            </button>
           </div>
         </div>
 
+        {/* Balance figures */}
         {isAccountPending ? (
-          <div className='mt-4'>
-            <Skeleton className='h-4 w-28 mb-2' />
-            <Skeleton className='h-10 w-40' />
-          </div>
-        ) : financialAccount?.balance ? (
-          <div className='mt-4'>
-            {/* Top Section - Available Balance */}
-            <div>
-              <p className='text-sm text-gray-500 mb-1'>Available balance</p>
-              <p className='text-3xl font-semibold text-gray-900'>
-                {totalBalance
-                  ? formatBalanceAmount(
-                    totalBalance.value,
-                    totalBalance.currency,
-                  )
-                  : formatBalanceAmount(0, 'usd')}
-              </p>
-            </div>
-
-            {/* Pending Balances */}
-            {(Object.keys(financialAccount.balance.inbound_pending || {})
-              .length > 0 ||
-              Object.keys(financialAccount.balance.outbound_pending || {})
-                .length > 0) && (
-                <div className='border-t border-gray-200 pt-4 mt-4'>
-                  <div className='flex gap-12'>
-                    {Object.keys(financialAccount.balance.inbound_pending || {})
-                      .length > 0 && (
-                        <div>
-                          <p className='text-sm text-gray-500 mb-1'>
-                            Inbound pending
-                          </p>
-                          {Object.entries(
-                            financialAccount.balance.inbound_pending,
-                          ).map(([currency, balance]) => (
-                            <p
-                              key={currency}
-                              className='text-lg font-semibold text-gray-900'
-                            >
-                              {formatBalanceAmount(
-                                balance?.value,
-                                balance?.currency,
-                              )}
-                            </p>
-                          ))}
-                        </div>
-                      )}
-
-                    {Object.keys(financialAccount.balance.outbound_pending || {})
-                      .length > 0 && (
-                        <div>
-                          <p className='text-sm text-gray-500 mb-1'>
-                            Outbound pending
-                          </p>
-                          {Object.entries(
-                            financialAccount.balance.outbound_pending,
-                          ).map(([currency, balance]) => (
-                            <p
-                              key={currency}
-                              className='text-lg font-semibold text-gray-900'
-                            >
-                              {formatBalanceAmount(
-                                balance?.value,
-                                balance?.currency,
-                              )}
-                            </p>
-                          ))}
-                        </div>
-                      )}
-                  </div>
-                </div>
-              )}
-          </div>
+          <div><Skeleton className='h-4 w-28 mb-2' /><Skeleton className='h-10 w-44' /></div>
         ) : (
-          <p className='text-gray-500 text-sm mt-4'>
-            No balance information available
-          </p>
-        )}
-
-      </Card>
-
-      {/* Tabs */}
-      <Card>
-        <div className='border-b border-gray-200 mb-4'>
-          <nav className='-mb-px flex space-x-6'>
-            <button
-              onClick={() => setActiveTab('transactions')}
-              className={`whitespace-nowrap border-b-2 py-3 px-1 text-sm font-medium transition-colors ${
-                activeTab === 'transactions'
-                  ? 'border-brand-primary text-brand-primary'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              }`}
-            >
-              {t('dashboard.expenses.financial-account.transactions')}
-            </button>
-            <button
-              onClick={() => setActiveTab('cards')}
-              className={`whitespace-nowrap border-b-2 py-3 px-1 text-sm font-medium transition-colors ${
-                activeTab === 'cards'
-                  ? 'border-brand-primary text-brand-primary'
-                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-              }`}
-            >
-              {t('dashboard.expenses.issuing-cards')}
-            </button>
-          </nav>
-        </div>
-
-        {/* Transactions Tab Content */}
-        {activeTab === 'transactions' && (
-        <div className='flow-root'>
-          <div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
-            <div className='inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8'>
-              <div className='overflow-hidden shadow-sm ring-1 ring-black/5 sm:rounded-lg'>
-                <table className='min-w-full divide-y divide-gray-300'>
-                  <thead className='bg-gray-50'>
-                    <tr>
-                      <th
-                        scope='col'
-                        className='py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6'
-                      >
-                        Date
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                      >
-                        Category
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                      >
-                        Amount
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                      >
-                        Balance Impact
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-3 py-3.5 text-left text-sm font-semibold text-gray-900'
-                      >
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className='divide-y divide-gray-200 bg-white'>
-                    {isTransactionsPending ? (
-                      // Skeleton rows for loading state
-                      [...Array(5)].map((_, i) => (
-                        <tr key={i}>
-                          <td className='whitespace-nowrap py-4 pl-4 pr-3 sm:pl-6'>
-                            <Skeleton className='h-4 w-32' />
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4'>
-                            <Skeleton className='h-4 w-28' />
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4'>
-                            <Skeleton className='h-4 w-20' />
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4'>
-                            <Skeleton className='h-4 w-24' />
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4'>
-                            <Skeleton className='h-5 w-16 rounded-full' />
-                          </td>
-                        </tr>
-                      ))
-                    ) : transactions && transactions.length > 0 ? (
-                      transactions.map((transaction) => (
-                        <tr key={transaction.id}>
-                          <td className='whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-6'>
-                            {formatTransactionDate(transaction.created)}
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm text-gray-500'>
-                            {getCategoryLabel(transaction.category)}
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm font-medium'>
-                            {(() => {
-                              const balanceImpact = transaction.balance_impact?.available?.value ?? 0;
-                              const isDebit = balanceImpact < 0;
-                              const displayValue = isDebit
-                                ? -(transaction.amount?.value ?? 0)
-                                : (transaction.amount?.value ?? 0);
-                              return (
-                                <span className={isDebit ? 'text-red-600' : 'text-green-600'}>
-                                  {isDebit ? '' : '+'}
-                                  {formatBalanceAmount(
-                                    displayValue,
-                                    transaction.amount?.currency,
-                                  )}
-                                </span>
-                              );
-                            })()}
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm'>
-                            <div className='space-y-1'>
-                              {transaction.balance_impact?.available?.value !==
-                                0 && (
-                                  <span
-                                    className={`block ${(transaction.balance_impact?.available
-                                      ?.value ?? 0) > 0
-                                      ? 'text-green-600'
-                                      : 'text-red-600'
-                                      }`}
-                                  >
-                                    Available:{' '}
-                                    {(transaction.balance_impact?.available
-                                      ?.value ?? 0) > 0
-                                      ? '+'
-                                      : ''}
-                                    {formatBalanceAmount(
-                                      transaction.balance_impact?.available
-                                        ?.value,
-                                      transaction.balance_impact?.available
-                                        ?.currency,
-                                    )}
-                                  </span>
-                                )}
-                              {transaction.balance_impact?.inbound_pending
-                                ?.value !== 0 && (
-                                  <span className='block text-blue-600'>
-                                    Inbound:{' '}
-                                    {(transaction.balance_impact?.inbound_pending
-                                      ?.value ?? 0) > 0
-                                      ? '+'
-                                      : ''}
-                                    {formatBalanceAmount(
-                                      transaction.balance_impact?.inbound_pending
-                                        ?.value,
-                                      transaction.balance_impact?.inbound_pending
-                                        ?.currency,
-                                    )}
-                                  </span>
-                                )}
-                              {transaction.balance_impact?.outbound_pending
-                                ?.value !== 0 && (
-                                  <span className='block text-orange-600'>
-                                    Outbound:{' '}
-                                    {(transaction.balance_impact?.outbound_pending
-                                      ?.value ?? 0) > 0
-                                      ? '+'
-                                      : ''}
-                                    {formatBalanceAmount(
-                                      transaction.balance_impact?.outbound_pending
-                                        ?.value,
-                                      transaction.balance_impact?.outbound_pending
-                                        ?.currency,
-                                    )}
-                                  </span>
-                                )}
-                            </div>
-                          </td>
-                          <td className='whitespace-nowrap px-3 py-4 text-sm'>
-                            <span
-                              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusBadgeClass(
-                                transaction.status,
-                              )}`}
-                            >
-                              {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
-                            </span>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td
-                          colSpan={5}
-                          className='py-8 text-center text-sm text-gray-500'
-                        >
-                          {t(
-                            'dashboard.expenses.financial-account.no-transactions',
-                          )}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+          <>
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 11, color: '#8892A0', fontWeight: 600, letterSpacing: '.04em', textTransform: 'uppercase' as const, marginBottom: 6 }}>Available balance</div>
+              <div style={{ fontSize: 36, fontWeight: 700, color: '#323E48', letterSpacing: '-0.02em', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
+                {totalBalance ? fmt(totalBalance.value, totalBalance.currency) : fmt(0, 'gbp')}
               </div>
             </div>
-          </div>
+
+            {/* Pending */}
+            {(Object.keys(financialAccount?.balance?.inbound_pending ?? {}).length > 0 ||
+              Object.keys(financialAccount?.balance?.outbound_pending ?? {}).length > 0) && (
+              <div style={{ display: 'flex', gap: 32, paddingTop: 16, borderTop: '1px solid #F4F4F4' }}>
+                {Object.entries(financialAccount!.balance!.inbound_pending ?? {}).map(([, bal]) => (
+                  <div key='inbound'>
+                    <div style={{ fontSize: 11, color: '#8892A0', fontWeight: 600, letterSpacing: '.04em', textTransform: 'uppercase' as const, marginBottom: 4 }}>Inbound pending</div>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: '#323E48' }}>{fmt(bal?.value, bal?.currency)}</div>
+                  </div>
+                ))}
+                {Object.entries(financialAccount!.balance!.outbound_pending ?? {}).map(([, bal]) => (
+                  <div key='outbound'>
+                    <div style={{ fontSize: 11, color: '#8892A0', fontWeight: 600, letterSpacing: '.04em', textTransform: 'uppercase' as const, marginBottom: 4 }}>Outbound pending</div>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: '#323E48' }}>{fmt(bal?.value, bal?.currency)}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Tabs + content */}
+      <div style={{ background: '#fff', borderRadius: 6, boxShadow: '0 2px 8px rgba(0,0,0,.08)', overflow: 'hidden' }}>
+        {/* Tab bar */}
+        <div style={{ display: 'flex', borderBottom: '1px solid #F4F4F4', padding: '0 24px' }}>
+          {(['transactions', 'cards'] as FATab[]).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              style={{ padding: '14px 0', marginRight: 24, fontSize: 13, fontWeight: 600, color: activeTab === tab ? '#77B32A' : '#8892A0', background: 'none', border: 'none', borderBottom: `2px solid ${activeTab === tab ? '#77B32A' : 'transparent'}`, cursor: 'pointer', textTransform: 'capitalize' as const }}
+            >
+              {tab === 'transactions' ? t('dashboard.expenses.financial-account.transactions') : t('dashboard.expenses.issuing-cards')}
+            </button>
+          ))}
         </div>
+
+        {/* Transactions */}
+        {activeTab === 'transactions' && (
+          <div style={{ overflowX: 'auto' as const }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' as const, fontSize: 13 }}>
+              <thead>
+                <tr style={{ background: '#FAFAFA' }}>
+                  {['Date', 'Category', 'Amount', 'Balance Impact', 'Status'].map(h => (
+                    <th key={h} style={{ padding: '10px 16px', textAlign: 'left' as const, fontSize: 11, fontWeight: 700, color: '#8892A0', letterSpacing: '.04em', textTransform: 'uppercase' as const, whiteSpace: 'nowrap' as const }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {isTransactionsPending ? (
+                  [...Array(5)].map((_, i) => (
+                    <tr key={i} style={{ borderTop: '1px solid #F4F4F4' }}>
+                      {[...Array(5)].map((__, j) => <td key={j} style={{ padding: '12px 16px' }}><Skeleton className='h-4 w-24' /></td>)}
+                    </tr>
+                  ))
+                ) : transactions && transactions.length > 0 ? (
+                  transactions.map((tx) => {
+                    const impact = tx.balance_impact?.available?.value ?? 0;
+                    const isDebit = impact < 0;
+                    return (
+                      <tr key={tx.id} style={{ borderTop: '1px solid #F4F4F4' }}>
+                        <td style={{ padding: '12px 16px', color: '#323E48', whiteSpace: 'nowrap' as const }}>{fmtDate(tx.created)}</td>
+                        <td style={{ padding: '12px 16px', color: '#4D5761' }}>{categoryLabel[tx.category] ?? tx.category}</td>
+                        <td style={{ padding: '12px 16px', fontWeight: 600, color: isDebit ? '#DC2626' : '#16A34A', whiteSpace: 'nowrap' as const }}>
+                          {isDebit ? '' : '+'}{fmt(isDebit ? -(tx.amount?.value ?? 0) : (tx.amount?.value ?? 0), tx.amount?.currency)}
+                        </td>
+                        <td style={{ padding: '12px 16px', whiteSpace: 'nowrap' as const }}>
+                          {impact !== 0 && (
+                            <span style={{ color: impact > 0 ? '#16A34A' : '#DC2626', fontWeight: 500 }}>
+                              Available: {impact > 0 ? '+' : ''}{fmt(impact, tx.balance_impact?.available?.currency)}
+                            </span>
+                          )}
+                        </td>
+                        <td style={{ padding: '12px 16px' }}>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 700, letterSpacing: '.04em', textTransform: 'uppercase' as const, background: tx.status === 'posted' ? '#f3f8e9' : '#FEF3C7', color: tx.status === 'posted' ? '#5a881f' : '#92400E' }}>
+                            {tx.status}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan={5} style={{ padding: '40px 16px', textAlign: 'center' as const, color: '#8892A0', fontSize: 13 }}>
+                      {t('dashboard.expenses.financial-account.no-transactions')}
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
 
-        {/* Issuing Cards Tab Content */}
+        {/* Cards */}
         {activeTab === 'cards' && (
-          <CardsList
-            financialAccountId={financialAccountId}
-            showCreateButton
-            onCardClick={(card) =>
-              router.push(`/${language}/dashboard/cards/${card.id}`)
-            }
-          />
+          <div style={{ padding: 24 }}>
+            <CardsList
+              financialAccountId={financialAccountId}
+              showCreateButton
+              onCardClick={(card) => router.push(`/${language}/dashboard/cards/${card.id}`)}
+            />
+          </div>
         )}
-      </Card>
-    </div>
+      </div>
+    </>
   );
 };
 

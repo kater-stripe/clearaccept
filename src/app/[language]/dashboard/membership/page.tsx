@@ -115,7 +115,7 @@ const MembershipPage = () => {
                 {tp(membershipProduct).name}
               </h1>
               <div>
-                <Card className='grid w-full grid-cols-12 gap-5 rounded-md px-4 py-6'>
+                <Card accent='#77B32A' className='grid w-full grid-cols-12 gap-5'>
                   <div className='col-span-2'>
                     <p className='font-medium text-secondary'>
                       {t('dashboard.membership.price')}
