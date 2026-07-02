@@ -31,11 +31,8 @@ export const createPaymentLinkAction = async ({
    */
   const price = await stripe.prices.retrieve(
     priceId,
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
+    {},
+    chargeType === 'direct' ? { stripeAccount: accountId } : {},
   );
 
   const paymentLink = await stripe.paymentLinks.create(

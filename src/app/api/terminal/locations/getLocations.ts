@@ -30,11 +30,8 @@ export const getLocations = async ({
      *
      * See https://docs.stripe.com/terminal/design-multiparty-platform#standard-connect for more information.
      */
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
+    {},
+    chargeType === 'direct' ? { stripeAccount: accountId } : {},
   );
 
   /**

@@ -73,7 +73,7 @@ export const createCardholder = async ({
           : {}),
       },
       {
-        stripeAccount: accountId,
+        stripeContext: accountId,
       },
     );
 

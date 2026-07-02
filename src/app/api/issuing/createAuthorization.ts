@@ -40,7 +40,7 @@ export const createAuthorization = async ({
           },
         },
         {
-          stripeAccount: accountId,
+          stripeContext: accountId,
         },
       );
 
@@ -59,7 +59,7 @@ export const createAuthorization = async ({
       authorization.id,
       {},
       {
-        stripeAccount: accountId,
+        stripeContext: accountId,
       },
     );
 

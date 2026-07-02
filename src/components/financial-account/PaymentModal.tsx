@@ -378,31 +378,49 @@ export const PaymentModal = ({
                   </div>
 
                   {/* Payout Method Selection */}
-                  <Select
-                    label={t('modals.payment.form.destination')}
-                    value={payoutMethodId}
-                    onChange={(value) => setPayoutMethodId(value || '')}
-                    options={availablePayoutMethods.map((pm) => ({
-                      value: pm.id,
-                      label: getPayoutMethodLabel(pm),
-                    }))}
-                    placeholder={
-                      !recipientAccountId
-                        ? t('modals.payment.form.select-account-first')
-                        : isLoadingPayoutMethods
-                          ? t('modals.payment.form.loading-payout-methods')
-                          : availablePayoutMethods.length === 0
-                            ? t('modals.payment.form.no-payout-methods-available')
-                            : t('modals.payment.form.select-destination')
-                    }
-                    disabled={
-                      !recipientAccountId ||
-                      isLoadingPayoutMethods ||
-                      availablePayoutMethods.length === 0
-                    }
-                    nullable
-                    required
-                  />
+                  <div>
+                    <Select
+                      label={t('modals.payment.form.destination')}
+                      value={payoutMethodId}
+                      onChange={(value) => setPayoutMethodId(value || '')}
+                      options={availablePayoutMethods.map((pm) => ({
+                        value: pm.id,
+                        label: getPayoutMethodLabel(pm),
+                      }))}
+                      placeholder={
+                        !recipientAccountId
+                          ? t('modals.payment.form.select-account-first')
+                          : isLoadingPayoutMethods
+                            ? t('modals.payment.form.loading-payout-methods')
+                            : availablePayoutMethods.length === 0
+                              ? t('modals.payment.form.no-payout-methods-available')
+                              : t('modals.payment.form.select-destination')
+                      }
+                      disabled={
+                        !recipientAccountId ||
+                        isLoadingPayoutMethods ||
+                        availablePayoutMethods.length === 0
+                      }
+                      nullable
+                      required
+                    />
+                    {/* Show "Add bank account" when recipient selected but has no payout methods */}
+                    {recipientAccountId && !isLoadingPayoutMethods && availablePayoutMethods.length === 0 && (
+                      <Button
+                        type='button'
+                        onClick={() => {
+                          const selectedRecipient = allRecipients.find((r) => r.id === recipientAccountId);
+                          if (selectedRecipient) {
+                            setCreatedRecipientAccount(selectedRecipient as Stripe.V2.Core.Account);
+                            setIsAddPayoutMethodModalOpen(true);
+                          }
+                        }}
+                        className='mt-2 w-full bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                      >
+                        + Add bank account for this recipient
+                      </Button>
+                    )}
+                  </div>
 
                   {/* Amount */}
                   <div>

@@ -48,11 +48,8 @@ export const createCustomCheckoutSession = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   const taxSettings = await stripe.tax.settings.retrieve(
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
+    {},
+    chargeType === 'direct' ? { stripeAccount: accountId } : {},
   );
 
   const defaultTaxBehavior =
@@ -142,7 +139,7 @@ export const createCustomCheckoutSession = async ({
       },
       line_items: lineItems,
       mode: hasSubscriptionInCart ? 'subscription' : 'payment',
-      ui_mode: 'custom',
+      ui_mode: 'custom' as Stripe.Checkout.SessionCreateParams.UiMode,
       locale: language as Stripe.Checkout.SessionCreateParams.Locale,
       phone_number_collection: {
         enabled: true,

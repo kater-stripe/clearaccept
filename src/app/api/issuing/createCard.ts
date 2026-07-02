@@ -30,6 +30,65 @@ export const createCard = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
+  // Ensure the card_creator (v2) and card_issuing (v1) capabilities are requested.
+  try {
+    await stripe.v2.core.accounts.update(accountId, {
+      configuration: {
+        card_creator: {
+          capabilities: {
+            commercial: {
+              stripe: {
+                prepaid_card: { requested: true },
+              },
+            },
+          },
+        },
+      } as any,
+    });
+  } catch {
+    // Platform may not be Issuing-enabled; the cards.create call will surface the real error.
+  }
+
+  try {
+    await stripe.accounts.update(accountId, {
+      capabilities: { card_issuing: { requested: true } },
+    });
+  } catch {
+    // Same — silently ignored if platform isn't Issuing-enabled.
+  }
+
+  // Apply the platform's issuing program to the connected account.
+  // Required for Treasury-linked cards (financial_account_v2).
+  try {
+    const programsRes = await fetch('https://api.stripe.com/v1/issuing/programs', {
+      headers: {
+        Authorization: `Bearer ${stripeSecretKey}`,
+        'Stripe-Version': '2026-06-24.preview; issuing_program_beta=v2',
+      },
+    });
+    if (programsRes.ok) {
+      const { data: programs } = await programsRes.json() as { data: { id: string }[] };
+      const platformProgram = programs?.[0];
+      if (platformProgram) {
+        await fetch('https://api.stripe.com/v1/issuing/programs', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${stripeSecretKey}`,
+            'Stripe-Version': '2026-06-24.preview; issuing_program_beta=v2',
+            'Stripe-Context': accountId,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            platform_program: platformProgram.id,
+            is_default: 'true',
+          }).toString(),
+        });
+      }
+    }
+  } catch {
+    // Silently skip — not all platforms have issuing programs configured.
+  }
+
   try {
     const card = await stripe.issuing.cards.create(
       {
@@ -54,7 +113,7 @@ export const createCard = async ({
           : {}),
       },
       {
-        stripeAccount: accountId,
+        stripeContext: accountId,
       },
     );
 

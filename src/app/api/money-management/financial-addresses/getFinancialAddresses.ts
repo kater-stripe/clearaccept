@@ -32,7 +32,7 @@ export const getFinancialAddresses = async ({
         ],
       },
       {
-        stripeAccount: accountId,
+        stripeContext: accountId,
       },
     );
 

@@ -26,10 +26,7 @@ export const cancelSubscription = async ({
 
   await stripe.subscriptions.cancel(
     subscriptionId,
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
+    {},
+    chargeType === 'direct' ? { stripeAccount: accountId } : {},
   );
 };

@@ -25,8 +25,9 @@ export const getFinancialAccount = async ({
   const financialAccount =
     await stripe.v2.moneyManagement.financialAccounts.retrieve(
       financialAccountId,
+      {},
       {
-        stripeAccount: accountId,
+        stripeContext: accountId,
       },
     );
 

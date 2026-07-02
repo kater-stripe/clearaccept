@@ -59,6 +59,7 @@ export const seedFinancialAccountTransactions = async ({
         const newFinancialAccount =
           await stripe.treasury.financialAccounts.retrieve(
             financialAccount.id,
+            {},
             { stripeAccount: accountId },
           );
 

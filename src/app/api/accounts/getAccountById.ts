@@ -21,15 +21,12 @@ export const getAccountById = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   try {
-    // @ts-expect-error
     const account = await stripe.v2.core.accounts.retrieve(id, {
       include: [
         'requirements',
         'configuration.merchant',
-        'configuration.storer',
+        'configuration.money_manager',
         'configuration.recipient',
-        'configuration.storer',
-        'configuration.card_creator',
         'identity',
         'defaults',
       ],

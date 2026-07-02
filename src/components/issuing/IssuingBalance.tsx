@@ -48,7 +48,8 @@ export const IssuingBalance = ({ balance }: IssuingBalanceProps) => {
     error: creatingIssuingBalanceTransferError,
   } = useMutation({
     mutationFn: createIssuingBalanceTransferAction,
-    onSuccess: async ({ message }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: async ({ message }: any) => {
       if (message) {
         throw new Error(message);
       }

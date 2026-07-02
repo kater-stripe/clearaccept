@@ -43,16 +43,14 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       case '/dashboard': {
         const title = t('dashboard.home.greeting', {
           name:
+            account?.display_name ||
             account?.identity?.business_details?.registered_name ||
-            `${account?.identity?.individual?.given_name} ${account?.identity?.individual?.surname
-              }`.trim(),
+            `${account?.identity?.individual?.given_name ?? ''} ${account?.identity?.individual?.surname ?? ''}`.trim() ||
+            account?.contact_email,
         });
 
         return {
           title,
-          subtitle: t('dashboard.home.greeting-subtitle', {
-            email: account?.contact_email,
-          }),
         };
       }
       case '/dashboard/payouts': {
@@ -167,7 +165,11 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 
         return {
           title: t('dashboard.home.greeting', {
-            name: account?.contact_email!,
+            name:
+              account?.display_name ||
+              account?.identity?.business_details?.registered_name ||
+              account?.identity?.individual?.given_name ||
+              account?.contact_email,
           }),
         };
       }
@@ -235,8 +237,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             {!hideHeadings && (
               <div>
                 <h1 className='text-3xl font-bold'>{headings.title}</h1>
-                {headings.subtitle && (
-                  <p className='text-md text-gray-500'>{headings.subtitle}</p>
+                {(headings as { subtitle?: string }).subtitle && (
+                  <p className='text-md text-gray-500'>{(headings as { subtitle?: string }).subtitle}</p>
                 )}
               </div>
             )}

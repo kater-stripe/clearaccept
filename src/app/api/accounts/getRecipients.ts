@@ -31,7 +31,7 @@ export const getRecipients = async ({
         applied_configurations: ['recipient'],
       },
       {
-        stripeContext: connectedAccountId,
+        stripeAccount: connectedAccountId,
       },
     );
 
@@ -45,7 +45,7 @@ export const getRecipients = async ({
               include: ['identity'],
             },
             {
-              stripeContext: connectedAccountId,
+              stripeAccount: connectedAccountId,
             },
           );
           return plain(fullAccount);

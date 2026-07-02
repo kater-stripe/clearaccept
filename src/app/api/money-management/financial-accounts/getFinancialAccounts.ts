@@ -28,7 +28,7 @@ export const getFinancialAccounts = async ({
         limit,
       },
       {
-        stripeAccount: accountId,
+        stripeContext: accountId,
       },
     );
 

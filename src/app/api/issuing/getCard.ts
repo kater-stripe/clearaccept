@@ -28,7 +28,7 @@ export const getCard = async ({
       expand: ['number', 'cvc'],
     },
     {
-      stripeAccount: accountId,
+      stripeContext: accountId,
     },
   );
 

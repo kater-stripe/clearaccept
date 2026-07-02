@@ -17,7 +17,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   const nodeEnv = process.env.NODE_ENV;
   const isDemogen = !!process.env.DEMOGEN;
   return (
-    <html>
+    <html suppressHydrationWarning>
       <head>
         <meta name='robots' content='noindex, nofollow' />
 

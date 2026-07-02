@@ -1,111 +1,70 @@
-# [ZenFlow](https://zenflow.stripedemos.com/en)
+# ClearAccept
 
-###### `ZenFlow` is a fictional embedded payments SaaS platform demo for service-based merchants.
+**ClearAccept** is a fictional embedded-finance SaaS platform for service-based merchants, built as a Stripe sales demo. It showcases Stripe Capital, embedded financial accounts, card issuing, and money movement via Stripe's v2 API.
 
-### Tech Stack
+This repo is a fork of the `demoeng-zenflow` demo (`sage` branch), customised for the ClearAccept brand.
 
-- Next.js
-- React
-- TypeScript
-- Stripe (via. `stripe-node`)
+---
 
-### Important! Before you get started, read this.
+## Demo surfaces
 
-- If you only need to change colors, hero image, or logo of ZenFlow we recommend going to [go/demos](https://www.stripedemos.com/demos), choosing ZenFlow, and going through the Personalization flow there.
+| Route | What it shows |
+|-------|---------------|
+| `/en/demo/finance` | Merchant Finance — Stripe Capital embedded component (live Stripe data) |
+| `/en/demo/wallet` | ClearAccept Wallet — interactive mock wallet with localStorage state |
+| `/en/demo/issuing` | Corporate Card — simulates card spend; shares balance state with the wallet slide |
 
-- If you need to do Advanced Personalization like adding new Stripe features, changing text, changing the structure of the components on the UI, etc., go to [go/demos](https://www.stripedemos.com/demos), choose ZenFlow, and go to the Advanced tab to Clone to GitHub. After doing so, follow [these](#advanced-personalization-setup) instructions.
+The wallet and issuing slides share state via the `ca_demo_wallet` localStorage key.
 
-### Advanced Personalization Setup
+---
 
-1. Copy `env.example` and rename to `.env` then paste in your public and private API keys
+## Tech stack
 
-   > :bulb: By going to [go/demos](https://www.stripedemos.com/demos) and finding ZenFlow you can choose the seed only option to seed your demo account with products. We strongly recommend doing this so you don't have to manually add the required product metadata.
+- Next.js 14 (App Router)
+- React 18 + TypeScript
+- Stripe Node SDK v22 (`stripe@^22.4.0-beta.1`, API version `2026-06-24.preview`)
+- TanStack Query, Tailwind CSS, Headless UI
 
-2. Open the VS code terminal
-   - Either use the shortcut `` control + ` `` or click `terminal` and `new terminal` in the top bar
+---
 
-3. Check your node version.
+## Setup
 
-   > :warning: Please follow the directions below closely otherwise you will not be able to install dependencies or run the local development server.
+Requires **Node 24.11.0** (enforced via `.node-version` + nodenv).
 
-   ```bash
-   # Check that your `node` version matches the version in the `.node-version` file (24.11.1).
-   node -v
+```bash
+node -v        # must be v24.11.0
 
-   # If you see 24.11.1, skip to step number 4.
-   # If you see another version, follow the steps below.
+npm install
+cp .env.example .env.local   # already exists with ClearAccept defaults
+npm run dev    # http://localhost:3000
+```
 
-   # Check you have `nodenv` installed.
+`.env.local` is pre-configured with `CURRENCY=gbp`, dark sidebar, and `DEMO_NAME=clearaccept`. Add your Stripe secret and publishable keys.
 
-   nodenv -v
+---
 
-   # If you do not have `nodenv` installed, follow these instructions:
-   # https://trailhead.corp.stripe.com/docs/frontend/setup
+## Key commands
 
-   # If you do have `nodenv` installed, use the command below to check what versions of node are installed.
-   # A list of node versions will appear. Check if 24.11.1 is in the list.
+```bash
+npm run dev      # development server
+npm run build    # production build
+npm run lint     # ESLint
+npm run format   # Prettier
+```
 
-   nodenv versions
+There is no test suite.
 
-   # If node version 24.11.1 is listed, run the following command:
+---
 
-   nodenv local 24.11.1
+## Deploying
 
-   # If node version 24.11.1 is NOT listed, run the following two commands:
+1. Go to the **Actions** tab in this repository.
+2. Run the **"Build and Deploy to Cloud Run"** workflow.
+3. Select your branch, enter a subdomain (e.g. `clearaccept`), choose **Custom** deployment type, and paste in your `.env.local` contents.
+4. Once complete, your demo is live at `<subdomain>.stripedemos.com`.
 
-   nodenv install 24.11.1
-   nodenv local 24.11.1
+---
 
-   # Finally, ensure the your `node` version was changed correctly.
+## Development notes
 
-   node -v
-
-   # You should see 24.11.1.
-   ```
-
-4. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-5. Run the development server
-
-   ```bash
-   npm run dev
-   ```
-
-6. Open [http://localhost:3000](http://localhost:3000) to see the running demo.
-
-### Deploying Your Changes
-
-###### If you made your own branch, follow the below instructions to deploy your demo.
-
-1. Navigate to the [ZenFlow GitHub Repository](https://github.com/stripe-demos/demoeng-zenflow).
-2. Click the "Actions" tab.
-3. Click the "Build and Deploy to Cloud Run" action.
-4. Click on "Run workflow".
-5. Choose the name of your branch.
-6. Enter a subdomain (e.g. if you are making an OCS demo for REI then enter rei-ocs).
-7. Choose the "Custom" deployment type.
-8. Paste in the `.env` file you made [previously](#advanced-personalization-setup).
-9. Click on "Run workflow".
-10. Refresh the page and you should see a new workflow running. Feel free to click into it to see the deployment progress. Once the workflow is complete your demo should be live at \<subdomain\>.stripedemos.com.
-
-### Learn More
-
-###### To learn more about this demo in particular or see this demo live, take a look at the following resources:
-
-- [go/zenflow-demo](http://go/zenflow-demo) - ZenFlow Demo Instructions
-
-- [go/demos/zenflow](http://go/demos/zenflow) - ZenFlow Live Site
-
-###### To learn more about the Demo Engineering team, take a look at the following resources:
-
-- [go/demoeng](https://confluence.corp.stripe.com/display/DemoEng) - Our confluence Home page where you can find our roadmap and other useful links.
-- [#demos](https://stripe.enterprise.slack.com/archives/C018UF94KEY) - Public slack channel where you can ask questions.
-
-###### To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See [`CLAUDE.md`](./CLAUDE.md) for detailed architecture notes covering the Stripe v2 API patterns, context provider hierarchy, GB Confirmation of Payee flow, and all ClearAccept-specific customisations.

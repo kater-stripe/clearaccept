@@ -15,7 +15,7 @@ import type { DemoMerchant } from '@/types/demoMerchant';
 import { DEFAULT_DEMO_MERCHANT } from '@/constants/demoMerchant';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { loadConnectAndInitialize } from '@stripe/connect-js';
+import { loadConnectAndInitialize } from '@stripe/connect-js/pure';
 import { ConnectComponentsProvider } from '@stripe/react-connect-js';
 import { LoadingOverlay } from '@/components/common/LoadingOverlay';
 import { getAccountByEmail as getAccountByEmailAction } from '@/app/api/accounts/getAccountByEmail';
@@ -188,15 +188,22 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
 
       const account = response;
 
+      // v2 accounts return requirements: null immediately after creation — requirements are
+      // computed asynchronously. Treat null as "onboarding not complete" so we don't redirect
+      // a freshly-created account to the dashboard before onboarding finishes.
+      const reqStatus = account.requirements?.summary?.minimum_deadline?.status;
+      const onboardingIncomplete =
+        account.requirements == null ||
+        reqStatus === 'past_due' ||
+        reqStatus === 'currently_due';
+
       // If we're on a dashboard page.
       if (pathnameWithoutLanguage.startsWith('/dashboard')) {
         /*
          * If we don't have account details submitted (meaning onboarding wasn't completed)
          * redirect back to the home page to show either embedded/hosted Connect onboarding.
          */
-        if (
-          account.requirements?.summary?.minimum_deadline?.status === 'past_due'
-        ) {
+        if (onboardingIncomplete) {
           router.push(`/${language}`);
         }
       } else if (
@@ -206,12 +213,10 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
         // If we're anywhere else in the application besides the storefront or bills/pay page.
 
         /**
-         * If we have an account, the account details were submitted (meaning onboarding was completed)
-         * and we're not in the dashboard, redirect to the dashboard.
+         * Only redirect to the dashboard once we have a definitive signal that onboarding is
+         * complete (requirements object is non-null with no past_due/currently_due items).
          */
-        if (
-          account.requirements?.summary?.minimum_deadline?.status !== 'past_due'
-        ) {
+        if (!onboardingIncomplete) {
           router.push(`/${language}/dashboard`);
         }
       }
@@ -256,14 +261,30 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
       fetchClientSecret: async () => {
         const response = await fetch('/api/accounts/account-session', {
           method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             accountId: demoMerchant.account!.id,
             stripeSecretKey,
           } satisfies CreateAccountSessionRequestBody),
         });
 
-        const { client_secret } =
-          (await response.json()) as CreateAccountSessionResponse;
+        const data = (await response.json()) as
+          | CreateAccountSessionResponse
+          | { error?: string };
+
+        if (!response.ok) {
+          throw new Error(
+            'error' in data && data.error
+              ? data.error
+              : `Failed to create account session (${response.status})`,
+          );
+        }
+
+        const { client_secret } = data as CreateAccountSessionResponse;
+
+        if (!client_secret) {
+          throw new Error('Account session response missing client_secret.');
+        }
 
         return client_secret;
       },
@@ -276,9 +297,10 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
       locale:
         language === 'en-GB'
           ? language
-          : `${language}-${demoMerchant.account.identity?.country ?? 'US'}`,
+          : `${language}-${demoMerchant.account.identity?.country?.toUpperCase() ?? 'US'}`,
     });
-  }, [demoMerchant.account]);
+  // Only depend on account ID — refreshing account data should not recreate the ConnectJS instance.
+  }, [demoMerchant.account?.id]);
 
   const isCapitalEligible = useMemo(() => {
     const account = demoMerchant.account;
@@ -310,7 +332,7 @@ export const DemoMerchantProvider = ({ children }: PropsWithChildren) => {
 
     const capabilities = {
       ...(account.configuration?.merchant?.capabilities ?? {}),
-      ...(account.configuration?.storer?.capabilities ?? {}),
+      ...(account.configuration?.money_manager?.capabilities ?? {}),
       ...(account.configuration?.recipient?.capabilities ?? {}),
       // @ts-expect-error
       ...(account.configuration?.card_creator?.capabilities ?? {}),

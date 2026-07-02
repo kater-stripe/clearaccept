@@ -128,7 +128,7 @@ export const createRecipient = async ({
             },
           },
         },
-        include: ['identity', 'configuration.customer'],
+        include: ['requirements', 'configuration.recipient', 'identity'],
       },
       {
         // Stripe-Context header scopes this recipient to the connected account

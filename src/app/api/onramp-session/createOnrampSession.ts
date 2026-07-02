@@ -10,7 +10,9 @@ import { DestinationCurrency, DestinationNetwork } from '@/types/onramp';
 import { initializeStripe } from '@/utils/initializeStripe';
 import Stripe from 'stripe';
 
+// @ts-expect-error StripeResource.extend and .method were removed in Stripe SDK v22
 const OnrampSessions = Stripe.StripeResource.extend({
+  // @ts-expect-error StripeResource.method was removed in Stripe SDK v22
   create: Stripe.StripeResource.method({
     method: 'POST',
     path: 'crypto/onramp_sessions',

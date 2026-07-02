@@ -44,11 +44,8 @@ export const createEmbeddedCheckoutSession = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   const taxSettings = await stripe.tax.settings.retrieve(
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
+    {},
+    chargeType === 'direct' ? { stripeAccount: accountId } : {},
   );
 
   const defaultTaxBehavior =
@@ -115,7 +112,7 @@ export const createEmbeddedCheckoutSession = async ({
       : {
           customer_email: customerEmail,
         }),
-    ui_mode: 'embedded',
+    ui_mode: 'embedded' as Stripe.Checkout.SessionCreateParams.UiMode,
     ...(taxSettings.head_office !== null
       ? {
           automatic_tax: {

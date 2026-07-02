@@ -13,6 +13,7 @@ import { Alert } from '../common/Alert';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { createHostedOnboardingLink as createHostedOnboardingLinkAction } from '@/app/api/accounts/createHostedOnboardingLink';
+import { createFinancialAccount as createFinancialAccountAction } from '@/app/api/money-management/financial-accounts/createFinancialAccount';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import { Combobox } from '../common/Combobox';
 import { COUNTRIES, CountryCode, CountryName } from '@/constants/countryCodes';
@@ -75,13 +76,22 @@ export const SignUpCard = () => {
         <div id='connect-account-onboarding'>
           <ConnectAccountOnboarding
             onExit={async () => {
-              /**
-               * Refreshes the account data from Stripe, which is good practice after onboarding is completed.
-               */
               await getAccountByEmail({
                 email: account?.contact_email!,
                 stripeSecretKey,
               });
+
+              // Per the docs flow: create FA + financial address immediately after onboarding.
+              // Fire-and-forget — don't block the redirect on FA creation failure.
+              if (storerCapabilityEnabled && account?.id) {
+                createFinancialAccountAction({
+                  name: 'ClearAccept Wallet',
+                  accountId: account.id,
+                  stripeSecretKey,
+                }).catch((err) =>
+                  console.error('Failed to create financial account after onboarding:', err),
+                );
+              }
 
               router.push(`/${language}/dashboard`);
             }}

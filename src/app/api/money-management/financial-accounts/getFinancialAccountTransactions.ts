@@ -28,7 +28,7 @@ export const getFinancialAccountTransactions = async ({
         financial_account: financialAccountId,
       },
       {
-        stripeAccount: accountId,
+        stripeContext: accountId,
       },
     );
 

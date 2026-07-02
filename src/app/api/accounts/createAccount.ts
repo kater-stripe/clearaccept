@@ -13,9 +13,31 @@ type CreateAccountParams = {
   countryCode: CountryCode;
   language?: string;
   email: string;
+  /** Enables Treasury/money-management capabilities (business_storage, received_credits, outbound_payments) */
   storerCapabilityEnabled?: boolean;
   issuingCapabilityEnabled?: boolean;
   stripeSecretKey?: string;
+};
+
+type MoneyManagerCapabilities =
+  Stripe.V2.Core.AccountCreateParams.Configuration.MoneyManager.Capabilities;
+type BusinessStorage = MoneyManagerCapabilities['business_storage'];
+
+const EURO_COUNTRIES: CountryCode[] = [
+  'AT', 'BE', 'CY', 'DE', 'EE', 'ES', 'FI', 'FR',
+  'GR', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL',
+  'PT', 'SI', 'SK',
+];
+
+/**
+ * Returns business_storage capability block for v2 money_manager.
+ * Both inbound and outbound must be requested together for the same currency.
+ */
+const buildBusinessStorage = (countryCode: CountryCode): BusinessStorage => {
+  const req = { requested: true as const };
+  if (countryCode === 'GB') return { inbound: { gbp: req }, outbound: { gbp: req } };
+  if (EURO_COUNTRIES.includes(countryCode)) return { inbound: { eur: req }, outbound: { eur: req } };
+  return { inbound: { usd: req }, outbound: { usd: req } };
 };
 
 export const createAccount = async ({
@@ -44,8 +66,18 @@ export const createAccount = async ({
     };
   }
 
+  const mock = new Mock({
+    language: language as MockLanguage,
+    country: countryCode as MockCountryCode,
+    validForConnect: true,
+  });
+
+  const companyNames = mock.companyNames();
+  const displayName = companyNames.name || email.split('@')[0];
+
   const account = await stripe.v2.core.accounts.create({
     contact_email: email,
+    display_name: displayName,
     configuration: {
       merchant: {
         capabilities: {
@@ -67,9 +99,7 @@ export const createAccount = async ({
               capabilities: {
                 commercial: {
                   stripe: {
-                    prepaid_card: {
-                      requested: true,
-                    },
+                    prepaid_card: { requested: true },
                   },
                 },
               },
@@ -78,41 +108,24 @@ export const createAccount = async ({
         : {}),
       ...(storerCapabilityEnabled
         ? {
-            storer: {
+            money_manager: {
               capabilities: {
-                financial_addresses: {
-                  bank_accounts: {
-                    requested: true,
-                  },
-                },
-                holds_currencies: {
-                  ...(countryCode === 'US'
-                    ? {
-                        usd: {
-                          requested: true,
-                        },
-                      }
-                    : {}),
-                  ...(countryCode === 'GB'
-                    ? {
-                        gbp: {
-                          requested: true,
-                        },
-                      }
-                    : {}),
+                received_credits: { bank_accounts: { requested: true } },
+                business_storage: buildBusinessStorage(countryCode),
+                outbound_payments: {
+                  bank_accounts: { requested: true },
+                  financial_accounts: { requested: true },
                 },
                 outbound_transfers: {
-                  financial_accounts: {
-                    requested: true,
-                  },
-                  bank_accounts: {
-                    requested: true,
-                  },
+                  bank_accounts: { requested: true },
+                  financial_accounts: { requested: true },
                 },
-                outbound_payments: {
-                  bank_accounts: {
-                    requested: true,
-                  },
+              },
+            },
+            recipient: {
+              capabilities: {
+                stripe_balance: {
+                  stripe_transfers: { requested: true },
                 },
               },
             },
@@ -129,13 +142,14 @@ export const createAccount = async ({
       },
     },
     dashboard: 'none',
-    include: ['requirements', 'configuration.merchant', 'identity', 'defaults'],
-  });
-
-  const mock = new Mock({
-    language: language as MockLanguage,
-    country: countryCode as MockCountryCode,
-    validForConnect: true,
+    include: [
+      'requirements',
+      'configuration.merchant',
+      'configuration.money_manager',
+      'configuration.recipient',
+      'identity',
+      'defaults',
+    ],
   });
 
   const shouldPrefillBusinessProfile = email
@@ -333,12 +347,9 @@ export const createAccount = async ({
           },
         },
       });
-    } catch (error) {
-      console.error(
-        `Unable to request v1 card_issuing capability for account ${account.id}`,
-        error,
-      );
-      // Continue execution - v1 capability is optional if v2 card_creator is configured
+    } catch {
+      // Expected when the platform hasn't been onboarded for Stripe Issuing.
+      // v2 card_creator config is sufficient; this v1 capability is best-effort.
     }
   }
 

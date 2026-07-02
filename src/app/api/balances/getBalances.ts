@@ -20,9 +20,10 @@ export const getBalances = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  const balances = await stripe.balance.retrieve({
-    ...(accountId ? { stripeAccount: accountId } : {}),
-  });
+  const balances = await stripe.balance.retrieve(
+    {},
+    accountId ? { stripeAccount: accountId } : {},
+  );
 
   return plain(balances);
 };

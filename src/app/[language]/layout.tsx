@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Sage',
+  title: 'ClearAccept',
   icons: {
     icon: '/img/brand/icon.svg',
   },

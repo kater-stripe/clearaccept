@@ -181,21 +181,25 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         label: t('dashboard.finance.title'),
         children: [
           {
+            href: `/${language}/dashboard/wallet`,
+            icon: WalletIcon,
+            label: 'Wallet',
+          },
+          {
+            href: `/${language}/dashboard/financial-accounts`,
+            icon: BuildingLibraryIcon,
+            label: t('dashboard.accounts.title'),
+          },
+          {
+            href: `/${language}/dashboard/capital`,
+            icon: Square3Stack3DIcon,
+            label: t('dashboard.capital.title'),
+          },
+          {
             href: `/${language}/dashboard/bills`,
             icon: DocumentTextIcon,
             label: t('dashboard.bills.title'),
           },
-          ...(isCapabilityActive('holds_currencies.usd') ||
-            isCapabilityActive('holds_currencies.gbp') ||
-            isCapabilityActive('holds_currencies.eur')
-            ? [
-              {
-                href: `/${language}/dashboard/financial-accounts`,
-                icon: BuildingLibraryIcon,
-                label: t('dashboard.accounts.title'),
-              },
-            ]
-            : []),
           ...(isCapabilityActive('commercial.stripe.prepaid_card')
             ? [
               {
@@ -205,16 +209,6 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
               },
             ]
             : []),
-          {
-            href: `/${language}/dashboard/capital`,
-            icon: Square3Stack3DIcon,
-            label: t('dashboard.capital.title'),
-          },
-          // {
-          //   href: `/${language}/dashboard/payouts`,
-          //   icon: WalletIcon,
-          //   label: t('dashboard.payouts.title'),
-          // },
         ],
       },
       {
@@ -223,15 +217,20 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
         label: t('dashboard.more.title'),
         children: [
           {
+            href: `/${language}/dashboard/suppliers`,
+            icon: BanknotesIcon,
+            label: 'Suppliers',
+          },
+          {
+            href: `/${language}/dashboard/authorizations`,
+            icon: CreditCardIcon,
+            label: 'Authorizations',
+          },
+          {
             href: `/${language}/dashboard/reports`,
             icon: DocumentChartBarIcon,
             label: t('dashboard.reports.title'),
           },
-          // {
-          //   href: 'https://apps-homebox.onrender.com/?redirect=/integrations/xero',
-          //   icon: LinkIcon,
-          //   label: t('dashboard.apps.title'),
-          // },
         ],
       },
       /**

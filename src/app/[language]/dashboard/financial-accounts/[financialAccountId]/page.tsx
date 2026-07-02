@@ -18,6 +18,7 @@ import { TransferModal } from '@/components/financial-account/TransferModal';
 import { PaymentModal } from '@/components/financial-account/PaymentModal';
 import { UseForPayoutsModal } from '@/components/financial-account/UseForPayoutsModal';
 import { getBalanceSettings as getBalanceSettingsAction } from '@/app/api/balance-settings/getBalanceSettings';
+import { fundFinancialAccount as fundFinancialAccountAction } from '@/app/api/money-management/financial-accounts/fundFinancialAccount';
 import { CardsList } from '@/components/issuing/CardsList';
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
@@ -44,6 +45,7 @@ const FinancialAccountPage = () => {
     useState(false);
   const [showFullAccountNumber, setShowFullAccountNumber] = useState(false);
   const [activeTab, setActiveTab] = useState<FATab>('transactions');
+  const [isTopUpPending, setIsTopUpPending] = useState(false);
 
   const { data: financialAccount, isPending: isAccountPending } = useQuery({
     queryKey: ['financial-account', financialAccountId],
@@ -136,11 +138,35 @@ const FinancialAccountPage = () => {
     });
   };
 
+  const handleTopUp = async () => {
+    if (!account || !financialAddresses || financialAddresses.length === 0) return;
+    const faAddr = financialAddresses[0];
+    const faCurrency = financialAccount?.storage?.holds_currencies?.[0] ?? 'gbp';
+    // Top up £500 (or $500) as a demo amount — 50000 in minor units
+    const topUpAmount = 50000;
+
+    setIsTopUpPending(true);
+    try {
+      await fundFinancialAccountAction({
+        accountId: account.id,
+        financialAccountId,
+        financialAddressId: (faAddr as any).id,
+        amount: topUpAmount,
+        currency: faCurrency,
+        stripeSecretKey,
+      });
+      queryClient.invalidateQueries({ queryKey: ['financial-account', financialAccountId] });
+      queryClient.invalidateQueries({ queryKey: ['financial-account-transactions', financialAccountId] });
+    } finally {
+      setIsTopUpPending(false);
+    }
+  };
+
   // Check if this FA is currently set up for automatic payouts
   // Structure: payments.payouts.automatic_transfer_rules_by_currency[currency][0].payout_method
   const isAutoPayoutsEnabled = (() => {
-    const rules =
-      balanceSettings?.payments?.payouts?.automatic_transfer_rules_by_currency;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const rules = (balanceSettings?.payments?.payouts as any)?.automatic_transfer_rules_by_currency;
     if (!rules) return false;
 
     // Check all currencies for a rule pointing to this FA
@@ -269,7 +295,7 @@ const FinancialAccountPage = () => {
                   t('dashboard.expenses.financial-account.overview')}
               </h2>
               {isAutoPayoutsEnabled && (
-                <span className='inline-flex items-center rounded-full bg-brand-primary px-2.5 py-0.5 text-xs font-medium text-black'>
+                <span className='inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800'>
                   {t('dashboard.expenses.financial-account.auto-payouts-active')}
                 </span>
               )}
@@ -296,6 +322,13 @@ const FinancialAccountPage = () => {
             )}
           </div>
           <div className='flex gap-2'>
+            <Button
+              onClick={handleTopUp}
+              disabled={isAccountPending || !financialAccount || !hasFinancialAddress || isTopUpPending}
+              colorMode='dark'
+            >
+              {isTopUpPending ? 'Topping up...' : 'Top Up'}
+            </Button>
             <Button
               onClick={() => setIsUseForPayoutsModalOpen(true)}
               disabled={isAccountPending || !financialAccount}

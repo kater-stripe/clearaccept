@@ -31,7 +31,7 @@ export const updateCard = async ({
         status,
       },
       {
-        stripeAccount: accountId,
+        stripeContext: accountId,
       },
     );
 

@@ -4,7 +4,6 @@ import type { CurrencyCode } from '@/constants/currencyCodes';
 import { initializeStripe } from '@/utils/initializeStripe';
 import { plain } from '@/utils/plain';
 import { createFinancialAddress } from '@/app/api/money-management/financial-addresses/createFinancialAddress';
-import type Stripe from 'stripe';
 
 type CreateFinancialAccountParams = {
   name: string;
@@ -27,94 +26,35 @@ export const createFinancialAccount = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
-  const account = await stripe.v2.core.accounts.retrieve(accountId);
+  const account = await stripe.v2.core.accounts.retrieve(accountId, {
+    include: ['defaults', 'identity'],
+  });
+  const envCurrency = process.env.CURRENCY?.toLowerCase();
+  const resolvedCurrency = currency ?? account.defaults?.currency ?? envCurrency ?? 'gbp';
+  const country = account.identity?.country?.toUpperCase() ?? 'GB';
 
   try {
+    // v2 API: use stripeContext (Stripe-Context header), not stripeAccount (Stripe-Account header)
     const financialAccount =
       await stripe.v2.moneyManagement.financialAccounts.create(
         {
           display_name: name,
           type: 'storage',
           storage: {
-            holds_currencies: [currency ?? account.defaults?.currency ?? 'usd'],
+            holds_currencies: [resolvedCurrency],
           },
         },
         {
-          stripeAccount: accountId,
+          stripeContext: accountId,
         },
       );
 
-    const country = account.identity?.country?.toUpperCase() ?? 'US';
-    const isGB = country === 'GB';
-
-    const features: Stripe.Treasury.FinancialAccountCreateParams.Features = {
-      card_issuing: {
-        requested: true,
-      },
-      financial_addresses: {
-        aba: {
-          requested: true,
-        },
-      },
-      inbound_transfers: {
-        ach: {
-          requested: true,
-        },
-      },
-      intra_stripe_flows: {
-        requested: true,
-      },
-      outbound_payments: {
-        ach: {
-          requested: true,
-        },
-        ...(isGB
-          ? {
-              us_domestic_wire: {
-                requested: true,
-              },
-            }
-          : {}),
-      },
-      outbound_transfers: {
-        ach: {
-          requested: true,
-        },
-        ...(isGB
-          ? {
-              us_domestic_wire: {
-                requested: true,
-              },
-            }
-          : {}),
-      },
-    };
-
-    for (const [feature, value] of Object.entries(features)) {
-      try {
-        await stripe.treasury.financialAccounts.update(
-          financialAccount.id,
-          {
-            features: { [feature]: value },
-          },
-          {
-            stripeAccount: accountId,
-          },
-        );
-      } catch (error) {
-        console.error(
-          `Unable to request feature ${feature} for account ${financialAccount.id}`,
-          error,
-        );
-      }
-    }
-
-    // Create a financial address for the account
+    // Provision a financial address so the account can receive funds
     try {
       await createFinancialAddress({
         accountId,
         financialAccountId: financialAccount.id,
-        country: isGB ? 'GB' : 'US',
+        country: country === 'GB' ? 'GB' : 'US',
         stripeSecretKey,
       });
     } catch (error) {
@@ -127,7 +67,7 @@ export const createFinancialAccount = async ({
     return plain(financialAccount);
   } catch (error) {
     console.error(
-      `Unable to create financial account ${name} for account ${accountId}`,
+      `Unable to create financial account "${name}" for account ${accountId}`,
       error,
     );
 

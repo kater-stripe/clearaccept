@@ -60,83 +60,59 @@ export const createOutboundSetupIntent = async ({
     const countryLower = country.toLowerCase();
     const countryUpper = country.toUpperCase();
 
-    // Build payout method data based on country
-    const payoutMethodData: any = {
-      type: 'bank_account',
-      bank_account: {
-        country: countryUpper, // Stripe requires uppercase ISO 3166 alpha-2 code
-        account_number: accountNumber,
-        bank_account_type: accountType,
-      },
-    };
-
-    // Add country-specific fields
-    if (countryLower === 'us') {
-      if (!accountNumber || !routingNumber) {
-        throw new Error(
-          'Account number and routing number are required for US bank accounts',
-        );
-      }
-      payoutMethodData.bank_account.routing_number = routingNumber;
-    } else if (countryLower === 'gb') {
-      if (!accountNumber || !sortCode) {
-        throw new Error(
-          'Account number and sort code are required for GB bank accounts',
-        );
-      }
-      payoutMethodData.bank_account.sort_code = sortCode;
-
-      // GB bank accounts require Confirmation of Payee
-      payoutMethodData.bank_account.confirmation_of_payee = {
-        business_type: 'personal',
-        initiate: true,
-        name: accountHolderName || 'Account Holder',
-      };
+    // Derive currency from country
+    let currency: string;
+    if (countryLower === 'gb') {
+      currency = 'gbp';
     } else if (IBAN_COUNTRIES.includes(countryLower)) {
-      // IBAN countries - the account_number field contains the full IBAN
-      if (!accountNumber) {
-        throw new Error('IBAN is required for European bank accounts');
-      }
-      // IBAN already contains all routing information, no additional fields needed
+      currency = 'eur';
     } else {
-      throw new Error(
-        `Unsupported country: ${country}. Supported: US, GB, and IBAN countries (EU/SEPA).`,
-      );
+      currency = 'usd';
     }
 
-    // Create payout method via OutboundSetupIntent
-    // Use Stripe-Context with format: connectedAccountId/recipientAccountId
+    // Validate required fields per country
+    if (countryLower === 'us' && (!accountNumber || !routingNumber)) {
+      throw new Error('Account number and routing number are required for US bank accounts');
+    }
+    if (countryLower === 'gb' && (!accountNumber || !sortCode)) {
+      throw new Error('Account number and sort code are required for GB bank accounts');
+    }
+    if (IBAN_COUNTRIES.includes(countryLower) && !accountNumber) {
+      throw new Error('IBAN is required for European bank accounts');
+    }
+    if (!['us', 'gb', ...IBAN_COUNTRIES].includes(countryLower)) {
+      throw new Error(`Unsupported country: ${country}`);
+    }
+
+    // Build payout_method_data.bank_account — v2 API shape:
+    // GB: branch_number = sort code (NOT sort_code), no confirmation_of_payee field
+    // US: routing_number
+    // IBAN: account_number contains the full IBAN
+    const bankAccount: Record<string, string> = {
+      account_number: accountNumber!,
+      country: countryUpper,
+      currency,
+    };
+    if (countryLower === 'us') {
+      bankAccount.routing_number = routingNumber!;
+    }
+    if (countryLower === 'gb') {
+      bankAccount.routing_number = sortCode!; // GB sort code is passed as routing_number in OSI
+    }
+
     const setupIntent =
       await stripe.v2.moneyManagement.outboundSetupIntents.create(
         {
-          payout_method_data: payoutMethodData,
+          payout_method_data: {
+            type: 'bank_account',
+            bank_account: bankAccount as any,
+          },
+          usage_intent: 'payment',
         },
         {
           stripeContext: stripeContextValue,
         },
       );
-
-    // For GB accounts, acknowledge confirmation of payee if needed
-    if (
-      countryLower === 'gb' &&
-      setupIntent.payout_method?.type === 'bank_account' &&
-      setupIntent.payout_method.bank_account
-    ) {
-      const payoutMethodId = setupIntent.payout_method.id;
-
-      try {
-        // Acknowledge the CoP result
-        await stripe.v2.core.vault.gbBankAccounts.acknowledgeConfirmationOfPayee(
-          payoutMethodId,
-          {},
-          {
-            stripeContext: stripeContextValue,
-          },
-        );
-      } catch (ackError) {
-        console.warn('Could not acknowledge CoP, continuing anyway', ackError);
-      }
-    }
 
     return plain(setupIntent);
   } catch (error) {

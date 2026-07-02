@@ -36,7 +36,7 @@ export const getCards = async ({
       ...(status ? { status } : {}),
     },
     {
-      stripeAccount: accountId,
+      stripeContext: accountId,
     },
   );
 

@@ -34,11 +34,7 @@ export const getSubscriptionsByCustomer = async ({
         {
           customer: customerId,
         },
-        chargeType === 'direct'
-          ? {
-              stripeAccount: accountId,
-            }
-          : undefined,
+        chargeType === 'direct' ? { stripeAccount: accountId } : {},
       );
 
       const subscriptionsWithExpandedProduct = await Promise.all(
@@ -47,11 +43,8 @@ export const getSubscriptionsByCustomer = async ({
             subscription.items.data.map(async (item) => {
               const product = await stripe.products.retrieve(
                 item.price.product as string,
-                chargeType === 'direct'
-                  ? {
-                      stripeAccount: accountId,
-                    }
-                  : undefined,
+                {},
+                chargeType === 'direct' ? { stripeAccount: accountId } : {},
               );
 
               return {

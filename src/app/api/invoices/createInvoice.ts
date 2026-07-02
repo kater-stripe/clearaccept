@@ -61,7 +61,7 @@ export const createInvoice = async ({
         customer: customerId,
         invoice: invoice.id,
         description: item.description,
-        unit_amount_decimal: String(item.unitAmount),
+        amount: item.unitAmount,
         quantity: item.quantity,
         currency,
       },

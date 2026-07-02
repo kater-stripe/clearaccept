@@ -21,6 +21,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatPrice } from '@/utils/formatPrice';
 import type { CurrencyCode } from '@/constants/currencyCodes';
 import type { SupportedLanguage } from '@/constants/languages';
+import { CreateCardholderModal } from './CreateCardholderModal';
 
 type CreateCardModalProps = {
   open: boolean;
@@ -38,6 +39,7 @@ export const CreateCardModal = ({ open, onClose, defaultFinancialAccountId }: Cr
   const [cardType, setCardType] = useState<'virtual' | 'physical'>('virtual');
   const [status, setStatus] = useState<'active' | 'inactive'>('active');
   const [financialAccountId, setFinancialAccountId] = useState('');
+  const [isCreateCardholderOpen, setIsCreateCardholderOpen] = useState(false);
 
   const currency = account?.defaults?.currency ?? 'gbp';
 
@@ -103,6 +105,7 @@ export const CreateCardModal = ({ open, onClose, defaultFinancialAccountId }: Cr
   });
 
   return (
+    <>
     <Dialog open={open} onClose={onClose} className='relative z-10'>
       <DialogBackdrop
         transition
@@ -150,28 +153,51 @@ export const CreateCardModal = ({ open, onClose, defaultFinancialAccountId }: Cr
 
               <div className='mt-4 flex flex-col gap-y-4'>
                 {/* Cardholder selector */}
-                <Select
-                  label={t('dashboard.issuing.create-card.cardholder')}
-                  value={cardholderId}
-                  onChange={setCardholderId}
-                  placeholder={
-                    isCardholdersLoading
-                      ? 'Loading...'
-                      : t(
-                        'dashboard.issuing.create-card.select-cardholder-placeholder',
-                      )
-                  }
-                  options={
-                    cardholders
-                      ?.filter((ch) => ch.status === 'active')
-                      .map((ch) => ({
-                        value: ch.id,
-                        label: ch.name,
-                      })) ?? []
-                  }
-                  required
-                  disabled={isCardholdersLoading}
-                />
+                <div>
+                  <Select
+                    label={t('dashboard.issuing.create-card.cardholder')}
+                    value={cardholderId}
+                    onChange={setCardholderId}
+                    placeholder={
+                      isCardholdersLoading
+                        ? 'Loading...'
+                        : t(
+                          'dashboard.issuing.create-card.select-cardholder-placeholder',
+                        )
+                    }
+                    options={
+                      cardholders
+                        ?.filter((ch) => ch.status === 'active')
+                        .map((ch) => ({
+                          value: ch.id,
+                          label: ch.name,
+                        })) ?? []
+                    }
+                    required
+                    disabled={isCardholdersLoading}
+                  />
+                  {!isCardholdersLoading && (!cardholders || cardholders.length === 0) && (
+                    <p className='mt-1 text-xs text-gray-500'>
+                      No cardholders yet.{' '}
+                      <button
+                        type='button'
+                        onClick={() => setIsCreateCardholderOpen(true)}
+                        className='text-brand-primary underline hover:no-underline'
+                      >
+                        Create one now
+                      </button>
+                    </p>
+                  )}
+                  {!isCardholdersLoading && cardholders && cardholders.length > 0 && (
+                    <button
+                      type='button'
+                      onClick={() => setIsCreateCardholderOpen(true)}
+                      className='mt-1 text-xs text-brand-primary hover:underline'
+                    >
+                      + Add cardholder
+                    </button>
+                  )}
+                </div>
 
                 {/* Card type selector */}
                 <Select
@@ -280,6 +306,17 @@ export const CreateCardModal = ({ open, onClose, defaultFinancialAccountId }: Cr
         </div>
       </form>
     </Dialog>
+
+    <CreateCardholderModal
+      open={isCreateCardholderOpen}
+      onClose={() => setIsCreateCardholderOpen(false)}
+      onCreated={(newCardholderId) => {
+        setIsCreateCardholderOpen(false);
+        setCardholderId(newCardholderId);
+        queryClient.invalidateQueries({ queryKey: ['issuing-cardholders', account?.id, stripeSecretKey] });
+      }}
+    />
+    </>
   );
 };
 

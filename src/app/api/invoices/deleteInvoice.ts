@@ -31,11 +31,12 @@ export const deleteInvoice = async ({
   // First, void the invoice if it's open, or delete if draft
   const invoice = await stripe.invoices.retrieve(
     invoiceId,
+    {},
     stripeAccountOption,
   );
 
   if (invoice.status === 'draft') {
-    const deleted = await stripe.invoices.del(invoiceId, stripeAccountOption);
+    const deleted = await stripe.invoices.del(invoiceId, {}, stripeAccountOption);
     return plain(deleted);
   } else if (invoice.status === 'open') {
     const voided = await stripe.invoices.voidInvoice(

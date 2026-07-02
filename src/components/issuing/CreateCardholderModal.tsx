@@ -21,11 +21,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 type CreateCardholderModalProps = {
   open: boolean;
   onClose: () => void;
+  onCreated?: (cardholderId: string) => void;
 };
 
 export const CreateCardholderModal = ({
   open,
   onClose,
+  onCreated,
 }: CreateCardholderModalProps) => {
   const { t } = useTranslation();
   const { account } = useDemoMerchant();
@@ -169,11 +171,15 @@ export const CreateCardholderModal = ({
         throw new Error(response.message);
       }
 
-      onClose();
-
       queryClient.invalidateQueries({
         queryKey: ['issuing-cardholders'],
       });
+
+      if (onCreated) {
+        onCreated(response.id);
+      } else {
+        onClose();
+      }
     },
   });
 

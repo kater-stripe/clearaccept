@@ -90,7 +90,7 @@ export const seedIssuing = async ({
           status: 'active',
         },
         {
-          stripeAccount: accountId,
+          stripeContext: accountId,
         },
       );
 
@@ -106,7 +106,7 @@ export const seedIssuing = async ({
               : {}),
           },
           {
-            stripeAccount: accountId,
+            stripeContext: accountId,
           },
         );
 
@@ -127,7 +127,7 @@ export const seedIssuing = async ({
                   },
                 },
                 {
-                  stripeAccount: accountId,
+                  stripeContext: accountId,
                 },
               );
 
@@ -136,9 +136,8 @@ export const seedIssuing = async ({
               if (mock.integer({ min: 0, max: 10 }) === 1) {
                 await stripe.testHelpers.issuing.transactions.refund(
                   capture.id,
-                  {
-                    stripeAccount: accountId,
-                  },
+                  {},
+                  { stripeContext: accountId },
                 );
               }
             }

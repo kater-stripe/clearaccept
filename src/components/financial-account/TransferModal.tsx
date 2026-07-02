@@ -97,6 +97,13 @@ export const TransferModal = ({
     });
   }, [payoutMethods]);
 
+  // Auto-switch to external-bank when no other FAs are available
+  useEffect(() => {
+    if (!isLoadingAccounts && destinationAccounts.length === 0 && destinationType === 'financial-account') {
+      setDestinationType('external-bank');
+    }
+  }, [isLoadingAccounts, destinationAccounts.length]);
+
   // Reset form when modal closes
   useEffect(() => {
     if (!open) {
@@ -216,14 +223,10 @@ export const TransferModal = ({
                     setDestinationType(value as DestinationType);
                   }}
                   options={[
-                    {
-                      value: 'financial-account',
-                      label: t('modals.transfer.form.financial-account'),
-                    },
-                    {
-                      value: 'external-bank',
-                      label: t('modals.transfer.form.external-bank'),
-                    },
+                    ...(destinationAccounts.length > 0
+                      ? [{ value: 'financial-account', label: t('modals.transfer.form.financial-account') }]
+                      : []),
+                    { value: 'external-bank', label: t('modals.transfer.form.external-bank') },
                   ]}
                   required
                 />

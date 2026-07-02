@@ -106,22 +106,21 @@ export const AddRecipientModal = ({
     }
   }, [open]);
 
-  // Create recipient mutation
+  // Create recipient mutation — after creation, parent opens AddPayoutMethodModal
   const {
     mutate: createRecipient,
     isPending: isCreatingRecipient,
     error: recipientError,
   } = useMutation({
     mutationFn: createRecipientAction,
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
       if ('message' in response) {
         throw new Error(response.message);
       }
 
-      // Notify parent about the created recipient
+      // Notify parent so it can open AddPayoutMethodModal for this recipient
       onRecipientCreated(response);
 
-      // Close this modal and trigger success callback
       onClose();
       onSuccess();
     },

@@ -30,7 +30,7 @@ export const getCardTransactions = async ({
       limit,
     },
     {
-      stripeAccount: accountId,
+      stripeContext: accountId,
     },
   );
 

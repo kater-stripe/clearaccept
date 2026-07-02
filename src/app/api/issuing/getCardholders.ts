@@ -29,7 +29,7 @@ export const getCardholders = async ({
       limit,
     },
     {
-      stripeAccount: accountId,
+      stripeContext: accountId,
     },
   );
 

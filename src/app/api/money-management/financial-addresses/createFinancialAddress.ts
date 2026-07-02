@@ -26,6 +26,7 @@ export const createFinancialAddress = async ({
 
   try {
     // Create financial address based on country
+    // v2 API requires Stripe-Context header (stripeContext), not Stripe-Account (stripeAccount)
     const financialAddress =
       await stripe.v2.moneyManagement.financialAddresses.create(
         {
@@ -33,7 +34,7 @@ export const createFinancialAddress = async ({
           type: country === 'GB' ? 'gb_bank_account' : 'us_bank_account',
         },
         {
-          stripeAccount: accountId,
+          stripeContext: accountId,
         },
       );
 

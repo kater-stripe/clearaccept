@@ -9,16 +9,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Input } from '../common/Input';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
-import { CURRENCY_CODES, CurrencyCode } from '@/constants/currencyCodes';
 import { useEffect, useState } from 'react';
 import { createFinancialAccount as createFinancialAccountAction } from '@/app/api/money-management/financial-accounts/createFinancialAccount';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { Button } from '../common/Button';
-import { Select } from '../common/Select';
 import { Alert } from '../common/Alert';
 import { LoadingSpinner } from '../common/LoadingSpinner';
-import type { Stripe } from 'stripe';
 
 type CreateFinancialAccountModalProps = {
   open: boolean;
@@ -35,12 +32,6 @@ export const CreateFinancialAccountModal = ({
 
   const [name, setName] = useState('');
 
-  const defaultCurrency = account?.defaults?.currency ?? 'usd';
-
-  const [currency, setCurrency] = useState<CurrencyCode>(
-    defaultCurrency as CurrencyCode,
-  );
-
   useEffect(() => {
     if (open) {
       return;
@@ -48,7 +39,6 @@ export const CreateFinancialAccountModal = ({
 
     const resetTimeout = setTimeout(() => {
       setName('');
-      setCurrency(defaultCurrency as CurrencyCode);
     }, 1000);
 
     return () => clearTimeout(resetTimeout);
@@ -89,7 +79,6 @@ export const CreateFinancialAccountModal = ({
 
             createFinancialAccount({
               name,
-              currency,
               accountId: account!.id,
               stripeSecretKey,
             });
@@ -126,16 +115,6 @@ export const CreateFinancialAccountModal = ({
                     label={t('modals.create-financial-account.form.name')}
                     value={name}
                     onChange={setName}
-                    required={true}
-                  />
-                  <Select
-                    label={t('modals.create-financial-account.form.currency')}
-                    value={currency}
-                    onChange={setCurrency}
-                    options={CURRENCY_CODES.map((currency) => ({
-                      value: currency,
-                      label: currency.toUpperCase(),
-                    }))}
                     required={true}
                   />
                 </div>

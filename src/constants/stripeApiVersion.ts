@@ -1,1 +1,1 @@
-export const STRIPE_API_VERSION = '2025-11-17.preview' as const;
+export const STRIPE_API_VERSION = '2026-06-24.preview' as const;

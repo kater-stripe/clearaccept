@@ -38,11 +38,8 @@ export const setReaderDisplay = async ({
   if (items.length === 0) {
     const reader = await stripe.terminal.readers.cancelAction(
       readerId,
-      chargeType === 'direct'
-        ? {
-            stripeAccount: accountId,
-          }
-        : undefined,
+      {},
+      chargeType === 'direct' ? { stripeAccount: accountId } : {},
     );
 
     return plain(reader);
@@ -63,11 +60,7 @@ export const setReaderDisplay = async ({
         total,
       },
     },
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
+    chargeType === 'direct' ? { stripeAccount: accountId } : {},
   );
 
   return plain(reader);

@@ -30,6 +30,25 @@ export const createOutboundTransfer = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
+  // Request outbound transfer capabilities if not already active.
+  // Existing accounts may predate these being included in the default money_manager config.
+  try {
+    await stripe.v2.core.accounts.update(accountId, {
+      configuration: {
+        money_manager: {
+          capabilities: {
+            outbound_transfers: {
+              bank_accounts: { requested: true },
+              financial_accounts: { requested: true },
+            },
+          },
+        },
+      },
+    });
+  } catch {
+    // Silently skip — the transfer call will surface the real error if capability is missing.
+  }
+
   try {
     const outboundTransfer =
       await stripe.v2.moneyManagement.outboundTransfers.create(
@@ -49,7 +68,7 @@ export const createOutboundTransfer = async ({
           description: description || 'Transfer to own account',
         },
         {
-          stripeAccount: accountId,
+          stripeContext: accountId,
         },
       );
 

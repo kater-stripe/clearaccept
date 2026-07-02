@@ -27,11 +27,8 @@ export const getCheckoutSessionById = async ({
 
   const checkoutSession = await stripe.checkout.sessions.retrieve(
     id,
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
+    {},
+    chargeType === 'direct' ? { stripeAccount: accountId } : {},
   );
 
   return plain(checkoutSession);

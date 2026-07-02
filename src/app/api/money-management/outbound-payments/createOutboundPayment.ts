@@ -40,6 +40,22 @@ export const createOutboundPayment = async ({
 
   const stripe = initializeStripe(stripeSecretKey);
 
+  // GB bank account payout methods (gbba_ prefix) require Confirmation of Payee
+  // before an outbound payment can be created. Initiate then acknowledge CoP.
+  if (payoutMethodId.startsWith('gbba_')) {
+    const copContext = `${connectedAccountId}/${recipientAccountId}`;
+    const copBase = `https://api.stripe.com/v2/core/vault/gb_bank_accounts/${payoutMethodId}`;
+    const copHeaders: Record<string, string> = {
+      Authorization: `Bearer ${stripeSecretKey}`,
+      'Stripe-Version': '2026-06-24.preview',
+      'Stripe-Context': copContext,
+    };
+    // Initiate CoP (ignore if already initiated)
+    await fetch(`${copBase}/initiate_confirmation_of_payee`, { method: 'POST', headers: copHeaders }).catch(() => {});
+    // Acknowledge CoP
+    await fetch(`${copBase}/acknowledge_confirmation_of_payee`, { method: 'POST', headers: copHeaders }).catch(() => {});
+  }
+
   try {
     // Create outbound payment from connected account's financial account
     // Use stripeContext with the connected account ID for v2 APIs

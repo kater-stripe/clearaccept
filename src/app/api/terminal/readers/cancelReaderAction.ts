@@ -27,11 +27,8 @@ export const cancelReaderAction = async ({
 
   const reader = await stripe.terminal.readers.cancelAction(
     readerId,
-    chargeType === 'direct'
-      ? {
-          stripeAccount: accountId,
-        }
-      : undefined,
+    {},
+    chargeType === 'direct' ? { stripeAccount: accountId } : {},
   );
 
   return plain(reader);
