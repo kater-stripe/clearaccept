@@ -81,7 +81,7 @@ export const AddRecipientModal = ({
   const { account } = useDemoMerchant();
 
   const [entityType, setEntityType] = useState<EntityType>('individual');
-  const [country, setCountry] = useState<string>('us');
+  const [country, setCountry] = useState<string>('gb');
   const [contactEmail, setContactEmail] = useState<string>('');
 
   // Individual fields
@@ -96,7 +96,7 @@ export const AddRecipientModal = ({
     if (!open) {
       const resetTimeout = setTimeout(() => {
         setEntityType('individual');
-        setCountry('us');
+        setCountry('gb');
         setContactEmail('');
         setGivenName('');
         setSurname('');

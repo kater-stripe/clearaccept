@@ -55,7 +55,7 @@ export class Mock {
   }
 
   phoneNumber() {
-    return '+447700900000';
+    return '+447400123456';
   }
 
   email({ individualNames, companyNames }: { individualNames?: { first_name: string; last_name: string }; companyNames?: { name: string } } = {}) {
