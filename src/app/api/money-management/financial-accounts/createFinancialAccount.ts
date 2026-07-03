@@ -27,64 +27,77 @@ export const createFinancialAccount = async ({
   const stripe = initializeStripe(stripeSecretKey);
 
   // Resolve currency: explicit > account default > env var > gbp
-  const resolvedCurrency = currency ?? (await stripe.v2.core.accounts.retrieve(accountId, { include: ['defaults'] })).defaults?.currency ?? process.env.CURRENCY?.toLowerCase() ?? 'gbp';
+  const resolvedCurrency =
+    currency ??
+    (await stripe.v2.core.accounts.retrieve(accountId, { include: ['defaults'] })).defaults
+      ?.currency ??
+    process.env.CURRENCY?.toLowerCase() ??
+    'gbp';
 
-  // Request only the capability for the specific currency being created.
-  // Requesting unsupported currencies (e.g. EUR/USD on a GBP-only platform) marks them
-  // "restricted" which then blocks ALL FA operations including GBP ones.
+  // Request capabilities for the specific currency only.
+  // Requesting unsupported currencies (e.g. EUR/USD on GBP-only platform) marks them
+  // "restricted" and blocks ALL FA operations including GBP.
   try {
-    await stripe.v2.core.accounts.update(
-      accountId,
-      {
-        configuration: {
-          money_manager: {
-            capabilities: {
-              received_credits: { bank_accounts: req },
-              business_storage: {
-                inbound: { [resolvedCurrency]: req },
-                outbound: { [resolvedCurrency]: req },
-              },
-              outbound_payments: { bank_accounts: req, financial_accounts: req },
-              outbound_transfers: { bank_accounts: req, financial_accounts: req },
+    await stripe.v2.core.accounts.update(accountId, {
+      configuration: {
+        money_manager: {
+          capabilities: {
+            received_credits: { bank_accounts: req },
+            business_storage: {
+              inbound: { [resolvedCurrency]: req },
+              outbound: { [resolvedCurrency]: req },
             },
+            outbound_payments: { bank_accounts: req, financial_accounts: req },
+            outbound_transfers: { bank_accounts: req, financial_accounts: req },
           },
         },
       },
-    );
+    });
   } catch {
-    // Best-effort: proceed even if the capability update fails (e.g. platform not enabled)
+    // Best-effort: proceed even if capability update fails (e.g. platform not enabled)
   }
 
-  // Retry up to 5× with 1 s back-off: capabilities are requested asynchronously
-  // and may be in a transient "restricted/pending" state immediately after account creation.
-  const maxAttempts = 5;
-  let lastError: unknown;
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+  // Poll capability status up to 30 s before attempting creation.
+  // Capabilities are activated asynchronously; "restricted" here is transient (pending approval)
+  // not a permanent block.
+  const pollLimit = 30;
+  for (let i = 0; i < pollLimit; i++) {
     try {
-      const financialAccount =
-        await stripe.v2.moneyManagement.financialAccounts.create(
-          {
-            display_name: name,
-            type: 'storage',
-            storage: { holds_currencies: [resolvedCurrency] },
-          },
-          { stripeContext: accountId },
-        );
+      const acct = await stripe.v2.core.accounts.retrieve(accountId, {
+        include: ['configuration.money_manager'],
+      });
+      const caps = (acct as any).configuration?.money_manager?.capabilities;
+      const inbound = caps?.business_storage?.inbound?.[resolvedCurrency]?.status;
+      const outbound = caps?.business_storage?.outbound?.[resolvedCurrency]?.status;
 
-      return plain(financialAccount);
-    } catch (error: any) {
-      lastError = error;
-      if (error?.code === 'financial_account_capability_restricted' && attempt < maxAttempts - 1) {
+      if (inbound === 'active' && outbound === 'active') break;
+
+      // If still pending/restricted, wait and try again
+      if (i < pollLimit - 1) {
         await new Promise(r => setTimeout(r, 1000));
-        continue;
       }
+    } catch {
+      // Non-fatal: proceed and let the create attempt surface any real error
       break;
     }
   }
 
-  console.error(
-    `Unable to create financial account "${name}" for account ${accountId}`,
-    lastError,
-  );
-  return { message: 'modals.create-financial-account.error' };
+  try {
+    const financialAccount = await stripe.v2.moneyManagement.financialAccounts.create(
+      {
+        display_name: name,
+        type: 'storage',
+        storage: { holds_currencies: [resolvedCurrency] },
+      },
+      { stripeContext: accountId },
+    );
+
+    return plain(financialAccount);
+  } catch (error) {
+    console.error(
+      `Unable to create financial account "${name}" for account ${accountId}`,
+      error,
+    );
+    return { message: 'modals.create-financial-account.error' };
+  }
 };
