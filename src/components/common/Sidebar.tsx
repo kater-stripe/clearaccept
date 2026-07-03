@@ -1,6 +1,5 @@
 'use client';
 
-import { POSIcon } from '@/components/pos/POSIcon';
 import { useDemoConfig } from '@/context/DemoConfigContext';
 import { useDemoMerchant } from '@/context/DemoMerchantContext';
 import {
@@ -12,18 +11,12 @@ import {
   UserIcon,
   WalletIcon,
   Square3Stack3DIcon,
-  CalculatorIcon,
-  LinkIcon,
   DocumentChartBarIcon,
   StarIcon,
   DocumentTextIcon,
-  UsersIcon,
   ChevronDownIcon,
-  CurrencyDollarIcon,
   BriefcaseIcon,
-  Cog6ToothIcon,
   EllipsisHorizontalCircleIcon,
-  DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -121,60 +114,6 @@ export const Sidebar = ({ onMobileMenuClose }: SidebarProps) => {
       //   icon: BanknotesIcon,
       //   label: t('dashboard.products.title'),
       // },
-      {
-        href: `/${language}/dashboard/customers`,
-        icon: UsersIcon,
-        label: t('dashboard.customers.title'),
-      },
-      {
-        id: 'payments',
-        icon: CurrencyDollarIcon,
-        label: t('dashboard.taking-payments.title'),
-        children: [
-          {
-            href: `/${language}/dashboard/payments/settings`,
-            icon: Cog6ToothIcon,
-            label: t('dashboard.payments.settings.title'),
-          },
-          {
-            href: `/${language}/dashboard/payments`,
-            icon: CreditCardIcon,
-            label: t('dashboard.payments.title'),
-          },
-          {
-            href: `/${language}/dashboard/payments/invoices`,
-            icon: DocumentTextIcon,
-            label: t('dashboard.invoices.title'),
-          },
-          // {
-          //   id: 'terminal',
-          //   icon: DevicePhoneMobileIcon,
-          //   label: t('dashboard.terminal.title'),
-          //   children: [
-          //     {
-          //       href: `/${language}/dashboard/payments/terminal/settings`,
-          //       icon: Cog6ToothIcon,
-          //       label: t('dashboard.terminal.settings.title'),
-          //     },
-          //     {
-          //       href: `/${language}/dashboard/payments/terminal/pos`,
-          //       icon: POSIcon,
-          //       label: t('dashboard.terminal.pos.title'),
-          //     },
-          //     // {
-          //     //   href: `/${language}/dashboard/payments/terminal/shop`,
-          //     //   icon: BuildingStorefrontIcon,
-          //     //   label: t('dashboard.terminal.shop.title'),
-          //     // },
-          //   ],
-          // },
-          {
-            href: `/${language}/dashboard/tax`,
-            icon: CalculatorIcon,
-            label: t('dashboard.tax.title'),
-          },
-        ],
-      },
       {
         id: 'finance',
         icon: BriefcaseIcon,
