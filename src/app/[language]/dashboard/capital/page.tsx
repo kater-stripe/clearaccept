@@ -13,7 +13,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const TERMINAL_STATUSES = ['paid_out', 'paid_off', 'completed', 'accepted', 'rejected', 'expired', 'canceled'];
+const ACTIVE_FINANCING_STATUSES = ['accepted', 'paid_out'];
+const SEED_BLOCKED_STATUSES = ['delivered', 'accepted', 'paid_out', 'paid_off', 'completed'];
+
+const getOfferStatus = (offer: { status?: string; state?: string } | null | undefined) =>
+  offer?.status ?? offer?.state;
 
 const CapitalAndFundingPage = () => {
   const { t } = useTranslation();
@@ -25,33 +29,43 @@ const CapitalAndFundingPage = () => {
   const { data: latestFinancingOffer, refetch: refetchOffer } = useQuery({
     queryKey: ['latest-financing-offer', account?.id, stripeSecretKey],
     queryFn: async () => {
-      const result = await getLatestFinancingOfferAction({ accountId: account!.id, stripeSecretKey });
-      if (result?.status === 'accepted' && waitingForFinancingOfferToUpdate) {
-        window.location.reload();
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-      }
-      return result;
+      return getLatestFinancingOfferAction({ accountId: account!.id, stripeSecretKey });
     },
     refetchInterval: waitingForFinancingOfferToUpdate ? 1000 : false,
     enabled: !!account,
   });
 
+  const offerStatus = getOfferStatus(latestFinancingOffer);
+
+  useEffect(() => {
+    if (
+      waitingForFinancingOfferToUpdate &&
+      offerStatus &&
+      ACTIVE_FINANCING_STATUSES.includes(offerStatus)
+    ) {
+      setWaitingForFinancingOfferToUpdate(false);
+    }
+  }, [waitingForFinancingOfferToUpdate, offerStatus]);
+
   // Auto-seed a test offer when the account has no active offer.
   // Silently ignored if the platform doesn't have Capital enabled.
   useEffect(() => {
     if (!account || latestFinancingOffer === undefined) return;
-    const hasActiveOffer = latestFinancingOffer && !TERMINAL_STATUSES.includes(latestFinancingOffer.status);
+    const hasActiveOffer =
+      latestFinancingOffer &&
+      offerStatus &&
+      SEED_BLOCKED_STATUSES.includes(offerStatus);
     if (!hasActiveOffer) {
       const country = (account.identity?.country?.toUpperCase() === 'GB' ? 'GB' : 'US') as 'GB' | 'US';
       createCapitalOfferAction({ accountId: account.id, country, stripeSecretKey })
         .then(() => refetchOffer())
         .catch(() => {/* Capital not enabled on this platform */});
     }
-  }, [account?.id, latestFinancingOffer]);
+  }, [account?.id, latestFinancingOffer, offerStatus]);
 
-  // delivered = offer pending application; accepted/active = show active financing
-  const offerIsDelivered = latestFinancingOffer?.status === 'delivered';
-  const offerIsActive = latestFinancingOffer && !offerIsDelivered && !TERMINAL_STATUSES.includes(latestFinancingOffer.status);
+  const offerIsDelivered = offerStatus === 'delivered';
+  const offerIsActive =
+    !!offerStatus && ACTIVE_FINANCING_STATUSES.includes(offerStatus);
 
   if (waitingForFinancingOfferToUpdate) {
     return <LoadingSpinner className='size-8 text-brand-primary' />;
